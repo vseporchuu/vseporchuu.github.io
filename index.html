@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>47bot - Tanki Online</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        :root {
+            --primary-dark: #0d1b2a;
+            --primary: #1b263b;
+            --secondary: #415a77;
+            --accent: #4cc9f0;
+            --accent-gradient: linear-gradient(135deg, #4cc9f0, #4361ee);
+            --text-primary: #e0e1dd;
+            --text-secondary: #a8b2d1;
+            --card-bg: rgba(26, 39, 59, 0.6);
+            --menu-height: 60px;
+            --mint-light: #a0e8d0;
+            --mint-medium: #4db6ac;
+            --mint-dark: #00897b;
+            --mint-gradient: linear-gradient(135deg, var(--mint-light), var(--mint-dark));
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: radial-gradient(circle at top, var(--primary-dark), var(--primary));
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding-bottom: var(--menu-height);
+        }
+        
+        .container {
+            max-width: 100%;
+            padding: 0 15px;
+            padding-bottom: 20px;
+        }
+        
+        header {
+            background: rgba(13, 27, 42, 0.95);
+            padding: 20px 15px;
+            text-align: center;
+            border-bottom: 1px solid rgba(76, 201, 240, 0.2);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(65, 90, 119, 0.3) 0%, rgba(13, 27, 42, 0) 70%);
+            z-index: 0;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+            background: var(--mint-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(76, 201, 240, 0.2);
+            letter-spacing: 0.5px;
+        }
+        
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-top: 5px;
+        }
+        
+        .content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .content.active {
+            display: block;
+        }
+        
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            border: 1px solid rgba(76, 201, 240, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(5px);
+            margin-top: 15px;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+            color: var(--mint-medium);
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--mint-medium), transparent);
+        }
+        
+        .search-box {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            background: rgba(13, 27, 42, 0.7);
+            color: var(--text-primary);
+            border: 1px solid rgba(76, 201, 240, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--mint-medium);
+            box-shadow: 0 0 0 2px rgba(77, 182, 172, 0.3);
+        }
+        
+        .search-input::placeholder {
+            color: var(--text-secondary);
+        }
+        
+        .search-button {
+            background: var(--mint-gradient);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 0 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 120px;
+            box-shadow: 0 4px 15px rgba(77, 182, 172, 0.25);
+        }
+        
+        .search-button:hover {
+            background: linear-gradient(135deg, #7fd9c7, #00897b);
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(77, 182, 172, 0.4);
+        }
+        
+        .search-button i {
+            margin-right: 8px;
+        }
+        
+        .results-container {
+            background: rgba(13, 27, 42, 0.5);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(76, 201, 240, 0.1);
+            margin-top: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .player-header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(76, 201, 240, 0.1);
+        }
+        
+        .player-name {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--mint-medium);
+        }
+        
+        .player-rank {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-top: 5px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .stat-card {
+            background: rgba(27, 38, 59, 0.7);
+            border-radius: 12px;
+            padding: 20px 15px;
+            text-align: center;
+            border: 1px solid rgba(76, 201, 240, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(77, 182, 172, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .stat-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--mint-gradient);
+        }
+        
+        .stat-label {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        .detailed-stats {
+            background: rgba(27, 38, 59, 0.7);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid rgba(76, 201, 240, 0.1);
+        }
+        
+        .detailed-stats h3 {
+            color: var(--mint-medium);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .stats-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(76, 201, 240, 0.05);
+        }
+        
+        .stat-name {
+            color: var(--text-secondary);
+        }
+        
+        .stat-data {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .top-section {
+            margin-top: 35px;
+        }
+        
+        .top-section h3 {
+            color: var(--mint-medium);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(76, 201, 240, 0.1);
+        }
+        
+        .top-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .top-item {
+            background: rgba(27, 38, 59, 0.7);
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid rgba(76, 201, 240, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .top-item:hover {
+            transform: translateY(-3px);
+            border-color: rgba(77, 182, 172, 0.3);
+        }
+        
+        .item-name {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .item-score {
+            background: var(--mint-medium);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(65, 90, 119, 0.3);
+            border-top-color: var(--mint-medium);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .loading p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+        
+        .error {
+            background: rgba(231, 76, 60, 0.15);
+            border: 1px solid rgba(231, 76, 60, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .error p {
+            margin-bottom: 10px;
+            color: #ff6b6b;
+        }
+        
+        .player-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 1px solid rgba(76, 201, 240, 0.1);
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .player-card h3 {
+            color: var(--mint-medium);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        .player-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid var(--mint-medium);
+            margin-bottom: 15px;
+            object-fit: cover;
+            background: var(--primary-dark);
+            box-shadow: 0 0 20px rgba(77, 182, 172, 0.3);
+        }
+        
+        .profile-name {
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+        }
+        
+        .profile-username {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+        
+        .bind-form {
+            margin-top: 20px;
+        }
+        
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: var(--menu-height);
+            background: rgba(13, 27, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(76, 201, 240, 0.2);
+            display: flex;
+            justify-content: space-around;
+            z-index: 1000;
+            box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .nav-btn {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 0;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-btn.active {
+            color: var(--mint-medium);
+        }
+        
+        .nav-btn i {
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn.active i {
+            color: var(--mint-medium);
+            text-shadow: 0 0 10px rgba(77, 182, 172, 0.5);
+        }
+        
+        .nav-btn:hover {
+            color: var(--mint-medium);
+        }
+        
+        .nav-btn:hover i {
+            transform: translateY(-3px);
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .nav-btn:hover .tooltip {
+            opacity: 1;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(76, 201, 240, 0.1);
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>47bot</h1>
+                <p class="subtitle">Tanki Online Assistant</p>
+            </div>
+        </header>
+        
+        <!-- Главная страница -->
+        <div id="main-content" class="content active">
+            <div class="player-card">
+                <h3>Добро пожаловать в Tanki Assistant!</h3>
+                <p>Используйте это приложение для просмотра статистики игроков, чтения новостей и изучения гайдов по игре Tanki Online.</p>
+                <p>Выберите раздел в меню ниже, чтобы начать.</p>
+            </div>
+            
+            <div class="player-card">
+                <h3>Последние обновления</h3>
+                <p>• Добавлен поиск по игровому рейтингу</p>
+                <p>• Обновлена база данных танков</p>
+                <p>• Новый дизайн приложения</p>
+                <p>• Привязка аккаунта Telegram</p>
+            </div>
+        </div>
+        
+        <!-- Страница поиска -->
+        <div id="search-content" class="content">
+            <div class="search-container">
+                <h2 class="section-title">Поиск игрока</h2>
+                
+                <div class="search-box">
+                    <input 
+                        type="text" 
+                        id="player-search" 
+                        class="search-input" 
+                        placeholder="Введите ник игрока"
+                        autocomplete="off"
+                    >
+                    <button id="search-btn" class="search-button">
+                        <i class="fas fa-search"></i> Поиск
+                    </button>
+                </div>
+                
+                <div id="search-results" class="results-container">
+                    <p style="text-align: center; color: var(--text-secondary);">
+                        Введите ник игрока для просмотра статистики
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Танкофонд -->
+        <div id="tankopedia-content" class="content">
+            <div class="search-container">
+                <h2 class="section-title">Танкофонд</h2>
+                <div class="player-card">
+                    <h3>Игровые ресурсы</h3>
+                    <p>Выберите категорию для просмотра информации:</p>
+                    
+                    <div class="stats-grid" style="margin-top: 25px;">
+                        <div class="stat-card" onclick="showTankCategory('hulls')">
+                            <i class="fas fa-shield-alt" style="font-size: 2rem; margin-bottom: 15px;"></i>
+                            <div class="stat-label">Корпуса</div>
+                        </div>
+                        <div class="stat-card" onclick="showTankCategory('turrets')">
+                            <i class="fas fa-crosshairs" style="font-size: 2rem; margin-bottom: 15px;"></i>
+                            <div class="stat-label">Пушки</div>
+                        </div>
+                        <div class="stat-card" onclick="showTankCategory('modules')">
+                            <i class="fas fa-cog" style="font-size: 2rem; margin-bottom: 15px;"></i>
+                            <div class="stat-label">Модули</div>
+                        </div>
+                        <div class="stat-card" onclick="showTankCategory('skins')">
+                            <i class="fas fa-paint-brush" style="font-size: 2rem; margin-bottom: 15px;"></i>
+                            <div class="stat-label">Скины</div>
+                        </div>
+                    </div>
+                    
+                    <div id="tank-category-content" style="display: none; margin-top: 30px;">
+                        <div class="player-card">
+                            <h3 id="category-title">Корпуса</h3>
+                            <p>Раздел в разработке. Скоро здесь появится подробная информация о выбранной категории.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Профиль -->
+        <div id="profile-content" class="content">
+            <div class="search-container">
+                <h2 class="section-title">Мой профиль</h2>
+                
+                <div class="player-card">
+                    <div class="profile-info">
+                        <img id="user-avatar" class="avatar" src="" alt="Avatar">
+                        <div class="profile-name" id="user-name"></div>
+                        <div class="profile-username" id="user-username"></div>
+                    </div>
+                    
+                    <div class="bind-form">
+                        <h3>Привязать аккаунт Tanki Online</h3>
+                        <div class="search-box" style="margin-top: 20px;">
+                            <input 
+                                type="text" 
+                                id="bind-nickname" 
+                                class="search-input" 
+                                placeholder="Введите ваш игровой ник"
+                                autocomplete="off"
+                            >
+                            <button id="bind-btn" class="search-button">
+                                <i class="fas fa-link"></i> Привязать
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="bound-account" style="display: none; margin-top: 25px;">
+                        <div class="player-card">
+                            <h3>Привязанный аккаунт</h3>
+                            <p>Никнейм: <strong id="saved-nickname"></strong></p>
+                            <button id="search-bound-account" class="search-button" style="margin-top: 15px;">
+                                <i class="fas fa-chart-line"></i> Показать мой рейтинг
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>47bot Tanki Assistant • v1.1</p>
+            <p>Данные принадлежат Tanki Online</p>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <button class="nav-btn active" onclick="showContent('main')">
+            <i class="fas fa-home"></i>
+            <div class="tooltip">Главная</div>
+        </button>
+        <button class="nav-btn" onclick="showContent('search')">
+            <i class="fas fa-search"></i>
+            <div class="tooltip">Поиск</div>
+        </button>
+        <button class="nav-btn" onclick="showContent('tankopedia')">
+            <i class="fas fa-th-large"></i>
+            <div class="tooltip">Танкофонд</div>
+        </button>
+        <button class="nav-btn" onclick="showContent('profile')">
+            <i class="fas fa-user"></i>
+            <div class="tooltip">Профиль</div>
+        </button>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+        tg.enableClosingConfirmation();
+        
+        // Показать выбранный контент
+        function showContent(contentId) {
+            // Скрыть все разделы
+            document.querySelectorAll('.content').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Показать выбранный
+            document.getElementById(`${contentId}-content`).classList.add('active');
+            
+            // Обновить активную кнопку в навигации
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-btn')[getNavIndex(contentId)].classList.add('active');
+            
+            // Если открыли поиск - фокус на поле ввода
+            if (contentId === 'search') {
+                setTimeout(() => {
+                    document.getElementById('player-search').focus();
+                }, 300);
+            }
+            
+            // Если открыли профиль - загрузить данные пользователя
+            if (contentId === 'profile') {
+                loadUserProfile();
+            }
+        }
+        
+        // Индексы кнопок навигации
+        function getNavIndex(contentId) {
+            const navMap = {
+                'main': 0,
+                'search': 1,
+                'tankopedia': 2,
+                'profile': 3
+            };
+            return navMap[contentId] || 0;
+        }
+        
+        // Загрузка профиля пользователя
+        function loadUserProfile() {
+            const user = tg.initDataUnsafe.user;
+            if (user) {
+                // Заполняем данные пользователя
+                document.getElementById('user-name').textContent = 
+                    `${user.first_name || ''} ${user.last_name || ''}`.trim() || 'Пользователь Telegram';
+                
+                document.getElementById('user-username').textContent = 
+                    user.username ? `@${user.username}` : '';
+                
+                // Устанавливаем аватар
+                const avatar = document.getElementById('user-avatar');
+                if (user.photo_url) {
+                    avatar.src = user.photo_url;
+                } else {
+                    // Иконка по умолчанию
+                    avatar.style.display = 'flex';
+                    avatar.style.alignItems = 'center';
+                    avatar.style.justifyContent = 'center';
+                    avatar.style.fontSize = '2.5rem';
+                    avatar.innerHTML = '<i class="fas fa-user"></i>';
+                }
+                
+                // Проверяем сохраненный никнейм
+                const savedNickname = localStorage.getItem('tanki_nickname');
+                if (savedNickname) {
+                    document.getElementById('saved-nickname').textContent = savedNickname;
+                    document.getElementById('bound-account').style.display = 'block';
+                } else {
+                    document.getElementById('bound-account').style.display = 'none';
+                }
+            }
+        }
+        
+        // Привязка игрового аккаунта
+        document.getElementById('bind-btn').addEventListener('click', bindAccount);
+        document.getElementById('search-bound-account').addEventListener('click', searchBoundAccount);
+        
+        function bindAccount() {
+            const nickname = document.getElementById('bind-nickname').value.trim();
+            if (!nickname) {
+                alert('Пожалуйста, введите ваш игровой ник');
+                return;
+            }
+            
+            // Сохраняем в localStorage
+            localStorage.setItem('tanki_nickname', nickname);
+            document.getElementById('saved-nickname').textContent = nickname;
+            document.getElementById('bound-account').style.display = 'block';
+            
+            // Очищаем поле ввода
+            document.getElementById('bind-nickname').value = '';
+            
+            // Показываем уведомление
+            showNotification(`Аккаунт ${nickname} успешно привязан!`);
+        }
+        
+        function searchBoundAccount() {
+            const nickname = localStorage.getItem('tanki_nickname');
+            if (nickname) {
+                // Переходим на страницу поиска
+                showContent('search');
+                
+                // Устанавливаем значение и запускаем поиск
+                setTimeout(() => {
+                    document.getElementById('player-search').value = nickname;
+                    searchPlayer();
+                }, 500);
+            }
+        }
+        
+        // Показываем уведомление
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'player-card';
+            notification.style.position = 'fixed';
+            notification.style.top = '20px';
+            notification.style.left = '50%';
+            notification.style.transform = 'translateX(-50%)';
+            notification.style.zIndex = '1000';
+            notification.style.width = '90%';
+            notification.style.maxWidth = '400px';
+            notification.style.animation = 'fadeIn 0.3s ease';
+            notification.innerHTML = `<p>${message}</p>`;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 2000);
+        }
+        
+        // Танкофонд
+        function showTankCategory(category) {
+            const categoryContent = document.getElementById('tank-category-content');
+            const categoryTitle = document.getElementById('category-title');
+            
+            // Обновляем заголовок
+            const titles = {
+                'hulls': 'Корпуса',
+                'turrets': 'Пушки',
+                'modules': 'Модули',
+                'skins': 'Скины'
+            };
+            
+            categoryTitle.textContent = titles[category] || 'Категория';
+            categoryContent.style.display = 'block';
+            
+            // Прокручиваем к контенту
+            categoryContent.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Обработчик поиска
+        document.getElementById('search-btn').addEventListener('click', searchPlayer);
+        document.getElementById('player-search').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') searchPlayer();
+        });
+
+        async function searchPlayer() {
+            const nickname = document.getElementById('player-search').value.trim();
+            const resultsContainer = document.getElementById('search-results');
+            
+            if (!nickname) {
+                resultsContainer.innerHTML = '<div class="error"><p>Пожалуйста, введите ник игрока</p></div>';
+                return;
+            }
+
+            // Показываем загрузку
+            resultsContainer.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Загружаем статистику для: ${nickname}</p>
+                </div>
+            `;
+
+            try {
+                const data = await fetchPlayerData(nickname);
+                renderPlayerStats(data, resultsContainer);
+            } catch (error) {
+                resultsContainer.innerHTML = `
+                    <div class="error">
+                        <p>Ошибка: ${error.message}</p>
+                        <p>Проверьте правильность ника или попробуйте позже</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Запрос к API Tanki Online
+        async function fetchPlayerData(nickname) {
+            const response = await fetch(`https://ratings.tankionline.com/api/eu/profile/?user=${encodeURIComponent(nickname)}&lang=ru`);
+            
+            if (response.status === 404) {
+                throw new Error('Игрок не найден');
+            }
+            
+            if (!response.ok) {
+                throw new Error('Ошибка сервера, попробуйте позже');
+            }
+
+            const data = await response.json();
+            
+            if (!data.response) {
+                throw new Error('Данные об игроке недоступны');
+            }
+            
+            return data.response;
+        }
+
+        // Отрисовка результатов
+        function renderPlayerStats(playerData, container) {
+            // Рассчитываем K/D
+            const kills = playerData.kills || 0;
+            const deaths = playerData.deaths || 1;
+            const kdRatio = (kills / deaths).toFixed(2);
+
+            // Форматируем время игры (мс → часы)
+            const playTimeHours = (playerData.timePlayed / 3600000).toFixed(1);
+
+            container.innerHTML = `
+                <div class="player-header">
+                    <h2 class="player-name">${playerData.name}</h2>
+                    <div class="player-rank">${getRankName(playerData.rank)}</div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Уровень</div>
+                        <div class="stat-value">${playerData.level}</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-label">Очки</div>
+                        <div class="stat-value">${playerData.score}</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-label">У/П</div>
+                        <div class="stat-value">${kdRatio}</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-label">GS</div>
+                        <div class="stat-value">${playerData.gearScore}</div>
+                    </div>
+                </div>
+
+                <div class="detailed-stats">
+                    <h3>Подробная статистика</h3>
+                    <div class="stats-list">
+                        <div class="stat-item">
+                            <span class="stat-name">Убийств:</span>
+                            <span class="stat-data">${kills}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-name">Смертей:</span>
+                            <span class="stat-data">${deaths}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-name">Время игры:</span>
+                            <span class="stat-data">${playTimeHours} ч</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-name">Золотых ящиков:</span>
+                            <span class="stat-data">${playerData.caughtGolds || 0}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-name">Кристаллов:</span>
+                            <span class="stat-data">${playerData.earnedCrystals || 0}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-name">Премиум:</span>
+                            <span class="stat-data">${playerData.hasPremium ? 'Да' : 'Нет'}</span>
+                        </div>
+                    </div>
+                </div>
+
+                ${renderTopItems(playerData.turretsPlayed, 'Топ пушки')}
+                ${renderTopItems(playerData.hullsPlayed, 'Топ корпуса')}
+                ${renderTopItems(playerData.resistanceModules, 'Топ модули')}
+            `;
+        }
+
+        // Вспомогательная функция для отрисовки топ-листов
+        function renderTopItems(items, title) {
+            if (!items || items.length === 0) return '';
+            
+            // Сортируем и берем топ-3
+            const sortedItems = [...items].sort((a, b) => b.scoreEarned - a.scoreEarned);
+            const topItems = sortedItems.slice(0, 3);
+            
+            return `
+                <div class="top-section">
+                    <h3>${title}</h3>
+                    <div class="top-items">
+                        ${topItems.map(item => `
+                            <div class="top-item">
+                                <span class="item-name">${item.name}</span>
+                                <span class="item-score">${item.scoreEarned}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Функция для получения названия звания
+        function getRankName(rankId) {
+            const ranks = {
+                1: "Новобранец", 2: "Рядовой", 3: "Ефрейтор", 4: "Капрал",
+                5: "Мастер-капрал", 6: "Сержант", 7: "Штаб-сержант",
+                8: "Мастер-сержант", 9: "Первый сержант", 10: "Сержант-майор",
+                11: "Уорэнт-офицер 1", 12: "Уорэнт-офицер 2", 13: "Уорэнт-офицер 3",
+                14: "Уорэнт-офицер 4", 15: "Уорэнт-офицер 5", 16: "Младший лейтенант",
+                17: "Лейтенант", 18: "Старший лейтенант", 19: "Капитан",
+                20: "Майор", 21: "Подполковник", 22: "Полковник",
+                23: "Бригадир", 24: "Генерал-майор", 25: "Генерал-лейтенант",
+                26: "Генерал", 27: "Маршал", 28: "Фельдмаршал",
+                29: "Командор", 30: "Генералиссимус", 31: "Легенда"
+            };
+            
+            return ranks[rankId] || `Звание ${rankId}`;
+        }
+        
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', () => {
+            // Загружаем профиль если открыта эта страница
+            if (document.getElementById('profile-content').classList.contains('active')) {
+                loadUserProfile();
+            }
+        });
+    </script>
+</body>
+</html>
