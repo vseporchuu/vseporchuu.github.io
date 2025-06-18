@@ -14,12 +14,14 @@
             --accent-gradient: linear-gradient(135deg, #4cc9f0, #4361ee);
             --text-primary: #e0e1dd;
             --text-secondary: #a8b2d1;
-            --card-bg: rgba(26, 39, 59, 0.6);
+            --card-bg: rgba(26, 39, 59, 0.75);
             --menu-height: 60px;
             --mint-light: #a0e8d0;
             --mint-medium: #4db6ac;
             --mint-dark: #00897b;
             --mint-gradient: linear-gradient(135deg, var(--mint-light), var(--mint-dark));
+            --glass-bg: rgba(26, 39, 59, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
         
         * {
@@ -30,10 +32,14 @@
         }
         
         body {
-            background: radial-gradient(circle at top, var(--primary-dark), var(--primary));
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(65, 90, 119, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(77, 182, 172, 0.15) 0%, transparent 40%),
+                linear-gradient(135deg, #0d1b2a, #1b263b);
             color: var(--text-primary);
             min-height: 100vh;
             padding-bottom: var(--menu-height);
+            overflow-x: hidden;
         }
         
         .container {
@@ -43,13 +49,15 @@
         }
         
         header {
-            background: rgba(13, 27, 42, 0.95);
+            background: rgba(13, 27, 42, 0.85);
             padding: 20px 15px;
             text-align: center;
             border-bottom: 1px solid rgba(76, 201, 240, 0.2);
             position: relative;
             overflow: hidden;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
         
         header::before {
@@ -76,6 +84,7 @@
             -webkit-text-fill-color: transparent;
             text-shadow: 0 2px 10px rgba(76, 201, 240, 0.2);
             letter-spacing: 0.5px;
+            font-weight: 700;
         }
         
         .subtitle {
@@ -102,11 +111,12 @@
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
-            background: var(--card-bg);
+            background: var(--glass-bg);
             border-radius: 15px;
-            border: 1px solid rgba(76, 201, 240, 0.15);
+            border: 1px solid var(--glass-border);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             margin-top: 15px;
         }
         
@@ -189,9 +199,11 @@
             background: rgba(13, 27, 42, 0.5);
             border-radius: 15px;
             padding: 25px;
-            border: 1px solid rgba(76, 201, 240, 0.1);
+            border: 1px solid var(--glass-border);
             margin-top: 20px;
             animation: fadeIn 0.5s ease;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
         
         .player-header {
@@ -226,10 +238,12 @@
             border-radius: 12px;
             padding: 20px 15px;
             text-align: center;
-            border: 1px solid rgba(76, 201, 240, 0.1);
+            border: 1px solid var(--glass-border);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
         
         .stat-card:hover {
@@ -265,7 +279,9 @@
             border-radius: 12px;
             padding: 20px;
             margin: 30px 0;
-            border: 1px solid rgba(76, 201, 240, 0.1);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
         
         .detailed-stats h3 {
@@ -318,11 +334,13 @@
             background: rgba(27, 38, 59, 0.7);
             border-radius: 10px;
             padding: 15px;
-            border: 1px solid rgba(76, 201, 240, 0.1);
+            border: 1px solid var(--glass-border);
             display: flex;
             justify-content: space-between;
             align-items: center;
             transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
         
         .top-item:hover {
@@ -374,6 +392,8 @@
             border-radius: 12px;
             padding: 25px;
             text-align: center;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
         
         .error p {
@@ -386,9 +406,11 @@
             border-radius: 15px;
             padding: 25px;
             margin: 20px 0;
-            border: 1px solid rgba(76, 201, 240, 0.1);
+            border: 1px solid var(--glass-border);
             text-align: center;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
         
         .player-card h3 {
@@ -418,16 +440,25 @@
             object-fit: cover;
             background: var(--primary-dark);
             box-shadow: 0 0 20px rgba(77, 182, 172, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--mint-medium);
         }
         
         .profile-name {
             font-size: 1.4rem;
             margin-bottom: 5px;
+            font-weight: 600;
         }
         
         .profile-username {
             color: var(--text-secondary);
             font-size: 1rem;
+            background: rgba(77, 182, 172, 0.15);
+            padding: 4px 12px;
+            border-radius: 20px;
         }
         
         .bind-form {
@@ -443,7 +474,7 @@
             height: var(--menu-height);
             background: rgba(13, 27, 42, 0.95);
             backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(76, 201, 240, 0.2);
+            border-top: 1px solid var(--glass-border);
             display: flex;
             justify-content: space-around;
             z-index: 1000;
@@ -516,12 +547,78 @@
             padding-top: 20px;
             color: var(--text-secondary);
             font-size: 0.9rem;
-            border-top: 1px solid rgba(76, 201, 240, 0.1);
+            border-top: 1px solid var(--glass-border);
+        }
+        
+        /* Particles Background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(76, 201, 240, 0.15);
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(100px) rotate(360deg); opacity: 0; }
+        }
+        
+        /* Profile badges */
+        .badges {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .badge {
+            background: var(--mint-gradient);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        /* Progress bar */
+        .progress-container {
+            width: 100%;
+            background: rgba(13, 27, 42, 0.5);
+            border-radius: 10px;
+            margin: 20px 0;
+            height: 10px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: var(--mint-gradient);
+            border-radius: 10px;
+            width: 65%;
+        }
+        
+        .progress-text {
+            text-align: right;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 5px;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <div class="particles" id="particles"></div>
+    
     <div class="container">
         <header>
             <div class="header-content">
@@ -534,7 +631,7 @@
         <div id="main-content" class="content active">
             <div class="player-card">
                 <h3>Добро пожаловать в Tanki Assistant!</h3>
-                <p>Используйте это приложение для просмотра статистики игроков, чтения новостей и для слежки по событиям по игре Tanki Online.</p>
+                <p>Используйте это приложение для просмотра статистики игроков, чтения новостей и изучения гайдов по игре Tanki Online.</p>
                 <p>Выберите раздел в меню ниже, чтобы начать.</p>
             </div>
             
@@ -542,12 +639,13 @@
                 <h3>Последние обновления</h3>
                 <p>• Добавлен поиск по игровому рейтингу</p>
                 <p>• Обновлена база данных танков</p>
-                <p>• Новый дизайн приложения</p>
-                <p>• Привязка аккаунта Telegram</p>
+                <p>• Новый современный дизайн приложения</p>
+                <p>• Улучшенная привязка аккаунта Telegram</p>
+                <p>• Анимированный фон с частицами</p>
             </div>
         </div>
         
-        <!-- Тут для поиска крч -->
+        <!-- Страница поиска -->
         <div id="search-content" class="content">
             <div class="search-container">
                 <h2 class="section-title">Поиск игрока</h2>
@@ -573,7 +671,7 @@
             </div>
         </div>
         
-        <!-- Сделать -->
+        <!-- Танкофонд -->
         <div id="tankopedia-content" class="content">
             <div class="search-container">
                 <h2 class="section-title">Танкофонд</h2>
@@ -615,12 +713,24 @@
             <div class="search-container">
                 <h2 class="section-title">Мой профиль</h2>
                 
-                <div class="player-card">
+                <div class="player-card" style="background: linear-gradient(135deg, rgba(26, 39, 59, 0.8), rgba(13, 27, 42, 0.8));">
                     <div class="profile-info">
-                        <img id="user-avatar" class="avatar" src="" alt="Avatar">
-                        <div class="profile-name" id="user-name"></div>
-                        <div class="profile-username" id="user-username"></div>
+                        <div id="user-avatar" class="avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="profile-name" id="user-name">Пользователь Telegram</div>
+                        <div class="profile-username" id="user-username">@username</div>
+                        
+                        <div class="badges">
+                            <div class="badge">Новичок</div>
+                            <div class="badge">Игрок</div>
+                        </div>
                     </div>
+                    
+                    <div class="progress-container">
+                        <div class="progress-bar"></div>
+                    </div>
+                    <div class="progress-text">Уровень 5 • 65% до следующего уровня</div>
                     
                     <div class="bind-form">
                         <h3>Привязать аккаунт Tanki Online</h3>
@@ -639,9 +749,10 @@
                     </div>
                     
                     <div id="bound-account" style="display: none; margin-top: 25px;">
-                        <div class="player-card">
+                        <div class="player-card" style="background: rgba(13, 27, 42, 0.5);">
                             <h3>Привязанный аккаунт</h3>
-                            <p>Никнейм: <strong id="saved-nickname"></strong></p>
+                            <p>Никнейм: <strong id="saved-nickname">PlayerNick</strong></p>
+                            <p>Уровень: <strong>15</strong> | Ранг: <strong>Сержант</strong></p>
                             <button id="search-bound-account" class="search-button" style="margin-top: 15px;">
                                 <i class="fas fa-chart-line"></i> Показать мой рейтинг
                             </button>
@@ -652,12 +763,12 @@
         </div>
         
         <div class="footer">
-            <p>47bot Tanki Assistant • v1.1</p>
+            <p>47bot Tanki Assistant • v1.2</p>
             <p>Данные принадлежат Tanki Online</p>
         </div>
     </div>
 
-    <!-- Навигация снизу -->
+    <!-- Bottom Navigation -->
     <div class="bottom-nav">
         <button class="nav-btn active" onclick="showContent('main')">
             <i class="fas fa-home"></i>
@@ -681,6 +792,32 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
         tg.enableClosingConfirmation();
+        
+        // Создание частиц для фона
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 20;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Случайный размер и позиция
+                const size = Math.random() * 15 + 5;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const delay = Math.random() * 15;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
+                
+                container.appendChild(particle);
+            }
+        }
         
         // Показать выбранный контент
         function showContent(contentId) {
@@ -730,20 +867,25 @@
                 document.getElementById('user-name').textContent = 
                     `${user.first_name || ''} ${user.last_name || ''}`.trim() || 'Пользователь Telegram';
                 
-                document.getElementById('user-username').textContent = 
-                    user.username ? `@${user.username}` : '';
+                const usernameEl = document.getElementById('user-username');
+                if (user.username) {
+                    usernameEl.textContent = `@${user.username}`;
+                    usernameEl.style.display = 'block';
+                } else {
+                    usernameEl.style.display = 'none';
+                }
                 
                 // Устанавливаем аватар
                 const avatar = document.getElementById('user-avatar');
                 if (user.photo_url) {
-                    avatar.src = user.photo_url;
+                    avatar.innerHTML = '';
+                    avatar.style.backgroundImage = `url(${user.photo_url})`;
+                    avatar.style.backgroundSize = 'cover';
+                    avatar.style.backgroundPosition = 'center';
                 } else {
                     // Иконка по умолчанию
-                    avatar.style.display = 'flex';
-                    avatar.style.alignItems = 'center';
-                    avatar.style.justifyContent = 'center';
-                    avatar.style.fontSize = '2.5rem';
                     avatar.innerHTML = '<i class="fas fa-user"></i>';
+                    avatar.style.backgroundImage = 'none';
                 }
                 
                 // Проверяем сохраненный никнейм
@@ -764,7 +906,7 @@
         function bindAccount() {
             const nickname = document.getElementById('bind-nickname').value.trim();
             if (!nickname) {
-                alert('Пожалуйста, введите ваш игровой ник');
+                showNotification('Пожалуйста, введите ваш игровой ник', 'error');
                 return;
             }
             
@@ -777,7 +919,7 @@
             document.getElementById('bind-nickname').value = '';
             
             // Показываем уведомление
-            showNotification(`Аккаунт ${nickname} успешно привязан!`);
+            showNotification(`Аккаунт ${nickname} успешно привязан!`, 'success');
         }
         
         function searchBoundAccount() {
@@ -795,7 +937,7 @@
         }
         
         // Показываем уведомление
-        function showNotification(message) {
+        function showNotification(message, type = 'success') {
             const notification = document.createElement('div');
             notification.className = 'player-card';
             notification.style.position = 'fixed';
@@ -806,7 +948,16 @@
             notification.style.width = '90%';
             notification.style.maxWidth = '400px';
             notification.style.animation = 'fadeIn 0.3s ease';
-            notification.innerHTML = `<p>${message}</p>`;
+            
+            if (type === 'error') {
+                notification.style.background = 'rgba(231, 76, 60, 0.2)';
+                notification.style.border = '1px solid rgba(231, 76, 60, 0.3)';
+            } else {
+                notification.style.background = 'rgba(77, 182, 172, 0.2)';
+                notification.style.border = '1px solid rgba(77, 182, 172, 0.3)';
+            }
+            
+            notification.innerHTML = `<p style="text-align: center;">${message}</p>`;
             
             document.body.appendChild(notification);
             
@@ -862,8 +1013,42 @@
             `;
 
             try {
-                const data = await fetchPlayerData(nickname);
-                renderPlayerStats(data, resultsContainer);
+                
+                 const data = await fetchPlayerData(nickname);
+                 renderPlayerStats(data, resultsContainer);
+                
+                // Заглушка для демонстрации
+                setTimeout(() => {
+                    const mockData = {
+                        name: nickname,
+                        rank: 12,
+                        level: 24,
+                        score: 124567,
+                        gearScore: 875,
+                        kills: 3456,
+                        deaths: 1234,
+                        timePlayed: 24560000,
+                        caughtGolds: 56,
+                        earnedCrystals: 12450,
+                        hasPremium: true,
+                        turretsPlayed: [
+                            {name: "Гром", scoreEarned: 45678},
+                            {name: "Огнемёт", scoreEarned: 32456},
+                            {name: "Рельса", scoreEarned: 28765}
+                        ],
+                        hullsPlayed: [
+                            {name: "Хантер", scoreEarned: 56789},
+                            {name: "Викинг", scoreEarned: 43210},
+                            {name: "Титан", scoreEarned: 39876}
+                        ],
+                        resistanceModules: [
+                            {name: "3", scoreEarned: 12345},
+                            {name: "2", scoreEarned: 9876},
+                            {name: "1", scoreEarned: 8765}
+                        ]
+                    };
+                    renderPlayerStats(mockData, resultsContainer);
+                }, 1500);
             } catch (error) {
                 resultsContainer.innerHTML = `
                     <div class="error">
@@ -919,7 +1104,7 @@
                     
                     <div class="stat-card">
                         <div class="stat-label">Очки</div>
-                        <div class="stat-value">${playerData.score}</div>
+                        <div class="stat-value">${playerData.score.toLocaleString()}</div>
                     </div>
                     
                     <div class="stat-card">
@@ -938,11 +1123,11 @@
                     <div class="stats-list">
                         <div class="stat-item">
                             <span class="stat-name">Убийств:</span>
-                            <span class="stat-data">${kills}</span>
+                            <span class="stat-data">${kills.toLocaleString()}</span>
                         </div>
                         <div class="stat-item">
                             <span class="stat-name">Смертей:</span>
-                            <span class="stat-data">${deaths}</span>
+                            <span class="stat-data">${deaths.toLocaleString()}</span>
                         </div>
                         <div class="stat-item">
                             <span class="stat-name">Время игры:</span>
@@ -954,7 +1139,7 @@
                         </div>
                         <div class="stat-item">
                             <span class="stat-name">Кристаллов:</span>
-                            <span class="stat-data">${playerData.earnedCrystals || 0}</span>
+                            <span class="stat-data">${(playerData.earnedCrystals || 0).toLocaleString()}</span>
                         </div>
                         <div class="stat-item">
                             <span class="stat-name">Премиум:</span>
@@ -984,7 +1169,7 @@
                         ${topItems.map(item => `
                             <div class="top-item">
                                 <span class="item-name">${item.name}</span>
-                                <span class="item-score">${item.scoreEarned}</span>
+                                <span class="item-score">${item.scoreEarned.toLocaleString()}</span>
                             </div>
                         `).join('')}
                     </div>
@@ -1012,6 +1197,8 @@
         
         // Инициализация при загрузке
         document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            
             // Загружаем профиль если открыта эта страница
             if (document.getElementById('profile-content').classList.contains('active')) {
                 loadUserProfile();
