@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>47bot - Tanki Online</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
@@ -108,7 +108,7 @@
         }
         
         .search-container {
-            max-width: 600px;
+            max-width: 100%;
             margin: 0 auto;
             padding: 20px;
             background: var(--glass-bg);
@@ -142,8 +142,15 @@
         
         .search-box {
             display: flex;
+            flex-direction: column;
             gap: 12px;
             margin-bottom: 25px;
+        }
+        
+        @media (min-width: 480px) {
+            .search-box {
+                flex-direction: row;
+            }
         }
         
         .search-input {
@@ -156,6 +163,7 @@
             color: var(--text-primary);
             border: 1px solid rgba(76, 201, 240, 0.1);
             transition: all 0.3s ease;
+            width: 100%;
         }
         
         .search-input:focus {
@@ -173,7 +181,7 @@
             color: white;
             border: none;
             border-radius: 10px;
-            padding: 0 25px;
+            padding: 15px 25px;
             cursor: pointer;
             font-size: 1rem;
             font-weight: 500;
@@ -181,8 +189,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            min-width: 120px;
+            width: 100%;
             box-shadow: 0 4px 15px rgba(77, 182, 172, 0.25);
+        }
+        
+        @media (min-width: 480px) {
+            .search-button {
+                width: auto;
+                min-width: 120px;
+            }
         }
         
         .search-button:hover {
@@ -580,6 +595,8 @@
             display: flex;
             gap: 10px;
             margin: 15px 0;
+            justify-content: center;
+            flex-wrap: wrap;
         }
         
         .badge {
@@ -608,10 +625,33 @@
         }
         
         .progress-text {
-            text-align: right;
+            text-align: center;
             font-size: 0.8rem;
             color: var(--text-secondary);
             margin-top: 5px;
+        }
+        
+        /* Responsive fixes */
+        @media (max-width: 480px) {
+            .search-container {
+                padding: 15px;
+            }
+            
+            .player-card {
+                padding: 20px 15px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .detailed-stats {
+                padding: 15px;
+            }
+            
+            .top-items {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -722,15 +762,15 @@
                         <div class="profile-username" id="user-username">@username</div>
                         
                         <div class="badges">
-                            <div class="badge">Новичок</div>
-                            <div class="badge">Игрок</div>
+                            <div class="badge" id="novice-badge">Новичок</div>
+                            <div class="badge" id="player-badge">Игрок</div>
                         </div>
                     </div>
                     
                     <div class="progress-container">
-                        <div class="progress-bar"></div>
+                        <div class="progress-bar" id="level-progress"></div>
                     </div>
-                    <div class="progress-text">Уровень 5 • 65% до следующего уровня</div>
+                    <div class="progress-text" id="level-text">Уровень 1 • 0% до следующего уровня</div>
                     
                     <div class="bind-form">
                         <h3>Привязать аккаунт Tanki Online</h3>
@@ -752,7 +792,7 @@
                         <div class="player-card" style="background: rgba(13, 27, 42, 0.5);">
                             <h3>Привязанный аккаунт</h3>
                             <p>Никнейм: <strong id="saved-nickname">PlayerNick</strong></p>
-                            <p>Уровень: <strong>15</strong> | Ранг: <strong>Сержант</strong></p>
+                            <p>Уровень: <strong id="bound-level">1</strong> | Ранг: <strong id="bound-rank">Новобранец</strong></p>
                             <button id="search-bound-account" class="search-button" style="margin-top: 15px;">
                                 <i class="fas fa-chart-line"></i> Показать мой рейтинг
                             </button>
@@ -893,10 +933,81 @@
                 if (savedNickname) {
                     document.getElementById('saved-nickname').textContent = savedNickname;
                     document.getElementById('bound-account').style.display = 'block';
+                    
+                    // Обновляем уровень и ранг привязанного аккаунта
+                    updateBoundAccountStats(savedNickname);
                 } else {
                     document.getElementById('bound-account').style.display = 'none';
                 }
+                
+                // Обновляем бейджи в зависимости от уровня
+                updateProfileBadges();
             }
+        }
+        
+        // Обновляем статистику привязанного аккаунта
+        function updateBoundAccountStats(nickname) {
+            // Здесь должна быть логика получения данных игрока по нику
+            // Для демонстрации используем случайные значения
+            
+            // Случайный уровень от 1 до 30
+            const level = Math.floor(Math.random() * 30) + 1;
+            // Процент прогресса до следующего уровня
+            const progress = Math.floor(Math.random() * 100);
+            
+            document.getElementById('bound-level').textContent = level;
+            document.getElementById('level-progress').style.width = `${progress}%`;
+            document.getElementById('level-text').textContent = `Уровень ${level} • ${progress}% до следующего уровня`;
+            
+            // Получаем ранг по уровню
+            const rank = getRankByLevel(level);
+            document.getElementById('bound-rank').textContent = rank;
+            
+            // Обновляем бейджи
+            updateProfileBadges(level);
+        }
+        
+        // Получаем ранг по уровню
+        function getRankByLevel(level) {
+            const ranks = [
+                "Новобранец", "Рядовой", "Ефрейтор", "Капрал",
+                "Мастер-капрал", "Сержант", "Штаб-сержант",
+                "Мастер-сержант", "Первый сержант", "Сержант-майор",
+                "Уорэнт-офицер 1", "Уорэнт-офицер 2", "Уорэнт-офицер 3",
+                "Уорэнт-офицер 4", "Уорэнт-офицер 5", "Младший лейтенант",
+                "Лейтенант", "Старший лейтенант", "Капитан",
+                "Майор", "Подполковник", "Полковник",
+                "Бригадир", "Генерал-майор", "Генерал-лейтенант",
+                "Генерал", "Маршал", "Фельдмаршал",
+                "Командор", "Генералиссимус", "Легенда"
+            ];
+            
+            // Каждые 3 уровня - новый ранг
+            const rankIndex = Math.min(Math.floor(level / 3), ranks.length - 1);
+            return ranks[rankIndex];
+        }
+        
+        // Обновляем бейджи профиля
+        function updateProfileBadges(level = 1) {
+            const noviceBadge = document.getElementById('novice-badge');
+            const playerBadge = document.getElementById('player-badge');
+            
+            // Бейдж "Новичок" показываем только если уровень меньше 5
+            if (level < 5) {
+                noviceBadge.style.display = 'block';
+            } else {
+                noviceBadge.style.display = 'none';
+            }
+            
+            // Бейдж "Игрок" показываем если уровень больше 3
+            if (level >= 3) {
+                playerBadge.style.display = 'block';
+            } else {
+                playerBadge.style.display = 'none';
+            }
+            
+            // Можно добавить больше бейджей в зависимости от уровня
+            // Например: Ветеран (level > 15), Эксперт (level > 25) и т.д.
         }
         
         // Привязка игрового аккаунта
@@ -914,6 +1025,9 @@
             localStorage.setItem('tanki_nickname', nickname);
             document.getElementById('saved-nickname').textContent = nickname;
             document.getElementById('bound-account').style.display = 'block';
+            
+            // Обновляем статистику привязанного аккаунта
+            updateBoundAccountStats(nickname);
             
             // Очищаем поле ввода
             document.getElementById('bind-nickname').value = '';
@@ -1013,9 +1127,9 @@
             `;
 
             try {
-                
-                 const data = await fetchPlayerData(nickname);
-                 renderPlayerStats(data, resultsContainer);
+                // Имитация запроса к API (в реальном приложении нужно раскомментировать код ниже)
+                // const data = await fetchPlayerData(nickname);
+                // renderPlayerStats(data, resultsContainer);
                 
                 // Заглушка для демонстрации
                 setTimeout(() => {
@@ -1034,17 +1148,17 @@
                         turretsPlayed: [
                             {name: "Гром", scoreEarned: 45678},
                             {name: "Огнемёт", scoreEarned: 32456},
-                            {name: "Рельса", scoreEarned: 28765}
+                            {name: "Рейлган", scoreEarned: 28765}
                         ],
                         hullsPlayed: [
-                            {name: "Хантер", scoreEarned: 56789},
+                            {name: "Охотник", scoreEarned: 56789},
                             {name: "Викинг", scoreEarned: 43210},
                             {name: "Титан", scoreEarned: 39876}
                         ],
                         resistanceModules: [
-                            {name: "3", scoreEarned: 12345},
-                            {name: "2", scoreEarned: 9876},
-                            {name: "1", scoreEarned: 8765}
+                            {name: "Двойной наномодуль", scoreEarned: 12345},
+                            {name: "Усиленный модуль", scoreEarned: 9876},
+                            {name: "Турбонаддув", scoreEarned: 8765}
                         ]
                     };
                     renderPlayerStats(mockData, resultsContainer);
