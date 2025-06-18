@@ -6,6 +6,7 @@
     <title>47bot - Tanki Online</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
+        /* Все стили остаются без изменений */
         :root {
             --primary-dark: #0d1b2a;
             --primary: #1b263b;
@@ -621,7 +622,6 @@
             height: 100%;
             background: var(--mint-gradient);
             border-radius: 10px;
-            width: 65%;
         }
         
         .progress-text {
@@ -940,74 +940,56 @@
                     document.getElementById('bound-account').style.display = 'none';
                 }
                 
-                // Обновляем бейджи в зависимости от уровня
-                updateProfileBadges();
+                // Загружаем данные из чата
+                loadChatData();
             }
         }
         
         // Обновляем статистику привязанного аккаунта
         function updateBoundAccountStats(nickname) {
-            // Здесь должна быть логика получения данных игрока по нику
-            // Для демонстрации используем случайные значения
-            
-            // Случайный уровень от 1 до 30
-            const level = Math.floor(Math.random() * 30) + 1;
-            // Процент прогресса до следующего уровня
-            const progress = Math.floor(Math.random() * 100);
-            
-            document.getElementById('bound-level').textContent = level;
-            document.getElementById('level-progress').style.width = `${progress}%`;
-            document.getElementById('level-text').textContent = `Уровень ${level} • ${progress}% до следующего уровня`;
-            
-            // Получаем ранг по уровню
-            const rank = getRankByLevel(level);
-            document.getElementById('bound-rank').textContent = rank;
-            
-            // Обновляем бейджи
-            updateProfileBadges(level);
+            // Загружаем данные из Tanki Online API
+            fetchPlayerData(nickname)
+                .then(data => {
+                    document.getElementById('bound-level').textContent = data.level;
+                    document.getElementById('bound-rank').textContent = data.rankName;
+                })
+                .catch(error => {
+                    console.error('Ошибка загрузки данных:', error);
+                });
         }
         
-        // Получаем ранг по уровню
-        function getRankByLevel(level) {
+        // Получаем ранг по уровню (для Tanki Online)
+        function getRankName(rankId) {
+            const ranks = {
+                1: "Новобранец", 2: "Рядовой", 3: "Ефрейтор", 4: "Капрал",
+                5: "Мастер-капрал", 6: "Сержант", 7: "Штаб-сержант",
+                8: "Мастер-сержант", 9: "Первый сержант", 10: "Сержант-майор",
+                11: "Уорэнт-офицер 1", 12: "Уорэнт-офицер 2", 13: "Уорэнт-офицер 3",
+                14: "Уорэнт-офицер 4", 15: "Уорэнт-офицер 5", 16: "Младший лейтенант",
+                17: "Лейтенант", 18: "Старший лейтенант", 19: "Капитан",
+                20: "Майор", 21: "Подполковник", 22: "Полковник",
+                23: "Бригадир", 24: "Генерал-майор", 25: "Генерал-лейтенант",
+                26: "Генерал", 27: "Маршал", 28: "Фельдмаршал",
+                29: "Командор", 30: "Генералиссимус", 31: "Легенда"
+            };
+            
+            return ranks[rankId] || `Звание ${rankId}`;
+        }
+        
+        // Получаем ранг по опыту (для чата)
+        function getRankByExperience(experience) {
             const ranks = [
-                "Новобранец", "Рядовой", "Ефрейтор", "Капрал",
-                "Мастер-капрал", "Сержант", "Штаб-сержант",
-                "Мастер-сержант", "Первый сержант", "Сержант-майор",
-                "Уорэнт-офицер 1", "Уорэнт-офицер 2", "Уорэнт-офицер 3",
-                "Уорэнт-офицер 4", "Уорэнт-офицер 5", "Младший лейтенант",
-                "Лейтенант", "Старший лейтенант", "Капитан",
-                "Майор", "Подполковник", "Полковник",
-                "Бригадир", "Генерал-майор", "Генерал-лейтенант",
-                "Генерал", "Маршал", "Фельдмаршал",
-                "Командор", "Генералиссимус", "Легенда"
+                "Новобранец", "Рядовой", "Ефрейтор", "Капрал", "Мастер-капрал",
+                "Сержант", "Штаб-сержант", "Мастер-сержант", "Первый сержант",
+                "Сержант-майор", "Уорэнт-офицер 1", "Уорэнт-офицер 2", "Уорэнт-офицер 3",
+                "Уорэнт-офицер 4", "Уорэнт-офицер 5", "Младший лейтенант", "Лейтенант",
+                "Старший лейтенант", "Капитан", "Майор", "Подполковник", "Полковник",
+                "Бригадир", "Генерал-майор", "Генерал-лейтенант", "Генерал", "Маршал",
+                "Фельдмаршал", "Командор", "Генералиссимус", "Легенда"
             ];
             
-            // Каждые 3 уровня - новый ранг
-            const rankIndex = Math.min(Math.floor(level / 3), ranks.length - 1);
+            const rankIndex = Math.min(Math.floor(experience / 500), ranks.length - 1);
             return ranks[rankIndex];
-        }
-        
-        // Обновляем бейджи профиля
-        function updateProfileBadges(level = 1) {
-            const noviceBadge = document.getElementById('novice-badge');
-            const playerBadge = document.getElementById('player-badge');
-            
-            // Бейдж "Новичок" показываем только если уровень меньше 5
-            if (level < 5) {
-                noviceBadge.style.display = 'block';
-            } else {
-                noviceBadge.style.display = 'none';
-            }
-            
-            // Бейдж "Игрок" показываем если уровень больше 3
-            if (level >= 3) {
-                playerBadge.style.display = 'block';
-            } else {
-                playerBadge.style.display = 'none';
-            }
-            
-            // Можно добавить больше бейджей в зависимости от уровня
-            // Например: Ветеран (level > 15), Эксперт (level > 25) и т.д.
         }
         
         // Привязка игрового аккаунта
@@ -1109,6 +1091,7 @@
             if (e.key === 'Enter') searchPlayer();
         });
 
+        // Поиск игрока в Tanki Online
         async function searchPlayer() {
             const nickname = document.getElementById('player-search').value.trim();
             const resultsContainer = document.getElementById('search-results');
@@ -1127,87 +1110,88 @@
             `;
 
             try {
-                // Имитация запроса к API (в реальном приложении нужно раскомментировать код ниже)
-                // const data = await fetchPlayerData(nickname);
-                // renderPlayerStats(data, resultsContainer);
-                
-                // Заглушка для демонстрации
-                setTimeout(() => {
-                    const mockData = {
-                        name: nickname,
-                        rank: 12,
-                        level: 24,
-                        score: 124567,
-                        gearScore: 875,
-                        kills: 3456,
-                        deaths: 1234,
-                        timePlayed: 24560000,
-                        caughtGolds: 56,
-                        earnedCrystals: 12450,
-                        hasPremium: true,
-                        turretsPlayed: [
-                            {name: "Гром", scoreEarned: 45678},
-                            {name: "Огнемёт", scoreEarned: 32456},
-                            {name: "Рейлган", scoreEarned: 28765}
-                        ],
-                        hullsPlayed: [
-                            {name: "Охотник", scoreEarned: 56789},
-                            {name: "Викинг", scoreEarned: 43210},
-                            {name: "Титан", scoreEarned: 39876}
-                        ],
-                        resistanceModules: [
-                            {name: "Двойной наномодуль", scoreEarned: 12345},
-                            {name: "Усиленный модуль", scoreEarned: 9876},
-                            {name: "Турбонаддув", scoreEarned: 8765}
-                        ]
-                    };
-                    renderPlayerStats(mockData, resultsContainer);
-                }, 1500);
+                const data = await fetchPlayerData(nickname);
+                renderPlayerStats(data, resultsContainer);
             } catch (error) {
                 resultsContainer.innerHTML = `
                     <div class="error">
-                        <p>Ошибка: ${error.message}</p>
+                        <p>❌ ${error.message}</p>
                         <p>Проверьте правильность ника или попробуйте позже</p>
                     </div>
                 `;
             }
         }
 
-        // Запрос к API Tanki Online
+        // Получение данных игрока из API Tanki Online
         async function fetchPlayerData(nickname) {
             const response = await fetch(`https://ratings.tankionline.com/api/eu/profile/?user=${encodeURIComponent(nickname)}&lang=ru`);
             
             if (response.status === 404) {
-                throw new Error('Игрок не найден');
+                throw new Error('Профиль скрыт или не существует');
             }
             
             if (!response.ok) {
-                throw new Error('Ошибка сервера, попробуйте позже');
+                throw new Error('Ошибка API Tanki Online');
             }
 
             const data = await response.json();
             
             if (!data.response) {
-                throw new Error('Данные об игроке недоступны');
+                throw new Error('Нет данных для этого игрока');
             }
             
-            return data.response;
+            return formatTankiData(data.response);
+        }
+
+        // Форматирование данных из Tanki Online API
+        function formatTankiData(data) {
+            // Расчет K/D
+            const kills = data.kills || 0;
+            const deaths = data.deaths || 1;
+            const kdRatio = (kills / deaths).toFixed(2);
+            
+            // Расчет времени игры (мс → часы)
+            const playTimeHours = (data.timePlayed / 3600000).toFixed(1);
+            
+            // Форматирование топов
+            const formatTop = (items, limit = 3) => {
+                return [...items]
+                    .sort((a, b) => b.scoreEarned - a.scoreEarned)
+                    .slice(0, limit)
+                    .map(item => ({
+                        name: item.name,
+                        score: item.scoreEarned.toLocaleString()
+                    }));
+            };
+
+            return {
+                name: data.name,
+                rank: data.rank,
+                rankName: getRankName(data.rank),
+                level: data.level,
+                score: data.score.toLocaleString(),
+                gearScore: data.gearScore,
+                kills: kills.toLocaleString(),
+                deaths: deaths.toLocaleString(),
+                kdRatio,
+                timePlayed: playTimeHours,
+                caughtGolds: data.caughtGolds || 0,
+                earnedCrystals: (data.earnedCrystals || 0).toLocaleString(),
+                hasPremium: data.hasPremium ? 'Да' : 'Нет',
+                turrets: formatTop(data.turretsPlayed),
+                hulls: formatTop(data.hullsPlayed),
+                modules: formatTop(data.resistanceModules),
+                paints: formatTop(data.paintsPlayed),
+                modes: formatTop(data.modesPlayed)
+            };
         }
 
         // Отрисовка результатов
         function renderPlayerStats(playerData, container) {
-            // Рассчитываем K/D
-            const kills = playerData.kills || 0;
-            const deaths = playerData.deaths || 1;
-            const kdRatio = (kills / deaths).toFixed(2);
-
-            // Форматируем время игры (мс → часы)
-            const playTimeHours = (playerData.timePlayed / 3600000).toFixed(1);
-
             container.innerHTML = `
                 <div class="player-header">
                     <h2 class="player-name">${playerData.name}</h2>
-                    <div class="player-rank">${getRankName(playerData.rank)}</div>
+                    <div class="player-rank">${playerData.rankName}</div>
                 </div>
 
                 <div class="stats-grid">
@@ -1218,12 +1202,12 @@
                     
                     <div class="stat-card">
                         <div class="stat-label">Очки</div>
-                        <div class="stat-value">${playerData.score.toLocaleString()}</div>
+                        <div class="stat-value">${playerData.score}</div>
                     </div>
                     
                     <div class="stat-card">
                         <div class="stat-label">У/П</div>
-                        <div class="stat-value">${kdRatio}</div>
+                        <div class="stat-value">${playerData.kdRatio}</div>
                     </div>
                     
                     <div class="stat-card">
@@ -1237,53 +1221,51 @@
                     <div class="stats-list">
                         <div class="stat-item">
                             <span class="stat-name">Убийств:</span>
-                            <span class="stat-data">${kills.toLocaleString()}</span>
+                            <span class="stat-data">${playerData.kills}</span>
                         </div>
                         <div class="stat-item">
                             <span class="stat-name">Смертей:</span>
-                            <span class="stat-data">${deaths.toLocaleString()}</span>
+                            <span class="stat-data">${playerData.deaths}</span>
                         </div>
                         <div class="stat-item">
                             <span class="stat-name">Время игры:</span>
-                            <span class="stat-data">${playTimeHours} ч</span>
+                            <span class="stat-data">${playerData.timePlayed} ч</span>
                         </div>
                         <div class="stat-item">
                             <span class="stat-name">Золотых ящиков:</span>
-                            <span class="stat-data">${playerData.caughtGolds || 0}</span>
+                            <span class="stat-data">${playerData.caughtGolds}</span>
                         </div>
                         <div class="stat-item">
                             <span class="stat-name">Кристаллов:</span>
-                            <span class="stat-data">${(playerData.earnedCrystals || 0).toLocaleString()}</span>
+                            <span class="stat-data">${playerData.earnedCrystals}</span>
                         </div>
                         <div class="stat-item">
                             <span class="stat-name">Премиум:</span>
-                            <span class="stat-data">${playerData.hasPremium ? 'Да' : 'Нет'}</span>
+                            <span class="stat-data">${playerData.hasPremium}</span>
                         </div>
                     </div>
                 </div>
 
-                ${renderTopItems(playerData.turretsPlayed, 'Топ пушки')}
-                ${renderTopItems(playerData.hullsPlayed, 'Топ корпуса')}
-                ${renderTopItems(playerData.resistanceModules, 'Топ модули')}
+                ${renderTopSection(playerData.turrets, 'Топ пушки')}
+                ${renderTopSection(playerData.hulls, 'Топ корпуса')}
+                ${renderTopSection(playerData.modules, 'Топ модули')}
+                ${renderTopSection(playerData.paints, 'Топ краски')}
+                ${renderTopSection(playerData.modes, 'Топ режимы')}
             `;
         }
 
-        // Вспомогательная функция для отрисовки топ-листов
-        function renderTopItems(items, title) {
+        // Отрисовка топ-секций
+        function renderTopSection(items, title) {
             if (!items || items.length === 0) return '';
-            
-            // Сортируем и берем топ-3
-            const sortedItems = [...items].sort((a, b) => b.scoreEarned - a.scoreEarned);
-            const topItems = sortedItems.slice(0, 3);
             
             return `
                 <div class="top-section">
                     <h3>${title}</h3>
                     <div class="top-items">
-                        ${topItems.map(item => `
+                        ${items.map(item => `
                             <div class="top-item">
                                 <span class="item-name">${item.name}</span>
-                                <span class="item-score">${item.scoreEarned.toLocaleString()}</span>
+                                <span class="item-score">${item.score}</span>
                             </div>
                         `).join('')}
                     </div>
@@ -1291,22 +1273,56 @@
             `;
         }
 
-        // Функция для получения названия звания
-        function getRankName(rankId) {
-            const ranks = {
-                1: "Новобранец", 2: "Рядовой", 3: "Ефрейтор", 4: "Капрал",
-                5: "Мастер-капрал", 6: "Сержант", 7: "Штаб-сержант",
-                8: "Мастер-сержант", 9: "Первый сержант", 10: "Сержант-майор",
-                11: "Уорэнт-офицер 1", 12: "Уорэнт-офицер 2", 13: "Уорэнт-офицер 3",
-                14: "Уорэнт-офицер 4", 15: "Уорэнт-офицер 5", 16: "Младший лейтенант",
-                17: "Лейтенант", 18: "Старший лейтенант", 19: "Капитан",
-                20: "Майор", 21: "Подполковник", 22: "Полковник",
-                23: "Бригадир", 24: "Генерал-майор", 25: "Генерал-лейтенант",
-                26: "Генерал", 27: "Маршал", 28: "Фельдмаршал",
-                29: "Командор", 30: "Генералиссимус", 31: "Легенда"
-            };
+        // Загрузка данных из чата
+        async function loadChatData() {
+            if (!tg.initDataUnsafe.user) return;
             
-            return ranks[rankId] || `Звание ${rankId}`;
+            try {
+                // В реальном приложении замените URL на ваш API
+                const userId = tg.initDataUnsafe.user.id;
+                const response = await fetch(`https://your-bot-api.com/profile?user_id=${userId}`);
+                const profile = await response.json();
+                
+                if (profile && profile.experience !== undefined) {
+                    // Рассчитываем уровень (1 уровень = 100 опыта)
+                    const level = Math.floor(profile.experience / 100);
+                    const progress = profile.experience % 100;
+                    const rank = getRankByExperience(profile.experience);
+                    
+                    // Обновляем прогресс-бар
+                    document.getElementById('level-progress').style.width = `${progress}%`;
+                    document.getElementById('level-text').textContent = 
+                        `Уровень ${level} • ${progress}% до следующего уровня`;
+                    
+                    // Обновляем ранг
+                    document.getElementById('bound-rank').textContent = rank;
+                    
+                    // Обновляем бейджи
+                    updateProfileBadges(level);
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки данных чата:', error);
+            }
+        }
+
+        // Обновляем бейджи профиля
+        function updateProfileBadges(level = 1) {
+            const noviceBadge = document.getElementById('novice-badge');
+            const playerBadge = document.getElementById('player-badge');
+            
+            // Бейдж "Новичок" показываем только если уровень меньше 5
+            if (level < 5) {
+                noviceBadge.style.display = 'block';
+            } else {
+                noviceBadge.style.display = 'none';
+            }
+            
+            // Бейдж "Игрок" показываем если уровень больше 3
+            if (level >= 3) {
+                playerBadge.style.display = 'block';
+            } else {
+                playerBadge.style.display = 'none';
+            }
         }
         
         // Инициализация при загрузке
