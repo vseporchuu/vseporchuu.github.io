@@ -494,7 +494,7 @@
             margin-top: 20px;
         }
         
-        /* Bottom Navigation */
+        /* кнопки навигации */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -579,7 +579,7 @@
             border-top: 1px solid var(--glass-border);
         }
         
-        /* Particles Background */
+        /* партиклы фон */
         .particles {
             position: fixed;
             top: 0;
@@ -604,7 +604,7 @@
             100% { transform: translateY(-100vh) translateX(100px) rotate(360deg); opacity: 0; }
         }
         
-        /* Profile badges */
+        /* проф бейдж */
         .badges {
             display: flex;
             gap: 10px;
@@ -622,7 +622,7 @@
             font-weight: 500;
         }
         
-        /* Progress bar */
+        /* линия опыта */
         .progress-container {
             width: 100%;
             background: rgba(13, 27, 42, 0.5);
@@ -645,7 +645,7 @@
             margin-top: 5px;
         }
         
-        /* Notification */
+        /* уведы */
         .notification {
             position: fixed;
             top: 20px;
@@ -675,7 +675,7 @@
             color: var(--error-color);
         }
         
-        /* Responsive fixes */
+        /* т */
         @media (max-width: 480px) {
             .search-container {
                 padding: 15px;
@@ -729,7 +729,7 @@
             </div>
         </div>
         
-        <!-- Страница поиска -->
+        <!-- поиск -->
         <div id="search-content" class="content">
             <div class="search-container">
                 <h2 class="section-title">Поиск игрока</h2>
@@ -755,10 +755,10 @@
             </div>
         </div>
         
-        <!-- Танкофонд -->
+        <!-- кнпк выбор -->
         <div id="tankopedia-content" class="content">
             <div class="search-container">
-                <h2 class="section-title">Танкофонд</h2>
+                <h2 class="section-title">Дополнительно</h2>
                 <div class="player-card">
                     <h3>Игровые ресурсы</h3>
                     <p>Выберите категорию для просмотра информации:</p>
@@ -852,7 +852,7 @@
         </div>
     </div>
 
-    <!-- Bottom Navigation -->
+    <!-- навиг2 -->
     <div class="bottom-nav">
         <button class="nav-btn active" onclick="showContent('main')">
             <i class="fas fa-home"></i>
@@ -903,9 +903,9 @@
             }
         }
         
-        // Показать выбранный контент
+        // Показать контент
         function showContent(contentId) {
-            // Скрыть все разделы
+            // Скрыть все
             document.querySelectorAll('.content').forEach(el => {
                 el.classList.remove('active');
             });
@@ -919,7 +919,7 @@
             });
             document.querySelectorAll('.nav-btn')[getNavIndex(contentId)].classList.add('active');
             
-            // Если открыли поиск - фокус на поле ввода
+            // Если открыли поиск - фокус на поле
             if (contentId === 'search') {
                 setTimeout(() => {
                     document.getElementById('player-search').focus();
@@ -992,7 +992,7 @@
         // Обновляем статистику привязанного аккаунта
         function updateBoundAccountStats(nickname) {
             // Здесь должна быть логика получения данных игрока по нику
-            // Для демонстрации используем случайные значения
+            // рандом значеения для теста
             
             // Случайный уровень от 1 до 30
             const level = Math.floor(Math.random() * 30) + 1;
@@ -1026,7 +1026,7 @@
                 "Командор", "Генералиссимус", "Легенда"
             ];
             
-            // Каждые 3 уровня - новый ранг
+            // Каждые 3 уровня - новый ранг (для теста - исправить)
             const rankIndex = Math.min(Math.floor(level / 3), ranks.length - 1);
             return ranks[rankIndex];
         }
@@ -1107,7 +1107,7 @@
             }, 2000);
         }
         
-        // Танкофонд
+        // Категории
         function showTankCategory(category) {
             const categoryContent = document.getElementById('tank-category-content');
             const categoryTitle = document.getElementById('category-title');
