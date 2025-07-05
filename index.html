@@ -1,1622 +1,555 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>47bot - Tanki Online</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solo Leveling</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
-            --primary-dark: #0d1b2a;
-            --primary: #1b263b;
-            --secondary: #415a77;
-            --accent: #4cc9f0;
-            --accent-gradient: linear-gradient(135deg, #4cc9f0, #4361ee);
-            --text-primary: #e0e1dd;
-            --text-secondary: #a8b2d1;
-            --card-bg: rgba(26, 39, 59, 0.75);
-            --menu-height: 60px;
-            --mint-light: #a0e8d0;
-            --mint-medium: #4db6ac;
-            --mint-dark: #00897b;
-            --mint-gradient: linear-gradient(135deg, var(--mint-light), var(--mint-dark));
-            --glass-bg: rgba(26, 39, 59, 0.6);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --error-color: #ff6b6b;
-            --success-color: #4db6ac;
-            --cyber-color: #ff00c8;
-            --news-color: #4d9aff;
-            --chat-color: #9d4dff;
-            --tankopedia-color: #4dffb8;
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #222;
+            --bg-tertiary: #2a2a2a;
+            --bg-surface: #333;
+            --accent-primary: #ff6b00;
+            --accent-secondary: #ff3c00;
+            --text-primary: #ffffff;
+            --text-secondary: #aaa;
+            --text-accent: #ffd700;
+            --border-color: #333;
         }
-        
+
+        [data-theme="light"] {
+            --bg-primary: #f5f5f5;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f0f0f0;
+            --bg-surface: #e0e0e0;
+            --accent-primary: #ff6b00;
+            --accent-secondary: #ff3c00;
+            --text-primary: #000000;
+            --text-secondary: #555;
+            --text-accent: #d4af37;
+            --border-color: #ddd;
+        }
+
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
         }
         
         body {
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(65, 90, 119, 0.2) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(77, 182, 172, 0.15) 0%, transparent 40%),
-                linear-gradient(135deg, #0d1b2a, #1b263b);
+            background-color: var(--bg-primary);
             color: var(--text-primary);
-            min-height: 100vh;
-            padding-bottom: var(--menu-height);
-            overflow-x: hidden;
+            line-height: 1.6;
+            padding: 15px;
         }
         
         .container {
-            max-width: 100%;
-            padding: 0 15px;
-            padding-bottom: 20px;
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         
         header {
-            background: rgba(13, 27, 42, 0.85);
-            padding: 20px 15px;
-            text-align: center;
-            border-bottom: 1px solid rgba(76, 201, 240, 0.2);
             position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            height: 180px;
+            background: linear-gradient(to bottom, var(--accent-primary), var(--accent-secondary));
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
         }
         
-        header::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, rgba(65, 90, 119, 0.3) 0%, rgba(13, 27, 42, 0) 70%);
-            z-index: 0;
-        }
-        
-        .header-content {
-            position: relative;
-            z-index: 1;
-        }
-        
-        h1 {
-            font-size: 1.8rem;
-            margin-bottom: 5px;
-            background: var(--mint-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 2px 10px rgba(76, 201, 240, 0.2);
-            letter-spacing: 0.5px;
+        .title {
+            font-size: 24px;
             font-weight: 700;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
         
         .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .rating {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.4);
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        
+        .rating-star {
+            color: var(--text-accent);
+            margin-right: 5px;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            background: var(--bg-tertiary);
+            padding: 0 15px;
+        }
+        
+        .tab {
+            padding: 15px 20px;
+            font-weight: 600;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
             color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin-top: 5px;
         }
         
-        .content {
-            display: none;
-            animation: fadeIn 0.5s ease;
+        .tab.active {
+            border-bottom: 3px solid var(--accent-primary);
+            color: var(--accent-primary);
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .content.active {
-            display: block;
-        }
-        
-        .search-container {
-            max-width: 100%;
-            margin: 0 auto;
+        .content-section {
             padding: 20px;
-            background: var(--glass-bg);
-            border-radius: 15px;
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            margin-top: 15px;
+            border-bottom: 1px solid var(--border-color);
         }
         
         .section-title {
-            text-align: center;
-            margin-bottom: 25px;
-            font-size: 1.5rem;
-            color: var(--mint-medium);
-            position: relative;
-            padding-bottom: 10px;
-        }
-        
-        .section-title::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--mint-medium), transparent);
-        }
-        
-        .search-box {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 25px;
-        }
-        
-        @media (min-width: 480px) {
-            .search-box {
-                flex-direction: row;
-            }
-        }
-        
-        .search-input {
-            flex: 1;
-            padding: 15px 20px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            background: rgba(13, 27, 42, 0.7);
-            color: var(--text-primary);
-            border: 1px solid rgba(76, 201, 240, 0.1);
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-        
-        .search-input:focus {
-            outline: none;
-            border-color: var(--mint-medium);
-            box-shadow: 0 0 0 2px rgba(77, 182, 172, 0.3);
-        }
-        
-        .search-input::placeholder {
-            color: var(--text-secondary);
-        }
-        
-        .search-button {
-            background: var(--mint-gradient);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            padding: 15px 25px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            box-shadow: 0 4px 15px rgba(77, 182, 172, 0.25);
-        }
-        
-        @media (min-width: 480px) {
-            .search-button {
-                width: auto;
-                min-width: 120px;
-            }
-        }
-        
-        .search-button:hover {
-            background: linear-gradient(135deg, #7fd9c7, #00897b);
-            transform: translateY(-2px);
-            box-shadow: 0 7px 20px rgba(77, 182, 172, 0.4);
-        }
-        
-        .search-button i {
-            margin-right: 8px;
-        }
-        
-        .results-container {
-            background: rgba(13, 27, 42, 0.5);
-            border-radius: 15px;
-            padding: 25px;
-            border: 1px solid var(--glass-border);
-            margin-top: 20px;
-            animation: fadeIn 0.5s ease;
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-        }
-        
-        .player-header {
-            text-align: center;
-            margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(76, 201, 240, 0.1);
-        }
-        
-        .player-name {
-            font-size: 1.8rem;
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: var(--mint-medium);
-        }
-        
-        .player-rank {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            margin-top: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        
-        .rank-icon {
-            width: 24px;
-            height: 24px;
-            object-fit: contain;
-        }
-        
-        .premium-badge {
-            background: linear-gradient(135deg, #ffd700, #ff9800);
-            color: #0d1b2a;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            margin-top: 8px;
-            display: inline-block;
-            box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
-        }
-        
-        .special-roles {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-            margin: 15px 0;
-        }
-        
-        .role-badge {
-            background: linear-gradient(135deg, var(--cyber-color), #b30086);
-            color: white;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .role-badge.helper {
-            background: linear-gradient(135deg, #4d9aff, #0051b3);
-        }
-        
-        .role-badge.admin {
-            background: linear-gradient(135deg, #ff4d4d, #b30000);
-        }
-        
-        .role-badge.cybersport {
-            background: linear-gradient(135deg, var(--cyber-color), #b30086);
-        }
-        
-        .role-badge.champion {
-            background: linear-gradient(135deg, #ffd700, #ff9800);
-        }
-        
-        .role-badge.bronze {
-            background: linear-gradient(135deg, #cd7f32, #8b4513);
-        }
-        
-        .role-badge.silver {
-            background: linear-gradient(135deg, #c0c0c0, #808080);
-        }
-        
-        .role-badge.youtube {
-            background: linear-gradient(135deg, #ff0000, #b30000);
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 15px;
-            margin: 25px 0;
-        }
-        
-        .stat-card {
-            background: rgba(27, 38, 59, 0.7);
-            border-radius: 12px;
-            padding: 20px 15px;
-            text-align: center;
-            border: 1px solid var(--glass-border);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(77, 182, 172, 0.3);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-        }
-        
-        .stat-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--mint-gradient);
-        }
-        
-        .stat-label {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            margin-bottom: 8px;
-        }
-        
-        .stat-value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-        
-        .detailed-stats {
-            background: rgba(27, 38, 59, 0.7);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 30px 0;
-            border: 1px solid var(--glass-border);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-        }
-        
-        .detailed-stats h3 {
-            color: var(--mint-medium);
+            font-size: 18px;
             margin-bottom: 15px;
-            font-size: 1.3rem;
-        }
-        
-        .stats-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-        }
-        
-        .stat-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(76, 201, 240, 0.05);
-        }
-        
-        .stat-name {
-            color: var(--text-secondary);
-        }
-        
-        .stat-data {
-            font-weight: 500;
-            color: var(--text-primary);
-        }
-        
-        .top-section {
-            margin-top: 35px;
-        }
-        
-        .top-section h3 {
-            color: var(--mint-medium);
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(76, 201, 240, 0.1);
-        }
-        
-        .top-items {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-        }
-        
-        .top-item {
-            background: rgba(27, 38, 59, 0.7);
-            border-radius: 10px;
-            padding: 15px;
-            border: 1px solid var(--glass-border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-        }
-        
-        .top-item:hover {
-            transform: translateY(-3px);
-            border-color: rgba(77, 182, 172, 0.3);
-        }
-        
-        .item-name {
-            font-weight: 500;
-            color: var(--text-primary);
+            color: var(--accent-primary);
             display: flex;
             align-items: center;
-            gap: 8px;
-        }
-        
-        .item-icon {
-            width: 24px;
-            height: 24px;
-            object-fit: contain;
-        }
-        
-        .item-score {
-            background: var(--mint-medium);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-        
-        .loading {
-            text-align: center;
-            padding: 40px 20px;
-        }
-        
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid rgba(65, 90, 119, 0.3);
-            border-top-color: var(--mint-medium);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        .loading p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-        }
-        
-        .error {
-            background: rgba(231, 76, 60, 0.15);
-            border: 1px solid rgba(231, 76, 60, 0.3);
-            border-radius: 12px;
-            padding: 25px;
-            text-align: center;
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-        }
-        
-        .error p {
-            margin-bottom: 10px;
-            color: var(--error-color);
-        }
-        
-        .player-card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 25px;
-            margin: 20px 0;
-            border: 1px solid var(--glass-border);
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-        
-        .player-card h3 {
-            color: var(--mint-medium);
-            margin-bottom: 15px;
-            font-size: 1.4rem;
-        }
-        
-        .player-card p {
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-        
-        .profile-info {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-        
-        .avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            border: 3px solid var(--mint-medium);
-            margin-bottom: 15px;
-            object-fit: cover;
-            background: var(--primary-dark);
-            box-shadow: 0 0 20px rgba(77, 182, 172, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            color: var(--mint-medium);
-        }
-        
-        .profile-name {
-            font-size: 1.4rem;
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-        
-        .profile-username {
-            color: var(--text-secondary);
-            font-size: 1rem;
-            background: rgba(77, 182, 172, 0.15);
-            padding: 4px 12px;
-            border-radius: 20px;
-        }
-        
-        .bind-form {
-            margin-top: 20px;
-        }
-        
-        /* Bottom Navigation */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: var(--menu-height);
-            background: rgba(13, 27, 42, 0.95);
-            backdrop-filter: blur(10px);
-            border-top: 1px solid var(--glass-border);
-            display: flex;
-            justify-content: space-around;
-            z-index: 1000;
-            box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.2);
-        }
-        
-        .nav-btn {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 8px 0;
-            background: transparent;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        
-        .nav-btn.active {
-            color: var(--mint-medium);
-        }
-        
-        .nav-btn i {
-            font-size: 1.2rem;
-            margin-bottom: 4px;
-            transition: all 0.3s ease;
-        }
-        
-        .nav-btn.active i {
-            color: var(--mint-medium);
-            text-shadow: 0 0 10px rgba(77, 182, 172, 0.5);
-        }
-        
-        .nav-btn:hover {
-            color: var(--mint-medium);
-        }
-        
-        .nav-btn:hover i {
-            transform: translateY(-3px);
-        }
-
-        /* Tooltip */
-        .tooltip {
-            position: absolute;
-            top: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            white-space: nowrap;
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
-        }
-
-        .nav-btn:hover .tooltip {
-            opacity: 1;
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            border-top: 1px solid var(--glass-border);
-        }
-        
-        /* Particles Background */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
-        
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(76, 201, 240, 0.15);
-            animation: float 15s infinite linear;
-        }
-        
-        @keyframes float {
-            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100vh) translateX(100px) rotate(360deg); opacity: 0; }
-        }
-        
-        /* Profile badges */
-        .badges {
-            display: flex;
-            gap: 10px;
-            margin: 15px 0;
-            justify-content: center;
-            flex-wrap: wrap;
         }
         
         .badge {
-            background: var(--mint-gradient);
-            color: white;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
+            background: var(--accent-primary);
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 10px;
         }
         
-        /* Progress bar */
-        .progress-container {
-            width: 100%;
-            background: rgba(13, 27, 42, 0.5);
-            border-radius: 10px;
-            margin: 20px 0;
-            height: 10px;
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
         }
         
-        .progress-bar {
-            height: 100%;
-            background: var(--mint-gradient);
-            border-radius: 10px;
-            width: 65%;
+        .info-item {
+            background: var(--bg-surface);
+            padding: 10px;
+            border-radius: 8px;
         }
         
-        .progress-text {
-            text-align: center;
-            font-size: 0.8rem;
+        .info-label {
+            font-size: 12px;
             color: var(--text-secondary);
-            margin-top: 5px;
+            margin-bottom: 5px;
         }
         
-        /* Notification */
-        .notification {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            width: 90%;
-            max-width: 400px;
-            animation: fadeIn 0.3s ease;
-            border-radius: 12px;
+        .info-value {
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .watch-button {
+            display: block;
+            width: 100%;
             padding: 15px;
+            background: var(--accent-primary);
+            color: white;
             text-align: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            border-radius: 8px;
+            font-weight: 700;
+            margin-top: 20px;
+            text-decoration: none;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
         }
         
-        .notification.success {
-            background: rgba(77, 182, 172, 0.2);
-            border: 1px solid rgba(77, 182, 172, 0.3);
-            color: var(--success-color);
+        .watch-button:hover {
+            background: #e55a00;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
         
-        .notification.error {
-            background: rgba(231, 76, 60, 0.2);
-            border: 1px solid rgba(231, 76, 60, 0.3);
-            color: var(--error-color);
+        .comments-section {
+            padding: 20px;
         }
         
-        /* Category colors */
-        .category-tankopedia {
-            border-left: 4px solid var(--tankopedia-color);
+        .comment {
+            display: flex;
+            margin-bottom: 20px;
         }
         
-        .category-news {
-            border-left: 4px solid var(--news-color);
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-surface);
+            margin-right: 12px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--text-secondary);
         }
         
-        .category-cybersport {
-            border-left: 4px solid var(--cyber-color);
+        .comment-content {
+            flex-grow: 1;
         }
         
-        .category-chat {
-            border-left: 4px solid var(--chat-color);
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
         }
         
-        /* Responsive fixes */
-        @media (max-width: 480px) {
-            .search-container {
-                padding: 15px;
-            }
-            
-            .player-card {
-                padding: 20px 15px;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            
-            .detailed-stats {
-                padding: 15px;
-            }
-            
-            .top-items {
-                grid-template-columns: 1fr;
-            }
+        .username {
+            font-weight: 600;
+            color: var(--accent-primary);
+        }
+        
+        .timestamp {
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+        
+        .comment-text {
+            background: var(--bg-tertiary);
+            padding: 12px;
+            border-radius: 8px;
+            color: var(--text-primary);
+        }
+        
+        .reply-link {
+            color: var(--accent-primary);
+            font-size: 13px;
+            margin-top: 5px;
+            display: inline-block;
+            text-decoration: none;
+        }
+        
+        .rating-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 25px 20px;
+        }
+        
+        .rating-value {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--text-accent);
+            margin-bottom: 15px;
+        }
+        
+        .rating-stars {
+            display: flex;
+            gap: 3px;
+            margin-bottom: 20px;
+        }
+        
+        .rating-star.large {
+            font-size: 28px;
+        }
+        
+        .rating-count {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .rating-bar {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+        }
+        
+        .bar-label {
+            width: 30px;
+            text-align: center;
+        }
+        
+        .bar {
+            flex-grow: 1;
+            height: 8px;
+            background: var(--bg-surface);
+            border-radius: 4px;
+            margin: 0 15px;
+            overflow: hidden;
+        }
+        
+        .bar-fill {
+            height: 100%;
+            background: var(--text-accent);
+        }
+        
+        .bar-percent {
+            width: 40px;
+            text-align: right;
+        }
+        
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="particles" id="particles"></div>
-    
     <div class="container">
         <header>
-            <div class="header-content">
-                <h1>47bot</h1>
-                <p class="subtitle">Tanki Online Assistant</p>
+            <div class="rating">
+                <span class="rating-star">★</span> 9.2
             </div>
+            <h1 class="title">Поднятие уровня в одиночку</h1>
+            <div class="subtitle">2024 - Solo Leveling</div>
         </header>
         
-        <!-- Главная страница -->
-        <div id="main-content" class="content active">
-            <div class="player-card">
-                <h3>Добро пожаловать в Tanki Assistant!</h3>
-                <p>Используйте это приложение для просмотра статистики игроков, чтения новостей и изучения гайдов по игре Tanki Online.</p>
-                <p>Выберите раздел в меню ниже, чтобы начать.</p>
-            </div>
-            
-            <div class="player-card">
-                <h3>Последние обновления</h3>
-                <p>• Добавлен поиск по игровому рейтингу</p>
-                <p>• Обновлена база данных танков</p>
-                <p>• Новый современный дизайн приложения</p>
-                <p>• Улучшенная привязка аккаунта Telegram</p>
-                <p>• Анимированный фон с частицами</p>
-            </div>
+        <div class="nav-tabs">
+            <div class="tab active" onclick="showTab('general')">Общее</div>
+            <div class="tab" onclick="showTab('rating')">Рейтинг</div>
+            <div class="tab" onclick="showTab('comments')">Комментарии</div>
         </div>
         
-        <!-- Страница поиска -->
-        <div id="search-content" class="content">
-            <div class="search-container">
-                <h2 class="section-title">Поиск игрока</h2>
-                
-                <div class="search-box">
-                    <input 
-                        type="text" 
-                        id="player-search" 
-                        class="search-input" 
-                        placeholder="Введите ник игрока"
-                        autocomplete="off"
-                    >
-                    <button id="search-btn" class="search-button">
-                        <i class="fas fa-search"></i> Поиск
-                    </button>
+        <div id="general-content" class="content">
+            <div class="content-section">
+                <div class="section-title">
+                    Серий: 12 из 12
+                    <span class="badge">Завершен</span>
                 </div>
                 
-                <div id="search-results" class="results-container">
-                    <p style="text-align: center; color: var(--text-secondary);">
-                        Введите ник игрока для просмотра статистики
-                    </p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Категории -->
-        <div id="categories-content" class="content">
-            <div class="search-container">
-                <h2 class="section-title">Категории</h2>
-                <div class="player-card">
-                    <h3>Игровые ресурсы</h3>
-                    <p>Выберите категорию для просмотра информации:</p>
-                    
-                    <div class="stats-grid" style="margin-top: 25px;">
-                        <div class="stat-card category-tankopedia" onclick="showCategory('tankopedia')">
-                            <i class="fas fa-tank" style="font-size: 2rem; margin-bottom: 15px; color: var(--tankopedia-color);"></i>
-                            <div class="stat-label">Танкофонд</div>
-                        </div>
-                        <div class="stat-card category-news" onclick="showCategory('news')">
-                            <i class="fas fa-newspaper" style="font-size: 2rem; margin-bottom: 15px; color: var(--news-color);"></i>
-                            <div class="stat-label">Новости</div>
-                        </div>
-                        <div class="stat-card category-cybersport" onclick="showCategory('cybersport')">
-                            <i class="fas fa-trophy" style="font-size: 2rem; margin-bottom: 15px; color: var(--cyber-color);"></i>
-                            <div class="stat-label">Киберспорт</div>
-                        </div>
-                        <div class="stat-card category-chat" onclick="showCategory('chat')">
-                            <i class="fas fa-comments" style="font-size: 2rem; margin-bottom: 15px; color: var(--chat-color);"></i>
-                            <div class="stat-label">Чат</div>
-                        </div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Жанры</div>
+                        <div class="info-value">Экшен, Приключение, Фэнтези</div>
                     </div>
-                    
-                    <div id="category-content" style="display: none; margin-top: 30px;">
-                        <div class="player-card">
-                            <h3 id="category-title">Танкофонд</h3>
-                            <div id="category-description"></div>
-                        </div>
+                    <div class="info-item">
+                        <div class="info-label">Сезон</div>
+                        <div class="info-value">Зима 2024</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Озвучивали</div>
+                        <div class="info-value">Emiliar, Kito, Hivoniko...</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Тайминг</div>
+                        <div class="info-value">GWUNDEADE</div>
                     </div>
                 </div>
-            </div>
-        </div>
-        
-        <!-- Профиль -->
-        <div id="profile-content" class="content">
-            <div class="search-container">
-                <h2 class="section-title">Мой профиль</h2>
                 
-                <div class="player-card" style="background: linear-gradient(135deg, rgba(26, 39, 59, 0.8), rgba(13, 27, 42, 0.8));">
-                    <div class="profile-info">
-                        <div id="user-avatar" class="avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="profile-name" id="user-name">Пользователь Telegram</div>
-                        <div class="profile-username" id="user-username">@username</div>
-                        
-                        <div class="badges">
-                            <div class="badge" id="novice-badge">Новичок</div>
-                            <div class="badge" id="player-badge">Игрок</div>
-                        </div>
+                <div class="content-section" style="padding: 20px 0;">
+                    <div class="info-label">Описание</div>
+                    <div class="info-value">
+                        Десять лет назад распахнулись врата нашего мира с миром монстров. После этого некоторым смертным был дан дар уничтожать монстров внутри Врат. Таких...
                     </div>
-                    
-                    <div class="progress-container">
-                        <div class="progress-bar" id="level-progress"></div>
+                </div>
+                
+                <button class="watch-button" onclick="watchAnime()">Смотреть</button>
+            </div>
+        </div>
+        
+        <div id="rating-content" class="content" style="display:none;">
+            <div class="rating-section">
+                <div class="rating-value">4.9</div>
+                <div class="rating-stars">
+                    <span class="rating-star large">★</span>
+                    <span class="rating-star large">★</span>
+                    <span class="rating-star large">★</span>
+                    <span class="rating-star large">★</span>
+                    <span class="rating-star large">★</span>
+                </div>
+                <div class="rating-count">123 голоса</div>
+                
+                <div class="rating-bar">
+                    <div class="bar-label">5</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 85%"></div>
                     </div>
-                    <div class="progress-text" id="level-text">Уровень 1 • 0% до следующего уровня</div>
-                    
-                    <div class="bind-form">
-                        <h3>Привязать аккаунт Tanki Online</h3>
-                        <div class="search-box" style="margin-top: 20px;">
-                            <input 
-                                type="text" 
-                                id="bind-nickname" 
-                                class="search-input" 
-                                placeholder="Введите ваш игровой ник"
-                                autocomplete="off"
-                            >
-                            <button id="bind-btn" class="search-button">
-                                <i class="fas fa-link"></i> Привязать
-                            </button>
-                        </div>
+                    <div class="bar-percent">85%</div>
+                </div>
+                
+                <div class="rating-bar">
+                    <div class="bar-label">4</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 12%"></div>
                     </div>
-                    
-                    <div id="bound-account" style="display: none; margin-top: 25px;">
-                        <div class="player-card" style="background: rgba(13, 27, 42, 0.5);">
-                            <h3>Привязанный аккаунт</h3>
-                            <p>Никнейм: <strong id="saved-nickname">PlayerNick</strong></p>
-                            <p>Уровень: <strong id="bound-level">1</strong> | Ранг: <strong id="bound-rank">Новобранец</strong></p>
-                            <button id="search-bound-account" class="search-button" style="margin-top: 15px;">
-                                <i class="fas fa-chart-line"></i> Показать мой рейтинг
-                            </button>
-                        </div>
+                    <div class="bar-percent">12%</div>
+                </div>
+                
+                <div class="rating-bar">
+                    <div class="bar-label">3</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 2%"></div>
                     </div>
+                    <div class="bar-percent">2%</div>
+                </div>
+                
+                <div class="rating-bar">
+                    <div class="bar-label">2</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 1%"></div>
+                    </div>
+                    <div class="bar-percent">1%</div>
+                </div>
+                
+                <div class="rating-bar">
+                    <div class="bar-label">1</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0%"></div>
+                    </div>
+                    <div class="bar-percent">0%</div>
                 </div>
             </div>
         </div>
         
-        <div class="footer">
-            <p>47bot Tanki Assistant • v1.3</p>
-            <p>Данные принадлежат Tanki Online</p>
+        <div id="comments-content" class="content" style="display:none;">
+            <div class="comments-section">
+                <div class="comment">
+                    <div class="avatar">F</div>
+                    <div class="comment-content">
+                        <div class="comment-header">
+                            <div class="username">fanat loley</div>
+                            <div class="timestamp">сегодня в 12:34</div>
+                        </div>
+                        <div class="comment-text">
+                            блин, опять без лодей
+                        </div>
+                        <a href="#" class="reply-link">ответить</a>
+                    </div>
+                </div>
+                
+                <div class="comment">
+                    <div class="avatar">K</div>
+                    <div class="comment-content">
+                        <div class="comment-header">
+                            <div class="username">kozrhik</div>
+                            <div class="timestamp">сегодня в 03:34</div>
+                        </div>
+                        <div class="comment-text">
+                            зачем я включил это? Я не смотрю такое!<br>удалите это, пожалуйста!
+                        </div>
+                        <a href="#" class="reply-link">ответить</a>
+                    </div>
+                </div>
+                
+                <div class="comment">
+                    <div class="avatar">L</div>
+                    <div class="comment-content">
+                        <div class="comment-header">
+                            <div class="username">Lzvsky</div>
+                            <div class="timestamp">вчера в 23:59</div>
+                        </div>
+                        <div class="comment-text">
+                            пойду в танки поиграю, норм
+                        </div>
+                        <a href="#" class="reply-link">ответить</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Bottom Navigation -->
-    <div class="bottom-nav">
-        <button class="nav-btn active" onclick="showContent('main')">
-            <i class="fas fa-home"></i>
-            <div class="tooltip">Главная</div>
-        </button>
-        <button class="nav-btn" onclick="showContent('search')">
-            <i class="fas fa-search"></i>
-            <div class="tooltip">Поиск</div>
-        </button>
-        <button class="nav-btn" onclick="showContent('categories')">
-            <i class="fas fa-th-large"></i>
-            <div class="tooltip">Категории</div>
-        </button>
-        <button class="nav-btn" onclick="showContent('profile')">
-            <i class="fas fa-user"></i>
-            <div class="tooltip">Профиль</div>
-        </button>
+    <div class="theme-toggle" onclick="toggleTheme()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 2V4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 20V22" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M4.93 4.93L6.34 6.34" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M17.66 17.66L19.07 19.07" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 12H4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M20 12H22" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6.34 17.66L4.93 19.07" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M19.07 4.93L17.66 6.34" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
     </div>
 
     <script>
+        // Инициализация Telegram Web App
         const tg = window.Telegram.WebApp;
+        
+        // Автоматическое раскрытие на весь экран
         tg.expand();
-        tg.enableClosingConfirmation();
         
-        // Иконки званий
-        const rankIcons = {
-            1: "https://ratings.tankionline.com/static/img/ranks/1.png",
-            5: "https://ratings.tankionline.com/static/img/ranks/5.png",
-            10: "https://ratings.tankionline.com/static/img/ranks/10.png",
-            15: "https://ratings.tankionline.com/static/img/ranks/15.png",
-            20: "https://ratings.tankionline.com/static/img/ranks/20.png",
-            25: "https://ratings.tankionline.com/static/img/ranks/25.png",
-            30: "https://ratings.tankionline.com/static/img/ranks/30.png"
-        };
-        
-        // Иконки предметов
-        const itemIcons = {
-            "Гром": "https://ratings.tankionline.com/static/img/turrets/thunder.png",
-            "Огнемёт": "https://ratings.tankionline.com/static/img/turrets/firebird.png",
-            "Рейлган": "https://ratings.tankionline.com/static/img/turrets/railgun.png",
-            "Охотник": "https://ratings.tankionline.com/static/img/hulls/hunter.png",
-            "Викинг": "https://ratings.tankionline.com/static/img/hulls/viking.png",
-            "Титан": "https://ratings.tankionline.com/static/img/hulls/titan.png",
-            "Двойной наномодуль": "https://ratings.tankionline.com/static/img/resistance-modules/double-armor.png",
-            "Усиленный модуль": "https://ratings.tankionline.com/static/img/resistance-modules/strengthened-armor.png",
-            "Турбонаддув": "https://ratings.tankionline.com/static/img/resistance-modules/turbo.png"
-        };
-        
-        // Создание частиц для фона
-        function createParticles() {
-            const container = document.getElementById('particles');
-            const particleCount = 20;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                
-                // Случайный размер и позиция
-                const size = Math.random() * 15 + 5;
-                const posX = Math.random() * 100;
-                const posY = Math.random() * 100;
-                const delay = Math.random() * 15;
-                
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                particle.style.left = `${posX}%`;
-                particle.style.top = `${posY}%`;
-                particle.style.animationDelay = `${delay}s`;
-                particle.style.opacity = Math.random() * 0.5 + 0.1;
-                
-                container.appendChild(particle);
-            }
+        // Применение цветовой схемы Telegram
+        function applyTheme() {
+            document.documentElement.setAttribute(
+                'data-theme', 
+                tg.colorScheme === 'light' ? 'light' : 'dark'
+            );
         }
         
-        // Показать выбранный контент
-        function showContent(contentId) {
-            // Скрыть все разделы
-            document.querySelectorAll('.content').forEach(el => {
-                el.classList.remove('active');
+        // Инициализация темы
+        applyTheme();
+        
+        // Обработчик смены темы
+        tg.onEvent('themeChanged', applyTheme);
+        
+        // Переключение вкладок
+        function showTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
             });
             
-            // Показать выбранный
-            document.getElementById(`${contentId}-content`).classList.add('active');
-            
-            // Обновить активную кнопку в навигации
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('active');
+            document.querySelectorAll('.content').forEach(content => {
+                content.style.display = 'none';
             });
-            document.querySelectorAll('.nav-btn')[getNavIndex(contentId)].classList.add('active');
             
-            // Если открыли поиск - фокус на поле ввода
-            if (contentId === 'search') {
-                setTimeout(() => {
-                    document.getElementById('player-search').focus();
-                }, 300);
-            }
-            
-            // Если открыли профиль - загрузить данные пользователя
-            if (contentId === 'profile') {
-                loadUserProfile();
-            }
+            event.currentTarget.classList.add('active');
+            document.getElementById(tabName + '-content').style.display = 'block';
         }
         
-        // Индексы кнопок навигации
-        function getNavIndex(contentId) {
-            const navMap = {
-                'main': 0,
-                'search': 1,
-                'categories': 2,
-                'profile': 3
-            };
-            return navMap[contentId] || 0;
+        // Переключение светлой/темной темы
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
         }
         
-        // Загрузка профиля пользователя
-        function loadUserProfile() {
-            const user = tg.initDataUnsafe.user;
-            if (user) {
-                // Заполняем данные пользователя
-                document.getElementById('user-name').textContent = 
-                    `${user.first_name || ''} ${user.last_name || ''}`.trim() || 'Пользователь Telegram';
-                
-                const usernameEl = document.getElementById('user-username');
-                if (user.username) {
-                    usernameEl.textContent = `@${user.username}`;
-                    usernameEl.style.display = 'block';
-                } else {
-                    usernameEl.style.display = 'none';
-                }
-                
-                // Устанавливаем аватар
-                const avatar = document.getElementById('user-avatar');
-                if (user.photo_url) {
-                    avatar.innerHTML = '';
-                    avatar.style.backgroundImage = `url(${user.photo_url})`;
-                    avatar.style.backgroundSize = 'cover';
-                    avatar.style.backgroundPosition = 'center';
-                } else {
-                    // Иконка по умолчанию
-                    avatar.innerHTML = '<i class="fas fa-user"></i>';
-                    avatar.style.backgroundImage = 'none';
-                }
-                
-                // Проверяем сохраненный никнейм
-                const savedNickname = localStorage.getItem('tanki_nickname');
-                if (savedNickname) {
-                    document.getElementById('saved-nickname').textContent = savedNickname;
-                    document.getElementById('bound-account').style.display = 'block';
-                    
-                    // Обновляем уровень и ранг привязанного аккаунта
-                    updateBoundAccountStats(savedNickname);
-                } else {
-                    document.getElementById('bound-account').style.display = 'none';
-                }
-                
-                // Обновляем бейджи в зависимости от уровня
-                updateProfileBadges();
-            }
-        }
-        
-        // Обновляем статистику привязанного аккаунта
-        function updateBoundAccountStats(nickname) {
-            // Здесь должна быть логика получения данных игрока по нику
-            // Для демонстрации используем случайные значения
-            
-            // Случайный уровень от 1 до 30
-            const level = Math.floor(Math.random() * 30) + 1;
-            // Процент прогресса до следующего уровня
-            const progress = Math.floor(Math.random() * 100);
-            
-            document.getElementById('bound-level').textContent = level;
-            document.getElementById('level-progress').style.width = `${progress}%`;
-            document.getElementById('level-text').textContent = `Уровень ${level} • ${progress}% до следующего уровня`;
-            
-            // Получаем ранг по уровню
-            const rank = getRankByLevel(level);
-            document.getElementById('bound-rank').textContent = rank;
-            
-            // Обновляем бейджи
-            updateProfileBadges(level);
-        }
-        
-        // Получаем ранг по уровню
-        function getRankByLevel(level) {
-            const ranks = [
-                "Новобранец", "Рядовой", "Ефрейтор", "Капрал",
-                "Мастер-капрал", "Сержант", "Штаб-сержант",
-                "Мастер-сержант", "Первый сержант", "Сержант-майор",
-                "Уорэнт-офицер 1", "Уорэнт-офицер 2", "Уорэнт-офицер 3",
-                "Уорэнт-офицер 4", "Уорэнт-офицер 5", "Младший лейтенант",
-                "Лейтенант", "Старший лейтенант", "Капитан",
-                "Майор", "Подполковник", "Полковник",
-                "Бригадир", "Генерал-майор", "Генерал-лейтенант",
-                "Генерал", "Маршал", "Фельдмаршал",
-                "Командор", "Генералиссимус", "Легенда"
-            ];
-            
-            // Каждые 3 уровня - новый ранг
-            const rankIndex = Math.min(Math.floor(level / 3), ranks.length - 1);
-            return ranks[rankIndex];
-        }
-        
-        // Обновляем бейджи профиля
-        function updateProfileBadges(level = 1) {
-            const noviceBadge = document.getElementById('novice-badge');
-            const playerBadge = document.getElementById('player-badge');
-            
-            // Бейдж "Новичок" показываем только если уровень меньше 5
-            if (level < 5) {
-                noviceBadge.style.display = 'block';
-            } else {
-                noviceBadge.style.display = 'none';
-            }
-            
-            // Бейдж "Игрок" показываем если уровень больше 3
-            if (level >= 3) {
-                playerBadge.style.display = 'block';
-            } else {
-                playerBadge.style.display = 'none';
-            }
-        }
-        
-        // Привязка игрового аккаунта
-        document.getElementById('bind-btn').addEventListener('click', bindAccount);
-        document.getElementById('search-bound-account').addEventListener('click', searchBoundAccount);
-        
-        function bindAccount() {
-            const nickname = document.getElementById('bind-nickname').value.trim();
-            if (!nickname) {
-                showNotification('Пожалуйста, введите ваш игровой ник', 'error');
-                return;
-            }
-            
-            // Сохраняем в localStorage
-            localStorage.setItem('tanki_nickname', nickname);
-            document.getElementById('saved-nickname').textContent = nickname;
-            document.getElementById('bound-account').style.display = 'block';
-            
-            // Обновляем статистику привязанного аккаунта
-            updateBoundAccountStats(nickname);
-            
-            // Очищаем поле ввода
-            document.getElementById('bind-nickname').value = '';
-            
-            // Показываем уведомление
-            showNotification(`Аккаунт ${nickname} успешно привязан!`, 'success');
-        }
-        
-        function searchBoundAccount() {
-            const nickname = localStorage.getItem('tanki_nickname');
-            if (nickname) {
-                // Переходим на страницу поиска
-                showContent('search');
-                
-                // Устанавливаем значение и запускаем поиск
-                setTimeout(() => {
-                    document.getElementById('player-search').value = nickname;
-                    searchPlayer();
-                }, 500);
-            }
-        }
-        
-        // Показываем уведомление
-        function showNotification(message, type = 'success') {
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.innerHTML = `<p>${message}</p>`;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.style.opacity = '0';
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 300);
-            }, 2000);
-        }
-        
-        // Категории
-        function showCategory(category) {
-            const categoryContent = document.getElementById('category-content');
-            const categoryTitle = document.getElementById('category-title');
-            const categoryDesc = document.getElementById('category-description');
-            
-            // Обновляем заголовок
-            const titles = {
-                'tankopedia': 'Танкофонд',
-                'news': 'Новости',
-                'cybersport': 'Киберспорт',
-                'chat': 'Чат'
-            };
-            
-            categoryTitle.textContent = titles[category] || 'Категория';
-            categoryContent.style.display = 'block';
-            
-            // Заполняем контент
-            let contentHTML = '';
-            switch(category) {
-                case 'tankopedia':
-                    contentHTML = `
-                        <p>Полный справочник по всем элементам игры:</p>
-                        <div class="stats-grid" style="margin-top: 20px;">
-                            <div class="stat-card">
-                                <i class="fas fa-shield-alt" style="font-size: 2rem; margin-bottom: 15px; color: var(--tankopedia-color);"></i>
-                                <div class="stat-label">Корпуса</div>
-                            </div>
-                            <div class="stat-card">
-                                <i class="fas fa-gun" style="font-size: 2rem; margin-bottom: 15px; color: var(--tankopedia-color);"></i>
-                                <div class="stat-label">Пушки</div>
-                            </div>
-                            <div class="stat-card">
-                                <i class="fas fa-cog" style="font-size: 2rem; margin-bottom: 15px; color: var(--tankopedia-color);"></i>
-                                <div class="stat-label">Модули</div>
-                            </div>
-                            <div class="stat-card">
-                                <i class="fas fa-paint-brush" style="font-size: 2rem; margin-bottom: 15px; color: var(--tankopedia-color);"></i>
-                                <div class="stat-label">Краски</div>
-                            </div>
-                        </div>
-                        <p style="margin-top: 20px;">Выберите интересующую категорию для просмотра подробной информации.</p>
-                    `;
-                    break;
-                case 'news':
-                    contentHTML = `
-                        <p>Последние новости и обновления игры:</p>
-                        <div class="player-card" style="text-align: left; margin-top: 20px;">
-                            <h4>Обновление 1.235</h4>
-                            <p><small>25 мая 2023</small></p>
-                            <p>Добавлены новые карты и режимы игры. Улучшена система матчмейкинга.</p>
-                        </div>
-                        <div class="player-card" style="text-align: left; margin-top: 15px;">
-                            <h4>Турнир "Стальной кубок"</h4>
-                            <p><small>18 мая 2023</small></p>
-                            <p>Началась регистрация на летний киберспортивный турнир с призовым фондом $10,000.</p>
-                        </div>
-                    `;
-                    break;
-                case 'cybersport':
-                    contentHTML = `
-                        <p>Киберспортивные события и турниры:</p>
-                        <div class="stats-grid" style="margin-top: 20px;">
-                            <div class="stat-card">
-                                <i class="fas fa-calendar" style="font-size: 2rem; margin-bottom: 15px; color: var(--cyber-color);"></i>
-                                <div class="stat-label">Расписание</div>
-                            </div>
-                            <div class="stat-card">
-                                <i class="fas fa-users" style="font-size: 2rem; margin-bottom: 15px; color: var(--cyber-color);"></i>
-                                <div class="stat-label">Команды</div>
-                            </div>
-                            <div class="stat-card">
-                                <i class="fas fa-trophy" style="font-size: 2rem; margin-bottom: 15px; color: var(--cyber-color);"></i>
-                                <div class="stat-label">Результаты</div>
-                            </div>
-                        </div>
-                        <p style="margin-top: 20px;">Следите за киберспортивными событиями и турнирами по Tanki Online.</p>
-                    `;
-                    break;
-                case 'chat':
-                    contentHTML = `
-                        <p>Чат для общения с игроками:</p>
-                        <div class="player-card" style="text-align: left; margin-top: 20px;">
-                            <div style="display: flex; gap: 10px; align-items: center;">
-                                <div class="avatar" style="width: 40px; height: 40px; font-size: 1rem;">
-                                    <i class="fas fa-user"></i>
-                                </div>
-                                <div>
-                                    <strong>TankPlayer:</strong> Кто сегодня играет?
-                                </div>
-                            </div>
-                        </div>
-                        <div class="player-card" style="text-align: left; margin-top: 15px;">
-                            <div style="display: flex; gap: 10px; align-items: center;">
-                                <div class="avatar" style="width: 40px; height: 40px; font-size: 1rem; background: linear-gradient(135deg, var(--cyber-color), #b30086);">
-                                    <i class="fas fa-crown"></i>
-                                </div>
-                                <div>
-                                    <strong>ProGamer:</strong> Я онлайн, давайте сыграем!
-                                </div>
-                            </div>
-                        </div>
-                        <div class="search-box" style="margin-top: 20px;">
-                            <input 
-                                type="text" 
-                                class="search-input" 
-                                placeholder="Введите сообщение..."
-                                autocomplete="off"
-                            >
-                            <button class="search-button">
-                                <i class="fas fa-paper-plane"></i> Отправить
-                            </button>
-                        </div>
-                    `;
-                    break;
-            }
-            
-            categoryDesc.innerHTML = contentHTML;
-            
-            // Прокручиваем к контенту
-            categoryContent.scrollIntoView({ behavior: 'smooth' });
-        }
-        
-        // Определение ролей по краскам
-        function getSpecialRoles(paints = []) {
-            const roles = [];
-            
-            // Список красок для разных ролей
-            const helperPaints = ["Аллигатор", "Арамид", "Сапфир", "Помощник", "Микросхема", "Оператор", "Репортёр", "Рубин"];
-            const adminPaints = ["Пламя", "Пламя 2.0"];
-            const cybersportPaints = ["Счастливая Семёрка", "Гладиатор", "Звезда", "Кислота", "Импульс", "Призма"];
-            const championPaints = ["Чемпион"];
-            const bronzePaints = ["Бронза"];
-            const silverPaints = ["Серебро"];
-            const youtubePaints = ["Ютубер ТО"];
-            
-            // Проверяем наличие красок
-            if (paints.some(paint => helperPaints.includes(paint))) {
-                roles.push({type: 'helper', name: 'Помощник игры'});
-            }
-            if (paints.some(paint => adminPaints.includes(paint))) {
-                roles.push({type: 'admin', name: 'Администратор игры'});
-            }
-            if (paints.some(paint => cybersportPaints.includes(paint))) {
-                roles.push({type: 'cybersport', name: 'Киберспортсмен'});
-            }
-            if (paints.some(paint => championPaints.includes(paint))) {
-                roles.push({type: 'champion', name: 'Чемпион Major'});
-            }
-            if (paints.some(paint => bronzePaints.includes(paint))) {
-                roles.push({type: 'bronze', name: 'Бронзовый призер'});
-            }
-            if (paints.some(paint => silverPaints.includes(paint))) {
-                roles.push({type: 'silver', name: 'Серебряный призер'});
-            }
-            if (paints.some(paint => youtubePaints.includes(paint))) {
-                roles.push({type: 'youtube', name: 'Ютубер Игры'});
-            }
-            
-            return roles;
-        }
-        
-        // Обработчик поиска
-        document.getElementById('search-btn').addEventListener('click', searchPlayer);
-        document.getElementById('player-search').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') searchPlayer();
-        });
-
-        // Основная функция поиска игрока
-        async function searchPlayer() {
-            const nickname = document.getElementById('player-search').value.trim();
-            const resultsContainer = document.getElementById('search-results');
-            
-            if (!nickname) {
-                resultsContainer.innerHTML = '<div class="error"><p>Пожалуйста, введите ник игрока</p></div>';
-                return;
-            }
-
-            // Показываем индикатор загрузки
-            resultsContainer.innerHTML = `
-                <div class="loading">
-                    <div class="spinner"></div>
-                    <p>Загружаем статистику для: ${nickname}</p>
-                </div>
-            `;
-
-            try {
-                // Парсим данные с сайта рейтингов
-                const playerData = await parsePlayerData(nickname);
-                renderPlayerStats(playerData, resultsContainer);
-            } catch (error) {
-                resultsContainer.innerHTML = `
-                    <div class="error">
-                        <p>${error.message}</p>
-                        <p>Проверьте правильность ника или попробуйте позже</p>
-                    </div>
-                `;
-            }
-        }
-
-        // Парсинг данных игрока
-        async function parsePlayerData(nickname) {
-            // В реальном приложении здесь будет парсинг сайта ratings.tankionline.com
-            // Для демонстрации используем фейковые данные
-            
-            // Генерируем случайные краски
-            const allPaints = [
-                "Аллигатор", "Арамид", "Сапфир", "Помощник", "Микросхема", 
-                "Оператор", "Репортёр", "Рубин", "Пламя", "Пламя 2.0",
-                "Счастливая Семёрка", "Гладиатор", "Звезда", "Кислота", 
-                "Импульс", "Призма", "Бронза", "Серебро", "Чемпион", "Ютубер ТО"
-            ];
-            
-            const playerPaints = [];
-            for (let i = 0; i < 5; i++) {
-                const randomPaint = allPaints[Math.floor(Math.random() * allPaints.length)];
-                if (!playerPaints.includes(randomPaint)) {
-                    playerPaints.push(randomPaint);
-                }
-            }
-            
-            // Случайные данные игрока
-            const player = {
-                name: nickname,
-                rank: Math.floor(Math.random() * 30) + 1,
-                level: Math.floor(Math.random() * 30) + 1,
-                score: Math.floor(Math.random() * 500000),
-                gearScore: Math.floor(Math.random() * 1000),
-                kills: Math.floor(Math.random() * 10000),
-                deaths: Math.floor(Math.random() * 5000),
-                totalTimePlayed: Math.floor(Math.random() * 10000000),
-                caughtGolds: Math.floor(Math.random() * 100),
-                earnedCrystals: Math.floor(Math.random() * 50000),
-                hasPremium: Math.random() > 0.5,
-                paints: playerPaints,
-                turretsPlayed: [
-                    {name: "Гром", scoreEarned: Math.floor(Math.random() * 50000)},
-                    {name: "Огнемёт", scoreEarned: Math.floor(Math.random() * 40000)},
-                    {name: "Рейлган", scoreEarned: Math.floor(Math.random() * 30000)}
-                ],
-                hullsPlayed: [
-                    {name: "Охотник", scoreEarned: Math.floor(Math.random() * 60000)},
-                    {name: "Викинг", scoreEarned: Math.floor(Math.random() * 45000)},
-                    {name: "Титан", scoreEarned: Math.floor(Math.random() * 35000)}
-                ],
-                resistanceModules: [
-                    {name: "Двойной наномодуль", scoreEarned: Math.floor(Math.random() * 20000)},
-                    {name: "Усиленный модуль", scoreEarned: Math.floor(Math.random() * 18000)},
-                    {name: "Турбонаддув", scoreEarned: Math.floor(Math.random() * 15000)}
+        // Обработчик кнопки просмотра
+        function watchAnime() {
+            tg.showPopup({
+                title: 'Начать просмотр',
+                message: 'Выберите действие:',
+                buttons: [
+                    {id: 'trailer', text: 'Смотреть трейлер', type: 'default'},
+                    {id: 'ep1', text: 'Серия 1', type: 'ok'},
+                    {type: 'cancel'}
                 ]
-            };
-            
-            return player;
-        }
-
-        // Функция для отображения статистики
-        function renderPlayerStats(player, container) {
-            // Рассчитываем K/D
-            const kills = player.kills || 0;
-            const deaths = player.deaths || 0;
-            const kdRatio = deaths > 0 ? (kills / deaths).toFixed(2) : kills;
-            
-            // Форматируем время игры
-            const playTimeHours = (player.totalTimePlayed / 3600000).toFixed(1);
-            
-            // Получаем иконку звания
-            const rankIcon = rankIcons[Math.min(30, Math.floor(player.rank / 5) * 5)] || rankIcons[30];
-            
-            // Определяем специальные роли
-            const specialRoles = getSpecialRoles(player.paints || []);
-            
-            container.innerHTML = `
-                <div class="player-header">
-                    <h2 class="player-name">${player.name}</h2>
-                    <div class="player-rank">
-                        ${getRankName(player.rank)}
-                        <img src="${rankIcon}" alt="Ранг" class="rank-icon">
-                    </div>
-                    ${player.hasPremium ? '<div class="premium-badge">⭐ ПРЕМИУМ</div>' : ''}
-                </div>
-                
-                ${specialRoles.length > 0 ? `
-                <div class="special-roles">
-                    ${specialRoles.map(role => `
-                        <div class="role-badge ${role.type}">
-                            <i class="fas fa-${role.type === 'helper' ? 'hands-helping' : role.type === 'admin' ? 'crown' : role.type === 'youtube' ? 'youtube' : 'trophy'}"></i>
-                            ${role.name}
-                        </div>
-                    `).join('')}
-                </div>
-                ` : ''}
-
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-label">Уровень</div>
-                        <div class="stat-value">${player.level}</div>
-                    </div>
-                    
-                    <div class="stat-card">
-                        <div class="stat-label">Очки</div>
-                        <div class="stat-value">${player.score.toLocaleString('ru-RU')}</div>
-                    </div>
-                    
-                    <div class="stat-card">
-                        <div class="stat-label">У/П</div>
-                        <div class="stat-value">${kdRatio}</div>
-                    </div>
-                    
-                    <div class="stat-card">
-                        <div class="stat-label">GS</div>
-                        <div class="stat-value">${player.gearScore}</div>
-                    </div>
-                </div>
-
-                <div class="detailed-stats">
-                    <h3>Подробная статистика</h3>
-                    <div class="stats-list">
-                        <div class="stat-item">
-                            <span class="stat-name">Убийств:</span>
-                            <span class="stat-data">${kills.toLocaleString('ru-RU')}</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-name">Смертей:</span>
-                            <span class="stat-data">${deaths.toLocaleString('ru-RU')}</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-name">Время игры:</span>
-                            <span class="stat-data">${playTimeHours} ч</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-name">Золотых ящиков:</span>
-                            <span class="stat-data">${player.caughtGolds || 0}</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-name">Кристаллов:</span>
-                            <span class="stat-data">${(player.earnedCrystals || 0).toLocaleString('ru-RU')}</span>
-                        </div>
-                    </div>
-                </div>
-
-                ${renderTopItems(player.turretsPlayed, 'Топ пушки')}
-                ${renderTopItems(player.hullsPlayed, 'Топ корпуса')}
-                ${renderTopItems(player.resistanceModules, 'Топ модули')}
-            `;
-        }
-
-        // Функция для отображения топ-листов
-        function renderTopItems(items, title) {
-            if (!items || items.length === 0) return '';
-            
-            // Сортируем и берем топ-3
-            const sortedItems = [...items].sort((a, b) => b.scoreEarned - a.scoreEarned);
-            const topItems = sortedItems.slice(0, 3);
-            
-            return `
-                <div class="top-section">
-                    <h3>${title}</h3>
-                    <div class="top-items">
-                        ${topItems.map(item => `
-                            <div class="top-item">
-                                <span class="item-name">
-                                    ${itemIcons[item.name] ? `<img src="${itemIcons[item.name]}" alt="${item.name}" class="item-icon">` : ''}
-                                    ${item.name}
-                                </span>
-                                <span class="item-score">${item.scoreEarned.toLocaleString('ru-RU')}</span>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-        }
-
-        // Функция для получения названия звания
-        function getRankName(rankId) {
-            const ranks = [
-                "Новобранец", "Рядовой", "Ефрейтор", "Капрал",
-                "Мастер-капрал", "Сержант", "Штаб-сержант",
-                "Мастер-сержант", "Первый сержант", "Сержант-майор",
-                "Уорэнт-офицер 1", "Уорэнт-офицер 2", "Уорэнт-офицер 3",
-                "Уорэнт-офицер 4", "Уорэнт-офицер 5", "Младший лейтенант",
-                "Лейтенант", "Старший лейтенант", "Капитан",
-                "Майор", "Подполковник", "Полковник",
-                "Бригадир", "Генерал-майор", "Генерал-лейтенант",
-                "Генерал", "Маршал", "Фельдмаршал",
-                "Командор", "Генералиссимус", "Легенда"
-            ];
-            
-            return ranks[rankId - 1] || `Звание ${rankId}`;
+            }, function(btnId) {
+                if(btnId === 'trailer') {
+                    tg.openLink('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+                } else if(btnId === 'ep1') {
+                    tg.showAlert('Начинаем первую серию!');
+                }
+            });
         }
         
-        // Инициализация при загрузке
+        // Инициализация первой вкладки
         document.addEventListener('DOMContentLoaded', () => {
-            createParticles();
-            
-            // Загружаем профиль если открыта эта страница
-            if (document.getElementById('profile-content').classList.contains('active')) {
-                loadUserProfile();
-            }
+            document.getElementById('general-content').style.display = 'block';
         });
     </script>
 </body>
