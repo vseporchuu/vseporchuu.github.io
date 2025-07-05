@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель администратора</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .admin-container {
+            padding: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: #333;
+            color: white;
+        }
+        
+        .genre-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        
+        .genre-tag {
+            background-color: #444;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+        }
+        
+        .episode-inputs {
+            margin-top: 15px;
+        }
+        
+        .episode-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .add-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <h1>Создать новый релиз</h1>
+        
+        <form id="release-form">
+            <div class="form-group">
+                <label for="title">Название аниме</label>
+                <input type="text" id="title" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="description">Описание</label>
+                <textarea id="description" rows="4" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>Жанры</label>
+                <select id="genre-select">
+                    <option value="Экшен">Экшен</option>
+                    <option value="Фэнтези">Фэнтези</option>
+                    <option value="Комедия">Комедия</option>
+                    <!-- Другие жанры -->
+                </select>
+                <div class="genre-tags" id="genre-tags"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="image">Изображение</label>
+                <input type="file" id="image" accept="image/*">
+            </div>
+            
+            <div class="form-group">
+                <label>Дата выхода</label>
+                <input type="date" id="release-date">
+            </div>
+            
+            <div class="form-group">
+                <label>Серии</label>
+                <div class="episode-inputs" id="episode-inputs">
+                    <div class="episode-input">
+                        <input type="text" placeholder="Название серии" class="episode-title">
+                        <input type="url" placeholder="Ссылка на серию" class="episode-url">
+                    </div>
+                </div>
+                <button type="button" class="add-btn" id="add-episode">Добавить серию</button>
+            </div>
+            
+            <button type="submit" class="add-btn">Опубликовать</button>
+        </form>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>

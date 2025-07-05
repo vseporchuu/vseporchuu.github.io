@@ -1,0 +1,150 @@
+:root {
+    --primary-color: #ff6b00;
+    --secondary-color: #ff3c00;
+    --bg-color: #1a1a1a;
+    --card-color: #222;
+    --text-color: #fff;
+    --text-secondary: #aaa;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.app-container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding-bottom: 60px;
+}
+
+.today-releases {
+    padding: 15px;
+}
+
+.horizontal-scroll {
+    display: flex;
+    overflow-x: auto;
+    gap: 15px;
+    padding: 10px 0;
+    scrollbar-width: none;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.release-card {
+    min-width: 150px;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.release-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.release-info {
+    padding: 10px;
+    background-color: rgba(0,0,0,0.7);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.anime-list {
+    padding: 15px;
+}
+
+.anime-card {
+    display: flex;
+    background-color: var(--card-color);
+    border-radius: 10px;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+.anime-card img {
+    width: 100px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.anime-info {
+    padding: 10px;
+    flex-grow: 1;
+}
+
+.watch-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    background-color: var(--card-color);
+    padding: 10px 0;
+}
+
+.nav-btn {
+    flex: 1;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.nav-btn.active {
+    color: var(--primary-color);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.9);
+    z-index: 1000;
+}
+
+.modal-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#player-frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+}
