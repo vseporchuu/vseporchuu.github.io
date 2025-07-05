@@ -6,7 +6,6 @@
     <title>Аниме каталог</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        /* Основные стили */
         :root {
             --primary: #ff6b00;
             --primary-dark: #e55a00;
@@ -14,6 +13,7 @@
             --dark-card: #222;
             --text: #ffffff;
             --text-secondary: #aaa;
+            --admin-panel: #2c2c4a;
         }
         
         * {
@@ -34,6 +34,14 @@
             margin: 0 auto;
         }
         
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
         /* Шапка с сегодняшними релизами */
         .today-section {
             padding: 15px;
@@ -49,6 +57,7 @@
             overflow-x: auto;
             gap: 10px;
             padding-bottom: 10px;
+            scrollbar-width: thin;
         }
         
         .today-card {
@@ -57,6 +66,7 @@
             overflow: hidden;
             position: relative;
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            cursor: pointer;
         }
         
         .today-card img {
@@ -165,6 +175,7 @@
             background-color: var(--dark-card);
             padding: 10px 0;
             border-top: 1px solid #333;
+            z-index: 100;
         }
         
         .nav-btn {
@@ -191,7 +202,6 @@
         /* Профиль пользователя */
         .profile-container {
             padding: 20px;
-            display: none;
         }
         
         .profile-header {
@@ -231,37 +241,269 @@
             margin-top: 20px;
             cursor: pointer;
             font-weight: 600;
+            display: none;
+        }
+        
+        /* Админ-панель */
+        .admin-panel {
+            background-color: var(--admin-panel);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
+        .admin-panel h2 {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #444;
+            background-color: var(--dark-card);
+            color: var(--text);
+            font-size: 16px;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .genre-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .genre-tag {
+            background-color: #333;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .genre-tag .remove {
+            margin-left: 8px;
+            cursor: pointer;
+            color: var(--primary);
+        }
+        
+        .episode {
+            background-color: var(--dark-card);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .add-episode {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: 600;
+            width: 100%;
+        }
+        
+        .submit-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #e55a00;
+        }
+        
+        /* Модальное окно просмотра */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        #player-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
         }
     </style>
-    <!-- Иконочный шрифт -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <!-- Шапка с сегодняшними релизами -->
-        <section class="today-section">
-            <h2>Сегодня выходит</h2>
-            <div class="today-scroll">
+        <!-- Главная страница -->
+        <div id="home-page" class="page active">
+            <!-- Шапка с сегодняшними релизами -->
+            <section class="today-section">
+                <h2>Сегодня выходит</h2>
+                <div class="today-scroll" id="today-scroll">
+                    <!-- Динамически заполнится из JS -->
+                </div>
+            </section>
+            
+            <!-- Список аниме -->
+            <section class="anime-list" id="anime-list">
                 <!-- Динамически заполнится из JS -->
-            </div>
-        </section>
-        
-        <!-- Список аниме -->
-        <section class="anime-list" id="anime-list">
-            <!-- Динамически заполнится из JS -->
-        </section>
+            </section>
+        </div>
         
         <!-- Профиль пользователя -->
-        <section class="profile-container" id="profile-container">
-            <div class="profile-header">
-                <div class="profile-avatar" id="profile-avatar">U</div>
-                <div class="profile-info">
-                    <h2 id="profile-name">Пользователь</h2>
-                    <p id="profile-username">@username</p>
+        <div id="profile-page" class="page">
+            <section class="profile-container">
+                <div class="profile-header">
+                    <div class="profile-avatar" id="profile-avatar">U</div>
+                    <div class="profile-info">
+                        <h2 id="profile-name">Пользователь</h2>
+                        <p id="profile-username">@username</p>
+                    </div>
                 </div>
+                <button class="admin-btn" id="admin-btn">Панель администратора</button>
+                
+                <!-- Админ-панель (видна только админу) -->
+                <div id="admin-panel" class="admin-panel" style="display: none;">
+                    <h2><i class="fas fa-cog"></i> Панель администратора</h2>
+                    
+                    <form id="release-form">
+                        <div class="form-group">
+                            <label for="title">Название аниме</label>
+                            <input type="text" id="title" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="description">Описание</label>
+                            <textarea id="description" required></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="genres">Жанры</label>
+                            <select id="genre-select">
+                                <option value="">Выберите жанр</option>
+                                <option value="Экшен">Экшен</option>
+                                <option value="Фэнтези">Фэнтези</option>
+                                <option value="Комедия">Комедия</option>
+                                <option value="Драма">Драма</option>
+                                <option value="Романтика">Романтика</option>
+                                <option value="Приключения">Приключения</option>
+                                <option value="Сёнэн">Сёнэн</option>
+                            </select>
+                            <div class="genre-container" id="genre-container"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="image">Постер (ссылка)</label>
+                            <input type="url" id="image" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="status">Статус</label>
+                            <select id="status">
+                                <option value="Ожидается">Ожидается</option>
+                                <option value="Онгоинг">Онгоинг</option>
+                                <option value="Завершен">Завершен</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Серии</label>
+                            <div id="episodes-container">
+                                <div class="episode">
+                                    <div class="form-group">
+                                        <label>Название серии</label>
+                                        <input type="text" class="episode-title" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Ссылка на серию</label>
+                                        <input type="url" class="episode-url" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="add-episode" id="add-episode">
+                                <i class="fas fa-plus"></i> Добавить серию
+                            </button>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Опубликовать релиз</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+        
+        <!-- Страница расписания (заглушка) -->
+        <div id="schedule-page" class="page">
+            <div style="padding: 20px; text-align: center;">
+                <h2>Расписание выхода серий</h2>
+                <p>Скоро здесь появится расписание...</p>
             </div>
-            <button class="admin-btn" id="admin-btn" style="display: none;">Панель администратора</button>
-        </section>
+        </div>
+        
+        <!-- Страница избранного (заглушка) -->
+        <div id="favorites-page" class="page">
+            <div style="padding: 20px; text-align: center;">
+                <h2>Избранное</h2>
+                <p>Список избранных аниме появится здесь...</p>
+            </div>
+        </div>
+        
+        <!-- Страница поиска (заглушка) -->
+        <div id="search-page" class="page">
+            <div style="padding: 20px; text-align: center;">
+                <h2>Поиск аниме</h2>
+                <p>Функция поиска появится в следующем обновлении...</p>
+            </div>
+        </div>
     </div>
     
     <!-- Нижняя панель навигации -->
@@ -288,6 +530,14 @@
         </div>
     </nav>
     
+    <!-- Модальное окно просмотра -->
+    <div class="modal" id="player-modal">
+        <div class="modal-content">
+            <iframe id="player-frame" allowfullscreen></iframe>
+            <button class="close-modal">×</button>
+        </div>
+    </div>
+    
     <script>
         // Инициализация Telegram WebApp
         const tg = window.Telegram.WebApp;
@@ -298,7 +548,7 @@
         const isAdmin = user.username === 'vseporchuu';
         
         // Пример данных (в реальном проекте будут загружаться с сервера)
-        const releases = [
+        let releases = [
             {
                 id: 1,
                 title: "Поднятие уровня в одиночку",
@@ -307,7 +557,10 @@
                 rating: 9.2,
                 status: "Ожидается",
                 isToday: true,
-                poster: "https://via.placeholder.com/100x150/ff6b00/ffffff?text=Solo+Leveling"
+                poster: "https://via.placeholder.com/100x150/ff6b00/ffffff?text=Solo+Leveling",
+                episodes: [
+                    { title: "Серия 1", url: "https://example.com/player/1" }
+                ]
             },
             {
                 id: 2,
@@ -317,7 +570,10 @@
                 rating: 8.5,
                 status: "Завершен",
                 isToday: false,
-                poster: "https://via.placeholder.com/100x150/4caf50/ffffff?text=Sakamoto"
+                poster: "https://via.placeholder.com/100x150/4caf50/ffffff?text=Sakamoto",
+                episodes: [
+                    { title: "Серия 1", url: "https://example.com/player/101" }
+                ]
             }
         ];
         
@@ -327,12 +583,16 @@
             renderAnimeList();
             setupNavigation();
             initProfile();
+            setupAdminPanel();
+            setupPlayer();
         });
         
         // Рендерим сегодняшние релизы
         function renderTodayReleases() {
-            const todayContainer = document.querySelector('.today-scroll');
+            const todayContainer = document.getElementById('today-scroll');
             const todayReleases = releases.filter(release => release.isToday);
+            
+            todayContainer.innerHTML = '';
             
             todayReleases.forEach(release => {
                 todayContainer.innerHTML += `
@@ -346,11 +606,21 @@
                     </div>
                 `;
             });
+            
+            // Обработчики для карточек "Сегодня выходит"
+            document.querySelectorAll('.today-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const animeId = parseInt(card.dataset.id);
+                    const anime = releases.find(r => r.id === animeId);
+                    showAnimeDetails(anime);
+                });
+            });
         }
         
         // Рендерим список аниме
         function renderAnimeList() {
             const listContainer = document.getElementById('anime-list');
+            listContainer.innerHTML = '';
             
             releases.forEach(release => {
                 listContainer.innerHTML += `
@@ -360,11 +630,31 @@
                             <h3 class="anime-title">${release.title}</h3>
                             <div class="anime-genres">${release.genres.join(', ')}</div>
                             <p class="anime-description">${release.description}</p>
-                            <button class="watch-btn">Смотреть</button>
+                            <button class="watch-btn" data-id="${release.id}">Смотреть</button>
                         </div>
                     </div>
                 `;
             });
+            
+            // Обработчики для кнопок "Смотреть"
+            document.querySelectorAll('.watch-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const animeId = parseInt(btn.dataset.id);
+                    const anime = releases.find(r => r.id === animeId);
+                    if (anime.episodes && anime.episodes.length > 0) {
+                        playEpisode(anime.episodes[0].url);
+                    }
+                });
+            });
+        }
+        
+        // Показать детали аниме (при клике на "Сегодня выходит")
+        function showAnimeDetails(anime) {
+            // Здесь можно реализовать показ детальной страницы
+            // Вместо этого просто воспроизводим первую серию
+            if (anime.episodes && anime.episodes.length > 0) {
+                playEpisode(anime.episodes[0].url);
+            }
         }
         
         // Настройка навигации
@@ -379,22 +669,14 @@
                     // Добавляем активный класс текущей кнопке
                     btn.classList.add('active');
                     
-                    // Обработка перехода на страницы
-                    const page = btn.dataset.page;
-                    
                     // Скрываем все страницы
-                    document.querySelector('.today-section').style.display = 'none';
-                    document.querySelector('.anime-list').style.display = 'none';
-                    document.getElementById('profile-container').style.display = 'none';
+                    document.querySelectorAll('.page').forEach(page => {
+                        page.classList.remove('active');
+                    });
                     
                     // Показываем нужную страницу
-                    if (page === 'home') {
-                        document.querySelector('.today-section').style.display = 'block';
-                        document.querySelector('.anime-list').style.display = 'block';
-                    } 
-                    else if (page === 'profile') {
-                        document.getElementById('profile-container').style.display = 'block';
-                    }
+                    const pageId = btn.dataset.page + '-page';
+                    document.getElementById(pageId).classList.add('active');
                 });
             });
         }
@@ -405,6 +687,7 @@
             const profileName = document.getElementById('profile-name');
             const profileUsername = document.getElementById('profile-username');
             const adminBtn = document.getElementById('admin-btn');
+            const adminPanel = document.getElementById('admin-panel');
             
             // Заполняем данные пользователя
             if (user) {
@@ -419,15 +702,149 @@
                 // Логин
                 profileUsername.textContent = user.username ? `@${user.username}` : '';
                 
-                // Кнопка админа
+                // Показываем админ-панель только для админа
                 if (isAdmin) {
                     adminBtn.style.display = 'block';
-                    adminBtn.addEventListener('click', () => {
-                        tg.showAlert('Переход в панель администратора');
-                        // В реальном приложении: window.location.href = 'admin.html';
-                    });
+                    adminPanel.style.display = 'block';
                 }
             }
+        }
+        
+        // Настройка админ-панели
+        function setupAdminPanel() {
+            const genreSelect = document.getElementById('genre-select');
+            const genreContainer = document.getElementById('genre-container');
+            const addEpisodeBtn = document.getElementById('add-episode');
+            const episodesContainer = document.getElementById('episodes-container');
+            const form = document.getElementById('release-form');
+            
+            const selectedGenres = [];
+            
+            // Добавление жанра
+            genreSelect.addEventListener('change', () => {
+                const genre = genreSelect.value;
+                if (genre && !selectedGenres.includes(genre)) {
+                    selectedGenres.push(genre);
+                    renderGenreTags();
+                    genreSelect.value = "";
+                }
+            });
+            
+            // Рендер тегов жанров
+            function renderGenreTags() {
+                genreContainer.innerHTML = selectedGenres.map(genre => `
+                    <div class="genre-tag">
+                        ${genre}
+                        <span class="remove" onclick="removeGenre('${genre}')">×</span>
+                    </div>
+                `).join('');
+            }
+            
+            // Удаление жанра
+            window.removeGenre = (genre) => {
+                const index = selectedGenres.indexOf(genre);
+                if (index !== -1) {
+                    selectedGenres.splice(index, 1);
+                    renderGenreTags();
+                }
+            };
+            
+            // Добавление серии
+            addEpisodeBtn.addEventListener('click', () => {
+                const episodeDiv = document.createElement('div');
+                episodeDiv.className = 'episode';
+                episodeDiv.innerHTML = `
+                    <div class="form-group">
+                        <label>Название серии</label>
+                        <input type="text" class="episode-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Ссылка на серию</label>
+                        <input type="url" class="episode-url" required>
+                    </div>
+                `;
+                episodesContainer.appendChild(episodeDiv);
+            });
+            
+            // Отправка формы
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Сбор данных о сериях
+                const episodes = [];
+                document.querySelectorAll('.episode').forEach(episode => {
+                    const title = episode.querySelector('.episode-title').value;
+                    const url = episode.querySelector('.episode-url').value;
+                    if (title && url) {
+                        episodes.push({ title, url });
+                    }
+                });
+                
+                // Формируем объект релиза
+                const releaseData = {
+                    id: releases.length + 1,
+                    title: document.getElementById('title').value,
+                    description: document.getElementById('description').value,
+                    genres: selectedGenres,
+                    poster: document.getElementById('image').value,
+                    status: document.getElementById('status').value,
+                    episodes: episodes,
+                    rating: 0,
+                    isToday: document.getElementById('status').value === 'Ожидается'
+                };
+                
+                // Добавляем в список релизов
+                releases.push(releaseData);
+                
+                // Обновляем интерфейс
+                renderTodayReleases();
+                renderAnimeList();
+                
+                // Оповещаем пользователя
+                tg.showAlert('Релиз успешно создан!');
+                
+                // Очищаем форму
+                form.reset();
+                selectedGenres.length = 0;
+                renderGenreTags();
+                episodesContainer.innerHTML = `
+                    <div class="episode">
+                        <div class="form-group">
+                            <label>Название серии</label>
+                            <input type="text" class="episode-title" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Ссылка на серию</label>
+                            <input type="url" class="episode-url" required>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+        
+        // Настройка плеера
+        function setupPlayer() {
+            const modal = document.getElementById('player-modal');
+            const closeBtn = document.querySelector('.close-modal');
+            
+            closeBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+                document.getElementById('player-frame').src = '';
+            });
+            
+            // Закрытие при клике вне плеера
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    document.getElementById('player-frame').src = '';
+                }
+            });
+        }
+        
+        // Воспроизвести серию
+        function playEpisode(url) {
+            document.getElementById('player-frame').src = url;
+            document.getElementById('player-modal').style.display = 'block';
         }
     </script>
 </body>
