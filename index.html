@@ -5,68 +5,430 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Аниме каталог</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Основные стили */
+        :root {
+            --primary: #ff6b00;
+            --primary-dark: #e55a00;
+            --dark: #1a1a1a;
+            --dark-card: #222;
+            --text: #ffffff;
+            --text-secondary: #aaa;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--text);
+            padding-bottom: 60px;
+        }
+        
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+        }
+        
+        /* Шапка с сегодняшними релизами */
+        .today-section {
+            padding: 15px;
+        }
+        
+        .today-section h2 {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .today-scroll {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding-bottom: 10px;
+        }
+        
+        .today-card {
+            min-width: 150px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        .today-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .today-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 10px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+        }
+        
+        .today-rating {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .today-status {
+            background-color: var(--primary);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-top: 5px;
+            display: inline-block;
+        }
+        
+        /* Список аниме */
+        .anime-list {
+            padding: 0 15px;
+        }
+        
+        .anime-card {
+            display: flex;
+            background-color: var(--dark-card);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .anime-poster {
+            width: 100px;
+            height: 150px;
+            object-fit: cover;
+        }
+        
+        .anime-details {
+            padding: 10px;
+            flex-grow: 1;
+        }
+        
+        .anime-title {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        
+        .anime-genres {
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+        
+        .anime-description {
+            font-size: 14px;
+            margin-bottom: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .watch-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .watch-btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        /* Нижняя панель навигации */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            background-color: var(--dark-card);
+            padding: 10px 0;
+            border-top: 1px solid #333;
+        }
+        
+        .nav-btn {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 12px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .nav-btn.active {
+            color: var(--primary);
+        }
+        
+        .nav-btn i {
+            font-size: 20px;
+            margin-bottom: 3px;
+        }
+        
+        /* Профиль пользователя */
+        .profile-container {
+            padding: 20px;
+            display: none;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #444;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+        }
+        
+        .profile-info h2 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+        
+        .profile-info p {
+            color: var(--text-secondary);
+        }
+        
+        .admin-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+    </style>
+    <!-- Иконочный шрифт -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="app-container">
+    <div class="container">
         <!-- Шапка с сегодняшними релизами -->
-        <section class="today-releases">
+        <section class="today-section">
             <h2>Сегодня выходит</h2>
-            <div class="horizontal-scroll">
-                <div class="release-card today">
-                    <img src="https://via.placeholder.com/150x200" alt="Поднятие уровня в одиночку">
-                    <div class="release-info">
-                        <span class="rating">9.2 ★</span>
-                        <span class="status">Ожидается</span>
-                        <h3>Поднятие уровня в одиночку</h3>
-                    </div>
-                </div>
-                <!-- Другие сегодняшние релизы -->
+            <div class="today-scroll">
+                <!-- Динамически заполнится из JS -->
             </div>
         </section>
-
-        <!-- Основной список аниме -->
-        <section class="anime-list">
-            <div class="anime-card">
-                <img src="https://via.placeholder.com/100x150" alt="Название аниме">
-                <div class="anime-info">
-                    <h3>Поднятие уровня в одиночку</h3>
-                    <div class="genres">Экшен, Фэнтези</div>
-                    <p class="description">Десять лет назад распахнулись врата нашего мира с миром монстров...</p>
-                    <button class="watch-btn">Смотреть</button>
+        
+        <!-- Список аниме -->
+        <section class="anime-list" id="anime-list">
+            <!-- Динамически заполнится из JS -->
+        </section>
+        
+        <!-- Профиль пользователя -->
+        <section class="profile-container" id="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar" id="profile-avatar">U</div>
+                <div class="profile-info">
+                    <h2 id="profile-name">Пользователь</h2>
+                    <p id="profile-username">@username</p>
                 </div>
             </div>
-            <!-- Другие карточки аниме -->
+            <button class="admin-btn" id="admin-btn" style="display: none;">Панель администратора</button>
         </section>
-
-        <!-- Нижняя панель навигации -->
-        <nav class="bottom-nav">
-            <button class="nav-btn active" data-page="home">
-                <span>Главная</span>
-            </button>
-            <button class="nav-btn" data-page="schedule">
-                <span>Расписание</span>
-            </button>
-            <button class="nav-btn" data-page="favorites">
-                <span>Избранное</span>
-            </button>
-            <button class="nav-btn" data-page="search">
-                <span>Поиск</span>
-            </button>
-            <button class="nav-btn" data-page="profile">
-                <span>Профиль</span>
-            </button>
-        </nav>
-
-        <!-- Модальное окно просмотра -->
-        <div class="modal" id="player-modal">
-            <div class="modal-content">
-                <iframe id="player-frame" allowfullscreen></iframe>
-                <button class="close-modal">×</button>
-            </div>
-        </div>
     </div>
-
-    <script src="js/app.js"></script>
+    
+    <!-- Нижняя панель навигации -->
+    <nav class="bottom-nav">
+        <div class="nav-btn active" data-page="home">
+            <i class="fas fa-home"></i>
+            <span>Главная</span>
+        </div>
+        <div class="nav-btn" data-page="schedule">
+            <i class="fas fa-calendar"></i>
+            <span>Расписание</span>
+        </div>
+        <div class="nav-btn" data-page="favorites">
+            <i class="fas fa-heart"></i>
+            <span>Избранное</span>
+        </div>
+        <div class="nav-btn" data-page="search">
+            <i class="fas fa-search"></i>
+            <span>Поиск</span>
+        </div>
+        <div class="nav-btn" data-page="profile">
+            <i class="fas fa-user"></i>
+            <span>Профиль</span>
+        </div>
+    </nav>
+    
+    <script>
+        // Инициализация Telegram WebApp
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+        
+        // Данные пользователя
+        const user = tg.initDataUnsafe.user || {};
+        const isAdmin = user.username === 'vseporchuu';
+        
+        // Пример данных (в реальном проекте будут загружаться с сервера)
+        const releases = [
+            {
+                id: 1,
+                title: "Поднятие уровня в одиночку",
+                description: "Десять лет назад распахнулись врата нашего мира с миром монстров. После этого некоторым смертным был дан дар уничтожать монстров внутри Врат. Таких смертных назвали охотниками. Однако не все охотники достаточно сильны. Джин-Ву – охотник уровня Е. Парню приходится рисовать жизнью в темных подземельях, выполняя самые неперспективные задания.",
+                genres: ["Экшен", "Фэнтези", "Приключения"],
+                rating: 9.2,
+                status: "Ожидается",
+                isToday: true,
+                poster: "https://via.placeholder.com/100x150/ff6b00/ffffff?text=Solo+Leveling"
+            },
+            {
+                id: 2,
+                title: "Дни Сакомото",
+                description: "Комедийное аниме о жизни старшеклассника по имени Сакомото, который является обладает безупречным совершенством во всем, что он делает.",
+                genres: ["Комедия", "Школа"],
+                rating: 8.5,
+                status: "Завершен",
+                isToday: false,
+                poster: "https://via.placeholder.com/100x150/4caf50/ffffff?text=Sakamoto"
+            }
+        ];
+        
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', () => {
+            renderTodayReleases();
+            renderAnimeList();
+            setupNavigation();
+            initProfile();
+        });
+        
+        // Рендерим сегодняшние релизы
+        function renderTodayReleases() {
+            const todayContainer = document.querySelector('.today-scroll');
+            const todayReleases = releases.filter(release => release.isToday);
+            
+            todayReleases.forEach(release => {
+                todayContainer.innerHTML += `
+                    <div class="today-card" data-id="${release.id}">
+                        <img src="${release.poster}" alt="${release.title}">
+                        <div class="today-rating">${release.rating} ★</div>
+                        <div class="today-info">
+                            <h3>${release.title}</h3>
+                            <span class="today-status">${release.status}</span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+        
+        // Рендерим список аниме
+        function renderAnimeList() {
+            const listContainer = document.getElementById('anime-list');
+            
+            releases.forEach(release => {
+                listContainer.innerHTML += `
+                    <div class="anime-card" data-id="${release.id}">
+                        <img class="anime-poster" src="${release.poster}" alt="${release.title}">
+                        <div class="anime-details">
+                            <h3 class="anime-title">${release.title}</h3>
+                            <div class="anime-genres">${release.genres.join(', ')}</div>
+                            <p class="anime-description">${release.description}</p>
+                            <button class="watch-btn">Смотреть</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+        
+        // Настройка навигации
+        function setupNavigation() {
+            const navButtons = document.querySelectorAll('.nav-btn');
+            
+            navButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Убираем активный класс со всех кнопок
+                    navButtons.forEach(b => b.classList.remove('active'));
+                    
+                    // Добавляем активный класс текущей кнопке
+                    btn.classList.add('active');
+                    
+                    // Обработка перехода на страницы
+                    const page = btn.dataset.page;
+                    
+                    // Скрываем все страницы
+                    document.querySelector('.today-section').style.display = 'none';
+                    document.querySelector('.anime-list').style.display = 'none';
+                    document.getElementById('profile-container').style.display = 'none';
+                    
+                    // Показываем нужную страницу
+                    if (page === 'home') {
+                        document.querySelector('.today-section').style.display = 'block';
+                        document.querySelector('.anime-list').style.display = 'block';
+                    } 
+                    else if (page === 'profile') {
+                        document.getElementById('profile-container').style.display = 'block';
+                    }
+                });
+            });
+        }
+        
+        // Инициализация профиля
+        function initProfile() {
+            const profileAvatar = document.getElementById('profile-avatar');
+            const profileName = document.getElementById('profile-name');
+            const profileUsername = document.getElementById('profile-username');
+            const adminBtn = document.getElementById('admin-btn');
+            
+            // Заполняем данные пользователя
+            if (user) {
+                // Аватар (первая буква имени)
+                const firstNameLetter = user.first_name ? user.first_name.charAt(0) : 'U';
+                profileAvatar.textContent = firstNameLetter;
+                
+                // Имя
+                const fullName = [user.first_name, user.last_name].filter(Boolean).join(' ');
+                profileName.textContent = fullName || 'Пользователь';
+                
+                // Логин
+                profileUsername.textContent = user.username ? `@${user.username}` : '';
+                
+                // Кнопка админа
+                if (isAdmin) {
+                    adminBtn.style.display = 'block';
+                    adminBtn.addEventListener('click', () => {
+                        tg.showAlert('Переход в панель администратора');
+                        // В реальном приложении: window.location.href = 'admin.html';
+                    });
+                }
+            }
+        }
+    </script>
 </body>
 </html>
