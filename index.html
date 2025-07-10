@@ -3,15 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VALORANT Stats Mini App</title>
+    <title>Tanki Online Stats</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Segoe UI', Roboto, sans-serif;
-            background-color: #0f1923;
-            color: #fff;
+        * {
+            box-sizing: border-box;
             margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a2a4f 0%, #0d1b33 100%);
+            color: #ffffff;
             padding: 16px;
-            line-height: 1.5;
+            padding-bottom: 70px;
+            min-height: 100vh;
         }
         
         .container {
@@ -19,240 +26,623 @@
             margin: 0 auto;
         }
         
-        .header {
-            text-align: center;
+        /* Шапка с привязкой аккаунта */
+        .account-section {
+            background: rgba(13, 27, 51, 0.8);
+            border-radius: 12px;
+            padding: 20px;
             margin-bottom: 20px;
-            border-bottom: 1px solid #ff4655;
-            padding-bottom: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid #2a3e64;
         }
         
-        .player-name {
+        .account-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .rank-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 24px;
             font-weight: bold;
-            color: #ff4655;
-            margin: 0;
+            margin-right: 15px;
+            border: 2px solid #fff;
         }
         
-        .player-rating {
-            font-size: 18px;
-            color: #ece8e1;
-            margin: 5px 0;
+        .player-info {
+            flex-grow: 1;
         }
         
-        .section {
-            background-color: #1a242f;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        .player-nickname {
+            font-size: 22px;
+            font-weight: bold;
+            color: #ffc107;
+            margin-bottom: 5px;
+        }
+        
+        .player-rank {
+            font-size: 16px;
+            color: #ff9800;
+            background: rgba(255, 152, 0, 0.15);
+            padding: 3px 10px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+        
+        .input-group {
+            display: flex;
+            margin-top: 15px;
+        }
+        
+        .nickname-input {
+            flex-grow: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 8px 0 0 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px;
+        }
+        
+        .nickname-input::placeholder {
+            color: #a0aec0;
+        }
+        
+        .bind-btn {
+            background: linear-gradient(135deg, #2196F3 0%, #0d47a1 100%);
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 0 8px 8px 0;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .bind-btn:hover {
+            background: linear-gradient(135deg, #0d47a1 0%, #2196F3 100%);
+        }
+        
+        /* Основные блоки статистики */
+        .stats-section {
+            background: rgba(13, 27, 51, 0.8);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid #2a3e64;
         }
         
         .section-title {
-            color: #ff4655;
-            font-size: 18px;
-            margin-top: 0;
+            font-size: 20px;
+            color: #4fc3f7;
             margin-bottom: 15px;
-            border-bottom: 1px solid #2a3a4b;
-            padding-bottom: 5px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #2a3e64;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 10px;
+            color: #ffc107;
         }
         
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
         }
         
         .stat-item {
-            background-color: #2a3a4b;
-            padding: 10px;
-            border-radius: 6px;
+            background: rgba(41, 98, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(64, 126, 231, 0.3);
         }
         
         .stat-label {
             font-size: 14px;
-            color: #8b9bad;
+            color: #a0aec0;
+            margin-bottom: 5px;
         }
         
         .stat-value {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: bold;
-            color: #fff;
+            color: #ffffff;
         }
         
-        .weapon-stats {
+        .stat-subvalue {
+            font-size: 14px;
+            color: #ffc107;
+            margin-top: 3px;
+        }
+        
+        /* Топы */
+        .top-list {
             width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
         }
         
-        .weapon-stats th, .weapon-stats td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #2a3a4b;
+        .top-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        .weapon-name {
-            color: #ff4655;
-            font-weight: bold;
+        .top-item:last-child {
+            border-bottom: none;
         }
         
-        .premium-banner {
-            background: linear-gradient(90deg, #ff4655, #8b2131);
-            color: white;
-            padding: 12px;
+        .top-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 8px;
-            text-align: center;
-            margin-bottom: 15px;
-            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 20px;
         }
         
-        .premium-banner h3 {
-            margin: 0 0 5px 0;
+        .top-info {
+            flex-grow: 1;
         }
         
-        .premium-banner p {
-            margin: 0;
+        .top-name {
+            font-weight: bold;
+            color: #ffffff;
+        }
+        
+        .top-value {
+            color: #ffc107;
             font-size: 14px;
         }
         
-        .btn {
-            background-color: #ff4655;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
+        /* Расходники */
+        .supplies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
             margin-top: 10px;
         }
         
-        .accuracy-chart {
+        .supply-item {
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+        
+        /* Навигация */
+        .nav-tabs {
             display: flex;
-            height: 30px;
-            margin-top: 10px;
-            border-radius: 4px;
-            overflow: hidden;
+            background: rgba(13, 27, 51, 0.95);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            border-top: 1px solid #2a3e64;
+            z-index: 100;
         }
         
-        .accuracy-head {
-            background-color: #ff4655;
+        .tab-item {
+            flex: 1;
+            text-align: center;
+            padding: 15px 0;
+            color: #a0aec0;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
         
-        .accuracy-body {
-            background-color: #4a90e2;
+        .tab-item.active {
+            color: #4fc3f7;
+            background: rgba(33, 150, 243, 0.1);
+            border-top: 2px solid #4fc3f7;
         }
         
-        .accuracy-legs {
-            background-color: #8b9bad;
+        .tab-item i {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+        
+        /* Скрытие вкладок */
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 480px) {
+            .stat-item, .supply-item {
+                padding: 12px 10px;
+            }
+            
+            .tab-item span {
+                display: none;
+            }
+            
+            .tab-item i {
+                margin-bottom: 0;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1 class="player-name">vseporchuu #1969</h1>
-            <div class="player-rating">Рейтинг: 94</div>
-        </div>
-        
-        <div class="premium-banner" onclick="showPremium()">
-            <h3>Hide Ads, Get TRN Premium!</h3>
-            <p>No ads, profile customization & even more.</p>
-        </div>
-        
-        <div class="section">
-            <h2 class="section-title">Обзор</h2>
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-label">Матчи</div>
-                    <div class="stat-value">42</div>
+        <!-- Шапка с привязкой аккаунта -->
+        <div class="account-section">
+            <div class="account-header">
+                <div class="rank-icon">L</div>
+                <div class="player-info">
+                    <div class="player-nickname">vse</div>
+                    <div class="player-rank">Легенда 117</div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-label">Win Rate</div>
-                    <div class="stat-value">52.4%</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-label">У/С</div>
-                    <div class="stat-value">0.85</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-label">Урон/Раунд</div>
-                    <div class="stat-value">118.5</div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="section">
-            <h2 class="section-title">Топ оружие</h2>
-            <table class="weapon-stats">
-                <tr>
-                    <th>Оружие</th>
-                    <th>Kills</th>
-                    <th>Процент</th>
-                </tr>
-                <tr>
-                    <td class="weapon-name">Phantom</td>
-                    <td>55</td>
-                    <td>69.5%</td>
-                </tr>
-                <tr>
-                    <td class="weapon-name">Vandal</td>
-                    <td>40</td>
-                    <td>72.0%</td>
-                </tr>
-                <tr>
-                    <td class="weapon-name">Ghost</td>
-                    <td>31</td>
-                    <td>79.0%</td>
-                </tr>
-            </table>
-        </div>
-        
-        <div class="section">
-            <h2 class="section-title">Точность</h2>
-            <p>Последние 20 матчей</p>
-            
-            <div class="accuracy-chart">
-                <div class="accuracy-head" style="width: 13.9%"></div>
-                <div class="accuracy-body" style="width: 73.4%"></div>
-                <div class="accuracy-legs" style="width: 12.6%"></div>
             </div>
             
-            <div class="stats-grid" style="margin-top: 15px;">
-                <div class="stat-item">
-                    <div class="stat-label">Head</div>
-                    <div class="stat-value">13.9% (139)</div>
+            <div class="input-group">
+                <input type="text" class="nickname-input" id="nicknameInput" placeholder="Введите ваш никнейм">
+                <button class="bind-btn" id="bindBtn">Привязать</button>
+            </div>
+        </div>
+        
+        <!-- Вкладки контента -->
+        <div id="overviewTab" class="tab-content active">
+            <!-- Блок рейтингов -->
+            <div class="stats-section">
+                <h2 class="section-title">
+                    <i class="fas fa-trophy"></i>
+                    Места в рейтингах
+                </h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-label">По опыту</div>
+                        <div class="stat-value">#27 420</div>
+                        <div class="stat-subvalue">2 298 ▼ 26 280</div>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <div class="stat-label">Голдоловов</div>
+                        <div class="stat-value">2</div>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <div class="stat-label">По кристаллам</div>
+                        <div class="stat-value">#24 406</div>
+                        <div class="stat-subvalue">3 469, 76 662</div>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <div class="stat-label">По эффективности</div>
+                        <div class="stat-value">#96 718</div>
+                        <div class="stat-subvalue">86 447</div>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-label">Body</div>
-                    <div class="stat-value">73.4% (732)</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-label">Legs</div>
-                    <div class="stat-value">12.6% (126)</div>
+            </div>
+            
+            <!-- Блок личного дела -->
+            <div class="stats-section">
+                <h2 class="section-title">
+                    <i class="fas fa-user"></i>
+                    Личное дело
+                </h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-label">Бои</div>
+                        <div class="stat-value">1,248</div>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <div class="stat-label">Победы</div>
+                        <div class="stat-value">832</div>
+                        <div class="stat-subvalue">66.7%</div>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <div class="stat-label">Уничтожено</div>
+                        <div class="stat-value">3,891</div>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <div class="stat-label">Опыт</div>
+                        <div class="stat-value">2,347,891</div>
+                    </div>
                 </div>
             </div>
         </div>
         
-        <button class="btn" onclick="refreshData()">Обновить данные</button>
+        <div id="topsTab" class="tab-content">
+            <!-- Топ пушек -->
+            <div class="stats-section">
+                <h2 class="section-title">
+                    <i class="fas fa-gun"></i>
+                    Топ пушек
+                </h2>
+                
+                <div class="top-list">
+                    <div class="top-item">
+                        <div class="top-icon">R</div>
+                        <div class="top-info">
+                            <div class="top-name">Рейлган</div>
+                            <div class="top-value">142 часа</div>
+                        </div>
+                    </div>
+                    
+                    <div class="top-item">
+                        <div class="top-icon">T</div>
+                        <div class="top-info">
+                            <div class="top-name">Тандер</div>
+                            <div class="top-value">98 часов</div>
+                        </div>
+                    </div>
+                    
+                    <div class="top-item">
+                        <div class="top-icon">F</div>
+                        <div class="top-info">
+                            <div class="top-name">Фриз</div>
+                            <div class="top-value">76 часов</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Топ модулей -->
+            <div class="stats-section">
+                <h2 class="section-title">
+                    <i class="fas fa-cogs"></i>
+                    Топ модулей
+                </h2>
+                
+                <div class="top-list">
+                    <div class="top-item">
+                        <div class="top-icon">M</div>
+                        <div class="top-info">
+                            <div class="top-name">Двойной выстрел</div>
+                            <div class="top-value">89 часов</div>
+                        </div>
+                    </div>
+                    
+                    <div class="top-item">
+                        <div class="top-icon">M</div>
+                        <div class="top-info">
+                            <div class="top-name">Ускорение</div>
+                            <div class="top-value">67 часов</div>
+                        </div>
+                    </div>
+                    
+                    <div class="top-item">
+                        <div class="top-icon">M</div>
+                        <div class="top-info">
+                            <div class="top-name">Невидимость</div>
+                            <div class="top-value">54 часа</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Топ красок -->
+            <div class="stats-section">
+                <h2 class="section-title">
+                    <i class="fas fa-paint-roller"></i>
+                    Топ красок
+                </h2>
+                
+                <div class="top-list">
+                    <div class="top-item">
+                        <div class="top-icon" style="background: #FF5252; color: white;">C</div>
+                        <div class="top-info">
+                            <div class="top-name">Красная металлик</div>
+                            <div class="top-value">45 часов</div>
+                        </div>
+                    </div>
+                    
+                    <div class="top-item">
+                        <div class="top-icon" style="background: #3F51B5; color: white;">C</div>
+                        <div class="top-info">
+                            <div class="top-name">Синяя кристалл</div>
+                            <div class="top-value">32 часа</div>
+                        </div>
+                    </div>
+                    
+                    <div class="top-item">
+                        <div class="top-icon" style="background: #4CAF50; color: white;">C</div>
+                        <div class="top-info">
+                            <div class="top-name">Зеленая камуфляж</div>
+                            <div class="top-value">28 часов</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Топ режимов -->
+            <div class="stats-section">
+                <h2 class="section-title">
+                    <i class="fas fa-flag"></i>
+                    Топ режимов
+                </h2>
+                
+                <div class="top-list">
+                    <div class="top-item">
+                        <div class="top-icon">B</div>
+                        <div class="top-info">
+                            <div class="top-name">Бой насмерть</div>
+                            <div class="top-value">87 часов</div>
+                        </div>
+                    </div>
+                    
+                    <div class="top-item">
+                        <div class="top-icon">C</div>
+                        <div class="top-info">
+                            <div class="top-name">Захват флага</div>
+                            <div class="top-value">65 часов</div>
+                        </div>
+                    </div>
+                    
+                    <div class="top-item">
+                        <div class="top-icon">P</div>
+                        <div class="top-info">
+                            <div class="top-name">Контроль точки</div>
+                            <div class="top-value">43 часа</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="suppliesTab" class="tab-content">
+            <div class="stats-section">
+                <h2 class="section-title">
+                    <i class="fas fa-box-open"></i>
+                    Припасы
+                </h2>
+                
+                <div class="supplies-grid">
+                    <div class="supply-item">
+                        <div class="stat-label">Ремкомплекты</div>
+                        <div class="stat-value">42</div>
+                    </div>
+                    
+                    <div class="supply-item">
+                        <div class="stat-label">Бронирование</div>
+                        <div class="stat-value">28</div>
+                    </div>
+                    
+                    <div class="supply-item">
+                        <div class="stat-label">Двойной урон</div>
+                        <div class="stat-value">15</div>
+                    </div>
+                    
+                    <div class="supply-item">
+                        <div class="stat-label">Ускорение</div>
+                        <div class="stat-value">33</div>
+                    </div>
+                    
+                    <div class="supply-item">
+                        <div class="stat-label">Золотые ящики</div>
+                        <div class="stat-value">7</div>
+                    </div>
+                    
+                    <div class="supply-item">
+                        <div class="stat-label">Кристаллы</div>
+                        <div class="stat-value">2,450</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Нижняя навигация -->
+        <div class="nav-tabs">
+            <div class="tab-item active" data-tab="overviewTab">
+                <i class="fas fa-home"></i>
+                <span>Обзор</span>
+            </div>
+            <div class="tab-item" data-tab="topsTab">
+                <i class="fas fa-crown"></i>
+                <span>Топы</span>
+            </div>
+            <div class="tab-item" data-tab="suppliesTab">
+                <i class="fas fa-box"></i>
+                <span>Припасы</span>
+            </div>
+            <div class="tab-item">
+                <i class="fas fa-cog"></i>
+                <span>Настройки</span>
+            </div>
+        </div>
     </div>
     
     <script>
-        function showPremium() {
-            alert('Premium features will be available after purchase!');
-        }
+        // Навигация по вкладкам
+        document.querySelectorAll('.tab-item').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Убираем активный класс у всех вкладок
+                document.querySelectorAll('.tab-item').forEach(t => {
+                    t.classList.remove('active');
+                });
+                
+                // Скрываем все контенты
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Активируем текущую вкладку
+                this.classList.add('active');
+                
+                // Показываем соответствующий контент
+                const tabId = this.getAttribute('data-tab');
+                if (tabId) {
+                    document.getElementById(tabId).classList.add('active');
+                }
+            });
+        });
         
-        function refreshData() {
-            alert('Data refresh requested!');
-            // Здесь будет логика обновления данных
+        // Привязка аккаунта
+        document.getElementById('bindBtn').addEventListener('click', function() {
+            const nickname = document.getElementById('nicknameInput').value.trim();
+            if (nickname) {
+                bindAccount(nickname);
+            } else {
+                alert('Пожалуйста, введите ваш никнейм');
+            }
+        });
+        
+        function bindAccount(nickname) {
+            // В реальном приложении здесь будет запрос к API
+            // Для демонстрации используем заглушку
+            
+            // Обновляем данные пользователя
+            document.querySelector('.player-nickname').textContent = nickname;
+            
+            // Показываем загрузку
+            const bindBtn = document.getElementById('bindBtn');
+            bindBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            bindBtn.disabled = true;
+            
+            // Имитируем загрузку данных
+            setTimeout(() => {
+                // Обновляем данные
+                document.querySelector('.player-rank').textContent = "Легенда 117";
+                
+                // Возвращаем кнопку в исходное состояние
+                bindBtn.innerHTML = 'Привязано!';
+                
+                // Через 2 секунды возвращаем обычный текст
+                setTimeout(() => {
+                    bindBtn.innerHTML = 'Привязать';
+                    bindBtn.disabled = false;
+                }, 2000);
+                
+                // Показываем уведомление
+                alert(`Аккаунт ${nickname} успешно привязан! Данные обновлены.`);
+            }, 1500);
         }
         
         // Инициализация Telegram Mini App
         if (window.Telegram && window.Telegram.WebApp) {
+            Telegram.WebApp.ready();
             Telegram.WebApp.expand();
             Telegram.WebApp.enableClosingConfirmation();
-            Telegram.WebApp.setHeaderColor('#0f1923');
-            Telegram.WebApp.setBackgroundColor('#0f1923');
+            Telegram.WebApp.setHeaderColor('#0d1b33');
+            Telegram.WebApp.setBackgroundColor('#0d1b33');
         }
     </script>
 </body>
