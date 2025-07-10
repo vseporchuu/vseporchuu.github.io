@@ -3,896 +3,256 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Аниме Каталог</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>VALORANT Stats Mini App</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        }
-        
         body {
-            background-color: #0f0f0f;
-            color: #ffffff;
-            min-height: 100vh;
-            padding-bottom: 60px;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: #0f1923;
+            color: #fff;
+            margin: 0;
+            padding: 16px;
+            line-height: 1.5;
         }
         
         .container {
-            padding: 12px;
+            max-width: 100%;
+            margin: 0 auto;
         }
         
-        /* Шапка с горизонтальным скроллом */
-        .schedule-header {
-            margin-bottom: 20px;
-        }
-        
-        .schedule-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 12px;
-            color: #ffffff;
-        }
-        
-        .schedule-container {
-            display: flex;
-            overflow-x: auto;
-            gap: 10px;
-            padding-bottom: 5px;
-            scrollbar-width: none;
-        }
-        
-        .schedule-container::-webkit-scrollbar {
-            display: none;
-        }
-        
-        .schedule-item {
-            min-width: 140px;
-            height: 200px;
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-            flex-shrink: 0;
-            background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%);
-        }
-        
-        .schedule-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            z-index: -1;
-        }
-        
-        .schedule-info {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 12px;
-        }
-        
-        .schedule-name {
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: white;
-        }
-        
-        .schedule-rating {
-            display: flex;
-            align-items: center;
-            color: #ffcc00;
-            font-size: 13px;
-        }
-        
-        .schedule-rating::before {
-            content: "★";
-            margin-right: 3px;
-        }
-        
-        /* Основной контент */
-        .content-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin: 20px 0 15px;
-            color: #ffffff;
-        }
-        
-        .anime-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .anime-card {
-            background: #1a1a1a;
-            border-radius: 10px;
-            overflow: hidden;
-            transition: transform 0.3s ease;
-        }
-        
-        .anime-card:hover {
-            transform: translateY(-3px);
-        }
-        
-        .anime-cover {
-            width: 100%;
-            height: 180px;
-            position: relative;
-        }
-        
-        .anime-cover img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .anime-rating {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(0,0,0,0.7);
-            color: #ffcc00;
-            padding: 3px 8px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-        }
-        
-        .anime-rating::before {
-            content: "★";
-            margin-right: 3px;
-        }
-        
-        .anime-info {
-            padding: 15px;
-        }
-        
-        .anime-title {
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 8px;
-            color: white;
-        }
-        
-        .anime-description {
-            font-size: 13px;
-            color: #aaaaaa;
-            margin-bottom: 15px;
-            line-height: 1.4;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        
-        .watch-btn {
-            display: block;
-            width: 100%;
-            background: #ff4d89;
-            color: white;
+        .header {
             text-align: center;
-            padding: 10px;
-            border-radius: 8px;
-            font-weight: bold;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .watch-btn:hover {
-            background: #ff2d55;
-        }
-        
-        /* Нижняя панель профиля */
-        .footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: #1a1a1a;
-            border-top: 1px solid #333;
-            padding: 10px 15px;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .profile-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .profile-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #ff4d89 0%, #00b4d8 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 16px;
-            overflow: hidden;
-        }
-        
-        .profile-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .profile-text {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .profile-name {
-            font-weight: bold;
-            font-size: 14px;
-            color: white;
-        }
-        
-        .profile-username {
-            font-size: 12px;
-            color: #aaaaaa;
-        }
-        
-        .admin-panel-btn {
-            background: #00b4d8;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 8px 12px;
-            font-weight: bold;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: none;
-        }
-        
-        .admin-panel-btn:hover {
-            background: #0077b6;
-        }
-        
-        /* Модальные окна */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .modal-content {
-            background: #1a1a1a;
-            width: 90%;
-            max-width: 500px;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-        
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ff4655;
             padding-bottom: 10px;
-            border-bottom: 1px solid #333;
         }
         
-        .modal-title {
+        .player-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff4655;
+            margin: 0;
+        }
+        
+        .player-rating {
             font-size: 18px;
-            font-weight: bold;
-            color: #00b4d8;
+            color: #ece8e1;
+            margin: 5px 0;
         }
         
-        .close-btn {
-            background: none;
-            border: none;
-            color: #aaa;
-            font-size: 20px;
-            cursor: pointer;
-        }
-        
-        .form-group {
+        .section {
+            background-color: #1a242f;
+            border-radius: 8px;
+            padding: 15px;
             margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
-        .form-label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #ddd;
-            font-size: 14px;
+        .section-title {
+            color: #ff4655;
+            font-size: 18px;
+            margin-top: 0;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #2a3a4b;
+            padding-bottom: 5px;
         }
         
-        .form-input {
-            width: 100%;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid #333;
-            background: #2a2a2a;
-            color: white;
-            font-size: 14px;
-        }
-        
-        .form-input:focus {
-            outline: none;
-            border-color: #00b4d8;
-        }
-        
-        .episodes-container {
-            margin-top: 10px;
-        }
-        
-        .episode-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-            gap: 8px;
-        }
-        
-        .episode-input {
-            flex: 1;
-        }
-        
-        .remove-episode {
-            background: #ff4d89;
-            color: white;
-            border: none;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        
-        .add-episode {
-            background: #00b4d8;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 8px;
-            font-size: 13px;
-        }
-        
-        .modal-actions {
-            display: flex;
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 10px;
-            margin-top: 15px;
         }
         
-        .save-btn {
-            flex: 1;
-            background: #00b4d8;
-            color: white;
-            border: none;
+        .stat-item {
+            background-color: #2a3a4b;
             padding: 10px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        
-        .cancel-btn {
-            flex: 1;
-            background: #333;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        
-        .admin-list {
-            background: #2a2a2a;
-            border-radius: 10px;
-            padding: 10px;
-            margin-top: 15px;
-        }
-        
-        .admin-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #333;
-        }
-        
-        .admin-item:last-child {
-            border-bottom: none;
-        }
-        
-        .admin-item-title {
-            font-weight: bold;
-            font-size: 14px;
-            max-width: 70%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            color: white;
-        }
-        
-        .admin-actions {
-            display: flex;
-            gap: 8px;
-        }
-        
-        .edit-btn, .delete-btn {
-            padding: 5px 10px;
             border-radius: 6px;
-            border: none;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #8b9bad;
+        }
+        
+        .stat-value {
+            font-size: 16px;
             font-weight: bold;
-            font-size: 13px;
+            color: #fff;
+        }
+        
+        .weapon-stats {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        
+        .weapon-stats th, .weapon-stats td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #2a3a4b;
+        }
+        
+        .weapon-name {
+            color: #ff4655;
+            font-weight: bold;
+        }
+        
+        .premium-banner {
+            background: linear-gradient(90deg, #ff4655, #8b2131);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 15px;
             cursor: pointer;
         }
         
-        .edit-btn {
-            background: rgba(0, 180, 216, 0.2);
-            color: #00b4d8;
+        .premium-banner h3 {
+            margin: 0 0 5px 0;
         }
         
-        .delete-btn {
-            background: rgba(255, 77, 137, 0.2);
-            color: #ff4d89;
+        .premium-banner p {
+            margin: 0;
+            font-size: 14px;
         }
         
-        .create-btn {
-            background: #00b4d8;
+        .btn {
+            background-color: #ff4655;
             color: white;
             border: none;
-            padding: 10px;
-            border-radius: 8px;
+            padding: 10px 15px;
+            border-radius: 6px;
             font-weight: bold;
             cursor: pointer;
             width: 100%;
             margin-top: 10px;
-            font-size: 14px;
+        }
+        
+        .accuracy-chart {
+            display: flex;
+            height: 30px;
+            margin-top: 10px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .accuracy-head {
+            background-color: #ff4655;
+        }
+        
+        .accuracy-body {
+            background-color: #4a90e2;
+        }
+        
+        .accuracy-legs {
+            background-color: #8b9bad;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Шапка с горизонтальным скроллом -->
-        <div class="schedule-header">
-            <div class="schedule-title">Ожидается</div>
-            <div class="schedule-container" id="scheduleContainer">
-                <!-- Расписание будет добавлено динамически -->
-            </div>
+        <div class="header">
+            <h1 class="player-name">vseporchuu #1969</h1>
+            <div class="player-rating">Рейтинг: 94</div>
         </div>
         
-        <!-- Основной контент -->
-        <div class="content-title">Последнее</div>
-        <div class="anime-list" id="animeList">
-            <!-- Контент будет добавлен динамически -->
+        <div class="premium-banner" onclick="showPremium()">
+            <h3>Hide Ads, Get TRN Premium!</h3>
+            <p>No ads, profile customization & even more.</p>
         </div>
-    </div>
-    
-    <!-- Нижняя панель профиля -->
-    <div class="footer" id="footer">
-        <div class="profile-info">
-            <div class="profile-avatar" id="profileAvatar">
-                <!-- Аватар будет добавлен динамически -->
-            </div>
-            <div class="profile-text">
-                <div class="profile-name" id="profileName"></div>
-                <div class="profile-username" id="profileUsername"></div>
-            </div>
-        </div>
-        <button class="admin-panel-btn" id="adminPanelBtn">Панель админа</button>
-    </div>
-    
-    <!-- Модальное окно админ-панели -->
-    <div class="modal" id="adminModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Панель администрирования</h2>
-                <button class="close-btn" id="closeAdminModal">&times;</button>
-            </div>
-            <div id="adminList">
-                <!-- Список релизов для редактирования -->
-            </div>
-            <button class="create-btn" id="createNewBtn">Создать новый релиз</button>
-        </div>
-    </div>
-    
-    <!-- Модальное окно создания/редактирования релиза -->
-    <div class="modal" id="editModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title" id="editModalTitle">Новый релиз</h2>
-                <button class="close-btn" id="closeEditModal">&times;</button>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Название</label>
-                <input type="text" class="form-input" id="titleInput" placeholder="Введите название">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Жанры (через запятую)</label>
-                <input type="text" class="form-input" id="genresInput" placeholder="Экшен, Фантастика, Драма">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Описание</label>
-                <textarea class="form-input" id="descriptionInput" rows="3" placeholder="Введите описание"></textarea>
-            </div>
-            <div class="form-group">
-                <label class="form-label">URL обложки</label>
-                <input type="text" class="form-input" id="coverInput" placeholder="https://example.com/cover.jpg">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Рейтинг</label>
-                <input type="text" class="form-input" id="ratingInput" placeholder="9.2">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Ссылки на видео (серии)</label>
-                <div class="episodes-container" id="episodesContainer">
-                    <!-- Эпизоды будут добавлены динамически -->
+        
+        <div class="section">
+            <h2 class="section-title">Обзор</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-label">Матчи</div>
+                    <div class="stat-value">42</div>
                 </div>
-                <button class="add-episode" id="addEpisodeBtn">+ Добавить серию</button>
-            </div>
-            <div class="modal-actions">
-                <button class="save-btn" id="saveReleaseBtn">Сохранить</button>
-                <button class="cancel-btn" id="cancelEditBtn">Отмена</button>
+                <div class="stat-item">
+                    <div class="stat-label">Win Rate</div>
+                    <div class="stat-value">52.4%</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">У/С</div>
+                    <div class="stat-value">0.85</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Урон/Раунд</div>
+                    <div class="stat-value">118.5</div>
+                </div>
             </div>
         </div>
+        
+        <div class="section">
+            <h2 class="section-title">Топ оружие</h2>
+            <table class="weapon-stats">
+                <tr>
+                    <th>Оружие</th>
+                    <th>Kills</th>
+                    <th>Процент</th>
+                </tr>
+                <tr>
+                    <td class="weapon-name">Phantom</td>
+                    <td>55</td>
+                    <td>69.5%</td>
+                </tr>
+                <tr>
+                    <td class="weapon-name">Vandal</td>
+                    <td>40</td>
+                    <td>72.0%</td>
+                </tr>
+                <tr>
+                    <td class="weapon-name">Ghost</td>
+                    <td>31</td>
+                    <td>79.0%</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">Точность</h2>
+            <p>Последние 20 матчей</p>
+            
+            <div class="accuracy-chart">
+                <div class="accuracy-head" style="width: 13.9%"></div>
+                <div class="accuracy-body" style="width: 73.4%"></div>
+                <div class="accuracy-legs" style="width: 12.6%"></div>
+            </div>
+            
+            <div class="stats-grid" style="margin-top: 15px;">
+                <div class="stat-item">
+                    <div class="stat-label">Head</div>
+                    <div class="stat-value">13.9% (139)</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Body</div>
+                    <div class="stat-value">73.4% (732)</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Legs</div>
+                    <div class="stat-value">12.6% (126)</div>
+                </div>
+            </div>
+        </div>
+        
+        <button class="btn" onclick="refreshData()">Обновить данные</button>
     </div>
-
+    
     <script>
-        // Инициализация Telegram Web App
-        const tg = window.Telegram.WebApp;
-        tg.expand();
-        
-        // Получаем данные пользователя из Telegram
-        const userData = {
-            id: tg.initDataUnsafe.user?.id || 0,
-            first_name: tg.initDataUnsafe.user?.first_name || "Гость",
-            last_name: tg.initDataUnsafe.user?.last_name || "",
-            username: tg.initDataUnsafe.user?.username || "",
-            photo_url: tg.initDataUnsafe.user?.photo_url || ""
-        };
-        
-        // Инициализация данных
-        document.addEventListener('DOMContentLoaded', function() {
-            // Обновляем профиль пользователя
-            updateUserProfile();
-            
-            // Загружаем данные аниме
-            loadAnimeData();
-            
-            // Загружаем расписание
-            loadScheduleData();
-            
-            // Настройка кнопок
-            setupButtons();
-            
-            // Проверяем, является ли пользователь админом
-            if (userData.username === "vseporchuu") {
-                document.getElementById('adminPanelBtn').style.display = 'block';
-            }
-        });
-        
-        // Обновление профиля пользователя
-        function updateUserProfile() {
-            const profileName = document.getElementById('profileName');
-            const profileUsername = document.getElementById('profileUsername');
-            const profileAvatar = document.getElementById('profileAvatar');
-            
-            // Формируем полное имя
-            let fullName = userData.first_name;
-            if (userData.last_name) {
-                fullName += ` ${userData.last_name}`;
-            }
-            
-            profileName.textContent = fullName;
-            profileUsername.textContent = userData.username ? `@${userData.username}` : "";
-            
-            if (userData.photo_url) {
-                profileAvatar.innerHTML = `<img src="${userData.photo_url}" alt="Avatar">`;
-            } else {
-                // Создаем инициалы
-                const initials = userData.first_name.charAt(0) + (userData.last_name ? userData.last_name.charAt(0) : "");
-                profileAvatar.textContent = initials;
-            }
+        function showPremium() {
+            alert('Premium features will be available after purchase!');
         }
         
-        // Загрузка данных аниме
-        function loadAnimeData() {
-            const animeList = document.getElementById('animeList');
-            
-            // Пример данных (в реальном приложении данные будут браться из базы)
-            const animeData = [
-                {
-                    id: 1,
-                    title: "Поднятие уровня в одиночку",
-                    description: "Десять лет назад распахнулись врата нашего мира с миром монстров. После этого некоторым смертным был дан дар уничтожать монстров внутри Врат. Таких...",
-                    genres: "Экшен фантом",
-                    cover: "https://i.pinimg.com/originals/1a/37/0e/1a370e2c9c4d5f7f4c0b6c5a5f5e5e5e.jpg",
-                    rating: "9.2",
-                    episodes: []
-                },
-                {
-                    id: 2,
-                    title: "Дни Сакомото",
-                    description: "Комедийное аниме о жизни старшеклассника по имени Сакомото, который, кажется, обладает безупречным стилем и харизмой.",
-                    genres: "Комедия",
-                    cover: "https://static.zerochan.net/Sakamoto.desu.ga%3F.full.1985241.jpg",
-                    rating: "8.7",
-                    episodes: []
-                }
-            ];
-            
-            // Очищаем контейнер
-            animeList.innerHTML = '';
-            
-            // Добавляем карточки
-            animeData.forEach(anime => {
-                const animeCard = document.createElement('div');
-                animeCard.className = 'anime-card';
-                animeCard.innerHTML = `
-                    <div class="anime-cover">
-                        <img src="${anime.cover}" alt="${anime.title}">
-                        <div class="anime-rating">${anime.rating}</div>
-                    </div>
-                    <div class="anime-info">
-                        <div class="anime-title">${anime.title}</div>
-                        <div class="anime-description">${anime.description}</div>
-                        <button class="watch-btn">Смотреть</button>
-                    </div>
-                `;
-                animeList.appendChild(animeCard);
-            });
+        function refreshData() {
+            alert('Data refresh requested!');
+            // Здесь будет логика обновления данных
         }
         
-        // Загрузка расписания
-        function loadScheduleData() {
-            const scheduleContainer = document.getElementById('scheduleContainer');
-            
-            // Пример данных расписания
-            const scheduleData = [
-                { title: "Поднятие уровня в одиночку", rating: "9.2", cover: "https://i.pinimg.com/originals/1a/37/0e/1a370e2c9c4d5f7f4c0b6c5a5f5e5e5e.jpg" },
-                { title: "Дни Сакомото", rating: "8.7", cover: "https://static.zerochan.net/Sakamoto.desu.ga%3F.full.1985241.jpg" },
-                { title: "Они говорят, что я...", rating: "8.5", cover: "https://example.com/cover3.jpg" }
-            ];
-            
-            // Очищаем контейнер
-            scheduleContainer.innerHTML = '';
-            
-            // Добавляем элементы расписания
-            scheduleData.forEach(item => {
-                const scheduleItem = document.createElement('div');
-                scheduleItem.className = 'schedule-item';
-                scheduleItem.innerHTML = `
-                    <img src="${item.cover}" alt="${item.title}">
-                    <div class="schedule-info">
-                        <div class="schedule-name">${item.title}</div>
-                        <div class="schedule-rating">${item.rating}</div>
-                    </div>
-                `;
-                scheduleContainer.appendChild(scheduleItem);
-            });
-        }
-        
-        // Настройка кнопок
-        function setupButtons() {
-            // Кнопка админ-панели
-            document.getElementById('adminPanelBtn').addEventListener('click', () => {
-                document.getElementById('adminModal').style.display = 'flex';
-                loadAdminList();
-            });
-            
-            // Закрытие админ-модалки
-            document.getElementById('closeAdminModal').addEventListener('click', () => {
-                document.getElementById('adminModal').style.display = 'none';
-            });
-            
-            // Кнопка создания нового релиза
-            document.getElementById('createNewBtn').addEventListener('click', () => {
-                document.getElementById('adminModal').style.display = 'none';
-                document.getElementById('editModalTitle').textContent = 'Новый релиз';
-                document.getElementById('editModal').style.display = 'flex';
-                
-                // Очищаем форму
-                document.getElementById('titleInput').value = '';
-                document.getElementById('genresInput').value = '';
-                document.getElementById('descriptionInput').value = '';
-                document.getElementById('coverInput').value = '';
-                document.getElementById('ratingInput').value = '';
-                
-                // Очищаем эпизоды
-                const episodesContainer = document.getElementById('episodesContainer');
-                episodesContainer.innerHTML = '';
-                
-                // Добавляем первый эпизод
-                addEpisodeField();
-            });
-            
-            // Закрытие модалки редактирования
-            document.getElementById('closeEditModal').addEventListener('click', () => {
-                document.getElementById('editModal').style.display = 'none';
-            });
-            
-            document.getElementById('cancelEditBtn').addEventListener('click', () => {
-                document.getElementById('editModal').style.display = 'none';
-            });
-            
-            // Добавление эпизода
-            document.getElementById('addEpisodeBtn').addEventListener('click', addEpisodeField);
-            
-            // Сохранение релиза
-            document.getElementById('saveReleaseBtn').addEventListener('click', saveRelease);
-        }
-        
-        // Добавление поля для эпизода
-        function addEpisodeField() {
-            const episodesContainer = document.getElementById('episodesContainer');
-            const episodeCount = episodesContainer.children.length + 1;
-            
-            const episodeDiv = document.createElement('div');
-            episodeDiv.className = 'episode-item';
-            episodeDiv.innerHTML = `
-                <input type="text" class="form-input episode-input" placeholder="Ссылка на серию ${episodeCount}">
-                <button class="remove-episode">×</button>
-            `;
-            episodesContainer.appendChild(episodeDiv);
-            
-            // Добавляем обработчик удаления
-            episodeDiv.querySelector('.remove-episode').addEventListener('click', function() {
-                if (episodesContainer.children.length > 1) {
-                    episodeDiv.remove();
-                }
-            });
-        }
-        
-        // Загрузка списка релизов для админ-панели
-        function loadAdminList() {
-            const adminList = document.getElementById('adminList');
-            
-            // Пример данных (в реальном приложении будет запрос к серверу)
-            const releases = [
-                { id: 1, title: "Поднятие уровня в одиночку" },
-                { id: 2, title: "Дни Сакомото" }
-            ];
-            
-            adminList.innerHTML = '<div style="color: #aaa; font-size: 14px; margin-bottom: 10px;">Редактировать релизы:</div>';
-            
-            if (releases.length === 0) {
-                adminList.innerHTML += '<p style="color: #aaa; text-align: center;">Нет релизов для редактирования</p>';
-                return;
-            }
-            
-            releases.forEach(release => {
-                const item = document.createElement('div');
-                item.className = 'admin-item';
-                item.innerHTML = `
-                    <div class="admin-item-title">${release.title}</div>
-                    <div class="admin-actions">
-                        <button class="edit-btn" data-id="${release.id}">Изменить</button>
-                        <button class="delete-btn" data-id="${release.id}">Удалить</button>
-                    </div>
-                `;
-                adminList.appendChild(item);
-                
-                // Обработчики для кнопок
-                item.querySelector('.edit-btn').addEventListener('click', () => {
-                    editRelease(release.id);
-                });
-                
-                item.querySelector('.delete-btn').addEventListener('click', () => {
-                    deleteRelease(release.id);
-                });
-            });
-        }
-        
-        // Редактирование релиза
-        function editRelease(id) {
-            // В реальном приложении здесь будет запрос к серверу
-            const releaseData = {
-                id: id,
-                title: "Поднятие уровня в одиночку",
-                genres: "Экшен фантом",
-                description: "Десять лет назад распахнулись врата нашего мира с миром монстров. После этого некоторым смертным был дан дар уничтожать монстров внутри Врат.",
-                cover: "https://i.pinimg.com/originals/1a/37/0e/1a370e2c9c4d5f7f4c0b6c5a5f5e5e5e.jpg",
-                rating: "9.2",
-                episodes: []
-            };
-            
-            document.getElementById('adminModal').style.display = 'none';
-            document.getElementById('editModalTitle').textContent = 'Редактирование релиза';
-            document.getElementById('editModal').style.display = 'flex';
-            
-            // Заполняем форму
-            document.getElementById('titleInput').value = releaseData.title;
-            document.getElementById('genresInput').value = releaseData.genres;
-            document.getElementById('descriptionInput').value = releaseData.description;
-            document.getElementById('coverInput').value = releaseData.cover;
-            document.getElementById('ratingInput').value = releaseData.rating;
-            
-            // Заполняем эпизоды
-            const episodesContainer = document.getElementById('episodesContainer');
-            episodesContainer.innerHTML = '';
-            
-            if (releaseData.episodes.length === 0) {
-                addEpisodeField();
-            } else {
-                releaseData.episodes.forEach((episode, index) => {
-                    const episodeDiv = document.createElement('div');
-                    episodeDiv.className = 'episode-item';
-                    episodeDiv.innerHTML = `
-                        <input type="text" class="form-input episode-input" 
-                               value="${episode}" placeholder="Ссылка на серию ${index + 1}">
-                        <button class="remove-episode">×</button>
-                    `;
-                    episodesContainer.appendChild(episodeDiv);
-                    
-                    // Добавляем обработчик удаления
-                    episodeDiv.querySelector('.remove-episode').addEventListener('click', function() {
-                        if (episodesContainer.children.length > 1) {
-                            episodeDiv.remove();
-                        }
-                    });
-                });
-            }
-        }
-        
-        // Удаление релиза
-        function deleteRelease(id) {
-            if (confirm('Вы уверены, что хотите удалить этот релиз?')) {
-                // В реальном приложении здесь будет запрос к серверу
-                alert(`Релиз с ID ${id} удален`);
-                loadAdminList();
-            }
-        }
-        
-        // Сохранение релиза
-        function saveRelease() {
-            // Собираем данные из формы
-            const title = document.getElementById('titleInput').value;
-            const genres = document.getElementById('genresInput').value;
-            const description = document.getElementById('descriptionInput').value;
-            const cover = document.getElementById('coverInput').value;
-            const rating = document.getElementById('ratingInput').value;
-            
-            // Собираем эпизоды
-            const episodes = [];
-            document.querySelectorAll('.episode-input').forEach(input => {
-                if (input.value.trim() !== '') {
-                    episodes.push(input.value.trim());
-                }
-            });
-            
-            // Проверяем обязательные поля
-            if (!title || !cover) {
-                alert('Пожалуйста, заполните обязательные поля: название и обложка');
-                return;
-            }
-            
-            // В реальном приложении здесь будет отправка данных на сервер
-            alert('Релиз успешно сохранен!');
-            
-            // Закрываем модальное окно
-            document.getElementById('editModal').style.display = 'none';
-            
-            // Обновляем данные на странице
-            loadAnimeData();
-            loadScheduleData();
+        // Инициализация Telegram Mini App
+        if (window.Telegram && window.Telegram.WebApp) {
+            Telegram.WebApp.expand();
+            Telegram.WebApp.enableClosingConfirmation();
+            Telegram.WebApp.setHeaderColor('#0f1923');
+            Telegram.WebApp.setBackgroundColor('#0f1923');
         }
     </script>
 </body>
