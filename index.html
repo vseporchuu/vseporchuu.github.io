@@ -35,7 +35,8 @@
         }
 
         .search-icon {
-            font-size: 24px;
+            width: 24px;
+            height: 24px;
             cursor: pointer;
         }
 
@@ -89,56 +90,135 @@
             border-bottom: none;
         }
 
-        /* Главный контент */
-        .main-title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-
-        .status-label {
-            color: #FF6B81;
-            font-size: 16px;
+        /* Горизонтальный скролл */
+        .hero {
             margin-bottom: 24px;
         }
 
+        .hero-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .horizontal-scroll {
+            display: flex;
+            overflow-x: auto;
+            gap: 12px;
+            padding-bottom: 10px;
+            scrollbar-width: none;
+        }
+
+        .horizontal-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .featured-card {
+            min-width: 280px;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .featured-card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+        }
+
+        .status-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #FF6B81;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .featured-info {
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .featured-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .featured-rating {
+            font-size: 14px;
+            color: #FFD700;
+        }
+
+        /* Вертикальный список */
+        .vertical-list {
+            margin-top: 20px;
+        }
+
+        .list-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
         .anime-card {
+            display: flex;
             background: #1E1E1E;
             border-radius: 12px;
             margin-bottom: 16px;
             overflow: hidden;
         }
 
-        .anime-header {
-            padding: 16px;
-            border-bottom: 1px solid #333;
+        .anime-poster {
+            width: 100px;
+            height: 140px;
+            object-fit: cover;
+        }
+
+        .anime-content {
+            padding: 12px;
+            flex: 1;
         }
 
         .anime-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
         .anime-genre {
-            color: #FF6B81;
-            font-size: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .genre-tag {
+            background: #333;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
         }
 
         .anime-description {
-            padding: 16px;
-            font-size: 14px;
+            font-size: 13px;
             color: #AAAAAA;
             margin-bottom: 12px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .watch-btn {
             background: #FF6B81;
             color: white;
             border: none;
-            padding: 12px;
+            padding: 8px 12px;
             border-radius: 6px;
-            width: 100%;
             font-weight: bold;
             cursor: pointer;
         }
@@ -151,7 +231,6 @@
             width: 100%;
             height: 100%;
             background: #0F0F0F;
-            padding: 16px;
             z-index: 2000;
             transform: translateX(100%);
             transition: transform 0.3s ease;
@@ -162,37 +241,127 @@
             transform: translateX(0);
         }
 
+        .detail-header {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .detail-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            filter: blur(20px);
+            opacity: 0.5;
+            z-index: 1;
+        }
+
+        .detail-cover {
+            position: absolute;
+            bottom: -30px;
+            left: 20px;
+            width: 120px;
+            height: 170px;
+            border-radius: 10px;
+            object-fit: cover;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            z-index: 2;
+        }
+
+        .detail-actions {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 3;
+        }
+
         .back-btn {
             font-size: 24px;
-            margin-bottom: 16px;
             cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bookmark-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 3;
+            color: #FF6B81;
+            background: rgba(0, 0, 0, 0.5);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .detail-body {
+            padding: 70px 20px 20px;
+            position: relative;
+            z-index: 2;
         }
 
         .detail-title {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
             margin-bottom: 4px;
         }
 
-        .detail-subtitle {
+        .detail-year {
             color: #AAAAAA;
-            margin-bottom: 24px;
+            margin-bottom: 4px;
+        }
+
+        .detail-eng-title {
+            color: #AAAAAA;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .tabs-container {
+            background: #1E1E1E;
+            border-radius: 30px;
+            padding: 6px;
+            margin-bottom: 20px;
         }
 
         .tabs {
             display: flex;
-            border-bottom: 1px solid #333;
-            margin-bottom: 20px;
+            justify-content: space-around;
         }
 
         .tab {
-            padding: 12px 16px;
+            padding: 8px 16px;
+            border-radius: 20px;
             cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
         }
 
         .tab.active {
-            border-bottom: 2px solid #FF6B81;
-            color: #FF6B81;
+            background: #FF6B81;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
         }
 
         .info-item {
@@ -219,6 +388,91 @@
             font-size: 14px;
         }
 
+        .watch-btn-large {
+            background: #FF6B81;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            width: 100%;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        /* Панель поиска */
+        .search-panel {
+            position: fixed;
+            top: -100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 400px;
+            background: #1E1E1E;
+            border-radius: 16px;
+            padding: 20px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .search-panel.active {
+            top: 80px;
+        }
+
+        .search-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 16px;
+            background: #333;
+            border: none;
+            border-radius: 30px;
+            color: white;
+            font-size: 16px;
+        }
+
+        .filter-icon {
+            margin-left: 12px;
+            cursor: pointer;
+        }
+
+        .filters {
+            margin-top: 20px;
+        }
+
+        .filter-group {
+            margin-bottom: 16px;
+        }
+
+        .filter-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .filter-option {
+            background: #333;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .filter-option.active {
+            background: #FF6B81;
+        }
+
         /* Оверлей */
         .overlay {
             position: fixed;
@@ -240,7 +494,9 @@
     <!-- Header -->
     <header>
         <img id="user-avatar" class="avatar" src="" alt="Аватар">
-        <div class="search-icon">🔍</div>
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.5 14H14.71L14.43 13.73C15.41 12.59 16 11.11 16 9.5C16 5.91 13.09 3 9.5 3C5.91 3 3 5.91 3 9.5C3 13.09 5.91 16 9.5 16C11.11 16 12.59 15.41 13.73 14.43L14 14.71V15.5L19 20.49L20.49 19L15.5 14ZM9.5 14C7.01 14 5 11.99 5 9.5C5 7.01 7.01 5 9.5 5C11.99 5 14 7.01 14 9.5C14 11.99 11.99 14 9.5 14Z" fill="white"/>
+        </svg>
     </header>
 
     <!-- Центральное меню -->
@@ -261,94 +517,204 @@
         </ul>
     </div>
 
+    <!-- Панель поиска -->
+    <div class="search-panel" id="search-panel">
+        <div class="search-header">
+            <input type="text" class="search-input" placeholder="Поиск аниме...">
+            <svg class="filter-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.25 5.61C6.27 8.2 10 13 10 13V19C10 19.55 10.45 20 11 20H13C13.55 20 14 19.55 14 19V13C14 13 17.72 8.2 19.74 5.61C20.25 4.95 19.78 4 18.95 4H5.04C4.21 4 3.74 4.95 4.25 5.61Z" fill="white"/>
+            </svg>
+        </div>
+        <div class="filters">
+            <div class="filter-group">
+                <div class="filter-title">Жанры</div>
+                <div class="filter-options">
+                    <div class="filter-option">Экшен</div>
+                    <div class="filter-option">Фэнтези</div>
+                    <div class="filter-option">Комедия</div>
+                    <div class="filter-option">Драма</div>
+                    <div class="filter-option">Романтика</div>
+                </div>
+            </div>
+            <div class="filter-group">
+                <div class="filter-title">Статус</div>
+                <div class="filter-options">
+                    <div class="filter-option">Ожидается</div>
+                    <div class="filter-option">Выходит</div>
+                    <div class="filter-option">Завершен</div>
+                </div>
+            </div>
+            <div class="filter-group">
+                <div class="filter-title">Год выпуска</div>
+                <div class="filter-options">
+                    <div class="filter-option">2024</div>
+                    <div class="filter-option">2023</div>
+                    <div class="filter-option">2022</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Главный контент -->
     <div class="main-content">
-        <h1 class="main-title">Поднятие уровня в одиночку</h1>
-        <div class="status-label">Ожидается</div>
-
-        <div class="anime-card" data-id="1">
-            <div class="anime-header">
-                <h2 class="anime-title">Поднятие уровня в одиночку</h2>
-                <div class="anime-genre">Экшен-фэнтези</div>
+        <!-- Горизонтальный скролл -->
+        <div class="hero">
+            <h2 class="hero-title">Ожидаемые релизы</h2>
+            <div class="horizontal-scroll">
+                <div class="featured-card">
+                    <img src="https://via.placeholder.com/280x160/FF6B81/FFFFFF?text=Поднятие+уровня" alt="Поднятие уровня">
+                    <div class="status-badge">Ожидается</div>
+                    <div class="featured-info">
+                        <div class="featured-title">Поднятие уровня в одиночку</div>
+                        <div class="featured-rating">★ 9.8</div>
+                    </div>
+                </div>
+                
+                <div class="featured-card">
+                    <img src="https://via.placeholder.com/280x160/FF6B81/FFFFFF?text=Дни+Сакомото" alt="Дни Сакомото">
+                    <div class="status-badge">Выходит</div>
+                    <div class="featured-info">
+                        <div class="featured-title">Дни Сакомото</div>
+                        <div class="featured-rating">★ 8.7</div>
+                    </div>
+                </div>
+                
+                <div class="featured-card">
+                    <img src="https://via.placeholder.com/280x160/FF6B81/FFFFFF?text=Атака+титанов" alt="Атака титанов">
+                    <div class="status-badge">Завершен</div>
+                    <div class="featured-info">
+                        <div class="featured-title">Атака титанов</div>
+                        <div class="featured-rating">★ 9.9</div>
+                    </div>
+                </div>
             </div>
-            <div class="anime-description">
-                Десять лет назад распахнулись Врата нашего мира с миром монстров. После этого некоторым смертным был дан дар уничтожать монстров внутри Врат. Таких...
-            </div>
-            <button class="watch-btn">Смотреть</button>
         </div>
-
-        <div class="anime-card" data-id="2">
-            <div class="anime-header">
-                <h2 class="anime-title">Дни Сакомото</h2>
-                <div class="anime-genre">Комедия</div>
+        
+        <!-- Вертикальный список -->
+        <div class="vertical-list">
+            <h2 class="list-title">Все аниме</h2>
+            
+            <div class="anime-card" data-id="1">
+                <img src="https://via.placeholder.com/100x140/FF6B81/FFFFFF?text=Поднятие" class="anime-poster" alt="Поднятие уровня">
+                <div class="anime-content">
+                    <h3 class="anime-title">Поднятие уровня в одиночку</h3>
+                    <div class="anime-genre">
+                        <span class="genre-tag">Экшен</span>
+                        <span class="genre-tag">Фэнтези</span>
+                        <span class="genre-tag">Приключения</span>
+                    </div>
+                    <div class="anime-description">
+                        Десять лет назад распахнулись Врата нашего мира с миром монстров. После этого некоторым смертным был дан дар уничтожать монстров внутри Врат. Таких...
+                    </div>
+                    <button class="watch-btn">Смотреть</button>
+                </div>
             </div>
-            <div class="anime-description">
-                "Дни Сакомото" (Sakamoto desu ga?) – это комедийное аниме, рассказывающее о жизни старшеклассника по имени Сакомото, который, кажется, обладает безупречным...
+            
+            <div class="anime-card" data-id="2">
+                <img src="https://via.placeholder.com/100x140/FF6B81/FFFFFF?text=Сакомото" class="anime-poster" alt="Дни Сакомото">
+                <div class="anime-content">
+                    <h3 class="anime-title">Дни Сакомото</h3>
+                    <div class="anime-genre">
+                        <span class="genre-tag">Комедия</span>
+                        <span class="genre-tag">Школа</span>
+                    </div>
+                    <div class="anime-description">
+                        "Дни Сакомото" (Sakamoto desu ga?) – это комедийное аниме, рассказывающее о жизни старшеклассника по имени Сакомото, который, кажется, обладает безупречным...
+                    </div>
+                    <button class="watch-btn">Смотреть</button>
+                </div>
             </div>
-            <button class="watch-btn">Смотреть</button>
+            
+            <div class="anime-card" data-id="3">
+                <img src="https://via.placeholder.com/100x140/FF6B81/FFFFFF?text=Геройская" class="anime-poster" alt="Моя геройская академия">
+                <div class="anime-content">
+                    <h3 class="anime-title">Моя геройская академия</h3>
+                    <div class="anime-genre">
+                        <span class="genre-tag">Экшен</span>
+                        <span class="genre-tag">Супергерои</span>
+                        <span class="genre-tag">Школа</span>
+                    </div>
+                    <div class="anime-description">
+                        В мире, где суперспособности стали обычным явлением, мальчик без способностей мечтает стать героем...
+                    </div>
+                    <button class="watch-btn">Смотреть</button>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Страница деталей -->
     <div class="detail-page" id="detail-page">
-        <div class="back-btn">←</div>
-        
-        <h1 class="detail-title">Поднятие уровня в одиночку</h1>
-        <div class="detail-subtitle">2024 · Solo Leveling</div>
-        
-        <div class="tabs">
-            <div class="tab active" data-tab="general">Общее</div>
-            <div class="tab" data-tab="rating">Рейтинг</div>
-            <div class="tab" data-tab="comments">Комментарии</div>
+        <div class="detail-header">
+            <div class="detail-bg" id="detail-bg"></div>
+            <img src="https://via.placeholder.com/120x170/FF6B81/FFFFFF?text=Поднятие" class="detail-cover" id="detail-cover" alt="Обложка">
+            <div class="detail-actions">
+                <div class="back-btn">←</div>
+            </div>
+            <div class="bookmark-btn">❤</div>
         </div>
         
-        <div id="general-content">
-            <div class="info-item">
-                <div class="info-label">Серий</div>
-                <div class="info-value">12 из 12</div>
-            </div>
-            <div class="info-item">
-                <div class="info-label">Жанры</div>
-                <div class="info-value">
-                    <span class="tag">Экшен</span>
-                    <span class="tag">Приключения</span>
-                    <span class="tag">Фэнтези</span>
+        <div class="detail-body">
+            <h1 class="detail-title" id="detail-title">Поднятие уровня в одиночку</h1>
+            <div class="detail-year" id="detail-year">2024</div>
+            <div class="detail-eng-title" id="detail-eng-title">Solo Leveling</div>
+            
+            <div class="tabs-container">
+                <div class="tabs">
+                    <div class="tab active" data-tab="general">Общее</div>
+                    <div class="tab" data-tab="rating">Рейтинг</div>
+                    <div class="tab" data-tab="comments">Комментарии</div>
                 </div>
             </div>
-            <div class="info-item">
-                <div class="info-label">Сезон</div>
-                <div class="info-value">Зима 2024</div>
-            </div>
-            <div class="info-item">
-                <div class="info-label">Озвучивали</div>
-                <div class="info-value">
-                    <span class="tag">Familiar</span>
-                    <span class="tag">Kito</span>
-                    <span class="tag">Hiyorikio</span>
-                    <span class="tag">Diaiver</span>
-                    <span class="tag">Eezy</span>
-                    <span class="tag">Lord of Emotions</span>
-                    <span class="tag">Vatavu</span>
-                    <span class="tag">FSLB</span>
-                    <span class="tag">ShiYori</span>
-                    <span class="tag">Вова Степанов</span>
+            
+            <div class="tab-content active" id="general-content">
+                <div class="info-item">
+                    <div class="info-label">Серий</div>
+                    <div class="info-value">12 из 12</div>
                 </div>
-            </div>
-            <div class="info-item">
-                <div class="info-label">Тайминг</div>
-                <div class="info-value">GWUNBLAIDE</div>
-            </div>
-            <div class="info-item">
-                <div class="info-label">Состояние</div>
-                <div class="info-value">Завершён</div>
-            </div>
-            <div class="info-item">
-                <div class="info-label">Описание</div>
-                <div class="info-value">
-                    Десять лет назад распахнулись Врата нашего мира с миром монстров. После этого некоторым смертным был дан дар уничтожать монстров внутри Врат. Таких смертных назвали охотниками. Однако не все охотники достаточно сильны. Джин-Ву – охотник уровня Е. Парню приходится рисковать жизнью в темных подземельях, выполняя самые неперспективные задания. Дело в том, что охотник не имеет необходимых качеств для повышения, поэтому он вынужден выполнять черновую работу. Джин-Ву снова и снова спускался в подземелья, сражаясь с нижайшими монстрами, пока однажды не забреддет в подземелье уровня D. Пребывание в сложнейшем подземелье даровало парню удивительную
+                <div class="info-item">
+                    <div class="info-label">Жанры</div>
+                    <div class="info-value">
+                        <span class="tag">Экшен</span>
+                        <span class="tag">Приключения</span>
+                        <span class="tag">Фэнтези</span>
+                    </div>
                 </div>
+                <div class="info-item">
+                    <div class="info-label">Сезон</div>
+                    <div class="info-value">Зима 2024</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Озвучивали</div>
+                    <div class="info-value">
+                        <span class="tag">Familiar</span>
+                        <span class="tag">Kito</span>
+                        <span class="tag">Hiyorikio</span>
+                        <span class="tag">Diaiver</span>
+                        <span class="tag">Eezy</span>
+                        <span class="tag">Lord of Emotions</span>
+                        <span class="tag">Vatavu</span>
+                        <span class="tag">FSLB</span>
+                        <span class="tag">ShiYori</span>
+                        <span class="tag">Вова Степанов</span>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Тайминг</div>
+                    <div class="info-value">GWUNBLAIDE</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Состояние</div>
+                    <div class="info-value">Завершён</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Описание</div>
+                    <div class="info-value">
+                        Десять лет назад распахнулись Врата нашего мира с миром монстров. После этого некоторым смертным был дан дар уничтожать монстров внутри Врат. Таких смертных назвали охотниками. Однако не все охотники достаточно сильны. Джин-Ву – охотник уровня Е. Парню приходится рисковать жизнью в темных подземельях, выполняя самые неперспективные задания. Дело в том, что охотник не имеет необходимых качеств для повышения, поэтому он вынужден выполнять черновую работу. Джин-Ву снова и снова спускался в подземелья, сражаясь с нижайшими монстрами, пока однажды не забреддет в подземелье уровня D. Пребывание в сложнейшем подземелье даровало парню удивительную
+                    </div>
+                </div>
+                <button class="watch-btn-large">Смотреть</button>
             </div>
-            <button class="watch-btn" style="margin-top: 24px;">Смотреть</button>
         </div>
     </div>
 
@@ -367,7 +733,9 @@
             menuUsername: document.getElementById('menu-username'),
             centerMenu: document.getElementById('center-menu'),
             detailPage: document.getElementById('detail-page'),
-            overlay: document.getElementById('overlay')
+            overlay: document.getElementById('overlay'),
+            searchPanel: document.getElementById('search-panel'),
+            searchIcon: document.querySelector('.search-icon')
         };
 
         // Данные пользователя из Telegram
@@ -389,9 +757,24 @@
                 elements.overlay.classList.toggle('active');
             });
             
+            // Иконка поиска
+            elements.searchIcon.addEventListener('click', () => {
+                elements.searchPanel.classList.toggle('active');
+                elements.overlay.classList.toggle('active');
+            });
+            
             // Карточки аниме
-            document.querySelectorAll('.anime-card').forEach(card => {
-                card.addEventListener('click', () => {
+            document.querySelectorAll('.anime-card, .featured-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('watch-btn')) return;
+                    
+                    // Установка изображения для фона
+                    const img = card.querySelector('img');
+                    document.getElementById('detail-bg').style.backgroundImage = `url(${img.src})`;
+                    
+                    // Установка данных
+                    document.getElementById('detail-title').textContent = card.querySelector('.anime-title, .featured-title').textContent;
+                    
                     elements.detailPage.classList.add('active');
                 });
             });
@@ -406,12 +789,22 @@
                 tab.addEventListener('click', () => {
                     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
                     tab.classList.add('active');
+                    
+                    // Здесь можно добавить переключение контента вкладок
+                });
+            });
+            
+            // Фильтры
+            document.querySelectorAll('.filter-option').forEach(option => {
+                option.addEventListener('click', () => {
+                    option.classList.toggle('active');
                 });
             });
             
             // Оверлей
             elements.overlay.addEventListener('click', () => {
                 elements.centerMenu.classList.remove('active');
+                elements.searchPanel.classList.remove('active');
                 elements.overlay.classList.remove('active');
             });
         }
