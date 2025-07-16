@@ -14,7 +14,7 @@
         }
 
         body {
-            background-color: #0F0F0F;
+            background-color: #2D2D2D;
             color: white;
             padding: 16px;
         }
@@ -48,7 +48,7 @@
             transform: translateX(-50%);
             width: 90%;
             max-width: 400px;
-            background: #1E1E1E;
+            background: #3A3A3A;
             border-radius: 16px;
             padding: 20px;
             z-index: 1000;
@@ -65,7 +65,7 @@
             align-items: center;
             margin-bottom: 20px;
             padding-bottom: 15px;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid #444;
         }
 
         .user-info img {
@@ -81,7 +81,7 @@
 
         .menu-items li {
             padding: 16px 0;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid #444;
             text-align: center;
             cursor: pointer;
         }
@@ -93,12 +93,6 @@
         /* Горизонтальный скролл */
         .hero {
             margin-bottom: 24px;
-        }
-
-        .hero-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 12px;
         }
 
         .horizontal-scroll {
@@ -166,15 +160,15 @@
 
         .anime-card {
             display: flex;
-            background: #1E1E1E;
+            background: #3A3A3A;
             border-radius: 12px;
             margin-bottom: 16px;
             overflow: hidden;
         }
 
         .anime-poster {
-            width: 100px;
-            height: 140px;
+            width: 120px;
+            height: 170px;
             object-fit: cover;
         }
 
@@ -197,7 +191,7 @@
         }
 
         .genre-tag {
-            background: #333;
+            background: #444;
             padding: 4px 8px;
             border-radius: 12px;
             font-size: 12px;
@@ -205,7 +199,7 @@
 
         .anime-description {
             font-size: 13px;
-            color: #AAAAAA;
+            color: #BBBBBB;
             margin-bottom: 12px;
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -230,7 +224,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #0F0F0F;
+            background: #2D2D2D;
             z-index: 2000;
             transform: translateX(100%);
             transition: transform 0.3s ease;
@@ -243,7 +237,7 @@
 
         .detail-header {
             position: relative;
-            height: 220px;
+            height: 240px;
             overflow: hidden;
         }
 
@@ -255,17 +249,21 @@
             height: 100%;
             background-size: cover;
             background-position: center;
-            filter: blur(20px);
-            opacity: 0.5;
+            filter: blur(8px);
+            opacity: 0.7;
             z-index: 1;
+            /* Плавный переход */
+            mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
         }
 
         .detail-cover {
             position: absolute;
             bottom: -30px;
-            left: 20px;
-            width: 120px;
-            height: 170px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 200px;
             border-radius: 10px;
             object-fit: cover;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
@@ -280,62 +278,63 @@
         }
 
         .back-btn {
-            font-size: 24px;
-            cursor: pointer;
-            background: rgba(0, 0, 0, 0.5);
             width: 36px;
             height: 36px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            background: rgba(0, 0, 0, 0.5);
+            cursor: pointer;
         }
 
         .bookmark-btn {
             position: absolute;
             top: 20px;
             right: 20px;
-            font-size: 24px;
-            cursor: pointer;
             z-index: 3;
-            color: #FF6B81;
-            background: rgba(0, 0, 0, 0.5);
             width: 36px;
             height: 36px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            background: rgba(0, 0, 0, 0.5);
+            cursor: pointer;
         }
 
         .detail-body {
-            padding: 70px 20px 20px;
+            padding: 100px 20px 20px;
             position: relative;
             z-index: 2;
+            text-align: center;
         }
 
         .detail-title {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: bold;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
         .detail-year {
-            color: #AAAAAA;
-            margin-bottom: 4px;
+            color: #BBBBBB;
+            margin-bottom: 6px;
         }
 
         .detail-eng-title {
-            color: #AAAAAA;
+            color: #BBBBBB;
             font-style: italic;
             margin-bottom: 20px;
         }
 
         .tabs-container {
-            background: #1E1E1E;
+            background: #3A3A3A;
             border-radius: 30px;
             padding: 6px;
             margin-bottom: 20px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .tabs {
@@ -358,6 +357,8 @@
 
         .tab-content {
             display: none;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         .tab-content.active {
@@ -366,10 +367,11 @@
 
         .info-item {
             margin-bottom: 16px;
+            text-align: left;
         }
 
         .info-label {
-            color: #AAAAAA;
+            color: #BBBBBB;
             font-size: 14px;
             margin-bottom: 8px;
         }
@@ -380,7 +382,7 @@
 
         .tag {
             display: inline-block;
-            background: #333;
+            background: #444;
             padding: 6px 12px;
             border-radius: 16px;
             margin-right: 8px;
@@ -395,9 +397,13 @@
             padding: 14px;
             border-radius: 8px;
             width: 100%;
+            max-width: 300px;
             font-weight: bold;
             cursor: pointer;
             margin-top: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
         }
 
         /* Панель поиска */
@@ -408,7 +414,7 @@
             transform: translateX(-50%);
             width: 90%;
             max-width: 400px;
-            background: #1E1E1E;
+            background: #3A3A3A;
             border-radius: 16px;
             padding: 20px;
             z-index: 1000;
@@ -429,7 +435,7 @@
         .search-input {
             flex: 1;
             padding: 12px 16px;
-            background: #333;
+            background: #444;
             border: none;
             border-radius: 30px;
             color: white;
@@ -439,10 +445,28 @@
         .filter-icon {
             margin-left: 12px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #444;
+        }
+
+        .filter-icon.active {
+            background: #FF6B81;
         }
 
         .filters {
             margin-top: 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .filters.active {
+            max-height: 500px;
         }
 
         .filter-group {
@@ -462,7 +486,7 @@
         }
 
         .filter-option {
-            background: #333;
+            background: #444;
             padding: 8px 16px;
             border-radius: 20px;
             font-size: 14px;
@@ -487,6 +511,28 @@
 
         .overlay.active {
             display: block;
+        }
+
+        /* Пустое состояние */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #BBBBBB;
+        }
+
+        .empty-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-text {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .empty-subtext {
+            font-size: 14px;
         }
     </style>
 </head>
@@ -521,11 +567,13 @@
     <div class="search-panel" id="search-panel">
         <div class="search-header">
             <input type="text" class="search-input" placeholder="Поиск аниме...">
-            <svg class="filter-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4.25 5.61C6.27 8.2 10 13 10 13V19C10 19.55 10.45 20 11 20H13C13.55 20 14 19.55 14 19V13C14 13 17.72 8.2 19.74 5.61C20.25 4.95 19.78 4 18.95 4H5.04C4.21 4 3.74 4.95 4.25 5.61Z" fill="white"/>
-            </svg>
+            <div class="filter-icon" id="filter-toggle">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.25 5.61C6.27 8.2 10 13 10 13V19C10 19.55 10.45 20 11 20H13C13.55 20 14 19.55 14 19V13C14 13 17.72 8.2 19.74 5.61C20.25 4.95 19.78 4 18.95 4H5.04C4.21 4 3.74 4.95 4.25 5.61Z" fill="white"/>
+                </svg>
+            </div>
         </div>
-        <div class="filters">
+        <div class="filters" id="filters">
             <div class="filter-group">
                 <div class="filter-title">Жанры</div>
                 <div class="filter-options">
@@ -559,7 +607,6 @@
     <div class="main-content">
         <!-- Горизонтальный скролл -->
         <div class="hero">
-            <h2 class="hero-title">Ожидаемые релизы</h2>
             <div class="horizontal-scroll">
                 <div class="featured-card">
                     <img src="https://i.imgur.com/OY7QK5o.jpeg" alt="Поднятие уровня">
@@ -611,7 +658,7 @@
             </div>
             
             <div class="anime-card" data-id="2">
-                <img src="https://via.placeholder.com/100x140/FF6B81/FFFFFF?text=Сакомото" class="anime-poster" alt="Дни Сакомото">
+                <img src="https://via.placeholder.com/120x170/FF6B81/FFFFFF?text=Сакомото" class="anime-poster" alt="Дни Сакомото">
                 <div class="anime-content">
                     <h3 class="anime-title">Дни Сакомото</h3>
                     <div class="anime-genre">
@@ -626,7 +673,7 @@
             </div>
             
             <div class="anime-card" data-id="3">
-                <img src="https://via.placeholder.com/100x140/FF6B81/FFFFFF?text=Геройская" class="anime-poster" alt="Моя геройская академия">
+                <img src="https://via.placeholder.com/120x170/FF6B81/FFFFFF?text=Геройская" class="anime-poster" alt="Моя геройская академия">
                 <div class="anime-content">
                     <h3 class="anime-title">Моя геройская академия</h3>
                     <div class="anime-genre">
@@ -641,6 +688,13 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Пример пустого состояния -->
+        <div class="empty-state" style="display: none;">
+            <div class="empty-icon">📺</div>
+            <div class="empty-text">Здесь пока ничего нет</div>
+            <div class="empty-subtext">Попробуйте посмотреть в другом разделе</div>
+        </div>
     </div>
 
     <!-- Страница деталей -->
@@ -649,9 +703,17 @@
             <div class="detail-bg" id="detail-bg" style="background-image: url(https://i.imgur.com/OY7QK5o.jpeg)"></div>
             <img src="https://i.imgur.com/OY7QK5o.jpeg" class="detail-cover" id="detail-cover" alt="Обложка">
             <div class="detail-actions">
-                <div class="back-btn">←</div>
+                <div class="back-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15.41 16.59L10.83 12L15.41 7.41L14 6L8 12L14 18L15.41 16.59Z" fill="white"/>
+                    </svg>
+                </div>
             </div>
-            <div class="bookmark-btn">❤</div>
+            <div class="bookmark-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5C22 12.28 18.6 15.36 13.45 20.04L12 21.35Z" fill="#FF6B81"/>
+                </svg>
+            </div>
         </div>
         
         <div class="detail-body">
@@ -735,7 +797,9 @@
             detailPage: document.getElementById('detail-page'),
             overlay: document.getElementById('overlay'),
             searchPanel: document.getElementById('search-panel'),
-            searchIcon: document.querySelector('.search-icon')
+            searchIcon: document.querySelector('.search-icon'),
+            filters: document.getElementById('filters'),
+            filterToggle: document.getElementById('filter-toggle')
         };
 
         // Данные пользователя из Telegram
@@ -763,6 +827,12 @@
                 elements.overlay.classList.toggle('active');
             });
             
+            // Переключение фильтров
+            elements.filterToggle.addEventListener('click', () => {
+                elements.filterToggle.classList.toggle('active');
+                elements.filters.classList.toggle('active');
+            });
+            
             // Карточки аниме
             document.querySelectorAll('.anime-card, .featured-card').forEach(card => {
                 card.addEventListener('click', (e) => {
@@ -771,6 +841,7 @@
                     // Установка изображения для фона
                     const img = card.querySelector('img');
                     document.getElementById('detail-bg').style.backgroundImage = `url(${img.src})`;
+                    document.getElementById('detail-cover').src = img.src;
                     
                     // Установка данных
                     document.getElementById('detail-title').textContent = card.querySelector('.anime-title, .featured-title').textContent;
@@ -790,7 +861,11 @@
                     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
                     tab.classList.add('active');
                     
-                    // Здесь можно добавить переключение контента вкладок
+                    // Переключение контента вкладок
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    document.getElementById(`${tab.dataset.tab}-content`).classList.add('active');
                 });
             });
             
