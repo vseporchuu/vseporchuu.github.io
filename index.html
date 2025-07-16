@@ -3,50 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AnimeHub - Мини-приложение для просмотра аниме</title>
+    <title>AnimeHub</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        :root {
-            --primary-color: #ffb6c1;
-            --secondary-color: #ff69b4;
-            --bg-color: #121212;
-            --card-bg: #1e1e1e;
-            --text-color: #ffffff;
-            --transition: all 0.3s ease;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Roboto', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
         body {
-            background: var(--bg-color);
-            color: var(--text-color);
-            overflow-x: hidden;
+            background-color: #0F0F0F;
+            color: white;
+            padding: 16px;
         }
 
-        /* Header Styles */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px;
-            background: rgba(18, 18, 18, 0.8);
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            margin-bottom: 24px;
         }
 
         .avatar {
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            cursor: pointer;
             object-fit: cover;
+            cursor: pointer;
         }
 
         .search-icon {
@@ -57,16 +42,16 @@
         /* Центральное меню */
         .center-menu {
             position: fixed;
-            top: -300px;
+            top: -100%;
             left: 50%;
             transform: translateX(-50%);
             width: 90%;
             max-width: 400px;
-            background: var(--card-bg);
-            z-index: 1000;
-            transition: var(--transition);
+            background: #1E1E1E;
+            border-radius: 16px;
             padding: 20px;
-            border-radius: 15px;
+            z-index: 1000;
+            transition: all 0.3s ease;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
         }
 
@@ -94,163 +79,147 @@
         }
 
         .menu-items li {
-            padding: 12px 0;
+            padding: 16px 0;
             border-bottom: 1px solid #333;
-            cursor: pointer;
             text-align: center;
+            cursor: pointer;
         }
 
-        .menu-items li:hover {
-            color: var(--primary-color);
+        .menu-items li:last-child {
+            border-bottom: none;
         }
 
-        /* Hero Section */
-        .hero {
-            margin: 20px 15px;
+        /* Главный контент */
+        .main-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px;
         }
 
-        .hero-title {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: var(--primary-color);
+        .status-label {
+            color: #FF6B81;
+            font-size: 16px;
+            margin-bottom: 24px;
         }
 
-        .title-card {
-            background: var(--card-bg);
-            border-radius: 10px;
-            margin-bottom: 20px;
+        .anime-card {
+            background: #1E1E1E;
+            border-radius: 12px;
+            margin-bottom: 16px;
             overflow: hidden;
         }
 
-        .title-header {
-            padding: 15px;
+        .anime-header {
+            padding: 16px;
             border-bottom: 1px solid #333;
         }
 
-        .title-header h2 {
-            font-size: 1.3rem;
-            margin-bottom: 5px;
+        .anime-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 4px;
         }
 
-        .title-status {
-            color: var(--primary-color);
-            font-size: 0.9rem;
+        .anime-genre {
+            color: #FF6B81;
+            font-size: 14px;
         }
 
-        .title-body {
-            padding: 15px;
-        }
-
-        .title-genre {
-            color: #aaa;
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-        }
-
-        .title-description {
-            font-size: 0.95rem;
-            margin-bottom: 15px;
-            color: #ccc;
+        .anime-description {
+            padding: 16px;
+            font-size: 14px;
+            color: #AAAAAA;
+            margin-bottom: 12px;
         }
 
         .watch-btn {
-            background: var(--primary-color);
-            color: black;
+            background: #FF6B81;
+            color: white;
             border: none;
-            padding: 8px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
+            padding: 12px;
+            border-radius: 6px;
             width: 100%;
+            font-weight: bold;
+            cursor: pointer;
         }
 
-        /* Title Detail Page */
-        .title-detail {
+        /* Страница деталей */
+        .detail-page {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--bg-color);
+            background: #0F0F0F;
+            padding: 16px;
             z-index: 2000;
-            overflow-y: auto;
             transform: translateX(100%);
-            transition: var(--transition);
-            padding: 20px;
+            transition: transform 0.3s ease;
+            overflow-y: auto;
         }
 
-        .title-detail.active {
+        .detail-page.active {
             transform: translateX(0);
         }
 
-        .detail-header {
-            margin-bottom: 20px;
+        .back-btn {
+            font-size: 24px;
+            margin-bottom: 16px;
+            cursor: pointer;
         }
 
-        .detail-header h1 {
-            font-size: 1.5rem;
-            margin-bottom: 5px;
+        .detail-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 4px;
         }
 
         .detail-subtitle {
-            color: #aaa;
-            margin-bottom: 20px;
+            color: #AAAAAA;
+            margin-bottom: 24px;
         }
 
         .tabs {
             display: flex;
-            margin-bottom: 20px;
             border-bottom: 1px solid #333;
+            margin-bottom: 20px;
         }
 
         .tab {
-            padding: 10px 20px;
+            padding: 12px 16px;
             cursor: pointer;
         }
 
         .tab.active {
-            border-bottom: 2px solid var(--primary-color);
-            color: var(--primary-color);
+            border-bottom: 2px solid #FF6B81;
+            color: #FF6B81;
         }
 
         .info-item {
-            margin-bottom: 15px;
+            margin-bottom: 16px;
         }
 
         .info-label {
-            color: #aaa;
-            margin-bottom: 5px;
-            font-size: 0.9rem;
+            color: #AAAAAA;
+            font-size: 14px;
+            margin-bottom: 8px;
         }
 
         .info-value {
-            font-size: 1rem;
+            font-size: 16px;
         }
 
         .tag {
-            background: #333;
-            padding: 5px 10px;
-            border-radius: 4px;
             display: inline-block;
-            margin-right: 5px;
-            margin-bottom: 5px;
+            background: #333;
+            padding: 6px 12px;
+            border-radius: 16px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            font-size: 14px;
         }
 
-        .watch-btn-large {
-            background: var(--primary-color);
-            color: black;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            display: block;
-            width: 100%;
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        /* Overlay */
+        /* Оверлей */
         .overlay {
             position: fixed;
             top: 0;
@@ -258,18 +227,12 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.7);
-            z-index: 500;
+            z-index: 999;
             display: none;
         }
 
         .overlay.active {
             display: block;
-        }
-
-        .back-btn {
-            font-size: 24px;
-            margin-bottom: 20px;
-            cursor: pointer;
         }
     </style>
 </head>
@@ -298,47 +261,40 @@
         </ul>
     </div>
 
-    <!-- Main Content -->
-    <section class="hero">
-        <h2 class="hero-title">Поднятие уровня в одиночку</h2>
-        <div class="title-status">Ожидается</div>
-    </section>
+    <!-- Главный контент -->
+    <div class="main-content">
+        <h1 class="main-title">Поднятие уровня в одиночку</h1>
+        <div class="status-label">Ожидается</div>
 
-    <section class="titles-list">
-        <div class="title-card" data-id="1">
-            <div class="title-header">
-                <h2>Поднятие уровня в одиночку</h2>
-                <div class="title-status">Экшен-фэнтези</div>
+        <div class="anime-card" data-id="1">
+            <div class="anime-header">
+                <h2 class="anime-title">Поднятие уровня в одиночку</h2>
+                <div class="anime-genre">Экшен-фэнтези</div>
             </div>
-            <div class="title-body">
-                <div class="title-description">
-                    Десять лет назад распахнулись Врата нашего мира с миром монстров. После этого некоторым смертным был дан дар уничтожать монстров внутри Врат. Таких...
-                </div>
-                <button class="watch-btn">Смотреть</button>
+            <div class="anime-description">
+                Десять лет назад распахнулись Врата нашего мира с миром монстров. После этого некоторым смертным был дан дар уничтожать монстров внутри Врат. Таких...
             </div>
+            <button class="watch-btn">Смотреть</button>
         </div>
 
-        <div class="title-card" data-id="2">
-            <div class="title-header">
-                <h2>Дни Сакомото</h2>
-                <div class="title-status">Комедия</div>
+        <div class="anime-card" data-id="2">
+            <div class="anime-header">
+                <h2 class="anime-title">Дни Сакомото</h2>
+                <div class="anime-genre">Комедия</div>
             </div>
-            <div class="title-body">
-                <div class="title-description">
-                    "Дни Сакомото" (Sakamoto desu ga?) – это комедийное аниме, рассказывающее о жизни старшеклассника по имени Сакомото, который, кажется, обладает безупречным...
-                </div>
-                <button class="watch-btn">Смотреть</button>
+            <div class="anime-description">
+                "Дни Сакомото" (Sakamoto desu ga?) – это комедийное аниме, рассказывающее о жизни старшеклассника по имени Сакомото, который, кажется, обладает безупречным...
             </div>
+            <button class="watch-btn">Смотреть</button>
         </div>
-    </section>
+    </div>
 
-    <!-- Title Detail Page -->
-    <div class="title-detail" id="title-detail">
+    <!-- Страница деталей -->
+    <div class="detail-page" id="detail-page">
         <div class="back-btn">←</div>
-        <div class="detail-header">
-            <h1>Поднятие уровня в одиночку</h1>
-            <div class="detail-subtitle">2024 · Solo Leveling</div>
-        </div>
+        
+        <h1 class="detail-title">Поднятие уровня в одиночку</h1>
+        <div class="detail-subtitle">2024 · Solo Leveling</div>
         
         <div class="tabs">
             <div class="tab active" data-tab="general">Общее</div>
@@ -346,7 +302,7 @@
             <div class="tab" data-tab="comments">Комментарии</div>
         </div>
         
-        <div class="tab-content active" id="general-content">
+        <div id="general-content">
             <div class="info-item">
                 <div class="info-label">Серий</div>
                 <div class="info-value">12 из 12</div>
@@ -392,26 +348,17 @@
                     Десять лет назад распахнулись Врата нашего мира с миром монстров. После этого некоторым смертным был дан дар уничтожать монстров внутри Врат. Таких смертных назвали охотниками. Однако не все охотники достаточно сильны. Джин-Ву – охотник уровня Е. Парню приходится рисковать жизнью в темных подземельях, выполняя самые неперспективные задания. Дело в том, что охотник не имеет необходимых качеств для повышения, поэтому он вынужден выполнять черновую работу. Джин-Ву снова и снова спускался в подземелья, сражаясь с нижайшими монстрами, пока однажды не забреддет в подземелье уровня D. Пребывание в сложнейшем подземелье даровало парню удивительную
                 </div>
             </div>
-            <button class="watch-btn-large">Смотреть</button>
-        </div>
-        
-        <div class="tab-content" id="rating-content">
-            <!-- Контент рейтинга -->
-        </div>
-        
-        <div class="tab-content" id="comments-content">
-            <!-- Контент комментариев -->
+            <button class="watch-btn" style="margin-top: 24px;">Смотреть</button>
         </div>
     </div>
 
-    <!-- Overlay -->
+    <!-- Оверлей -->
     <div class="overlay" id="overlay"></div>
 
     <script>
         // Инициализация Telegram Web App
         const tg = window.Telegram.WebApp;
         tg.expand();
-        tg.enableClosingConfirmation();
         
         // Элементы DOM
         const elements = {
@@ -419,7 +366,7 @@
             menuAvatar: document.getElementById('menu-avatar'),
             menuUsername: document.getElementById('menu-username'),
             centerMenu: document.getElementById('center-menu'),
-            titleDetail: document.getElementById('title-detail'),
+            detailPage: document.getElementById('detail-page'),
             overlay: document.getElementById('overlay')
         };
 
@@ -442,26 +389,23 @@
                 elements.overlay.classList.toggle('active');
             });
             
-            // Карточки тайтлов
-            document.querySelectorAll('.title-card').forEach(card => {
+            // Карточки аниме
+            document.querySelectorAll('.anime-card').forEach(card => {
                 card.addEventListener('click', () => {
-                    elements.titleDetail.classList.add('active');
+                    elements.detailPage.classList.add('active');
                 });
             });
             
-            // Закрытие деталей
+            // Кнопка назад
             document.querySelector('.back-btn').addEventListener('click', () => {
-                elements.titleDetail.classList.remove('active');
+                elements.detailPage.classList.remove('active');
             });
             
             // Вкладки
             document.querySelectorAll('.tab').forEach(tab => {
                 tab.addEventListener('click', () => {
                     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                    
                     tab.classList.add('active');
-                    document.getElementById(`${tab.dataset.tab}-content`).classList.add('active');
                 });
             });
             
