@@ -54,22 +54,24 @@
             cursor: pointer;
         }
 
-        /* Side Menu */
-        .side-menu {
+        /* Центральное меню */
+        .center-menu {
             position: fixed;
-            top: 0;
-            left: -300px;
-            width: 280px;
-            height: 100%;
+            top: -300px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 400px;
             background: var(--card-bg);
             z-index: 1000;
             transition: var(--transition);
             padding: 20px;
-            overflow-y: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
         }
 
-        .side-menu.active {
-            left: 0;
+        .center-menu.active {
+            top: 80px;
         }
 
         .user-info {
@@ -95,40 +97,11 @@
             padding: 12px 0;
             border-bottom: 1px solid #333;
             cursor: pointer;
+            text-align: center;
         }
 
         .menu-items li:hover {
             color: var(--primary-color);
-        }
-
-        /* Search Panel */
-        .search-panel {
-            position: fixed;
-            top: -100%;
-            left: 0;
-            width: 100%;
-            background: var(--card-bg);
-            z-index: 900;
-            transition: var(--transition);
-            padding: 15px;
-        }
-
-        .search-panel.active {
-            top: 0;
-        }
-
-        .search-container {
-            display: flex;
-            align-items: center;
-        }
-
-        .search-container input {
-            flex: 1;
-            padding: 12px;
-            background: #333;
-            border: none;
-            border-radius: 4px;
-            color: white;
         }
 
         /* Hero Section */
@@ -139,110 +112,45 @@
         .hero-title {
             font-size: 1.5rem;
             margin-bottom: 15px;
-        }
-
-        .horizontal-scroll {
-            display: flex;
-            overflow-x: auto;
-            gap: 15px;
-            padding-bottom: 10px;
-        }
-
-        .featured-card {
-            min-width: 280px;
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .featured-card img {
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
-        }
-
-        .status-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: var(--primary-color);
-            color: black;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-        }
-
-        .featured-info {
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.7);
-        }
-
-        .featured-info h3 {
-            font-size: 16px;
-            margin-bottom: 5px;
-        }
-
-        .rating {
-            display: flex;
-            align-items: center;
-            font-size: 14px;
-        }
-
-        .rating span {
-            margin-left: 5px;
-        }
-
-        /* Titles List */
-        .titles-list {
-            margin: 20px 15px;
+            color: var(--primary-color);
         }
 
         .title-card {
-            display: flex;
-            margin-bottom: 20px;
             background: var(--card-bg);
             border-radius: 10px;
+            margin-bottom: 20px;
             overflow: hidden;
         }
 
-        .title-card img {
-            width: 100px;
-            height: 140px;
-            object-fit: cover;
-        }
-
-        .title-info {
+        .title-header {
             padding: 15px;
-            flex: 1;
+            border-bottom: 1px solid #333;
         }
 
-        .title-info h3 {
-            margin-bottom: 8px;
-            font-size: 18px;
+        .title-header h2 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
         }
 
-        .genres {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
+        .title-status {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+
+        .title-body {
+            padding: 15px;
+        }
+
+        .title-genre {
+            color: #aaa;
+            font-size: 0.9rem;
             margin-bottom: 10px;
         }
 
-        .genre {
-            background: #333;
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-size: 12px;
-        }
-
-        .description {
-            font-size: 14px;
-            color: #aaa;
+        .title-description {
+            font-size: 0.95rem;
             margin-bottom: 15px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            color: #ccc;
         }
 
         .watch-btn {
@@ -253,6 +161,7 @@
             border-radius: 4px;
             cursor: pointer;
             font-weight: bold;
+            width: 100%;
         }
 
         /* Title Detail Page */
@@ -267,6 +176,7 @@
             overflow-y: auto;
             transform: translateX(100%);
             transition: var(--transition);
+            padding: 20px;
         }
 
         .title-detail.active {
@@ -274,70 +184,16 @@
         }
 
         .detail-header {
-            position: relative;
-            height: 300px;
-            overflow: hidden;
+            margin-bottom: 20px;
         }
 
-        .detail-back {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 24px;
-            z-index: 10;
-            cursor: pointer;
-        }
-
-        .detail-bookmark {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 24px;
-            z-index: 10;
-            cursor: pointer;
-            color: var(--primary-color);
-        }
-
-        .detail-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            filter: blur(20px);
-            opacity: 0.5;
-        }
-
-        .detail-cover {
-            position: absolute;
-            bottom: -50px;
-            left: 20px;
-            width: 150px;
-            height: 200px;
-            border-radius: 10px;
-            object-fit: cover;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-            z-index: 5;
-        }
-
-        .detail-body {
-            padding: 70px 20px 20px;
-        }
-
-        .detail-title {
-            font-size: 24px;
+        .detail-header h1 {
+            font-size: 1.5rem;
             margin-bottom: 5px;
         }
 
-        .detail-year {
+        .detail-subtitle {
             color: #aaa;
-            margin-bottom: 5px;
-        }
-
-        .detail-eng-title {
-            color: #aaa;
-            font-style: italic;
             margin-bottom: 20px;
         }
 
@@ -357,14 +213,6 @@
             color: var(--primary-color);
         }
 
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
         .info-item {
             margin-bottom: 15px;
         }
@@ -372,18 +220,20 @@
         .info-label {
             color: #aaa;
             margin-bottom: 5px;
+            font-size: 0.9rem;
         }
 
         .info-value {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
+            font-size: 1rem;
         }
 
         .tag {
             background: #333;
             padding: 5px 10px;
             border-radius: 4px;
+            display: inline-block;
+            margin-right: 5px;
+            margin-bottom: 5px;
         }
 
         .watch-btn-large {
@@ -398,49 +248,6 @@
             width: 100%;
             margin-top: 20px;
             text-align: center;
-        }
-
-        /* Admin Panel */
-        .admin-panel {
-            display: none;
-            padding: 20px;
-        }
-
-        .admin-form {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .form-group input, 
-        .form-group textarea, 
-        .form-group select {
-            width: 100%;
-            padding: 10px;
-            background: #333;
-            border: none;
-            border-radius: 4px;
-            color: white;
-        }
-
-        .admin-btn {
-            background: var(--primary-color);
-            color: black;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
         }
 
         /* Overlay */
@@ -458,6 +265,12 @@
         .overlay.active {
             display: block;
         }
+
+        .back-btn {
+            font-size: 24px;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -467,8 +280,8 @@
         <div class="search-icon">🔍</div>
     </header>
 
-    <!-- Side Menu -->
-    <div class="side-menu">
+    <!-- Центральное меню -->
+    <div class="center-menu" id="center-menu">
         <div class="user-info">
             <img id="menu-avatar" src="" alt="Аватар">
             <div>
@@ -485,113 +298,109 @@
         </ul>
     </div>
 
-    <!-- Search Panel -->
-    <div class="search-panel">
-        <div class="search-container">
-            <input type="text" placeholder="Поиск аниме...">
-            <div class="search-icon close-search">✕</div>
-        </div>
-        <!-- Фильтры будут здесь -->
-    </div>
-
     <!-- Main Content -->
     <section class="hero">
-        <h2 class="hero-title">Ожидаемые релизы</h2>
-        <div class="horizontal-scroll" id="featured-titles">
-            <!-- Динамически заполняемые карточки -->
-        </div>
+        <h2 class="hero-title">Поднятие уровня в одиночку</h2>
+        <div class="title-status">Ожидается</div>
     </section>
 
     <section class="titles-list">
-        <h2 class="hero-title">Все аниме</h2>
-        <div id="titles-container">
-            <!-- Динамически заполняемые карточки -->
+        <div class="title-card" data-id="1">
+            <div class="title-header">
+                <h2>Поднятие уровня в одиночку</h2>
+                <div class="title-status">Экшен-фэнтези</div>
+            </div>
+            <div class="title-body">
+                <div class="title-description">
+                    Десять лет назад распахнулись Врата нашего мира с миром монстров. После этого некоторым смертным был дан дар уничтожать монстров внутри Врат. Таких...
+                </div>
+                <button class="watch-btn">Смотреть</button>
+            </div>
+        </div>
+
+        <div class="title-card" data-id="2">
+            <div class="title-header">
+                <h2>Дни Сакомото</h2>
+                <div class="title-status">Комедия</div>
+            </div>
+            <div class="title-body">
+                <div class="title-description">
+                    "Дни Сакомото" (Sakamoto desu ga?) – это комедийное аниме, рассказывающее о жизни старшеклассника по имени Сакомото, который, кажется, обладает безупречным...
+                </div>
+                <button class="watch-btn">Смотреть</button>
+            </div>
         </div>
     </section>
 
     <!-- Title Detail Page -->
     <div class="title-detail" id="title-detail">
+        <div class="back-btn">←</div>
         <div class="detail-header">
-            <div class="detail-back">←</div>
-            <div class="detail-bookmark">❤</div>
-            <div class="detail-bg" id="detail-bg"></div>
-            <img class="detail-cover" id="detail-cover" src="" alt="Обложка">
+            <h1>Поднятие уровня в одиночку</h1>
+            <div class="detail-subtitle">2024 · Solo Leveling</div>
         </div>
-        <div class="detail-body">
-            <h1 class="detail-title" id="detail-title"></h1>
-            <div class="detail-year" id="detail-year"></div>
-            <div class="detail-eng-title" id="detail-eng-title"></div>
-            
-            <div class="tabs">
-                <div class="tab active" data-tab="general">Общее</div>
-                <div class="tab" data-tab="rating">Рейтинг</div>
-                <div class="tab" data-tab="comments">Комментарии</div>
-            </div>
-            
-            <div class="tab-content active" id="general-content">
-                <div class="info-item">
-                    <div class="info-label">Серии</div>
-                    <div class="info-value" id="detail-episodes"></div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">Жанры</div>
-                    <div class="info-value" id="detail-genres"></div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">Сезон</div>
-                    <div class="info-value" id="detail-season"></div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">Озвучивали</div>
-                    <div class="info-value" id="detail-voice"></div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">Тайминг</div>
-                    <div class="info-value" id="detail-timing"></div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">Состояние</div>
-                    <div class="info-value" id="detail-status"></div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">Описание</div>
-                    <div id="detail-description"></div>
-                </div>
-                <button class="watch-btn-large">Смотреть</button>
-            </div>
-            
-            <div class="tab-content" id="rating-content">
-                <!-- Контент рейтинга -->
-            </div>
-            
-            <div class="tab-content" id="comments-content">
-                <!-- Контент комментариев -->
-            </div>
+        
+        <div class="tabs">
+            <div class="tab active" data-tab="general">Общее</div>
+            <div class="tab" data-tab="rating">Рейтинг</div>
+            <div class="tab" data-tab="comments">Комментарии</div>
         </div>
-    </div>
-
-    <!-- Admin Panel -->
-    <div class="admin-panel" id="admin-panel">
-        <h2>Админ-панель</h2>
-        <div class="admin-form">
-            <h3>Добавить новый тайтл</h3>
-            <div class="form-group">
-                <label>Название (рус)</label>
-                <input type="text" id="title-name">
+        
+        <div class="tab-content active" id="general-content">
+            <div class="info-item">
+                <div class="info-label">Серий</div>
+                <div class="info-value">12 из 12</div>
             </div>
-            <div class="form-group">
-                <label>Название (англ)</label>
-                <input type="text" id="title-eng">
+            <div class="info-item">
+                <div class="info-label">Жанры</div>
+                <div class="info-value">
+                    <span class="tag">Экшен</span>
+                    <span class="tag">Приключения</span>
+                    <span class="tag">Фэнтези</span>
+                </div>
             </div>
-            <div class="form-group">
-                <label>Год выпуска</label>
-                <input type="number" id="title-year">
+            <div class="info-item">
+                <div class="info-label">Сезон</div>
+                <div class="info-value">Зима 2024</div>
             </div>
-            <div class="form-group">
-                <label>Описание</label>
-                <textarea id="title-description"></textarea>
+            <div class="info-item">
+                <div class="info-label">Озвучивали</div>
+                <div class="info-value">
+                    <span class="tag">Familiar</span>
+                    <span class="tag">Kito</span>
+                    <span class="tag">Hiyorikio</span>
+                    <span class="tag">Diaiver</span>
+                    <span class="tag">Eezy</span>
+                    <span class="tag">Lord of Emotions</span>
+                    <span class="tag">Vatavu</span>
+                    <span class="tag">FSLB</span>
+                    <span class="tag">ShiYori</span>
+                    <span class="tag">Вова Степанов</span>
+                </div>
             </div>
-            <button class="admin-btn" id="add-title">Добавить</button>
+            <div class="info-item">
+                <div class="info-label">Тайминг</div>
+                <div class="info-value">GWUNBLAIDE</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Состояние</div>
+                <div class="info-value">Завершён</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Описание</div>
+                <div class="info-value">
+                    Десять лет назад распахнулись Врата нашего мира с миром монстров. После этого некоторым смертным был дан дар уничтожать монстров внутри Врат. Таких смертных назвали охотниками. Однако не все охотники достаточно сильны. Джин-Ву – охотник уровня Е. Парню приходится рисковать жизнью в темных подземельях, выполняя самые неперспективные задания. Дело в том, что охотник не имеет необходимых качеств для повышения, поэтому он вынужден выполнять черновую работу. Джин-Ву снова и снова спускался в подземелья, сражаясь с нижайшими монстрами, пока однажды не забреддет в подземелье уровня D. Пребывание в сложнейшем подземелье даровало парню удивительную
+                </div>
+            </div>
+            <button class="watch-btn-large">Смотреть</button>
+        </div>
+        
+        <div class="tab-content" id="rating-content">
+            <!-- Контент рейтинга -->
+        </div>
+        
+        <div class="tab-content" id="comments-content">
+            <!-- Контент комментариев -->
         </div>
     </div>
 
@@ -609,12 +418,8 @@
             avatar: document.getElementById('user-avatar'),
             menuAvatar: document.getElementById('menu-avatar'),
             menuUsername: document.getElementById('menu-username'),
-            sideMenu: document.querySelector('.side-menu'),
-            searchPanel: document.querySelector('.search-panel'),
-            featuredTitles: document.getElementById('featured-titles'),
-            titlesContainer: document.getElementById('titles-container'),
+            centerMenu: document.getElementById('center-menu'),
             titleDetail: document.getElementById('title-detail'),
-            adminPanel: document.getElementById('admin-panel'),
             overlay: document.getElementById('overlay')
         };
 
@@ -629,155 +434,23 @@
         elements.menuAvatar.src = user.photo_url;
         elements.menuUsername.textContent = `@${user.username}`;
 
-        // Пример данных аниме
-        const animeData = [
-            {
-                id: 1,
-                title: "Атака титанов",
-                eng_title: "Attack on Titan",
-                year: 2013,
-                image: "https://via.placeholder.com/280x160",
-                status: "вышел",
-                rating: 9.8,
-                episodes: "75 из 90",
-                genres: ["Экшен", "Драма", "Фэнтези"],
-                season: "Весна 2013",
-                voice: ["@voice_artist1", "@voice_artist2"],
-                timing: "@timing_group",
-                status_text: "Завершен",
-                description: "Человечество живёт в городах, окружённых огромными стенами, защищающими их от гигантских существ, называемых титанами."
-            },
-            {
-                id: 2,
-                title: "Моя геройская академия",
-                eng_title: "My Hero Academia",
-                year: 2016,
-                image: "https://via.placeholder.com/280x160",
-                status: "выходит",
-                rating: 8.7,
-                episodes: "113 из ?",
-                genres: ["Экшен", "Комедия", "Школа"],
-                season: "Весна 2016",
-                voice: ["@voice_artist3", "@voice_artist4"],
-                timing: "@timing_group2",
-                status_text: "Выходит",
-                description: "В мире, где суперспособности стали обычным явлением, мальчик без способностей мечтает стать героем."
-            }
-        ];
-
-        // Инициализация приложения
-        function initApp() {
-            renderFeaturedTitles();
-            renderAllTitles();
-            setupEventListeners();
-        }
-
-        // Рендер ожидаемых релизов
-        function renderFeaturedTitles() {
-            elements.featuredTitles.innerHTML = '';
-            animeData.forEach(anime => {
-                const card = `
-                    <div class="featured-card" data-id="${anime.id}">
-                        <img src="${anime.image}" alt="${anime.title}">
-                        <div class="status-badge">${anime.status}</div>
-                        <div class="featured-info">
-                            <h3>${anime.title}</h3>
-                            <div class="rating">
-                                ★ ${anime.rating}
-                            </div>
-                        </div>
-                    </div>
-                `;
-                elements.featuredTitles.innerHTML += card;
-            });
-        }
-
-        // Рендер всех тайтлов
-        function renderAllTitles() {
-            elements.titlesContainer.innerHTML = '';
-            animeData.forEach(anime => {
-                const card = `
-                    <div class="title-card" data-id="${anime.id}">
-                        <img src="${anime.image}" alt="${anime.title}">
-                        <div class="title-info">
-                            <h3>${anime.title}</h3>
-                            <div class="genres">
-                                ${anime.genres.map(genre => `<span class="genre">${genre}</span>`).join('')}
-                            </div>
-                            <div class="description">
-                                ${anime.description}
-                            </div>
-                            <button class="watch-btn">Смотреть</button>
-                        </div>
-                    </div>
-                `;
-                elements.titlesContainer.innerHTML += card;
-            });
-        }
-
-        // Открыть детали тайтла
-        function openTitleDetail(id) {
-            const anime = animeData.find(item => item.id === id);
-            if (!anime) return;
-            
-            document.getElementById('detail-title').textContent = anime.title;
-            document.getElementById('detail-year').textContent = anime.year;
-            document.getElementById('detail-eng-title').textContent = anime.eng_title;
-            document.getElementById('detail-cover').src = anime.image;
-            document.getElementById('detail-bg').style.backgroundImage = `url(${anime.image})`;
-            document.getElementById('detail-episodes').textContent = anime.episodes;
-            document.getElementById('detail-genres').innerHTML = anime.genres.map(g => `<span class="tag">${g}</span>`).join('');
-            document.getElementById('detail-season').textContent = anime.season;
-            document.getElementById('detail-voice').innerHTML = anime.voice.map(v => `<span class="tag">${v}</span>`).join('');
-            document.getElementById('detail-timing').textContent = anime.timing;
-            document.getElementById('detail-status').textContent = anime.status_text;
-            document.getElementById('detail-description').textContent = anime.description;
-            
-            elements.titleDetail.classList.add('active');
-        }
-
         // Настройка обработчиков событий
         function setupEventListeners() {
             // Аватарка пользователя
             elements.avatar.addEventListener('click', () => {
-                elements.sideMenu.classList.toggle('active');
+                elements.centerMenu.classList.toggle('active');
                 elements.overlay.classList.toggle('active');
             });
             
-            // Поиск
-            document.querySelector('.search-icon').addEventListener('click', () => {
-                elements.searchPanel.classList.add('active');
-            });
-            
-            document.querySelector('.close-search').addEventListener('click', () => {
-                elements.searchPanel.classList.remove('active');
-            });
-            
-            // Админ-панель
-            document.getElementById('admin-menu').addEventListener('click', () => {
-                const username = prompt('Введите логин админа:');
-                const password = prompt('Введите пароль:');
-                
-                if (username === 'vseadmin' && password === 'cfyz0206123') {
-                    elements.adminPanel.style.display = 'block';
-                    elements.sideMenu.classList.remove('active');
-                    elements.overlay.classList.remove('active');
-                } else {
-                    alert('Неверные данные!');
-                }
-            });
-            
             // Карточки тайтлов
-            document.addEventListener('click', (e) => {
-                const card = e.target.closest('.featured-card, .title-card');
-                if (card) {
-                    const id = parseInt(card.dataset.id);
-                    openTitleDetail(id);
-                }
+            document.querySelectorAll('.title-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    elements.titleDetail.classList.add('active');
+                });
             });
             
             // Закрытие деталей
-            document.querySelector('.detail-back').addEventListener('click', () => {
+            document.querySelector('.back-btn').addEventListener('click', () => {
                 elements.titleDetail.classList.remove('active');
             });
             
@@ -794,13 +467,13 @@
             
             // Оверлей
             elements.overlay.addEventListener('click', () => {
-                elements.sideMenu.classList.remove('active');
+                elements.centerMenu.classList.remove('active');
                 elements.overlay.classList.remove('active');
             });
         }
 
         // Запуск приложения
-        document.addEventListener('DOMContentLoaded', initApp);
+        document.addEventListener('DOMContentLoaded', setupEventListeners);
     </script>
 </body>
 </html>
