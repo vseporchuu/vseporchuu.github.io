@@ -92,7 +92,7 @@
 
         /* Горизонтальный скролл */
         .hero {
-            margin-bottom: 12px; /* Уменьшенный отступ */
+            margin-bottom: 8px; /* Еще уменьшенный отступ */
             position: relative;
         }
 
@@ -100,7 +100,7 @@
             display: flex;
             overflow-x: auto;
             gap: 12px;
-            padding-bottom: 8px; /* Уменьшенный отступ */
+            padding-bottom: 4px; /* Минимальный отступ */
             scrollbar-width: none;
             scroll-snap-type: x mandatory;
         }
@@ -123,20 +123,20 @@
         }
 
         .featured-info {
-            padding: 8px 0; /* Уменьшенный отступ */
+            padding: 6px 0; /* Уменьшенный отступ */
         }
 
         .featured-title {
-            font-size: 16px; /* Уменьшенный размер */
+            font-size: 16px;
             font-weight: bold;
-            margin-bottom: 2px; /* Уменьшенный отступ */
+            margin-bottom: 2px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
         .featured-rating {
-            font-size: 12px; /* Уменьшенный размер */
+            font-size: 12px;
             color: #FFD700;
         }
 
@@ -154,14 +154,14 @@
         .dots-container {
             display: flex;
             justify-content: center;
-            gap: 8px;
-            margin-top: 0; /* Убран отступ сверху */
-            margin-bottom: 8px; /* Уменьшенный отступ снизу */
+            gap: 6px; /* Уменьшенный отступ между точками */
+            margin-top: 0;
+            margin-bottom: 4px; /* Минимальный отступ снизу */
         }
 
         .dot {
-            width: 8px;
-            height: 8px;
+            width: 6px; /* Уменьшенный размер */
+            height: 6px; /* Уменьшенный размер */
             border-radius: 50%;
             background: #444;
             cursor: pointer;
@@ -173,7 +173,7 @@
 
         /* Вертикальный список */
         .vertical-list {
-            margin-top: 16px; /* Уменьшенный отступ */
+            margin-top: 16px;
         }
 
         .anime-card {
@@ -182,8 +182,8 @@
         }
 
         .anime-poster {
-            width: 100px; /* Уменьшенная ширина */
-            height: 140px; /* Уменьшенная высота */
+            width: 100px;
+            height: 140px;
             object-fit: cover;
             border-radius: 8px;
         }
@@ -191,13 +191,13 @@
         .anime-content {
             padding: 0 12px;
             flex: 1;
-            overflow: hidden; /* Обрезаем текст, который не помещается */
+            overflow: hidden;
         }
 
         .anime-title {
-            font-size: 14px; /* Уменьшенный размер */
+            font-size: 14px;
             font-weight: bold;
-            margin-bottom: 6px; /* Уменьшенный отступ */
+            margin-bottom: 6px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -207,23 +207,23 @@
             display: flex;
             flex-wrap: wrap;
             gap: 6px;
-            margin-bottom: 8px; /* Уменьшенный отступ */
+            margin-bottom: 8px;
         }
 
         .genre-tag {
             background: #444;
-            padding: 3px 6px; /* Уменьшенные отступы */
+            padding: 3px 6px;
             border-radius: 12px;
-            font-size: 10px; /* Уменьшенный размер */
+            font-size: 10px;
         }
 
         .anime-description {
-            font-size: 12px; /* Уменьшенный размер */
+            font-size: 12px;
             color: #BBBBBB;
-            margin-bottom: 10px; /* Уменьшенный отступ */
+            margin-bottom: 10px;
             line-height: 1.4;
             display: -webkit-box;
-            -webkit-line-clamp: 3; /* Ограничиваем количество строк */
+            -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
@@ -232,11 +232,11 @@
             background: #FF6B81;
             color: white;
             border: none;
-            padding: 6px 10px; /* Уменьшенные отступы */
+            padding: 6px 10px;
             border-radius: 6px;
             font-weight: bold;
             cursor: pointer;
-            font-size: 12px; /* Уменьшенный размер */
+            font-size: 12px;
         }
 
         /* Страница деталей */
@@ -259,8 +259,11 @@
 
         .detail-header {
             position: relative;
-            height: 380px; /* Увеличенная высота */
+            height: 360px; /* Оптимальная высота */
             overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .detail-bg {
@@ -279,16 +282,13 @@
         }
 
         .detail-cover {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            height: 100%;
-            object-fit: contain; /* Полное изображение без обрезки */
+            position: relative;
             z-index: 2;
-            mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 20%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.8) 80%, #2D2D2D 100%);
-            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 20%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.8) 80%, #2D2D2D 100%);
+            width: 80%; /* Уменьшенная ширина */
+            max-height: 300px; /* Ограничение высоты */
+            object-fit: contain; /* Полное изображение без обрезки */
+            margin: 0 auto;
+            border-radius: 8px;
         }
 
         .detail-actions {
@@ -351,7 +351,7 @@
         }
 
         .detail-body {
-            padding: 20px; /* Уменьшенный отступ сверху */
+            padding: 20px;
             position: relative;
             z-index: 2;
             text-align: center;
