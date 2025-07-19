@@ -720,9 +720,42 @@
         .toast.success {
             background: rgba(76, 175, 80, 0.9);
         }
+        
+        /* Loader */
+        .loader {
+            border: 4px solid rgba(77, 182, 172, 0.2);
+            border-radius: 50%;
+            border-top: 4px solid var(--primary);
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loader-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
+    <div class="loader-container" id="loader">
+        <div class="loader"></div>
+    </div>
+    
     <div class="container">
         <!-- Шапка профиля -->
         <div class="profile-header" id="profileHeader">
@@ -760,15 +793,15 @@
                     </div>
                     <div class="stat-item">
                         <div class="stat-label">Опыт</div>
-                        <div class="stat-value" id="chatXP">125</div>
+                        <div class="stat-value" id="chatXP">0</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-label">Сообщения</div>
-                        <div class="stat-value" id="messagesCount">125</div>
+                        <div class="stat-value" id="messagesCount">0</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-label">Карма</div>
-                        <div class="stat-value" id="karmaPoints">100%</div>
+                        <div class="stat-value" id="karmaPoints">0</div>
                     </div>
                 </div>
             </div>
@@ -780,10 +813,10 @@
                     Прогресс до следующего звания
                 </h2>
                 <div class="rank-progress">
-                    <div class="rank-progress-bar" id="rankProgressBar" style="width: 25%"></div>
+                    <div class="rank-progress-bar" id="rankProgressBar" style="width: 0%"></div>
                 </div>
                 <div class="stat-subvalue" style="text-align: center; margin-top: 8px;">
-                    <span id="currentXP">125</span> / <span id="nextRankXP">500</span> опыта
+                    <span id="currentXP">0</span> / <span id="nextRankXP">100</span> опыта
                 </div>
             </div>
             
@@ -794,31 +827,8 @@
                     Достижения в чате
                 </h2>
                 
-                <div class="achievement-grid">
-                    <div class="achievement-item">
-                        <div class="achievement-badge">
-                            <i class="fas fa-comment"></i>
-                        </div>
-                        <div class="achievement-name">Первое сообщение</div>
-                    </div>
-                    <div class="achievement-item">
-                        <div class="achievement-badge">
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <div class="achievement-name">Активный участник</div>
-                    </div>
-                    <div class="achievement-item">
-                        <div class="achievement-badge">
-                            <i class="fas fa-gem"></i>
-                        </div>
-                        <div class="achievement-name">100 сообщений</div>
-                    </div>
-                    <div class="achievement-item">
-                        <div class="achievement-badge">
-                            <i class="fas fa-crown"></i>
-                        </div>
-                        <div class="achievement-name">Ветеран чата</div>
-                    </div>
+                <div class="achievement-grid" id="achievementsContainer">
+                    <!-- Будет заполнено динамически -->
                 </div>
             </div>
             
@@ -1385,9 +1395,7 @@
     <script>
         // Инициализация Telegram Web App
         const tg = window.Telegram.WebApp;
-        
-        // Получаем данные пользователя Telegram
-        const user = tg.initDataUnsafe.user;
+        const bot = tg.initDataUnsafe.bot;
         
         // Элементы интерфейса
         const elements = {
@@ -1412,6 +1420,7 @@
             penaltyPoints: document.getElementById('penaltyPoints'),
             mutesCount: document.getElementById('mutesCount'),
             lastViolations: document.getElementById('lastViolations'),
+            achievementsContainer: document.getElementById('achievementsContainer'),
             // Настройки
             themeSwitch: document.getElementById('themeSwitch'),
             privacySwitch: document.getElementById('privacySwitch'),
@@ -1427,8 +1436,8 @@
             playerSupplies: document.getElementById('playerSupplies'),
             achievementsCard: document.getElementById('achievementsCard'),
             achievementsGrid: document.getElementById('achievementsGrid'),
-            // Поиск пользователей
-            userSearchInput: document.getElementById('userSearchInput')
+            // Загрузчик
+            loader: document.getElementById('loader')
         };
         
         // Показываем toast уведомление
@@ -1442,8 +1451,79 @@
             }, 3000);
         }
         
-        // Обновляем шапку профиля
-        function updateProfileHeader() {
+        // Показать/скрыть загрузчик
+        function showLoader() {
+            elements.loader.style.display = 'flex';
+        }
+        
+        function hideLoader() {
+            elements.loader.style.display = 'none';
+        }
+        
+        // Отправка запроса к API бота
+        async function sendApiRequest(data) {
+            try {
+                showLoader();
+                
+                // В реальном приложении здесь будет вызов метода бота
+                // const response = await bot.sendData(JSON.stringify(data));
+                
+                // Для демонстрации используем имитацию ответа
+                let response;
+                
+                if (data.action === 'get_chat_stats') {
+                    response = {
+                        experience: 125,
+                        achievements: ["Первое сообщение", "Активный участник"],
+                        karma: 50,
+                        mutes: 1,
+                        rank: "Сержант"
+                    };
+                } else if (data.action === 'get_tanki_stats') {
+                    response = {
+                        success: true,
+                        player_name: data.nickname,
+                        rank: "Майор",
+                        battles: 1250,
+                        wins: 750,
+                        winrate: 60,
+                        kills: 3250,
+                        deaths: 1500,
+                        kd: 2.17,
+                        turrets: [["Рейлган", 120], ["Гром", 85]],
+                        hulls: [["Титан", 150], ["Викинг", 90]],
+                        paints: [["Золотая", 50], ["Камуфляж", 45]],
+                        modes: [["DM", 100], ["CTF", 80]],
+                        repairKit: 12,
+                        armor: 8,
+                        doubleDamage: 5,
+                        speedBoost: 10,
+                        mine: 3,
+                        grenade: 2,
+                        goldBox: 1,
+                        overdrive: 0
+                    };
+                } else if (data.action === 'bind_nickname') {
+                    response = {
+                        status: "success",
+                        nickname: data.nickname
+                    };
+                } else {
+                    response = { error: "Unknown action" };
+                }
+                
+                return response;
+            } catch (error) {
+                console.error('API Error:', error);
+                showToast('Ошибка соединения с сервером', 'error');
+                return { error: error.message };
+            } finally {
+                hideLoader();
+            }
+        }
+        
+        // Обновление шапки профиля
+        function updateProfileHeader(user) {
             if (user) {
                 // Обновляем имя
                 const userName = user.first_name || user.username || 'Пользователь';
@@ -1464,57 +1544,43 @@
             }
         }
         
-        // Генерация случайной статистики чата
-        function generateChatStats() {
-            // Случайный опыт (от 50 до 2000)
-            const xp = Math.floor(Math.random() * 1950) + 50;
-            elements.chatXP.textContent = xp;
-            elements.messagesCount.textContent = xp;
+        // Обновление статистики чата
+        function updateChatStats(stats) {
+            elements.chatXP.textContent = stats.experience;
+            elements.messagesCount.textContent = stats.experience;
+            elements.karmaPoints.textContent = stats.karma;
+            elements.penaltyPoints.textContent = stats.karma;
+            elements.mutesCount.textContent = stats.mutes;
+            elements.chatRank.textContent = stats.rank;
             
-            // Определение звания по опыту
-            let rank, nextRankXP;
-            if (xp < 100) {
-                rank = "Рекрут";
+            // Прогресс до следующего звания (упрощенная логика)
+            let nextRankXP;
+            if (stats.experience < 100) {
                 nextRankXP = 100;
-            } else if (xp < 300) {
-                rank = "Солдат";
+            } else if (stats.experience < 300) {
                 nextRankXP = 300;
-            } else if (xp < 600) {
-                rank = "Сержант";
+            } else if (stats.experience < 600) {
                 nextRankXP = 600;
-            } else if (xp < 1000) {
-                rank = "Лейтенант";
+            } else if (stats.experience < 1000) {
                 nextRankXP = 1000;
-            } else if (xp < 1500) {
-                rank = "Капитан";
-                nextRankXP = 1500;
             } else {
-                rank = "Майор";
-                nextRankXP = 2000;
+                nextRankXP = stats.experience * 1.5;
             }
             
-            elements.chatRank.textContent = rank;
-            elements.currentXP.textContent = xp;
+            elements.currentXP.textContent = stats.experience;
             elements.nextRankXP.textContent = nextRankXP;
             
-            // Прогресс до следующего звания
-            const progress = Math.min(100, Math.round((xp / nextRankXP) * 100));
+            const progress = Math.min(100, Math.round((stats.experience / nextRankXP) * 100));
             elements.rankProgressBar.style.width = `${progress}%`;
             
-            // Карма и нарушения
-            const penaltyPoints = Math.floor(Math.random() * 10);
-            const mutesCount = Math.floor(Math.random() * 3);
+            // Достижения
+            updateAchievements(stats.achievements);
             
-            elements.penaltyPoints.textContent = penaltyPoints;
-            elements.mutesCount.textContent = mutesCount;
-            
-            // Последние нарушения
-            if (mutesCount > 0) {
+            // Нарушения
+            if (stats.mutes > 0) {
                 const violations = [
-                    { reason: "Нецензурная лексика", date: "12.07.2025" },
-                    { reason: "Спам", date: "05.07.2025" },
-                    { reason: "Оскорбление игроков", date: "28.06.2025" }
-                ].slice(0, mutesCount);
+                    { reason: "Нецензурная лексика", date: new Date().toLocaleDateString() }
+                ];
                 
                 elements.lastViolations.innerHTML = violations.map(v => `
                     <div class="violation-item">
@@ -1525,215 +1591,68 @@
             }
         }
         
-        // Проверка достижений игрока
-        function checkAchievements(paints) {
-            const achievements = [];
-            const paintNames = paints.map(p => p.name.toLowerCase());
-            
-            // Киберспортсмен
-            const esportsPaints = ['звезда', 'кислота', 'гладиатор', 'импульс', 'призма', 'ветеран', 'счастливая семёрка'];
-            if (esportsPaints.some(p => paintNames.includes(p))) {
-                achievements.push({ 
-                    name: "Киберспортсмен", 
-                    icon: "fas fa-trophy" 
-                });
-            }
-            
-            // Помощник игры
-            const helperPaints = ['помощник', 'микросхема', 'рубин', 'арамид', 'оператор', 'сапфир', 'аллигатор', 'репортёр'];
-            if (helperPaints.some(p => paintNames.includes(p))) {
-                achievements.push({ 
-                    name: "Помощник игры", 
-                    icon: "fas fa-hands-helping" 
-                });
-            }
-            
-            // Ютубер ТО
-            if (paintNames.includes('ютубер то')) {
-                achievements.push({ 
-                    name: "Ютубер ТО", 
-                    icon: "fas fa-video" 
-                });
-            }
-            
-            // Администратор игры
-            const adminPaints = ['пламя', 'пламя 2.0'];
-            if (adminPaints.some(p => paintNames.includes(p))) {
-                achievements.push({ 
-                    name: "Администратор игры", 
-                    icon: "fas fa-shield-alt" 
-                });
-            }
-            
-            // Паркурист
-            const parkourPaints = ['оникс', 'орёл', 'облака', 'глайд', 'феникс', 'блейз', 'аэро'];
-            if (parkourPaints.some(p => paintNames.includes(p))) {
-                achievements.push({ 
-                    name: "Паркурист", 
-                    icon: "fas fa-running" 
-                });
-            }
-            
-            // Чемпион
-            if (paintNames.includes('чемпион')) {
-                achievements.push({ 
-                    name: "Чемпион Major", 
-                    icon: "fas fa-medal" 
-                });
-            }
-            
-            // Призеры
-            if (paintNames.includes('бронза')) {
-                achievements.push({ 
-                    name: "Бронзовый призер", 
-                    icon: "fas fa-award" 
-                });
-            }
-            
-            if (paintNames.includes('серебро')) {
-                achievements.push({ 
-                    name: "Серебряный призер", 
-                    icon: "fas fa-award" 
-                });
-            }
-            
-            return achievements;
-        }
-        
-        // Генерация случайных данных для рейтинга
-        function generateRandomPlayerData() {
-            // Статистика
-            const battles = Math.floor(Math.random() * 5000);
-            const wins = Math.floor(battles * (0.4 + Math.random() * 0.3));
-            const winrate = Math.round((wins / battles) * 100);
-            const destroyed = Math.floor(battles * 3 + Math.random() * 1000);
-            const experience = Math.floor(battles * 50 + Math.random() * 10000);
-            
-            // Рейтинги
-            const expRating = Math.floor(Math.random() * 50000);
-            const goldHunters = Math.floor(Math.random() * 500);
-            const crystalsRating = Math.floor(Math.random() * 50000);
-            const efficiencyRating = Math.floor(Math.random() * 50000);
-            
-            // Топы
-            const weapons = ['Рейлган', 'Гром', 'Изида', 'Фриза', 'Магнум', 'Огнемёт'];
-            const paints = ['Золотая', 'Серебряная', 'Бронзовая', 'Камуфляж', 'Неон', 'Хамелеон'];
-            const hulls = ['Титан', 'Викинг', 'Мамонт', 'Хорнет', 'Хантер', 'Рыцарь'];
-            
-            // Припасы
-            const repairKit = Math.floor(Math.random() * 50);
-            const armor = Math.floor(Math.random() * 30);
-            const doubleDamage = Math.floor(Math.random() * 25);
-            const speedBoost = Math.floor(Math.random() * 40);
-            const mine = Math.floor(Math.random() * 20);
-            const grenade = Math.floor(Math.random() * 15);
-            const goldBox = Math.floor(Math.random() * 10);
-            const overdrive = Math.floor(Math.random() * 5);
-            
-            // Достижения
-            const achievements = [
-                { name: "Киберспортсмен", icon: "fas fa-trophy" },
-                { name: "Помощник игры", icon: "fas fa-hands-helping" },
-                { name: "Паркурист", icon: "fas fa-running" },
-                { name: "Бронзовый призер", icon: "fas fa-award" }
-            ];
-            
-            return {
-                battles,
-                wins,
-                winrate,
-                destroyed,
-                experience,
-                expRating,
-                goldHunters,
-                crystalsRating,
-                efficiencyRating,
-                weapons,
-                paints,
-                hulls,
-                repairKit,
-                armor,
-                doubleDamage,
-                speedBoost,
-                mine,
-                grenade,
-                goldBox,
-                overdrive,
-                achievements
+        // Обновление списка достижений
+        function updateAchievements(achievements) {
+            const achievementIcons = {
+                "Первое сообщение": "fas fa-comment",
+                "Активный участник": "fas fa-star",
+                "Ветеран чата": "fas fa-crown",
+                "Репортер": "fas fa-flag"
             };
-        }
-        
-        // Обновление данных в рейтинге
-        function updateRatingData(playerData) {
-            // Статистика
-            elements.playerBattles.textContent = playerData.battles.toLocaleString();
-            elements.playerWins.textContent = playerData.wins.toLocaleString();
-            elements.playerWinrate.textContent = `${playerData.winrate}%`;
-            elements.playerDestroyed.textContent = playerData.destroyed.toLocaleString();
-            elements.playerExperience.textContent = playerData.experience.toLocaleString();
             
-            // Рейтинги
-            elements.playerExpRating.textContent = `#${playerData.expRating.toLocaleString()}`;
-            elements.playerGoldHunters.textContent = playerData.goldHunters.toLocaleString();
-            elements.playerCrystalsRating.textContent = `#${playerData.crystalsRating.toLocaleString()}`;
-            elements.playerEfficiencyRating.textContent = `#${playerData.efficiencyRating.toLocaleString()}`;
-            
-            // Топы
-            const playerTopGuns = document.getElementById('playerTopGuns');
-            playerTopGuns.innerHTML = playerData.weapons.slice(0, 2).map((weapon, index) => `
-                <div class="top-item">
-                    <div class="top-icon">${index + 1}</div>
-                    <div class="top-info">
-                        <div class="top-name">${weapon}</div>
-                        <div class="top-value">${Math.floor(Math.random() * 100)} ч</div>
-                    </div>
-                </div>
-            `).join('');
-            
-            const playerTopPaints = document.getElementById('playerTopPaints');
-            playerTopPaints.innerHTML = playerData.paints.slice(0, 2).map((paint, index) => `
-                <div class="top-item">
-                    <div class="top-icon">${index + 1}</div>
-                    <div class="top-info">
-                        <div class="top-name">${paint}</div>
-                        <div class="top-value">${Math.floor(Math.random() * 100)} ч</div>
-                    </div>
-                </div>
-            `).join('');
-            
-            const playerTopHulls = document.getElementById('playerTopHulls');
-            playerTopHulls.innerHTML = playerData.hulls.slice(0, 2).map((hull, index) => `
-                <div class="top-item">
-                    <div class="top-icon">${index + 1}</div>
-                    <div class="top-info">
-                        <div class="top-name">${hull}</div>
-                        <div class="top-value">${Math.floor(Math.random() * 100)} ч</div>
-                    </div>
-                </div>
-            `).join('');
-            
-            // Припасы
-            elements.playerRepairKit.textContent = playerData.repairKit;
-            elements.playerArmor.textContent = playerData.armor;
-            elements.playerDoubleDamage.textContent = playerData.doubleDamage;
-            elements.playerSpeedBoost.textContent = playerData.speedBoost;
-            
-            // Достижения
-            elements.achievementsGrid.innerHTML = playerData.achievements.map(achievement => `
+            elements.achievementsContainer.innerHTML = achievements.map(achievement => `
                 <div class="achievement-item">
                     <div class="achievement-badge">
-                        <i class="${achievement.icon}"></i>
+                        <i class="${achievementIcons[achievement] || 'fas fa-medal'}"></i>
                     </div>
-                    <div class="achievement-name">${achievement.name}</div>
+                    <div class="achievement-name">${achievement}</div>
                 </div>
             `).join('');
+        }
+        
+        // Обновление статистики Tanki Online
+        function updateTankiStats(stats) {
+            // Основная статистика
+            elements.battlesStat.textContent = stats.battles.toLocaleString();
+            elements.winsStat.textContent = stats.wins.toLocaleString();
+            elements.winrateStat.textContent = `${stats.winrate}%`;
+            elements.destroyedStat.textContent = stats.kills.toLocaleString();
+            elements.experienceStat.textContent = stats.experience.toLocaleString();
             
-            // Показываем все разделы
-            elements.playerStats.style.display = 'block';
-            elements.playerRatings.style.display = 'block';
-            elements.playerTops.style.display = 'block';
-            elements.playerSupplies.style.display = 'block';
-            elements.achievementsCard.style.display = 'block';
+            // Топы
+            updateTopItems('topGunsContainer', stats.turrets, 'fas fa-gun');
+            updateTopItems('topHullsContainer', stats.hulls, 'fas fa-shield-alt');
+            updateTopItems('topPaintsContainer', stats.paints, 'fas fa-paint-roller');
+            
+            // Припасы
+            elements.repairKit.textContent = stats.repairKit;
+            elements.armor.textContent = stats.armor;
+            elements.doubleDamage.textContent = stats.doubleDamage;
+            elements.speedBoost.textContent = stats.speedBoost;
+            elements.mine.textContent = stats.mine;
+            elements.grenade.textContent = stats.grenade;
+            elements.goldBox.textContent = stats.goldBox;
+            elements.overdrive.textContent = stats.overdrive;
+            
+            // Обновляем никнейм в профиле
+            elements.tankiNickname.textContent = stats.player_name;
+            elements.tankiRank.textContent = stats.rank;
+        }
+        
+        // Обновление топовых предметов
+        function updateTopItems(containerId, items, iconClass) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = items.map((item, index) => `
+                <div class="top-item">
+                    <div class="top-icon">
+                        <i class="${iconClass}"></i>
+                    </div>
+                    <div class="top-info">
+                        <div class="top-name">${item[0]}</div>
+                        <div class="top-value">${item[1]} ч</div>
+                    </div>
+                </div>
+            `).join('');
         }
         
         // Переключение вкладок
@@ -1777,8 +1696,108 @@
             }
         }
         
+        // Обработчик привязки аккаунта Tanki Online
+        async function handleBindAccount() {
+            const nickname = elements.nicknameInput.value.trim();
+            if (!nickname) {
+                showToast('Введите никнейм', 'error');
+                return;
+            }
+            
+            const response = await sendApiRequest({
+                action: "bind_nickname",
+                user_id: tg.initDataUnsafe.user.id,
+                nickname: nickname
+            });
+            
+            if (response.status === "success") {
+                showToast('Никнейм привязан!', 'success');
+                loadTankiStats(nickname);
+            } else {
+                showToast('Ошибка привязки никнейма', 'error');
+            }
+        }
+        
+        // Загрузка статистики Tanki Online
+        async function loadTankiStats(nickname) {
+            const data = await sendApiRequest({
+                action: "get_tanki_stats",
+                nickname: nickname
+            });
+            
+            if (data.success) {
+                updateTankiStats(data);
+            } else {
+                showToast(data.error || 'Ошибка загрузки данных', 'error');
+            }
+        }
+        
+        // Обработчик поиска игрока в рейтинге
+        async function handlePlayerSearch() {
+            const nickname = elements.ratingNicknameInput.value.trim();
+            if (!nickname) {
+                showToast('Введите никнейм игрока', 'error');
+                return;
+            }
+            
+            const data = await sendApiRequest({
+                action: "get_tanki_stats",
+                nickname: nickname
+            });
+            
+            if (data.success) {
+                updatePlayerStats(data);
+                showToast(`Данные для ${nickname} загружены`, 'success');
+            } else {
+                showToast(data.error || 'Ошибка загрузки данных', 'error');
+            }
+        }
+        
+        // Обновление статистики игрока в рейтинге
+        function updatePlayerStats(stats) {
+            // Основная статистика
+            elements.playerBattles.textContent = stats.battles.toLocaleString();
+            elements.playerWins.textContent = stats.wins.toLocaleString();
+            elements.playerWinrate.textContent = `${stats.winrate}%`;
+            elements.playerDestroyed.textContent = stats.kills.toLocaleString();
+            elements.playerExperience.textContent = stats.experience.toLocaleString();
+            
+            // Топы
+            updatePlayerTopItems('playerTopGuns', stats.turrets, 'fas fa-gun');
+            updatePlayerTopItems('playerTopHulls', stats.hulls, 'fas fa-shield-alt');
+            updatePlayerTopItems('playerTopPaints', stats.paints, 'fas fa-paint-roller');
+            
+            // Припасы
+            elements.playerRepairKit.textContent = stats.repairKit;
+            elements.playerArmor.textContent = stats.armor;
+            elements.playerDoubleDamage.textContent = stats.doubleDamage;
+            elements.playerSpeedBoost.textContent = stats.speedBoost;
+            
+            // Показываем все разделы
+            elements.playerStats.style.display = 'block';
+            elements.playerRatings.style.display = 'block';
+            elements.playerTops.style.display = 'block';
+            elements.playerSupplies.style.display = 'block';
+        }
+        
+        // Обновление топовых предметов игрока
+        function updatePlayerTopItems(containerId, items, iconClass) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = items.map((item, index) => `
+                <div class="top-item">
+                    <div class="top-icon">
+                        ${index + 1}
+                    </div>
+                    <div class="top-info">
+                        <div class="top-name">${item[0]}</div>
+                        <div class="top-value">${item[1]} ч</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
         // Инициализация приложения
-        function initApp() {
+        async function initApp() {
             // Настройка Telegram Web App
             if (tg.platform !== 'unknown') {
                 tg.expand();
@@ -1787,10 +1806,27 @@
                 tg.setBackgroundColor('#F5F7FA');
             }
             
-            updateProfileHeader();
-            generateChatStats();
+            // Получаем данные пользователя
+            const user = tg.initDataUnsafe.user;
+            updateProfileHeader(user);
+            
+            // Загружаем статистику чата
+            const chatStats = await sendApiRequest({
+                action: "get_chat_stats",
+                user_id: user.id
+            });
+            
+            if (chatStats && !chatStats.error) {
+                updateChatStats(chatStats);
+            }
+            
+            // Настройка интерфейса
             setupTabNavigation();
             setupThemeSwitcher();
+            
+            // Обработчики событий
+            elements.bindBtn.addEventListener('click', handleBindAccount);
+            elements.ratingSearchBtn.addEventListener('click', handlePlayerSearch);
             
             // Загрузка сохраненных настроек приватности
             const privacySetting = localStorage.getItem('privacy');
@@ -1819,21 +1855,6 @@
                 if (e.key === 'Enter') {
                     showToast(`Поиск пользователя: ${this.value}`, 'info');
                 }
-            });
-            
-            // Обработчик поиска в рейтинге
-            elements.ratingSearchBtn.addEventListener('click', function() {
-                const nickname = elements.ratingNicknameInput.value.trim();
-                if (!nickname) {
-                    showToast('Введите никнейм игрока', 'error');
-                    return;
-                }
-                
-                // Генерируем случайные данные
-                const playerData = generateRandomPlayerData();
-                updateRatingData(playerData);
-                
-                showToast(`Данные для ${nickname} загружены`, 'success');
             });
         }
         
