@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Tanki Online Stats</title>
+    <title>Tanki Online 47bot</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
@@ -320,7 +320,7 @@
         /* Припасы */
         .supplies-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
             gap: 12px;
             margin-top: 12px;
         }
@@ -391,36 +391,6 @@
         
         .tab-item.active i {
             color: var(--primary);
-        }
-        
-        /* Скелетоны для загрузки */
-        .skeleton {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite;
-            border-radius: 8px;
-        }
-        
-        @keyframes loading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-        
-        .skeleton-text {
-            height: 14px;
-            margin: 6px 0;
-            border-radius: 4px;
-        }
-        
-        .skeleton-stat {
-            height: 50px;
-            border-radius: 10px;
-        }
-        
-        .skeleton-top {
-            height: 40px;
-            border-radius: 8px;
-            margin-bottom: 8px;
         }
         
         /* Новые стили для чат-статистики */
@@ -657,6 +627,27 @@
             display: block;
         }
         
+        /* Стили для припасов с иконками */
+        .supply-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: var(--accent);
+        }
+        
+        .supply-title {
+            font-size: 10px;
+            color: var(--text-light);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        
+        .supply-count {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+        }
+        
         /* Адаптивность */
         @media (max-width: 340px) {
             .top-grid {
@@ -864,7 +855,7 @@
             </div>
         </div>
         
-        <!-- Вкладка "Игровой аккаунт" -->
+        <!-- Вкладка "Профиль" (бывший Игровой аккаунт) -->
         <div class="tab-content" id="gameTab">
             <!-- Привязка аккаунта -->
             <div class="bind-section">
@@ -982,6 +973,60 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <div class="top-card">
+                        <div class="top-card-title">
+                            <i class="fas fa-shield-alt"></i>
+                            Корпуса
+                        </div>
+                        <div id="topHullsContainer">
+                            <div class="top-item">
+                                <div class="top-icon">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                </div>
+                                <div class="top-info">
+                                    <div class="top-name">Загрузка...</div>
+                                    <div class="top-value">0 часов</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="top-card">
+                        <div class="top-card-title">
+                            <i class="fas fa-cogs"></i>
+                            Модули
+                        </div>
+                        <div id="topModulesContainer">
+                            <div class="top-item">
+                                <div class="top-icon">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                </div>
+                                <div class="top-info">
+                                    <div class="top-name">Загрузка...</div>
+                                    <div class="top-value">0 часов</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="top-card">
+                        <div class="top-card-title">
+                            <i class="fas fa-flag"></i>
+                            Режимы
+                        </div>
+                        <div id="topModesContainer">
+                            <div class="top-item">
+                                <div class="top-icon">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                </div>
+                                <div class="top-info">
+                                    <div class="top-name">Загрузка...</div>
+                                    <div class="top-value">0 часов</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
@@ -994,20 +1039,60 @@
                 
                 <div class="supplies-grid" id="suppliesContainer">
                     <div class="supply-item">
-                        <div class="supply-label">Ремкомплекты</div>
-                        <div class="supply-value" id="repairKit">0</div>
+                        <div class="supply-icon">
+                            <i class="fas fa-wrench"></i>
+                        </div>
+                        <div class="supply-title">Ремкомплект</div>
+                        <div class="supply-count" id="repairKit">0</div>
                     </div>
                     <div class="supply-item">
-                        <div class="supply-label">Бронирование</div>
-                        <div class="supply-value" id="armor">0</div>
+                        <div class="supply-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="supply-title">Защита</div>
+                        <div class="supply-count" id="armor">0</div>
                     </div>
                     <div class="supply-item">
-                        <div class="supply-label">Двойной урон</div>
-                        <div class="supply-value" id="doubleDamage">0</div>
+                        <div class="supply-icon">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <div class="supply-title">Урон</div>
+                        <div class="supply-count" id="doubleDamage">0</div>
                     </div>
                     <div class="supply-item">
-                        <div class="supply-label">Ускорение</div>
-                        <div class="supply-value" id="speedBoost">0</div>
+                        <div class="supply-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="supply-title">Ускорение</div>
+                        <div class="supply-count" id="speedBoost">0</div>
+                    </div>
+                    <div class="supply-item">
+                        <div class="supply-icon">
+                            <i class="fas fa-circle"></i>
+                        </div>
+                        <div class="supply-title">Мина</div>
+                        <div class="supply-count" id="mine">0</div>
+                    </div>
+                    <div class="supply-item">
+                        <div class="supply-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="supply-title">Граната</div>
+                        <div class="supply-count" id="grenade">0</div>
+                    </div>
+                    <div class="supply-item">
+                        <div class="supply-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <div class="supply-title">Зол. ящик</div>
+                        <div class="supply-count" id="goldBox">0</div>
+                    </div>
+                    <div class="supply-item">
+                        <div class="supply-icon">
+                            <i class="fas fa-power-off"></i>
+                        </div>
+                        <div class="supply-title">Овердрайв</div>
+                        <div class="supply-count" id="overdrive">0</div>
                     </div>
                 </div>
             </div>
@@ -1021,7 +1106,7 @@
                     <div class="common-card-title">Новости</div>
                 </div>
                 <div class="common-card">
-                    <i class="fas fa-trophy"></i>
+                    <i class="fas fa-swords"></i>
                     <div class="common-card-title">Киберспорт</div>
                 </div>
                 <div class="common-card">
@@ -1029,16 +1114,12 @@
                     <div class="common-card-title">Вызов принят</div>
                 </div>
                 <div class="common-card">
-                    <i class="fas fa-book"></i>
+                    <i class="fas fa-book-open"></i>
                     <div class="common-card-title">Википедия</div>
                 </div>
                 <div class="common-card">
-                    <i class="fas fa-users"></i>
+                    <i class="fas fa-comments"></i>
                     <div class="common-card-title">Чат танкистов</div>
-                </div>
-                <div class="common-card">
-                    <i class="fas fa-video"></i>
-                    <div class="common-card-title">Видео-гайд</div>
                 </div>
             </div>
         </div>
@@ -1086,6 +1167,106 @@
                     <div class="stat-item">
                         <div class="stat-label">Опыт</div>
                         <div class="stat-value" id="playerExperience">0</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Рейтинги игрока -->
+            <div class="stats-card" id="playerRatings" style="display: none;">
+                <h2 class="section-title">
+                    <i class="fas fa-trophy"></i>
+                    Рейтинги игрока
+                </h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-label">По опыту</div>
+                        <div class="stat-value" id="playerExpRating">#0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Голдоловов</div>
+                        <div class="stat-value" id="playerGoldHunters">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">По кристаллам</div>
+                        <div class="stat-value" id="playerCrystalsRating">#0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">По эффективности</div>
+                        <div class="stat-value" id="playerEfficiencyRating">#0</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Топы игрока -->
+            <div class="stats-card" id="playerTops" style="display: none;">
+                <h2 class="section-title">
+                    <i class="fas fa-crown"></i>
+                    Топы игрока
+                </h2>
+                
+                <div class="top-grid">
+                    <div class="top-card">
+                        <div class="top-card-title">
+                            <i class="fas fa-gun"></i>
+                            Пушки
+                        </div>
+                        <div id="playerTopGuns"></div>
+                    </div>
+                    
+                    <div class="top-card">
+                        <div class="top-card-title">
+                            <i class="fas fa-paint-roller"></i>
+                            Краски
+                        </div>
+                        <div id="playerTopPaints"></div>
+                    </div>
+                    
+                    <div class="top-card">
+                        <div class="top-card-title">
+                            <i class="fas fa-shield-alt"></i>
+                            Корпуса
+                        </div>
+                        <div id="playerTopHulls"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Припасы игрока -->
+            <div class="stats-card" id="playerSupplies" style="display: none;">
+                <h2 class="section-title">
+                    <i class="fas fa-box-open"></i>
+                    Припасы игрока
+                </h2>
+                
+                <div class="supplies-grid">
+                    <div class="supply-item">
+                        <div class="supply-icon">
+                            <i class="fas fa-wrench"></i>
+                        </div>
+                        <div class="supply-title">Ремкомплект</div>
+                        <div class="supply-count" id="playerRepairKit">0</div>
+                    </div>
+                    <div class="supply-item">
+                        <div class="supply-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="supply-title">Защита</div>
+                        <div class="supply-count" id="playerArmor">0</div>
+                    </div>
+                    <div class="supply-item">
+                        <div class="supply-icon">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <div class="supply-title">Урон</div>
+                        <div class="supply-count" id="playerDoubleDamage">0</div>
+                    </div>
+                    <div class="supply-item">
+                        <div class="supply-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="supply-title">Ускорение</div>
+                        <div class="supply-count" id="playerSpeedBoost">0</div>
                     </div>
                 </div>
             </div>
@@ -1158,12 +1339,12 @@
                 
                 <div style="padding: 16px 0; line-height: 1.8;">
                     <p style="margin-bottom: 12px;">
-                        <strong>Tanki Online Stats</strong><br>
-                        Версия 1.5.0<br>
-                        © 2025 Tanki Community
+                        <strong>Tanki Online 47bot</strong><br>
+                        Версия 1.0<br>
+                        © Tanki Online
                     </p>
                     <p>
-                        Приложение для просмотра статистики игроков
+                        Официальное приложение для просмотра статистики игроков
                         Tanki Online и управления профилем в чате
                     </p>
                 </div>
@@ -1177,8 +1358,8 @@
                 <span>Главная</span>
             </div>
             <div class="tab-item" data-tab="gameTab">
-                <i class="fas fa-gamepad"></i>
-                <span>Игровой акк</span>
+                <i class="fas fa-user"></i>
+                <span>Профиль</span>
             </div>
             <div class="tab-item" data-tab="commonTab">
                 <i class="fas fa-th-large"></i>
@@ -1241,6 +1422,9 @@
             ratingErrorMessage: document.getElementById('ratingErrorMessage'),
             ratingErrorText: document.getElementById('ratingErrorText'),
             playerStats: document.getElementById('playerStats'),
+            playerRatings: document.getElementById('playerRatings'),
+            playerTops: document.getElementById('playerTops'),
+            playerSupplies: document.getElementById('playerSupplies'),
             achievementsCard: document.getElementById('achievementsCard'),
             achievementsGrid: document.getElementById('achievementsGrid'),
             // Поиск пользователей
@@ -1416,6 +1600,142 @@
             return achievements;
         }
         
+        // Генерация случайных данных для рейтинга
+        function generateRandomPlayerData() {
+            // Статистика
+            const battles = Math.floor(Math.random() * 5000);
+            const wins = Math.floor(battles * (0.4 + Math.random() * 0.3));
+            const winrate = Math.round((wins / battles) * 100);
+            const destroyed = Math.floor(battles * 3 + Math.random() * 1000);
+            const experience = Math.floor(battles * 50 + Math.random() * 10000);
+            
+            // Рейтинги
+            const expRating = Math.floor(Math.random() * 50000);
+            const goldHunters = Math.floor(Math.random() * 500);
+            const crystalsRating = Math.floor(Math.random() * 50000);
+            const efficiencyRating = Math.floor(Math.random() * 50000);
+            
+            // Топы
+            const weapons = ['Рейлган', 'Гром', 'Изида', 'Фриза', 'Магнум', 'Огнемёт'];
+            const paints = ['Золотая', 'Серебряная', 'Бронзовая', 'Камуфляж', 'Неон', 'Хамелеон'];
+            const hulls = ['Титан', 'Викинг', 'Мамонт', 'Хорнет', 'Хантер', 'Рыцарь'];
+            
+            // Припасы
+            const repairKit = Math.floor(Math.random() * 50);
+            const armor = Math.floor(Math.random() * 30);
+            const doubleDamage = Math.floor(Math.random() * 25);
+            const speedBoost = Math.floor(Math.random() * 40);
+            const mine = Math.floor(Math.random() * 20);
+            const grenade = Math.floor(Math.random() * 15);
+            const goldBox = Math.floor(Math.random() * 10);
+            const overdrive = Math.floor(Math.random() * 5);
+            
+            // Достижения
+            const achievements = [
+                { name: "Киберспортсмен", icon: "fas fa-trophy" },
+                { name: "Помощник игры", icon: "fas fa-hands-helping" },
+                { name: "Паркурист", icon: "fas fa-running" },
+                { name: "Бронзовый призер", icon: "fas fa-award" }
+            ];
+            
+            return {
+                battles,
+                wins,
+                winrate,
+                destroyed,
+                experience,
+                expRating,
+                goldHunters,
+                crystalsRating,
+                efficiencyRating,
+                weapons,
+                paints,
+                hulls,
+                repairKit,
+                armor,
+                doubleDamage,
+                speedBoost,
+                mine,
+                grenade,
+                goldBox,
+                overdrive,
+                achievements
+            };
+        }
+        
+        // Обновление данных в рейтинге
+        function updateRatingData(playerData) {
+            // Статистика
+            elements.playerBattles.textContent = playerData.battles.toLocaleString();
+            elements.playerWins.textContent = playerData.wins.toLocaleString();
+            elements.playerWinrate.textContent = `${playerData.winrate}%`;
+            elements.playerDestroyed.textContent = playerData.destroyed.toLocaleString();
+            elements.playerExperience.textContent = playerData.experience.toLocaleString();
+            
+            // Рейтинги
+            elements.playerExpRating.textContent = `#${playerData.expRating.toLocaleString()}`;
+            elements.playerGoldHunters.textContent = playerData.goldHunters.toLocaleString();
+            elements.playerCrystalsRating.textContent = `#${playerData.crystalsRating.toLocaleString()}`;
+            elements.playerEfficiencyRating.textContent = `#${playerData.efficiencyRating.toLocaleString()}`;
+            
+            // Топы
+            const playerTopGuns = document.getElementById('playerTopGuns');
+            playerTopGuns.innerHTML = playerData.weapons.slice(0, 2).map((weapon, index) => `
+                <div class="top-item">
+                    <div class="top-icon">${index + 1}</div>
+                    <div class="top-info">
+                        <div class="top-name">${weapon}</div>
+                        <div class="top-value">${Math.floor(Math.random() * 100)} ч</div>
+                    </div>
+                </div>
+            `).join('');
+            
+            const playerTopPaints = document.getElementById('playerTopPaints');
+            playerTopPaints.innerHTML = playerData.paints.slice(0, 2).map((paint, index) => `
+                <div class="top-item">
+                    <div class="top-icon">${index + 1}</div>
+                    <div class="top-info">
+                        <div class="top-name">${paint}</div>
+                        <div class="top-value">${Math.floor(Math.random() * 100)} ч</div>
+                    </div>
+                </div>
+            `).join('');
+            
+            const playerTopHulls = document.getElementById('playerTopHulls');
+            playerTopHulls.innerHTML = playerData.hulls.slice(0, 2).map((hull, index) => `
+                <div class="top-item">
+                    <div class="top-icon">${index + 1}</div>
+                    <div class="top-info">
+                        <div class="top-name">${hull}</div>
+                        <div class="top-value">${Math.floor(Math.random() * 100)} ч</div>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Припасы
+            elements.playerRepairKit.textContent = playerData.repairKit;
+            elements.playerArmor.textContent = playerData.armor;
+            elements.playerDoubleDamage.textContent = playerData.doubleDamage;
+            elements.playerSpeedBoost.textContent = playerData.speedBoost;
+            
+            // Достижения
+            elements.achievementsGrid.innerHTML = playerData.achievements.map(achievement => `
+                <div class="achievement-item">
+                    <div class="achievement-badge">
+                        <i class="${achievement.icon}"></i>
+                    </div>
+                    <div class="achievement-name">${achievement.name}</div>
+                </div>
+            `).join('');
+            
+            // Показываем все разделы
+            elements.playerStats.style.display = 'block';
+            elements.playerRatings.style.display = 'block';
+            elements.playerTops.style.display = 'block';
+            elements.playerSupplies.style.display = 'block';
+            elements.achievementsCard.style.display = 'block';
+        }
+        
         // Переключение вкладок
         function setupTabNavigation() {
             const tabItems = document.querySelectorAll('.tab-item');
@@ -1509,35 +1829,9 @@
                     return;
                 }
                 
-                // Случайные данные для демонстрации
-                elements.playerStats.style.display = 'block';
-                elements.achievementsCard.style.display = 'block';
-                
-                // Статистика
-                elements.playerBattles.textContent = Math.floor(Math.random() * 5000).toLocaleString();
-                elements.playerWins.textContent = Math.floor(Math.random() * 3000).toLocaleString();
-                elements.playerWinrate.textContent = Math.floor(Math.random() * 30 + 50) + '%';
-                elements.playerDestroyed.textContent = Math.floor(Math.random() * 10000).toLocaleString();
-                elements.playerExperience.textContent = Math.floor(Math.random() * 1000000).toLocaleString();
-                
-                // Достижения
-                const achievementIcons = [
-                    'fas fa-trophy', 'fas fa-hands-helping', 'fas fa-video', 
-                    'fas fa-shield-alt', 'fas fa-running', 'fas fa-medal', 'fas fa-award'
-                ];
-                elements.achievementsGrid.innerHTML = '';
-                
-                const count = Math.floor(Math.random() * 4) + 2;
-                for (let i = 0; i < count; i++) {
-                    elements.achievementsGrid.innerHTML += `
-                        <div class="achievement-item">
-                            <div class="achievement-badge">
-                                <i class="${achievementIcons[i]}"></i>
-                            </div>
-                            <div class="achievement-name">Достижение ${i+1}</div>
-                        </div>
-                    `;
-                }
+                // Генерируем случайные данные
+                const playerData = generateRandomPlayerData();
+                updateRatingData(playerData);
                 
                 showToast(`Данные для ${nickname} загружены`, 'success');
             });
