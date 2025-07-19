@@ -7,9 +7,423 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
+        :root {
+            --primary: #4DB6AC;
+            --primary-dark: #00897B;
+            --primary-light: #B2DFDB;
+            --accent: #FF9800;
+            --text: #263238;
+            --text-light: #78909C;
+            --bg: #F5F7FA;
+            --card-bg: #FFFFFF;
+            --divider: #E0E0E0;
+            --error: #F44336;
+        }
         
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Roboto', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
         
-        /* Новый дизайн главной страницы */
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            padding: 16px;
+            padding-bottom: 80px;
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            width: 100%;
+            position: relative;
+        }
+        
+        /* Шапка профиля */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+        
+        .profile-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid white;
+            margin-right: 16px;
+            object-fit: cover;
+            background-color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        
+        .profile-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .profile-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .tanki-info {
+            display: flex;
+            align-items: center;
+            margin-top: 6px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .tanki-rank {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        
+        .tanki-nickname {
+            font-size: 14px;
+            font-weight: 500;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .bind-section {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            width: 100%;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        
+        .input-group {
+            display: flex;
+            margin-top: 10px;
+            width: 100%;
+        }
+        
+        .nickname-input {
+            flex: 1;
+            padding: 12px 14px;
+            border: 1px solid var(--divider);
+            border-radius: 12px 0 0 12px;
+            font-size: 15px;
+            transition: border-color 0.3s;
+            min-width: 0;
+        }
+        
+        .nickname-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .bind-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 0 18px;
+            border-radius: 0 12px 12px 0;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            min-width: 90px;
+        }
+        
+        .bind-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
+        .error-message {
+            color: var(--error);
+            font-size: 13px;
+            margin-top: 8px;
+            display: none;
+        }
+        
+        /* Карточки статистики */
+        .stats-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            width: 100%;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+            margin-top: 8px;
+        }
+        
+        .stat-item {
+            background: rgba(77, 182, 172, 0.08);
+            border-radius: 12px;
+            padding: 14px 12px;
+            text-align: center;
+            border: 1px solid rgba(77, 182, 172, 0.2);
+            min-width: 0;
+        }
+        
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 6px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .stat-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .stat-subvalue {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+        
+        /* Топы */
+        .top-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+        
+        .top-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--divider);
+            min-width: 0;
+        }
+        
+        .top-card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .top-card-title i {
+            margin-right: 6px;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+        
+        .top-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--divider);
+            min-width: 0;
+        }
+        
+        .top-item:last-child {
+            border-bottom: none;
+        }
+        
+        .top-icon {
+            width: 34px;
+            height: 34px;
+            background: rgba(77, 182, 172, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-size: 16px;
+            color: var(--primary-dark);
+            flex-shrink: 0;
+        }
+        
+        .top-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .top-name {
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 14px;
+        }
+        
+        .top-value {
+            color: var(--text-light);
+            font-size: 13px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        /* Припасы */
+        .supplies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+        
+        .supply-item {
+            background: rgba(255, 152, 0, 0.08);
+            border-radius: 10px;
+            padding: 14px 10px;
+            text-align: center;
+            border: 1px solid rgba(255, 152, 0, 0.2);
+            min-width: 0;
+        }
+        
+        .supply-label {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-bottom: 6px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .supply-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--accent);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        /* Нижняя панель */
+        .nav-tabs {
+            display: flex;
+            background: var(--card-bg);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            border-top: 1px solid var(--divider);
+            z-index: 100;
+            padding: 8px 0;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .tab-item {
+            flex: 1;
+            text-align: center;
+            padding: 6px 0;
+            color: var(--text-light);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 0;
+        }
+        
+        .tab-item.active {
+            color: var(--primary-dark);
+        }
+        
+        .tab-item i {
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+        
+        .tab-item.active i {
+            color: var(--primary);
+        }
+        
+        /* Скелетоны для загрузки */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 8px;
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        .skeleton-text {
+            height: 14px;
+            margin: 6px 0;
+            border-radius: 4px;
+        }
+        
+        .skeleton-stat {
+            height: 50px;
+            border-radius: 10px;
+        }
+        
+        .skeleton-top {
+            height: 40px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+        
+        /* Новые стили для чат-статистики */
         .chat-stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -82,6 +496,7 @@
             font-size: 12px;
         }
         
+        /* Общие разделы */
         .common-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -240,6 +655,79 @@
         
         .tab-content.active {
             display: block;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 340px) {
+            .top-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
+            
+            .profile-name {
+                font-size: 16px;
+            }
+            
+            .tanki-rank {
+                font-size: 11px;
+                padding: 3px 8px;
+            }
+            
+            .tanki-nickname {
+                font-size: 12px;
+            }
+            
+            .common-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
+        }
+        
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate {
+            animation: fadeIn 0.4s ease forwards;
+        }
+        
+        /* Toast уведомления */
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            max-width: 90%;
+        }
+        
+        .toast.show {
+            opacity: 1;
+        }
+        
+        .toast i {
+            margin-right: 10px;
+        }
+        
+        .toast.error {
+            background: rgba(244, 67, 54, 0.9);
+        }
+        
+        .toast.success {
+            background: rgba(76, 175, 80, 0.9);
         }
     </style>
 </head>
@@ -1011,6 +1499,47 @@
                 if (e.key === 'Enter') {
                     showToast(`Поиск пользователя: ${this.value}`, 'info');
                 }
+            });
+            
+            // Обработчик поиска в рейтинге
+            elements.ratingSearchBtn.addEventListener('click', function() {
+                const nickname = elements.ratingNicknameInput.value.trim();
+                if (!nickname) {
+                    showToast('Введите никнейм игрока', 'error');
+                    return;
+                }
+                
+                // Случайные данные для демонстрации
+                elements.playerStats.style.display = 'block';
+                elements.achievementsCard.style.display = 'block';
+                
+                // Статистика
+                elements.playerBattles.textContent = Math.floor(Math.random() * 5000).toLocaleString();
+                elements.playerWins.textContent = Math.floor(Math.random() * 3000).toLocaleString();
+                elements.playerWinrate.textContent = Math.floor(Math.random() * 30 + 50) + '%';
+                elements.playerDestroyed.textContent = Math.floor(Math.random() * 10000).toLocaleString();
+                elements.playerExperience.textContent = Math.floor(Math.random() * 1000000).toLocaleString();
+                
+                // Достижения
+                const achievementIcons = [
+                    'fas fa-trophy', 'fas fa-hands-helping', 'fas fa-video', 
+                    'fas fa-shield-alt', 'fas fa-running', 'fas fa-medal', 'fas fa-award'
+                ];
+                elements.achievementsGrid.innerHTML = '';
+                
+                const count = Math.floor(Math.random() * 4) + 2;
+                for (let i = 0; i < count; i++) {
+                    elements.achievementsGrid.innerHTML += `
+                        <div class="achievement-item">
+                            <div class="achievement-badge">
+                                <i class="${achievementIcons[i]}"></i>
+                            </div>
+                            <div class="achievement-name">Достижение ${i+1}</div>
+                        </div>
+                    `;
+                }
+                
+                showToast(`Данные для ${nickname} загружены`, 'success');
             });
         }
         
