@@ -45,7 +45,7 @@
             position: relative;
         }
         
-        /* Шапка профиля */
+        /* шапка профиля тг акка */
         .profile-header {
             display: flex;
             align-items: center;
@@ -183,7 +183,7 @@
             display: none;
         }
         
-        /* Карточки статистики */
+        /* карточки статы */
         .stats-card {
             background: var(--card-bg);
             border-radius: 16px;
@@ -233,7 +233,7 @@
             margin-top: 4px;
         }
         
-        /* Топы */
+        /* топы */
         .top-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -317,7 +317,7 @@
             text-overflow: ellipsis;
         }
         
-        /* Припасы */
+        /* припасы */
         .supplies-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
@@ -352,7 +352,7 @@
             text-overflow: ellipsis;
         }
         
-        /* Нижняя панель */
+        /* нижняя панель (нав-ия) */
         .nav-tabs {
             display: flex;
             background: var(--card-bg);
@@ -393,7 +393,7 @@
             color: var(--primary);
         }
         
-        /* Новые стили для чат-статистики */
+        /* чат-статистика */
         .chat-stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -466,7 +466,7 @@
             font-size: 12px;
         }
         
-        /* Общие разделы */
+        /* общее */
         .common-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -587,7 +587,7 @@
             border-bottom: none;
         }
         
-        /* Темная тема */
+        /* темная тема */
         body.dark-theme {
             --text: #FFFFFF;
             --text-light: #B0BEC5;
@@ -627,7 +627,7 @@
             display: block;
         }
         
-        /* Стили для припасов с иконками */
+        /* стили для припасов с иконками (нарисовать, переделать в формат иконки припасов игры) */
         .supply-icon {
             font-size: 24px;
             margin-bottom: 8px;
@@ -648,7 +648,7 @@
             color: var(--text);
         }
         
-        /* Адаптивность */
+        /* аадаптивность */
         @media (max-width: 340px) {
             .top-grid {
                 grid-template-columns: 1fr;
@@ -676,7 +676,7 @@
             }
         }
         
-        /* Анимации */
+        /* анимации */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -686,7 +686,7 @@
             animation: fadeIn 0.4s ease forwards;
         }
         
-        /* Toast уведомления */
+        /* уведомления */
         .toast {
             position: fixed;
             top: 20px;
@@ -721,7 +721,7 @@
             background: rgba(76, 175, 80, 0.9);
         }
         
-        /* Loader */
+        /* загрузка */
         .loader {
             border: 4px solid rgba(77, 182, 172, 0.2);
             border-radius: 50%;
@@ -757,7 +757,7 @@
     </div>
     
     <div class="container">
-        <!-- Шапка профиля -->
+        <!-- шапка профиля -->
         <div class="profile-header" id="profileHeader">
             <div class="profile-avatar" id="userAvatar">
                 <i class="fas fa-user"></i>
@@ -771,15 +771,15 @@
             </div>
         </div>
         
-        <!-- Поиск пользователя -->
+        <!-- поиск пользователя -->
         <div class="search-container" id="userSearchContainer">
             <i class="fas fa-search search-icon"></i>
             <input type="text" class="search-input" id="userSearchInput" placeholder="Поиск пользователя">
         </div>
         
-        <!-- Контейнеры вкладок -->
+        <!-- контейнеры вкладок -->
         <div class="tab-content active" id="homeTab">
-            <!-- Статистика чата -->
+            <!-- статистика чата -->
             <div class="stats-card">
                 <h2 class="section-title">
                     <i class="fas fa-comments"></i>
@@ -806,7 +806,7 @@
                 </div>
             </div>
             
-            <!-- Прогресс звания -->
+            <!-- прогресс звания -->
             <div class="stats-card">
                 <h2 class="section-title">
                     <i class="fas fa-tasks"></i>
@@ -820,7 +820,7 @@
                 </div>
             </div>
             
-            <!-- Достижения -->
+            <!-- достижения -->
             <div class="stats-card">
                 <h2 class="section-title">
                     <i class="fas fa-medal"></i>
@@ -828,11 +828,11 @@
                 </h2>
                 
                 <div class="achievement-grid" id="achievementsContainer">
-                    <!-- Будет заполнено динамически -->
+                    <!-- пусто, при переносе заполнить ботом -->
                 </div>
             </div>
             
-            <!-- Карма и нарушения -->
+            <!-- карма и нарушения -->
             <div class="stats-card">
                 <h2 class="section-title">
                     <i class="fas fa-balance-scale"></i>
@@ -865,15 +865,15 @@
             </div>
         </div>
         
-        <!-- Вкладка "Профиль" (бывший Игровой аккаунт) -->
+        <!-- вкладка "Профиль"  -->
         <div class="tab-content" id="gameTab">
-            <!-- Привязка аккаунта -->
+            <!-- привязка аккаунта -->
             <div class="bind-section">
                 <h2 class="section-title">
                     <i class="fas fa-link"></i>
                     Привязка аккаунта
                 </h2>
-                <p>Введите ваш никнейм в Tanki Online</p>
+                <p>Введите ваш никнейм в Танках Онлайн</p>
                 
                 <div class="input-group">
                     <input type="text" class="nickname-input" id="nicknameInput" placeholder="Ваш никнейм">
@@ -885,7 +885,7 @@
                 </div>
             </div>
             
-            <!-- Статистика -->
+            <!-- статистика -->
             <div class="stats-card">
                 <h2 class="section-title">
                     <i class="fas fa-chart-line"></i>
@@ -894,11 +894,11 @@
                 
                 <div class="stats-grid" id="mainStats">
                     <div class="stat-item">
-                        <div class="stat-label">Бои</div>
+                        <div class="stat-label">1</div>
                         <div class="stat-value" id="battlesStat">0</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-label">Победы</div>
+                        <div class="stat-label">2</div>
                         <div class="stat-value" id="winsStat">0</div>
                         <div class="stat-subvalue" id="winrateStat">0%</div>
                     </div>
@@ -913,7 +913,7 @@
                 </div>
             </div>
             
-            <!-- Рейтинги -->
+            <!-- рейтинги -->
             <div class="stats-card">
                 <h2 class="section-title">
                     <i class="fas fa-trophy"></i>
@@ -940,7 +940,7 @@
                 </div>
             </div>
             
-            <!-- Топы -->
+            <!-- топы -->
             <div class="stats-card">
                 <h2 class="section-title">
                     <i class="fas fa-crown"></i>
@@ -1040,7 +1040,7 @@
                 </div>
             </div>
             
-            <!-- Припасы -->
+            <!-- припасы -->
             <div class="stats-card">
                 <h2 class="section-title">
                     <i class="fas fa-box-open"></i>
@@ -1108,7 +1108,7 @@
             </div>
         </div>
         
-        <!-- Вкладка "Общее" -->
+        <!-- вкладка "Общее" -->
         <div class="tab-content" id="commonTab">
             <div class="common-grid">
                 <div class="common-card">
@@ -1134,14 +1134,14 @@
             </div>
         </div>
         
-        <!-- Вкладка "Рейтинг" -->
+        <!-- вкладка "Рейтинг" -->
         <div class="tab-content" id="ratingTab">
             <div class="bind-section">
                 <h2 class="section-title">
                     <i class="fas fa-search"></i>
                     Поиск игрока
                 </h2>
-                <p>Введите никнейм в Tanki Online</p>
+                <p>Введите никнейм в Танках Онлайн</p>
                 
                 <div class="input-group">
                     <input type="text" class="nickname-input" id="ratingNicknameInput" placeholder="Никнейм игрока">
@@ -1153,7 +1153,7 @@
                 </div>
             </div>
             
-            <!-- Статистика игрока -->
+            <!-- статистика игрока -->
             <div class="stats-card" id="playerStats" style="display: none;">
                 <h2 class="section-title">
                     <i class="fas fa-chart-line"></i>
@@ -1181,7 +1181,7 @@
                 </div>
             </div>
             
-            <!-- Рейтинги игрока -->
+            <!-- рейтинги игрока -->
             <div class="stats-card" id="playerRatings" style="display: none;">
                 <h2 class="section-title">
                     <i class="fas fa-trophy"></i>
@@ -1208,7 +1208,7 @@
                 </div>
             </div>
             
-            <!-- Топы игрока -->
+            <!-- топы игрока -->
             <div class="stats-card" id="playerTops" style="display: none;">
                 <h2 class="section-title">
                     <i class="fas fa-crown"></i>
@@ -1242,7 +1242,7 @@
                 </div>
             </div>
             
-            <!-- Припасы игрока -->
+            <!-- припасы игрока -->
             <div class="stats-card" id="playerSupplies" style="display: none;">
                 <h2 class="section-title">
                     <i class="fas fa-box-open"></i>
@@ -1281,7 +1281,7 @@
                 </div>
             </div>
             
-            <!-- Достижения игрока -->
+            <!-- достижения игрока -->
             <div class="stats-card" id="achievementsCard" style="display: none;">
                 <h2 class="section-title">
                     <i class="fas fa-medal"></i>
@@ -1292,7 +1292,7 @@
             </div>
         </div>
         
-        <!-- Вкладка "Настройки" -->
+        <!-- вкладка "Настройки" -->
         <div class="tab-content" id="settingsTab">
             <div class="stats-card">
                 <h2 class="section-title">
@@ -1349,19 +1349,19 @@
                 
                 <div style="padding: 16px 0; line-height: 1.8;">
                     <p style="margin-bottom: 12px;">
-                        <strong>Tanki Online 47bot</strong><br>
+                        <strong>47bot | Tanki Online</strong><br>
                         Версия 1.0<br>
-                        © Tanki Online
+                        © vseporchuu
                     </p>
                     <p>
-                        Официальное приложение для просмотра статистики игроков
-                        Tanki Online и управления профилем в чате
+                        Приложение для просмотра статистики игроков
+                        «Танков Онлайн» и управления профилем в чате
                     </p>
                 </div>
             </div>
         </div>
         
-        <!-- Нижняя панель -->
+        <!-- нижняя панель -->
         <div class="nav-tabs">
             <div class="tab-item active" data-tab="homeTab">
                 <i class="fas fa-home"></i>
@@ -1386,18 +1386,18 @@
         </div>
     </div>
     
-    <!-- Toast уведомление -->
+    <!-- уведомление -->
     <div class="toast" id="toast">
         <i class="fas fa-info-circle"></i>
         <span id="toastMessage">Сообщение</span>
     </div>
     
     <script>
-        // Инициализация Telegram Web App
+        // инициализация Мини Апп
         const tg = window.Telegram.WebApp;
         const bot = tg.initDataUnsafe.bot;
         
-        // Элементы интерфейса
+        // элементы интерфейса
         const elements = {
             userName: document.getElementById('userName'),
             userAvatar: document.getElementById('userAvatar'),
@@ -1409,7 +1409,7 @@
             errorText: document.getElementById('errorText'),
             toast: document.getElementById('toast'),
             toastMessage: document.getElementById('toastMessage'),
-            // Статистика чата
+            // статистика чата
             chatRank: document.getElementById('chatRank'),
             chatXP: document.getElementById('chatXP'),
             messagesCount: document.getElementById('messagesCount'),
@@ -1421,11 +1421,11 @@
             mutesCount: document.getElementById('mutesCount'),
             lastViolations: document.getElementById('lastViolations'),
             achievementsContainer: document.getElementById('achievementsContainer'),
-            // Настройки
+            // настройки
             themeSwitch: document.getElementById('themeSwitch'),
             privacySwitch: document.getElementById('privacySwitch'),
             showGameAccount: document.getElementById('showGameAccount'),
-            // Рейтинг
+            // оейтинг
             ratingNicknameInput: document.getElementById('ratingNicknameInput'),
             ratingSearchBtn: document.getElementById('ratingSearchBtn'),
             ratingErrorMessage: document.getElementById('ratingErrorMessage'),
@@ -1436,11 +1436,11 @@
             playerSupplies: document.getElementById('playerSupplies'),
             achievementsCard: document.getElementById('achievementsCard'),
             achievementsGrid: document.getElementById('achievementsGrid'),
-            // Загрузчик
+            // загрузчик
             loader: document.getElementById('loader')
         };
         
-        // Показываем toast уведомление
+        // показываем уведомление
         function showToast(message, type = 'info') {
             elements.toast.className = `toast ${type}`;
             elements.toastMessage.textContent = message;
@@ -1451,7 +1451,7 @@
             }, 3000);
         }
         
-        // Показать/скрыть загрузчик
+        // показать/скрыть загрузчик
         function showLoader() {
             elements.loader.style.display = 'flex';
         }
@@ -1460,15 +1460,15 @@
             elements.loader.style.display = 'none';
         }
         
-        // Отправка запроса к API бота
+        // отправка запроса к API бота
         async function sendApiRequest(data) {
             try {
                 showLoader();
                 
-                // В реальном приложении здесь будет вызов метода бота
+                
                 // const response = await bot.sendData(JSON.stringify(data));
                 
-                // Для демонстрации используем имитацию ответа
+                // тест - не реальиные данные
                 let response;
                 
                 if (data.action === 'get_chat_stats') {
@@ -1522,14 +1522,14 @@
             }
         }
         
-        // Обновление шапки профиля
+        // обновление шапки профиля
         function updateProfileHeader(user) {
             if (user) {
-                // Обновляем имя
+                // обновляем имя
                 const userName = user.first_name || user.username || 'Пользователь';
                 elements.userName.textContent = userName;
                 
-                // Обновляем аватар
+                // обновляем аватар
                 if (user.photo_url) {
                     elements.userAvatar.innerHTML = '';
                     const img = document.createElement('img');
@@ -1544,7 +1544,7 @@
             }
         }
         
-        // Обновление статистики чата
+        // обновление статистики чата
         function updateChatStats(stats) {
             elements.chatXP.textContent = stats.experience;
             elements.messagesCount.textContent = stats.experience;
@@ -1553,7 +1553,7 @@
             elements.mutesCount.textContent = stats.mutes;
             elements.chatRank.textContent = stats.rank;
             
-            // Прогресс до следующего звания (упрощенная логика)
+            // прогресс до следующего звания
             let nextRankXP;
             if (stats.experience < 100) {
                 nextRankXP = 100;
@@ -1573,10 +1573,10 @@
             const progress = Math.min(100, Math.round((stats.experience / nextRankXP) * 100));
             elements.rankProgressBar.style.width = `${progress}%`;
             
-            // Достижения
+            // достижения
             updateAchievements(stats.achievements);
             
-            // Нарушения
+            // нарушения
             if (stats.mutes > 0) {
                 const violations = [
                     { reason: "Нецензурная лексика", date: new Date().toLocaleDateString() }
@@ -1591,7 +1591,7 @@
             }
         }
         
-        // Обновление списка достижений
+        // обновление списка достижений
         function updateAchievements(achievements) {
             const achievementIcons = {
                 "Первое сообщение": "fas fa-comment",
@@ -1610,21 +1610,21 @@
             `).join('');
         }
         
-        // Обновление статистики Tanki Online
+        // обновление статистики Tanki Online
         function updateTankiStats(stats) {
-            // Основная статистика
+            // основная статистика
             elements.battlesStat.textContent = stats.battles.toLocaleString();
             elements.winsStat.textContent = stats.wins.toLocaleString();
             elements.winrateStat.textContent = `${stats.winrate}%`;
             elements.destroyedStat.textContent = stats.kills.toLocaleString();
             elements.experienceStat.textContent = stats.experience.toLocaleString();
             
-            // Топы
+            // топы
             updateTopItems('topGunsContainer', stats.turrets, 'fas fa-gun');
             updateTopItems('topHullsContainer', stats.hulls, 'fas fa-shield-alt');
             updateTopItems('topPaintsContainer', stats.paints, 'fas fa-paint-roller');
             
-            // Припасы
+            // припасы
             elements.repairKit.textContent = stats.repairKit;
             elements.armor.textContent = stats.armor;
             elements.doubleDamage.textContent = stats.doubleDamage;
@@ -1634,12 +1634,12 @@
             elements.goldBox.textContent = stats.goldBox;
             elements.overdrive.textContent = stats.overdrive;
             
-            // Обновляем никнейм в профиле
+            // обновляем никнейм в профиле
             elements.tankiNickname.textContent = stats.player_name;
             elements.tankiRank.textContent = stats.rank;
         }
         
-        // Обновление топовых предметов
+        // обновление топовых предметов
         function updateTopItems(containerId, items, iconClass) {
             const container = document.getElementById(containerId);
             container.innerHTML = items.map((item, index) => `
@@ -1655,7 +1655,7 @@
             `).join('');
         }
         
-        // Переключение вкладок
+        // переключение вкладок
         function setupTabNavigation() {
             const tabItems = document.querySelectorAll('.tab-item');
             
@@ -1663,20 +1663,20 @@
                 tab.addEventListener('click', function() {
                     const tabId = this.getAttribute('data-tab');
                     
-                    // Убираем активный класс со всех вкладок
+                    // убираем активный класс со всех вкладок
                     tabItems.forEach(item => item.classList.remove('active'));
                     document.querySelectorAll('.tab-content').forEach(content => {
                         content.classList.remove('active');
                     });
                     
-                    // Добавляем активный класс текущей вкладке
+                    // добавляем активный класс текущей вкладке
                     this.classList.add('active');
                     document.getElementById(tabId).classList.add('active');
                 });
             });
         }
         
-        // Переключение темы
+        // переключение темы
         function setupThemeSwitcher() {
             elements.themeSwitch.addEventListener('change', function() {
                 if (this.checked) {
@@ -1688,7 +1688,7 @@
                 }
             });
             
-            // Загрузка сохраненной темы
+            // загрузка сохраненной темы
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'dark') {
                 elements.themeSwitch.checked = true;
@@ -1696,7 +1696,7 @@
             }
         }
         
-        // Обработчик привязки аккаунта Tanki Online
+        // обработчик привязки аккаунта ТО
         async function handleBindAccount() {
             const nickname = elements.nicknameInput.value.trim();
             if (!nickname) {
@@ -1718,7 +1718,7 @@
             }
         }
         
-        // Загрузка статистики Tanki Online
+        // загрузка статистики ТО
         async function loadTankiStats(nickname) {
             const data = await sendApiRequest({
                 action: "get_tanki_stats",
@@ -1732,7 +1732,7 @@
             }
         }
         
-        // Обработчик поиска игрока в рейтинге
+        // обработчик поиска игрока в рейтинге
         async function handlePlayerSearch() {
             const nickname = elements.ratingNicknameInput.value.trim();
             if (!nickname) {
@@ -1753,34 +1753,34 @@
             }
         }
         
-        // Обновление статистики игрока в рейтинге
+        // обновление статистики игрока в рейтинге
         function updatePlayerStats(stats) {
-            // Основная статистика
+            // основная статистика
             elements.playerBattles.textContent = stats.battles.toLocaleString();
             elements.playerWins.textContent = stats.wins.toLocaleString();
             elements.playerWinrate.textContent = `${stats.winrate}%`;
             elements.playerDestroyed.textContent = stats.kills.toLocaleString();
             elements.playerExperience.textContent = stats.experience.toLocaleString();
             
-            // Топы
+            // топы
             updatePlayerTopItems('playerTopGuns', stats.turrets, 'fas fa-gun');
             updatePlayerTopItems('playerTopHulls', stats.hulls, 'fas fa-shield-alt');
             updatePlayerTopItems('playerTopPaints', stats.paints, 'fas fa-paint-roller');
             
-            // Припасы
+            // припасы
             elements.playerRepairKit.textContent = stats.repairKit;
             elements.playerArmor.textContent = stats.armor;
             elements.playerDoubleDamage.textContent = stats.doubleDamage;
             elements.playerSpeedBoost.textContent = stats.speedBoost;
             
-            // Показываем все разделы
+            // показываем все разделы
             elements.playerStats.style.display = 'block';
             elements.playerRatings.style.display = 'block';
             elements.playerTops.style.display = 'block';
             elements.playerSupplies.style.display = 'block';
         }
         
-        // Обновление топовых предметов игрока
+        // обновление топовых предметов игрока
         function updatePlayerTopItems(containerId, items, iconClass) {
             const container = document.getElementById(containerId);
             container.innerHTML = items.map((item, index) => `
@@ -1796,9 +1796,9 @@
             `).join('');
         }
         
-        // Инициализация приложения
+        // инициализация приложения
         async function initApp() {
-            // Настройка Telegram Web App
+            // настройка телеграм мини апп
             if (tg.platform !== 'unknown') {
                 tg.expand();
                 tg.enableClosingConfirmation();
@@ -1806,11 +1806,11 @@
                 tg.setBackgroundColor('#F5F7FA');
             }
             
-            // Получаем данные пользователя
+            // получаем данные пользователя
             const user = tg.initDataUnsafe.user;
             updateProfileHeader(user);
             
-            // Загружаем статистику чата
+            // загружаем статистику чата
             const chatStats = await sendApiRequest({
                 action: "get_chat_stats",
                 user_id: user.id
@@ -1820,15 +1820,15 @@
                 updateChatStats(chatStats);
             }
             
-            // Настройка интерфейса
+            // настройка интерфейса
             setupTabNavigation();
             setupThemeSwitcher();
             
-            // Обработчики событий
+            // обработчики событий
             elements.bindBtn.addEventListener('click', handleBindAccount);
             elements.ratingSearchBtn.addEventListener('click', handlePlayerSearch);
             
-            // Загрузка сохраненных настроек приватности
+            // загрузка сохраненных настроек приватности
             const privacySetting = localStorage.getItem('privacy');
             if (privacySetting === 'hidden') {
                 elements.privacySwitch.checked = true;
@@ -1839,7 +1839,7 @@
                 elements.showGameAccount.checked = false;
             }
             
-            // Обработчики для настроек
+            // обработчики для настроек
             elements.privacySwitch.addEventListener('change', function() {
                 localStorage.setItem('privacy', this.checked ? 'hidden' : 'visible');
                 showToast(this.checked ? 'Профиль скрыт' : 'Профиль виден всем', 'success');
@@ -1850,7 +1850,7 @@
                 showToast(this.checked ? 'Игровой аккаунт виден' : 'Игровой аккаунт скрыт', 'success');
             });
             
-            // Обработчик поиска пользователей
+            // обработчик поиска пользователей
             elements.userSearchInput.addEventListener('keyup', function(e) {
                 if (e.key === 'Enter') {
                     showToast(`Поиск пользователя: ${this.value}`, 'info');
@@ -1858,7 +1858,7 @@
             });
         }
         
-        // Запуск приложения
+        // запуск приложения
         document.addEventListener('DOMContentLoaded', initApp);
     </script>
 </body>
