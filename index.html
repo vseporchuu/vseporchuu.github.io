@@ -1460,35 +1460,35 @@
             elements.loader.style.display = 'none';
         }
         
-        // Отправка запросов к API бота
+        // отправка запроса к API бота
         async function sendApiRequest(data) {
-            try {
-                showLoader();
-                
-                // Отправляем данные через WebApp
-                Telegram.WebApp.sendData(JSON.stringify(data));
-                
-                // Ждём ответ от бота (будет приходить как сообщение)
-                return new Promise((resolve) => {
-                    const listener = (event) => {
-                        if (event.data && event.data.message) {
-                            const message = event.data.message;
-                            if (message.text && message.text.startsWith('{')) {
-                                Telegram.WebApp.offEvent('messageReceived', listener);
-                                resolve(JSON.parse(message.text));
-                            }
-                        }
-                    };
-                    Telegram.WebApp.onEvent('messageReceived', listener);
-                });
-            } catch (error) {
-                console.error('API Error:', error);
-                showToast('Ошибка соединения с сервером', 'error');
-                return { error: error.message };
-            } finally {
-                hideLoader();
-            }
-        }
+    try {
+        showLoader();
+
+        // Отправляем данные через WebApp
+        Telegram.WebApp.sendData(JSON.stringify(data));
+
+        // Ждём ответ от бота (будет приходить как сообщение)
+        return new Promise((resolve) => {
+            const listener = (event) => {
+                if (event.data && event.data.message) {
+                    const message = event.data.message;
+                    if (message.text && message.text.startsWith('{')) {
+                        Telegram.WebApp.offEvent('messageReceived', listener);
+                        resolve(JSON.parse(message.text));
+                    }
+                }
+            };
+            Telegram.WebApp.onEvent('messageReceived', listener);
+        });
+    } catch (error) {
+        console.error('API Error:', error);
+        showToast('Ошибка соединения с сервером', 'error');
+        return { error: error.message };
+    } finally {
+        hideLoader();
+    }
+}
         
         // обновление шапки профиля
         function updateProfileHeader(user) {
@@ -1593,14 +1593,16 @@
             updateTopItems('topPaintsContainer', stats.paints, 'fas fa-paint-roller');
             
             // припасы
-            elements.repairKit.textContent = stats.supplies.repairKit;
-            elements.armor.textContent = stats.supplies.armor;
-            elements.doubleDamage.textContent = stats.supplies.doubleDamage;
-            elements.speedBoost.textContent = stats.supplies.speedBoost;
-            elements.mine.textContent = stats.supplies.mine;
-            elements.grenade.textContent = stats.supplies.grenade;
-            elements.goldBox.textContent = stats.supplies.goldBox;
-            elements.overdrive.textContent = stats.supplies.overdrive;
+    if (stats.supplies) {
+        elements.repairKit.textContent = stats.supplies.repairKit || 0;
+        elements.armor.textContent = stats.supplies.armor || 0;
+        elements.doubleDamage.textContent = stats.supplies.doubleDamage || 0;
+        elements.speedBoost.textContent = stats.supplies.speedBoost || 0;
+        elements.mine.textContent = stats.supplies.mine || 0;
+        elements.grenade.textContent = stats.supplies.grenade || 0;
+        elements.goldBox.textContent = stats.supplies.goldBox || 0;
+        elements.overdrive.textContent = stats.supplies.overdrive || 0;
+    }
             
             // обновляем никнейм в профиле
             elements.tankiNickname.textContent = stats.player_name;
@@ -1663,28 +1665,52 @@
                 document.body.classList.add('dark-theme');
             }
         }
-        
+
+            // загрузка настроек из базы
+    try {
+        const settingsResponse = await sendApiRequest({
+            action: "get_settings"
+        });
+
+        if (settingsResponse && settingsResponse.success) {
+            if (settingsResponse.theme === 'dark') {
+                elements.themeSwitch.checked = true;
+                document.body.classList.add('dark-theme');
+            }
+            elements.privacySwitch.checked = Boolean(settingsResponse.privacy);
+            elements.showGameAccount.checked = Boolean(settingsResponse.showGameAccount);
+        }
+    } catch (e) {
+        console.error('Ошибка загрузки настроек:', e);
+    }
+
         // обработчик привязки аккаунта ТО
         async function handleBindAccount() {
-            const nickname = elements.nicknameInput.value.trim();
-            if (!nickname) {
-                showToast('Введите никнейм', 'error');
-                return;
-            }
-            
-            const response = await sendApiRequest({
-                action: "bind_nickname",
-                user_id: tg.initDataUnsafe.user.id,
-                nickname: nickname
-            });
-            
-            if (response.status === "success") {
-                showToast('Никнейм привязан!', 'success');
-                loadTankiStats(nickname);
-            } else {
-                showToast('Ошибка привязки никнейма', 'error');
-            }
-        }
+    const nickname = elements.nicknameInput.value.trim();
+    if (!nickname) {
+        showToast('Введите никнейм', 'error');
+        return;
+    }
+
+    // Простая валидация никнейма
+    if (!/^[a-zA-Z0-9_]{3,16}$/.test(nickname)) {
+        showToast('Никнейм может содержать только буквы, цифры и _ (3-16 символов)', 'error');
+        return;
+    }
+
+    const response = await sendApiRequest({
+        action: "bind_nickname",
+        user_id: tg.initDataUnsafe.user.id,
+        nickname: nickname
+    });
+
+    if (response && response.status === "success") {
+        showToast('Никнейм привязан!', 'success');
+        loadTankiStats(nickname);
+    } else {
+        showToast(response?.error || 'Ошибка привязки никнейма', 'error');
+    }
+}
         
         // загрузка статистики ТО
         async function loadTankiStats(nickname) {
@@ -1699,7 +1725,20 @@
                 showToast(data.error || 'Ошибка загрузки данных', 'error');
             }
         }
-        
+
+        async function loadTankiStats(nickname) {
+    const data = await sendApiRequest({
+        action: "get_tanki_stats",
+        nickname: nickname
+    });
+
+    if (data && data.success) {
+        updateTankiStats(data);
+    } else {
+        showToast(data?.error || 'Ошибка загрузки данных', 'error');
+    }
+}
+
         // обработчик поиска игрока в рейтинге
         async function handlePlayerSearch() {
             const nickname = elements.ratingNicknameInput.value.trim();
@@ -1736,10 +1775,10 @@
             updatePlayerTopItems('playerTopPaints', stats.paints, 'fas fa-paint-roller');
             
             // припасы
-            elements.playerRepairKit.textContent = stats.supplies.repairKit;
-            elements.playerArmor.textContent = stats.supplies.armor;
-            elements.playerDoubleDamage.textContent = stats.supplies.doubleDamage;
-            elements.playerSpeedBoost.textContent = stats.supplies.speedBoost;
+            elements.playerRepairKit.textContent = stats.repairKit;
+            elements.playerArmor.textContent = stats.armor;
+            elements.playerDoubleDamage.textContent = stats.doubleDamage;
+            elements.playerSpeedBoost.textContent = stats.speedBoost;
             
             // показываем все разделы
             elements.playerStats.style.display = 'block';
@@ -1796,27 +1835,6 @@
             elements.bindBtn.addEventListener('click', handleBindAccount);
             elements.ratingSearchBtn.addEventListener('click', handlePlayerSearch);
             
-            // загрузка сохранённых настроек
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
-                elements.themeSwitch.checked = true;
-                document.body.classList.add('dark-theme');
-            }
-            
-            // Загружаем настройки из БД
-            const settingsResponse = await sendApiRequest({
-                action: "get_settings"
-            });
-            
-            if (settingsResponse.success) {
-                if (settingsResponse.theme === 'dark') {
-                    elements.themeSwitch.checked = true;
-                    document.body.classList.add('dark-theme');
-                }
-                elements.privacySwitch.checked = settingsResponse.privacy;
-                elements.showGameAccount.checked = settingsResponse.showGameAccount;
-            }
-            
             // загрузка сохраненных настроек приватности
             const privacySetting = localStorage.getItem('privacy');
             if (privacySetting === 'hidden') {
@@ -1829,16 +1847,42 @@
             }
             
             // обработчики для настроек
-            elements.privacySwitch.addEventListener('change', function() {
-                localStorage.setItem('privacy', this.checked ? 'hidden' : 'visible');
-                showToast(this.checked ? 'Профиль скрыт' : 'Профиль виден всем', 'success');
-            });
+                elements.privacySwitch.addEventListener('change', async function() {
+        const response = await sendApiRequest({
+            action: "update_settings",
+            privacy: this.checked
+        });
+
+        if (response && response.success) {
+            localStorage.setItem('privacy', this.checked ? 'hidden' : 'visible');
+            showToast(this.checked ? 'Профиль скрыт' : 'Профиль виден всем', 'success');
+        }
+    });
+
+    elements.showGameAccount.addEventListener('change', async function() {
+        const response = await sendApiRequest({
+            action: "update_settings",
+            showGameAccount: this.checked
+        });
+
+        if (response && response.success) {
+            localStorage.setItem('showGameAccount', this.checked);
+            showToast(this.checked ? 'Игровой аккаунт виден' : 'Игровой аккаунт скрыт', 'success');
+        }
+    });
             
-            elements.showGameAccount.addEventListener('change', function() {
-                localStorage.setItem('showGameAccount', this.checked);
-                showToast(this.checked ? 'Игровой аккаунт виден' : 'Игровой аккаунт скрыт', 'success');
-            });
-            
+        elements.themeSwitch.addEventListener('change', async function() {
+        const theme = this.checked ? 'dark' : 'light';
+        const response = await sendApiRequest({
+            action: "update_settings",
+            theme: theme
+        });
+        
+        if (response && response.success) {
+            localStorage.setItem('theme', theme);
+        }
+    });
+    
             // обработчик поиска пользователей
             elements.userSearchInput.addEventListener('keyup', function(e) {
                 if (e.key === 'Enter') {
