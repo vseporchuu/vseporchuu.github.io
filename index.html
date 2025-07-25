@@ -1460,59 +1460,27 @@
             elements.loader.style.display = 'none';
         }
         
-        // отправка запроса к API бота
+        // Отправка запросов к API бота
         async function sendApiRequest(data) {
             try {
                 showLoader();
                 
+                // Отправляем данные через WebApp
+                Telegram.WebApp.sendData(JSON.stringify(data));
                 
-                // const response = await bot.sendData(JSON.stringify(data));
-                
-                // тест - не реальиные данные
-                let response;
-                
-                if (data.action === 'get_chat_stats') {
-                    response = {
-                        experience: 125,
-                        achievements: ["Первое сообщение", "Активный участник"],
-                        karma: 50,
-                        mutes: 1,
-                        rank: "Сержант"
+                // Ждём ответ от бота (будет приходить как сообщение)
+                return new Promise((resolve) => {
+                    const listener = (event) => {
+                        if (event.data && event.data.message) {
+                            const message = event.data.message;
+                            if (message.text && message.text.startsWith('{')) {
+                                Telegram.WebApp.offEvent('messageReceived', listener);
+                                resolve(JSON.parse(message.text));
+                            }
+                        }
                     };
-                } else if (data.action === 'get_tanki_stats') {
-                    response = {
-                        success: true,
-                        player_name: data.nickname,
-                        rank: "Майор",
-                        battles: 1250,
-                        wins: 750,
-                        winrate: 60,
-                        kills: 3250,
-                        deaths: 1500,
-                        kd: 2.17,
-                        turrets: [["Рейлган", 120], ["Гром", 85]],
-                        hulls: [["Титан", 150], ["Викинг", 90]],
-                        paints: [["Золотая", 50], ["Камуфляж", 45]],
-                        modes: [["DM", 100], ["CTF", 80]],
-                        repairKit: 12,
-                        armor: 8,
-                        doubleDamage: 5,
-                        speedBoost: 10,
-                        mine: 3,
-                        grenade: 2,
-                        goldBox: 1,
-                        overdrive: 0
-                    };
-                } else if (data.action === 'bind_nickname') {
-                    response = {
-                        status: "success",
-                        nickname: data.nickname
-                    };
-                } else {
-                    response = { error: "Unknown action" };
-                }
-                
-                return response;
+                    Telegram.WebApp.onEvent('messageReceived', listener);
+                });
             } catch (error) {
                 console.error('API Error:', error);
                 showToast('Ошибка соединения с сервером', 'error');
@@ -1625,14 +1593,14 @@
             updateTopItems('topPaintsContainer', stats.paints, 'fas fa-paint-roller');
             
             // припасы
-            elements.repairKit.textContent = stats.repairKit;
-            elements.armor.textContent = stats.armor;
-            elements.doubleDamage.textContent = stats.doubleDamage;
-            elements.speedBoost.textContent = stats.speedBoost;
-            elements.mine.textContent = stats.mine;
-            elements.grenade.textContent = stats.grenade;
-            elements.goldBox.textContent = stats.goldBox;
-            elements.overdrive.textContent = stats.overdrive;
+            elements.repairKit.textContent = stats.supplies.repairKit;
+            elements.armor.textContent = stats.supplies.armor;
+            elements.doubleDamage.textContent = stats.supplies.doubleDamage;
+            elements.speedBoost.textContent = stats.supplies.speedBoost;
+            elements.mine.textContent = stats.supplies.mine;
+            elements.grenade.textContent = stats.supplies.grenade;
+            elements.goldBox.textContent = stats.supplies.goldBox;
+            elements.overdrive.textContent = stats.supplies.overdrive;
             
             // обновляем никнейм в профиле
             elements.tankiNickname.textContent = stats.player_name;
@@ -1768,10 +1736,10 @@
             updatePlayerTopItems('playerTopPaints', stats.paints, 'fas fa-paint-roller');
             
             // припасы
-            elements.playerRepairKit.textContent = stats.repairKit;
-            elements.playerArmor.textContent = stats.armor;
-            elements.playerDoubleDamage.textContent = stats.doubleDamage;
-            elements.playerSpeedBoost.textContent = stats.speedBoost;
+            elements.playerRepairKit.textContent = stats.supplies.repairKit;
+            elements.playerArmor.textContent = stats.supplies.armor;
+            elements.playerDoubleDamage.textContent = stats.supplies.doubleDamage;
+            elements.playerSpeedBoost.textContent = stats.supplies.speedBoost;
             
             // показываем все разделы
             elements.playerStats.style.display = 'block';
@@ -1827,6 +1795,27 @@
             // обработчики событий
             elements.bindBtn.addEventListener('click', handleBindAccount);
             elements.ratingSearchBtn.addEventListener('click', handlePlayerSearch);
+            
+            // загрузка сохранённых настроек
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                elements.themeSwitch.checked = true;
+                document.body.classList.add('dark-theme');
+            }
+            
+            // Загружаем настройки из БД
+            const settingsResponse = await sendApiRequest({
+                action: "get_settings"
+            });
+            
+            if (settingsResponse.success) {
+                if (settingsResponse.theme === 'dark') {
+                    elements.themeSwitch.checked = true;
+                    document.body.classList.add('dark-theme');
+                }
+                elements.privacySwitch.checked = settingsResponse.privacy;
+                elements.showGameAccount.checked = settingsResponse.showGameAccount;
+            }
             
             // загрузка сохраненных настроек приватности
             const privacySetting = localStorage.getItem('privacy');
