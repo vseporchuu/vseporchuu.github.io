@@ -230,7 +230,7 @@ function updateTopItems(containerId, items, iconClass) {
     `).join('');
 }
 
-// Переключение вкладок
+// Функция для переключения вкладок
 function setupTabNavigation() {
     const tabItems = document.querySelectorAll('.tab-item');
     
@@ -247,6 +247,12 @@ function setupTabNavigation() {
             // Добавляем активный класс текущей вкладке
             this.classList.add('active');
             document.getElementById(tabId).classList.add('active');
+            
+            // Добавляем анимацию при переключении
+            document.getElementById(tabId).classList.add('animate');
+            setTimeout(() => {
+                document.getElementById(tabId).classList.remove('animate');
+            }, 400);
         });
     });
 }
