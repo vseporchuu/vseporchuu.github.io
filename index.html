@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>47bot - Tanki Online Assistant</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
@@ -352,7 +351,7 @@
             font-weight: 600;
         }
 
-        .profile-level {
+        .profile-title {
             display: inline-block;
             background-color: rgba(0,0,0,0.2);
             padding: 5px 15px;
@@ -499,6 +498,12 @@
             color: var(--primary);
         }
 
+        .equipment-icon img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+
         .equipment-info {
             flex: 1;
         }
@@ -552,12 +557,15 @@
             width: 60px;
             height: 60px;
             margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .supply-icon svg {
-            width: 100%;
-            height: 100%;
-            fill: var(--primary);
+        .supply-icon img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
         }
 
         .supply-name {
@@ -1063,7 +1071,7 @@
                         <i class="fas fa-user"></i>
                     </div>
                     <h1 class="profile-name" id="gameNickname">Не привязан</h1>
-                    <div class="profile-level">Уровень 24</div>
+                    <div class="profile-title">Звание: Капитан</div>
                     <div class="profile-gear-score">12,850</div>
                     <div class="profile-gear-label">Gear Score</div>
                 </div>
@@ -1073,25 +1081,25 @@
                         <i class="fas fa-chart-bar"></i> Статистика
                     </button>
                     <button class="tab-btn" data-tab="turrets">
-                        <i class="fas fa-gun"></i> Пушки
+                        <img src="icons/turret.svg" alt="Пушки" width="16" height="16"> Пушки
                     </button>
                     <button class="tab-btn" data-tab="hulls">
-                        <i class="fas fa-tank"></i> Корпуса
+                        <img src="icons/hull.svg" alt="Корпуса" width="16" height="16"> Корпуса
                     </button>
                     <button class="tab-btn" data-tab="modules">
-                        <i class="fas fa-cog"></i> Модули
+                        <img src="icons/module.svg" alt="Модули" width="16" height="16"> Модули
                     </button>
                     <button class="tab-btn" data-tab="drones">
-                        <i class="fas fa-drone"></i> Дроны
+                        <img src="icons/drone.svg" alt="Дроны" width="16" height="16"> Дроны
                     </button>
                     <button class="tab-btn" data-tab="paints">
-                        <i class="fas fa-paint-roller"></i> Краски
+                        <img src="icons/paint.svg" alt="Краски" width="16" height="16"> Краски
                     </button>
                     <button class="tab-btn" data-tab="modes">
-                        <i class="fas fa-gamepad"></i> Режимы
+                        <img src="icons/mode.svg" alt="Режимы" width="16" height="16"> Режимы
                     </button>
                     <button class="tab-btn" data-tab="supplies">
-                        <i class="fas fa-box-open"></i> Припасы
+                        <img src="icons/supply.svg" alt="Припасы" width="16" height="16"> Припасы
                     </button>
                 </div>
 
@@ -1160,7 +1168,7 @@
                     <div class="equipment-grid">
                         <div class="equipment-card">
                             <div class="equipment-icon">
-                                <i class="fas fa-fire"></i>
+                                <img src="icons/turret-flamethrower.svg" alt="Огнемет">
                             </div>
                             <div class="equipment-info">
                                 <div class="equipment-name">Огнемет</div>
@@ -1178,7 +1186,7 @@
                         </div>
                         <div class="equipment-card">
                             <div class="equipment-icon">
-                                <i class="fas fa-bolt"></i>
+                                <img src="icons/turret-railgun.svg" alt="Рейлган">
                             </div>
                             <div class="equipment-info">
                                 <div class="equipment-name">Рейлган</div>
@@ -1196,7 +1204,7 @@
                         </div>
                         <div class="equipment-card">
                             <div class="equipment-icon">
-                                <i class="fas fa-explosion"></i>
+                                <img src="icons/turret-thunder.svg" alt="Гром">
                             </div>
                             <div class="equipment-info">
                                 <div class="equipment-name">Гром</div>
@@ -1220,7 +1228,7 @@
                     <div class="equipment-grid">
                         <div class="equipment-card">
                             <div class="equipment-icon">
-                                <i class="fas fa-shield-alt"></i>
+                                <img src="icons/hull-titan.svg" alt="Титан">
                             </div>
                             <div class="equipment-info">
                                 <div class="equipment-name">Титан</div>
@@ -1238,7 +1246,7 @@
                         </div>
                         <div class="equipment-card">
                             <div class="equipment-icon">
-                                <i class="fas fa-tachometer-alt"></i>
+                                <img src="icons/hull-racer.svg" alt="Гонщик">
                             </div>
                             <div class="equipment-info">
                                 <div class="equipment-name">Гонщик</div>
@@ -1262,7 +1270,7 @@
                     <div class="equipment-grid">
                         <div class="equipment-card">
                             <div class="equipment-icon">
-                                <i class="fas fa-bolt"></i>
+                                <img src="icons/module-damage.svg" alt="Усилитель урона">
                             </div>
                             <div class="equipment-info">
                                 <div class="equipment-name">Усилитель урона</div>
@@ -1280,7 +1288,7 @@
                         </div>
                         <div class="equipment-card">
                             <div class="equipment-icon">
-                                <i class="fas fa-shield-alt"></i>
+                                <img src="icons/module-armor.svg" alt="Бронепластины">
                             </div>
                             <div class="equipment-info">
                                 <div class="equipment-name">Бронепластины</div>
@@ -1304,7 +1312,7 @@
                     <div class="equipment-grid">
                         <div class="equipment-card">
                             <div class="equipment-icon">
-                                <i class="fas fa-question"></i>
+                                <img src="icons/drone-scout.svg" alt="Разведчик">
                             </div>
                             <div class="equipment-info">
                                 <div class="equipment-name">Разведчик</div>
@@ -1328,7 +1336,7 @@
                     <div class="equipment-grid">
                         <div class="equipment-card">
                             <div class="equipment-icon" style="background-color: #ff0000; color: white;">
-                                <i class="fas fa-paint-roller"></i>
+                                <img src="icons/paint-red.svg" alt="Красный камуфляж">
                             </div>
                             <div class="equipment-info">
                                 <div class="equipment-name">Красный камуфляж</div>
@@ -1348,7 +1356,7 @@
                     <div class="equipment-grid">
                         <div class="equipment-card">
                             <div class="equipment-icon">
-                                <i class="fas fa-flag"></i>
+                                <img src="icons/mode-ctf.svg" alt="Захват флага">
                             </div>
                             <div class="equipment-info">
                                 <div class="equipment-name">Захват флага</div>
@@ -1372,54 +1380,42 @@
                     <div class="supplies-grid">
                         <div class="supply-card">
                             <div class="supply-icon">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M12,2L1,12H5V22H19V12H23L12,2M12,5.7L18,11.2V20H15V14H9V20H6V11.2L12,5.7Z" />
-                                </svg>
+                                <img src="icons/repairKit.svg" alt="Ремкомплект">
                             </div>
                             <div class="supply-name">Ремкомплект</div>
                             <div class="supply-count">124</div>
                         </div>
                         <div class="supply-card">
                             <div class="supply-icon">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M12,1L3,5V11C3,16.5 6.8,21.7 12,23C17.2,21.7 21,16.5 21,11V5L12,1Z" />
-                                </svg>
+                                <img src="icons/armor.svg" alt="Защита">
                             </div>
                             <div class="supply-name">Защита</div>
                             <div class="supply-count">87</div>
                         </div>
                         <div class="supply-card">
                             <div class="supply-icon">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M17,12H12V17H10V12H5V10H10V5H12V10H17V12Z" />
-                                </svg>
+                                <img src="icons/doubleDamage.svg" alt="Урон x2">
                             </div>
                             <div class="supply-name">Урон x2</div>
                             <div class="supply-count">56</div>
                         </div>
                         <div class="supply-card">
                             <div class="supply-icon">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M13,5V11H19V5H13M13,13V19H19V13H13M5,5V11H11V5H5M5,13V19H11V13H5Z" />
-                                </svg>
+                                <img src="icons/speedBoost.svg" alt="Ускорение">
                             </div>
                             <div class="supply-name">Ускорение</div>
                             <div class="supply-count">42</div>
                         </div>
                         <div class="supply-card">
                             <div class="supply-icon">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M14.6,16.6L19.2,12L14.6,7.4L16,6L22,12L16,18L14.6,16.6M9.4,16.6L4.8,12L9.4,7.4L8,6L2,12L8,18L9.4,16.6Z" />
-                                </svg>
+                                <img src="icons/mine.svg" alt="Мина">
                             </div>
                             <div class="supply-name">Мина</div>
                             <div class="supply-count">38</div>
                         </div>
                         <div class="supply-card">
                             <div class="supply-icon">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2Z" />
-                                </svg>
+                                <img src="icons/supply-grenade.svg" alt="Граната">
                             </div>
                             <div class="supply-name">Граната</div>
                             <div class="supply-count">29</div>
@@ -1438,7 +1434,7 @@
                     <div class="service-card">
                         <i class="fas fa-newspaper"></i>
                         <h3>Новости</h3>
-                        <p>Последние обновления и события в Tanki Online</p>
+                        <p>Последние обновления и события</p>
                     </div>
                     <div class="service-card">
                         <i class="fas fa-trophy"></i>
@@ -1448,12 +1444,12 @@
                     <div class="service-card">
                         <i class="fas fa-flag-checkered"></i>
                         <h3>Вызов принят</h3>
-                        <p>Еженедельные задания и испытания для игроков</p>
+                        <p>Таблица игроков</p>
                     </div>
                     <div class="service-card">
                         <i class="fas fa-book"></i>
                         <h3>Википедия</h3>
-                        <p>База знаний по игре: тактики, гайды, характеристики</p>
+                        <p>База знаний по игре</p>
                     </div>
                 </div>
             </section>
@@ -1733,7 +1729,7 @@
             bindNicknameBtn.addEventListener('click', () => {
                 const nickname = prompt('Введите ваш игровой никнейм:');
                 if (nickname && nickname.trim() !== '') {
-                    // In a real app, this would call the bot API to bind the nickname
+                    // пример
                     document.getElementById('gameNickname').textContent = nickname;
                     
                     // Сохраняем в localStorage
