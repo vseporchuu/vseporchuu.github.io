@@ -232,28 +232,33 @@ function updateTopItems(containerId, items, iconClass) {
 
 // Функция для переключения вкладок
 function setupTabNavigation() {
-    const tabItems = document.querySelectorAll('.tab-item');
+    const navTabs = document.querySelector('.nav-tabs');
     
-    tabItems.forEach(tab => {
-        tab.addEventListener('click', function() {
-            const tabId = this.getAttribute('data-tab');
-            
-            // Убираем активный класс со всех вкладок
-            tabItems.forEach(item => item.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            
-            // Добавляем активный класс текущей вкладке
-            this.classList.add('active');
-            document.getElementById(tabId).classList.add('active');
-            
-            // Добавляем анимацию при переключении
-            document.getElementById(tabId).classList.add('animate');
-            setTimeout(() => {
-                document.getElementById(tabId).classList.remove('animate');
-            }, 400);
+    navTabs.addEventListener('click', (event) => {
+        const tabItem = event.target.closest('.tab-item');
+        if (!tabItem) return;
+        
+        const tabId = tabItem.getAttribute('data-tab');
+        if (!tabId) return;
+        
+        // Убираем активный класс со всех вкладок
+        document.querySelectorAll('.tab-item').forEach(item => {
+            item.classList.remove('active');
         });
+        
+        document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.remove('active');
+        });
+        
+        // Добавляем активный класс текущей вкладке
+        tabItem.classList.add('active');
+        document.getElementById(tabId).classList.add('active');
+        
+        // Добавляем анимацию при переключении
+        document.getElementById(tabId).classList.add('animate');
+        setTimeout(() => {
+            document.getElementById(tabId).classList.remove('animate');
+        }, 400);
     });
 }
 
