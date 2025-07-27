@@ -119,15 +119,6 @@
             color: white;
         }
 
-        .theme-toggle {
-            background: none;
-            border: none;
-            color: var(--text);
-            font-size: 1.2rem;
-            cursor: pointer;
-            margin-left: 10px;
-        }
-
         /* Main content */
         .main-content {
             flex: 1;
@@ -654,9 +645,8 @@
 
         .footer-content {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            flex-wrap: wrap;
         }
 
         .footer-logo {
@@ -665,24 +655,6 @@
             gap: 8px;
             font-weight: 500;
             font-size: 0.95rem;
-            margin-bottom: 10px;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: var(--text);
-            text-decoration: none;
-            transition: var(--transition);
-            font-size: 0.9rem;
-        }
-
-        .footer-links a:hover {
-            color: var(--primary);
         }
 
         /* Responsive styles */
@@ -757,17 +729,6 @@
                 flex-direction: column;
                 text-align: center;
             }
-            
-            .footer-content {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-            
-            .footer-links {
-                width: 100%;
-                justify-content: space-between;
-            }
         }
     </style>
 </head>
@@ -791,9 +752,6 @@
                         <li><a href="#" class="nav-link" data-section="settings"><i class="fas fa-cog"></i> Настройки</a></li>
                     </ul>
                 </nav>
-                <button class="theme-toggle" id="themeToggle">
-                    <i class="fas fa-moon"></i>
-                </button>
             </div>
         </div>
     </header>
@@ -1082,11 +1040,6 @@
                     <i class="fas fa-tank"></i>
                     <span>47bot - Tanki Online Assistant</span>
                 </div>
-                <div class="footer-links">
-                    <a href="#"><i class="fab fa-telegram"></i> Бот</a>
-                    <a href="#"><i class="fab fa-github"></i> Исходный код</a>
-                    <a href="#"><i class="fas fa-question-circle"></i> Поддержка</a>
-                </div>
             </div>
         </div>
     </footer>
@@ -1095,13 +1048,6 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Инициализация Telegram WebApp
             const tg = window.Telegram.WebApp;
-            
-            // Показать основную кнопку
-            tg.MainButton.show();
-            tg.MainButton.setText("Открыть бота");
-            tg.MainButton.onClick(() => {
-                tg.openTelegramLink('t.me/tankichat_bot');
-            });
             
             // Получение данных пользователя из Telegram
             const user = tg.initDataUnsafe.user || {};
@@ -1176,27 +1122,12 @@
             });
             
             // Theme toggle
-            const themeToggle = document.getElementById('themeToggle');
             const themeSwitch = document.getElementById('themeSwitch');
-            
-            themeToggle.addEventListener('click', () => {
-                document.body.classList.toggle('dark-theme');
-                updateThemeIcon();
-                saveThemePreference();
-            });
             
             themeSwitch.addEventListener('change', () => {
                 document.body.classList.toggle('dark-theme');
-                updateThemeIcon();
                 saveThemePreference();
             });
-            
-            function updateThemeIcon() {
-                const isDark = document.body.classList.contains('dark-theme');
-                themeToggle.innerHTML = isDark ? 
-                    '<i class="fas fa-sun"></i>' : 
-                    '<i class="fas fa-moon"></i>';
-            }
             
             function saveThemePreference() {
                 const isDark = document.body.classList.contains('dark-theme');
@@ -1208,7 +1139,6 @@
             if (savedTheme === 'dark') {
                 document.body.classList.add('dark-theme');
                 document.getElementById('themeSwitch').checked = true;
-                updateThemeIcon();
             }
             
             // Tabs
@@ -1268,9 +1198,6 @@
             if (savedNickname) {
                 document.getElementById('gameNickname').textContent = savedNickname;
             }
-            
-            // Инициализация данных пользователя
-            updateThemeIcon();
         });
     </script>
 </body>
