@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>47bot - Tanki Online Assistant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
@@ -397,10 +398,6 @@
             align-items: center;
             gap: 8px;
             box-shadow: var(--shadow);
-        }
-
-        .tab-btn i {
-            font-size: 1.1rem;
         }
 
         .tab-btn.active {
@@ -1228,7 +1225,7 @@
                     <div class="equipment-grid">
                         <div class="equipment-card">
                             <div class="equipment-icon">
-                                <img src="icons/hull-titan.svg" alt="Титан">
+                                <img src="icons/Titan_icon_small.svg" alt="Титан">
                             </div>
                             <div class="equipment-info">
                                 <div class="equipment-name">Титан</div>
@@ -1415,7 +1412,7 @@
                         </div>
                         <div class="supply-card">
                             <div class="supply-icon">
-                                <img src="icons/supply-grenade.svg" alt="Граната">
+                                <img src="icons/grenade.svg" alt="Граната">
                             </div>
                             <div class="supply-name">Граната</div>
                             <div class="supply-count">29</div>
@@ -1434,7 +1431,7 @@
                     <div class="service-card">
                         <i class="fas fa-newspaper"></i>
                         <h3>Новости</h3>
-                        <p>Последние обновления и события</p>
+                        <p>Последние обновления, события</p>
                     </div>
                     <div class="service-card">
                         <i class="fas fa-trophy"></i>
@@ -1494,27 +1491,27 @@
                     <h3>Топ-5 игроков</h3>
                     <div class="player-row">
                         <div class="player-position">1</div>
-                        <div class="player-name">ProTanker</div>
+                        <div class="player-name">47x</div>
                         <div class="player-score">42,150</div>
                     </div>
                     <div class="player-row">
                         <div class="player-position">2</div>
-                        <div class="player-name">Destroyer</div>
+                        <div class="player-name">Theosima</div>
                         <div class="player-score">38,900</div>
                     </div>
                     <div class="player-row">
                         <div class="player-position">3</div>
-                        <div class="player-name">TankMaster</div>
+                        <div class="player-name">Inception</div>
                         <div class="player-score">36,750</div>
                     </div>
                     <div class="player-row">
                         <div class="player-position">4</div>
-                        <div class="player-name">Warrior47</div>
+                        <div class="player-name">Lazovsky</div>
                         <div class="player-score">32,400</div>
                     </div>
                     <div class="player-row">
                         <div class="player-position">5</div>
-                        <div class="player-name">IronSide</div>
+                        <div class="player-name">dora</div>
                         <div class="player-score">29,800</div>
                     </div>
                 </div>
@@ -1729,7 +1726,7 @@
             bindNicknameBtn.addEventListener('click', () => {
                 const nickname = prompt('Введите ваш игровой никнейм:');
                 if (nickname && nickname.trim() !== '') {
-                    // пример
+                    // In a real app, this would call the bot API to bind the nickname
                     document.getElementById('gameNickname').textContent = nickname;
                     
                     // Сохраняем в localStorage
