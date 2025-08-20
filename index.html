@@ -9,224 +9,227 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            user-select: none;
         }
-
+        
         body {
-            background: linear-gradient(135deg, #2e8b57, #228b22);
-            color: #fff;
+            background: linear-gradient(135deg, #0d1b2a, #1b263b);
+            color: #e0e1dd;
             min-height: 100vh;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-
+        
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
+            width: 100%;
+            max-width: 500px;
+            background: rgba(27, 38, 59, 0.8);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
-
+        
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 15px;
+            padding: 10px 0;
+            border-bottom: 2px solid #415a77;
             margin-bottom: 20px;
         }
-
-        .currency {
-            display: flex;
-            gap: 20px;
-        }
-
-        .currency-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 15px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 25px;
-        }
-
-        .currency-icon {
-            width: 24px;
-            height: 24px;
-        }
-
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 20px;
-        }
-
-        .farm-area {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 15px;
-            padding: 20px;
-            min-height: 500px;
-        }
-
-        .beds-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .bed {
-            width: 100px;
-            height: 100px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="5" y="5" width="90" height="90" fill="%238B4513" stroke="%23654B23" stroke-width="2"/></svg>');
-            background-size: cover;
-            border-radius: 10px;
-            cursor: pointer;
-            position: relative;
-            transition: transform 0.2s;
-        }
-
-        .bed:hover {
-            transform: scale(1.05);
-        }
-
-        .plant {
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            bottom: 10px;
-            left: 20px;
-        }
-
-        .plant-level {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background: gold;
-            color: black;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
+        
+        .game-title {
+            font-size: 28px;
             font-weight: bold;
+            color: #ffb74d;
+            text-shadow: 0 0 10px rgba(255, 183, 77, 0.5);
         }
-
-        .sidebar {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 15px;
-            padding: 20px;
-        }
-
-        .shop-category {
+        
+        .currency-display {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
             margin-bottom: 20px;
         }
-
-        .shop-category h3 {
-            margin-bottom: 10px;
-            color: #ffd700;
-        }
-
-        .shop-item {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 10px;
-            border-radius: 10px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .shop-item:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .shop-item-header {
+        
+        .currency-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 5px;
+            padding: 10px 15px;
+            background: rgba(65, 90, 119, 0.5);
+            border-radius: 12px;
+            font-size: 18px;
         }
-
-        .shop-item-price {
-            color: #ffd700;
-            font-weight: bold;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 10px 0;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #4CAF50, #8BC34A);
-            transition: width 0.3s;
-        }
-
-        .button {
-            background: linear-gradient(135deg, #ff6b35, #f7931e);
-            border: none;
-            padding: 12px 20px;
-            border-radius: 25px;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.2s;
-            width: 100%;
-            margin: 5px 0;
-        }
-
-        .button:hover {
-            transform: translateY(-2px);
-        }
-
-        .button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
+        
+        .currency-icon {
+            width: 30px;
+            height: 30px;
+            display: flex;
             align-items: center;
             justify-content: center;
+            font-weight: bold;
+            margin-right: 10px;
         }
-
-        .modal-content {
-            background: #2c3e50;
-            padding: 30px;
+        
+        .currency-value {
+            font-weight: bold;
+            color: #ffb74d;
+        }
+        
+        .income-display {
+            text-align: center;
+            padding: 15px;
+            background: rgba(26, 36, 56, 0.8);
             border-radius: 15px;
-            max-width: 400px;
-            width: 90%;
+            margin-bottom: 20px;
+            border: 2px solid #415a77;
         }
-
-        .close-modal {
-            float: right;
+        
+        .income-label {
+            font-size: 16px;
+            color: #e0e1dd;
+            margin-bottom: 5px;
+        }
+        
+        .income-value {
             font-size: 24px;
+            font-weight: bold;
+            color: #4caf50;
+        }
+        
+        .upgrades-section {
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            color: #ffb74d;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #415a77;
+        }
+        
+        .upgrades-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .upgrade-item {
+            background: rgba(42, 57, 83, 0.8);
+            border-radius: 15px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 2px solid #415a77;
             cursor: pointer;
         }
-
-        .craft-card {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 10px 0;
+        
+        .upgrade-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            background: rgba(51, 69, 100, 0.8);
+        }
+        
+        .upgrade-icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        
+        .upgrade-name {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
             text-align: center;
         }
-
-        @media (max-width: 768px) {
-            .main-content {
+        
+        .upgrade-level {
+            font-size: 14px;
+            color: #ffb74d;
+            margin-bottom: 8px;
+        }
+        
+        .upgrade-cost {
+            font-size: 14px;
+            color: #4caf50;
+            font-weight: bold;
+        }
+        
+        .boost-section {
+            background: rgba(65, 90, 119, 0.3);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 2px solid #415a77;
+        }
+        
+        .boost-button {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+            box-shadow: 0 5px 15px rgba(247, 147, 30, 0.3);
+        }
+        
+        .boost-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(247, 147, 30, 0.4);
+        }
+        
+        .farm-section {
+            background: rgba(26, 36, 56, 0.8);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            border: 2px solid #415a77;
+        }
+        
+        .farm-button {
+            background: linear-gradient(135deg, #388e3c, #4caf50);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+        
+        .farm-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
+        }
+        
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #778da9;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 500px) {
+            .upgrades-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .currency-item {
+                font-size: 16px;
             }
         }
     </style>
@@ -234,287 +237,228 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🌱 IDLE FARM</h1>
-            <div class="currency">
-                <div class="currency-item">
-                    <span class="currency-icon">💰</span>
-                    <span id="coins">100</span>
+            <h1 class="game-title">IDLE FARM</h1>
+        </div>
+        
+        <div class="currency-display">
+            <div class="currency-item">
+                <div style="display: flex; align-items: center;">
+                    <div class="currency-icon">💰</div>
+                    <span>CASH</span>
                 </div>
-                <div class="currency-item">
-                    <span class="currency-icon">⭐</span>
-                    <span id="stars">5</span>
+                <span class="currency-value" id="cash-value">5.21ac</span>
+            </div>
+            
+            <div class="currency-item">
+                <div style="display: flex; align-items: center;">
+                    <div class="currency-icon">⭐</div>
+                    <span>SUPER CASH</span>
                 </div>
+                <span class="currency-value" id="super-cash-value">16</span>
+            </div>
+            
+            <div class="currency-item">
+                <div style="display: flex; align-items: center;">
+                    <div class="currency-icon">🌲</div>
+                    <span>LUMBER</span>
+                </div>
+                <span class="currency-value" id="lumber-value">500</span>
             </div>
         </div>
-
-        <div class="main-content">
-            <div class="farm-area">
-                <h2>Ваша ферма</h2>
-                <div class="beds-grid" id="beds-container">
-                    <!-- Грядки будут добавляться динамически -->
+        
+        <div class="income-display">
+            <div class="income-label">IDLE CASH</div>
+            <div class="income-value" id="idle-cash-value">634aa/s</div>
+        </div>
+        
+        <div class="upgrades-section">
+            <h2 class="section-title">UPGRADES</h2>
+            <div class="upgrades-grid">
+                <div class="upgrade-item" onclick="buyUpgrade('market')">
+                    <div class="upgrade-icon">🏪</div>
+                    <div class="upgrade-name">MARKET</div>
+                    <div class="upgrade-level">Level 27.6T</div>
+                    <div class="upgrade-cost">1ad</div>
                 </div>
                 
-                <h2>Транспорт и рабочие</h2>
-                <div class="transport-grid" id="transport-container">
-                    <!-- Транспорт и рабочие будут добавляться динамически -->
+                <div class="upgrade-item" onclick="buyUpgrade('farm')">
+                    <div class="upgrade-icon">🌾</div>
+                    <div class="upgrade-name">FARM</div>
+                    <div class="upgrade-level">Level 69aa</div>
+                    <div class="upgrade-cost">1.57ac</div>
                 </div>
-            </div>
-
-            <div class="sidebar">
-                <div class="shop-category">
-                    <h3>🛒 Магазин</h3>
-                    <div class="shop-item" onclick="buyBed()">
-                        <div class="shop-item-header">
-                            <span>Новая грядка</span>
-                            <span class="shop-item-price">💰 50</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 0%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="shop-item" onclick="buyPlant()">
-                        <div class="shop-item-header">
-                            <span>Растение Ур.1</span>
-                            <span class="shop-item-price">💰 10</span>
-                        </div>
-                    </div>
-                    
-                    <div class="shop-item" onclick="buyUpgrade()">
-                        <div class="shop-item-header">
-                            <span>Улучшение покупки</span>
-                            <span class="shop-item-price">⭐ 3</span>
-                        </div>
-                    </div>
+                
+                <div class="upgrade-item" onclick="buyUpgrade('transport')">
+                    <div class="upgrade-icon">🚚</div>
+                    <div class="upgrade-name">TRANSPORT</div>
+                    <div class="upgrade-level">Level 10.75Th</div>
+                    <div class="upgrade-cost">15.7ab</div>
                 </div>
-
-                <div class="shop-category">
-                    <h3>🎁 Сундуки</h3>
-                    <button class="button" onclick="openChestModal()">
-                        Открыть сундук (⭐ 10)
-                    </button>
-                </div>
-
-                <div class="shop-category">
-                    <h3>⚡ Крафт</h3>
-                    <button class="button" onclick="useBoost('speed')">
-                        Ускорение сбора (30 мин)
-                    </button>
-                    <button class="button" onclick="useBoost('income')">
-                        Увеличение дохода (1 час)
-                    </button>
+                
+                <div class="upgrade-item" onclick="buyUpgrade('workers')">
+                    <div class="upgrade-icon">👨‍🌾</div>
+                    <div class="upgrade-name">WORKERS</div>
+                    <div class="upgrade-level">Level 12h</div>
+                    <div class="upgrade-cost">35ag</div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Модальное окно для сундуков -->
-    <div class="modal" id="chest-modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal('chest-modal')">×</span>
-            <h2>🎁 Открытие сундука</h2>
-            <div id="chest-rewards">
-                <div class="craft-card">
-                    <h3>Вы получили:</h3>
-                    <p>Карточка ускорения x2</p>
-                    <p>Карточка дохода x1</p>
-                </div>
-            </div>
-            <button class="button" onclick="claimChestRewards()">
-                Забрать награды
-            </button>
+        
+        <div class="boost-section">
+            <h2 class="section-title">BOOST</h2>
+            <button class="boost-button" onclick="activateBoost()">Boost!</button>
+        </div>
+        
+        <div class="farm-section">
+            <h2 class="section-title">FARM</h2>
+            <button class="farm-button" onclick="collectFarm()">Collect 50aa</button>
+        </div>
+        
+        <div class="footer">
+            <p>IDLE FARM © 2023 | Telegram Mini App</p>
         </div>
     </div>
 
     <script>
-        // Основные переменные игры
-        let gameState = {
-            coins: 100,
-            stars: 5,
-            beds: [],
-            plants: [],
-            transport: [],
-            workers: [],
+        // Игровые данные
+        let gameData = {
+            cash: 5.21, // в ac
+            superCash: 16,
+            lumber: 500,
+            idleCash: 634, // в aa/s
             upgrades: {
-                plantLevel: 1,
-                autoMerge: false
+                market: { level: 27.6, cost: 1 }, // в T и ad
+                farm: { level: 69, cost: 1.57 }, // в aa и ac
+                transport: { level: 10.75, cost: 15.7 }, // в Th и ab
+                workers: { level: 12, cost: 35 } // в h и ag
             },
-            boosts: {
-                active: [],
-                cooldowns: {}
-            },
-            prices: {
-                bed: 50,
-                plant: 10,
-                transport: 100,
-                worker: 80
-            }
+            lastUpdate: Date.now()
         };
-
-        // Инициализация игры
-        function initGame() {
-            loadGame();
-            updateUI();
-            startGameLoop();
+        
+        // Форматирование чисел в игровом стиле
+        function formatNumber(num, format) {
+            if (format === 'aa') return (num / 1e12).toFixed(2) + 'aa';
+            if (format === 'ac') return (num / 1e15).toFixed(2) + 'ac';
+            if (format === 'ab') return (num / 1e18).toFixed(2) + 'ab';
+            if (format === 'ad') return (num / 1e21).toFixed(2) + 'ad';
+            if (format === 'ag') return (num / 1e24).toFixed(2) + 'ag';
+            if (format === 'T') return (num / 1e12).toFixed(1) + 'T';
+            if (format === 'Th') return (num / 1e15).toFixed(1) + 'Th';
+            if (format === 'h') return (num / 1e18).toFixed(0) + 'h';
+            return num;
         }
-
-        // Основной игровой цикл
-        function startGameLoop() {
-            setInterval(() => {
-                generateIncome();
-                updateBoosts();
-                updateUI();
-                saveGame();
-            }, 1000);
-        }
-
-        // Генерация дохода
-        function generateIncome() {
-            let income = 0;
+        
+        // Обновление интерфейса
+        function updateUI() {
+            document.getElementById('cash-value').textContent = formatNumber(gameData.cash, 'ac');
+            document.getElementById('super-cash-value').textContent = gameData.superCash;
+            document.getElementById('lumber-value').textContent = gameData.lumber;
+            document.getElementById('idle-cash-value').textContent = formatNumber(gameData.idleCash, 'aa') + '/s';
             
-            // Доход от растений
-            gameState.plants.forEach(plant => {
-                income += plant.level * 0.1;
-            });
-            
-            // Доход от транспорта и рабочих
-            gameState.transport.forEach(vehicle => {
-                income += vehicle.level * 0.2;
-            });
-            
-            gameState.workers.forEach(worker => {
-                income += worker.level * 0.15;
-            });
-            
-            // Умножение на активные бусты
-            const incomeBoost = gameState.boosts.active.find(b => b.type === 'income');
-            if (incomeBoost) {
-                income *= 2;
-            }
-            
-            gameState.coins += income;
-        }
-
-        // Покупка грядки
-        function buyBed() {
-            if (gameState.coins >= gameState.prices.bed) {
-                gameState.coins -= gameState.prices.bed;
-                gameState.beds.push({
-                    id: Date.now(),
-                    level: 1,
-                    plant: null
-                });
-                gameState.prices.bed = Math.floor(gameState.prices.bed * 1.5);
-                updateUI();
-                saveGame();
-            }
-        }
-
-        // Покупка растения
-        function buyPlant() {
-            if (gameState.coins >= gameState.prices.plant) {
-                gameState.coins -= gameState.prices.plant;
+            // Обновление улучшений
+            document.querySelector('[onclick="buyUpgrade(\'market\')"] .upgrade-level').textContent = 
+                'Level ' + formatNumber(gameData.upgrades.market.level, 'T');
+            document.querySelector('[onclick="buyUpgrade(\'market\')"] .upgrade-cost').textContent = 
+                formatNumber(gameData.upgrades.market.cost, 'ad');
                 
-                const emptyBed = gameState.beds.find(bed => !bed.plant);
-                if (emptyBed) {
-                    gameState.plants.push({
-                        id: Date.now(),
-                        bedId: emptyBed.id,
-                        level: gameState.upgrades.plantLevel,
-                        growth: 0
-                    });
-                    emptyBed.plant = true;
-                }
+            document.querySelector('[onclick="buyUpgrade(\'farm\')"] .upgrade-level').textContent = 
+                'Level ' + formatNumber(gameData.upgrades.farm.level, 'aa');
+            document.querySelector('[onclick="buyUpgrade(\'farm\')"] .upgrade-cost').textContent = 
+                formatNumber(gameData.upgrades.farm.cost, 'ac');
                 
-                gameState.prices.plant = Math.floor(gameState.prices.plant * 1.3);
-                updateUI();
-                saveGame();
-            }
+            document.querySelector('[onclick="buyUpgrade(\'transport\')"] .upgrade-level').textContent = 
+                'Level ' + formatNumber(gameData.upgrades.transport.level, 'Th');
+            document.querySelector('[onclick="buyUpgrade(\'transport\')"] .upgrade-cost').textContent = 
+                formatNumber(gameData.upgrades.transport.cost, 'ab');
+                
+            document.querySelector('[onclick="buyUpgrade(\'workers\')"] .upgrade-level').textContent = 
+                'Level ' + formatNumber(gameData.upgrades.workers.level, 'h');
+            document.querySelector('[onclick="buyUpgrade(\'workers\')"] .upgrade-cost').textContent = 
+                formatNumber(gameData.upgrades.workers.cost, 'ag');
         }
-
-        // Использование буста
-        function useBoost(type) {
-            const boostCost = type === 'speed' ? 2 : 3;
-            
-            if (gameState.stars >= boostCost) {
-                gameState.stars -= boostCost;
+        
+        // Покупка улучшения
+        function buyUpgrade(type) {
+            const upgrade = gameData.upgrades[type];
+            // Проверка возможности покупки
+            if (gameData.cash >= upgrade.cost) {
+                gameData.cash -= upgrade.cost;
+                upgrade.level += 1;
+                upgrade.cost *= 1.5; // Увеличиваем стоимость
                 
-                gameState.boosts.active.push({
-                    type: type,
-                    duration: type === 'speed' ? 1800 : 3600, // 30 мин или 1 час в секундах
-                    startTime: Date.now()
-                });
+                // Увеличиваем доход в зависимости от типа улучшения
+                if (type === 'market') gameData.idleCash *= 1.2;
+                if (type === 'farm') gameData.idleCash *= 1.15;
+                if (type === 'transport') gameData.idleCash *= 1.1;
+                if (type === 'workers') gameData.idleCash *= 1.05;
                 
                 updateUI();
                 saveGame();
             }
         }
-
-        // Обновление бустов
-        function updateBoosts() {
-            const now = Date.now();
-            gameState.boosts.active = gameState.boosts.active.filter(boost => {
-                const elapsed = (now - boost.startTime) / 1000;
-                return elapsed < boost.duration;
-            });
-        }
-
-        // Открытие модального окна сундука
-        function openChestModal() {
-            if (gameState.stars >= 10) {
-                document.getElementById('chest-modal').style.display = 'flex';
+        
+        // Активация буста
+        function activateBoost() {
+            if (gameData.superCash >= 5) {
+                gameData.superCash -= 5;
+                gameData.idleCash *= 2; // Удваиваем доход
+                
+                // Через 30 секунд возвращаем обычный доход
+                setTimeout(() => {
+                    gameData.idleCash /= 2;
+                    updateUI();
+                }, 30000);
+                
+                updateUI();
+                saveGame();
             }
         }
-
-        // Получение наград из сундука
-        function claimChestRewards() {
-            gameState.stars -= 10;
-            // Добавление наград (упрощённо)
-            closeModal('chest-modal');
+        
+        // Сбор урожая с фермы
+        function collectFarm() {
+            gameData.cash += 50; // 50aa, но в наших единицах это 50
             updateUI();
             saveGame();
         }
-
-        // Закрытие модального окна
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-
-        // Обновление интерфейса
-        function updateUI() {
-            document.getElementById('coins').textContent = Math.floor(gameState.coins);
-            document.getElementById('stars').textContent = gameState.stars;
+        
+        // Игровой цикл - пассивный доход
+        function gameLoop() {
+            const now = Date.now();
+            const deltaTime = (now - gameData.lastUpdate) / 1000; // в секундах
+            gameData.lastUpdate = now;
             
-            // Обновление грядок
-            const bedsContainer = document.getElementById('beds-container');
-            bedsContainer.innerHTML = '';
+            // Добавляем пассивный доход
+            gameData.cash += gameData.idleCash * deltaTime;
             
-            gameState.beds.forEach(bed => {
-                const bedElement = document.createElement('div');
-                bedElement.className = 'bed';
-                bedElement.innerHTML = `
-                    ${bed.plant ? `
-                        <div class="plant">🌱</div>
-                        <div class="plant-level">${gameState.plants.find(p => p.bedId === bed.id)?.level || 1}</div>
-                    ` : ''}
-                `;
-                bedsContainer.appendChild(bedElement);
-            });
+            updateUI();
+            requestAnimationFrame(gameLoop);
         }
-
+        
         // Сохранение игры
         function saveGame() {
-            localStorage.setItem('idleFarmSave', JSON.stringify(gameState));
+            localStorage.setItem('idleFarmSave', JSON.stringify(gameData));
         }
-
+        
         // Загрузка игры
         function loadGame() {
             const save = localStorage.getItem('idleFarmSave');
             if (save) {
-                gameState = JSON.parse(save);
+                gameData = JSON.parse(save);
+                gameData.lastUpdate = Date.now();
             }
         }
-
+        
+        // Инициализация игры
+        function initGame() {
+            loadGame();
+            updateUI();
+            gameData.lastUpdate = Date.now();
+            requestAnimationFrame(gameLoop);
+            
+            // Автосохранение каждые 30 секунд
+            setInterval(saveGame, 30000);
+        }
+        
         // Запуск игры при загрузке страницы
         window.onload = initGame;
     </script>
