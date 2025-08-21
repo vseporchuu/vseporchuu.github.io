@@ -12,7 +12,6 @@
             --primary-light: #81C784;
             --primary-dark: #388E3C;
             --primary-gradient: linear-gradient(135deg, #4CAF50, #2E7D32);
-            --boost-gradient: linear-gradient(135deg, #FF9800, #FF5722);
             --secondary: #FFC107;
             --accent: #FF5722;
             --background: #121212;
@@ -23,10 +22,7 @@
             --text-lighter: #8a8a8a;
             --border: #333333;
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-            --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.4);
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            --glass-effect: rgba(255, 255, 255, 0.05);
-            --blur: blur(10px);
         }
 
         * {
@@ -43,12 +39,8 @@
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
-            line-height: 1.5;
+            line-height: 1.6;
             font-size: 15px;
-            padding-bottom: 70px;
-            background-image: 
-                radial-gradient(circle at 15% 50%, rgba(76, 175, 80, 0.05) 0%, transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(76, 175, 80, 0.05) 0%, transparent 25%);
         }
 
         .container {
@@ -65,8 +57,6 @@
             top: 0;
             z-index: 100;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            backdrop-filter: var(--blur);
-            background-color: rgba(30, 30, 30, 0.8);
         }
 
         .header-content {
@@ -93,14 +83,13 @@
             color: white;
         }
 
-        .logo-icon svg {
+        .logo-icon img {
             width: 20px;
             height: 20px;
-            fill: white;
         }
 
         .logo h1 {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: 700;
             background: linear-gradient(90deg, #4CAF50, #8BC34A);
             -webkit-background-clip: text;
@@ -108,15 +97,65 @@
             letter-spacing: -0.5px;
         }
 
+        .nav-toggle {
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.4rem;
+            cursor: pointer;
+            display: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 8px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            padding: 8px 14px;
+            border-radius: 10px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--text);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        nav a.active {
+            color: white;
+            background: rgba(76, 175, 80, 0.15);
+        }
+
+        nav a.active::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
         /* Main content */
         .main-content {
             flex: 1;
-            padding: 20px 0;
+            padding: 25px 0;
         }
 
         .section {
             display: none;
-            animation: fadeIn 0.4s ease;
+            animation: fadeIn 0.5s ease;
         }
 
         .section.active {
@@ -124,12 +163,12 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .section-header {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -138,7 +177,7 @@
         }
 
         .section-title {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 600;
             color: #e0f0e0;
             position: relative;
@@ -163,14 +202,13 @@
         .section-icon {
             width: 28px;
             height: 28px;
-            fill: var(--primary);
         }
 
         /* Dashboard styles - COMPACT VERSION */
         .dashboard-compact {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 16px;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
             margin-bottom: 20px;
         }
 
@@ -180,28 +218,16 @@
             gap: 16px;
             margin-bottom: 16px;
             background: var(--card-bg);
-            border-radius: 16px;
-            padding: 16px;
+            border-radius: 14px;
+            padding: 14px;
             box-shadow: var(--shadow);
             transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .user-header::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, transparent 70%);
-            z-index: 0;
+            grid-column: span 2;
         }
 
         .user-header:hover {
             transform: translateY(-3px);
-            box-shadow: var(--shadow-hover);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
         }
 
         .avatar {
@@ -217,29 +243,10 @@
             font-size: 1.5rem;
             color: white;
             flex-shrink: 0;
-            position: relative;
-            z-index: 1;
-        }
-
-        .avatar.has-boost {
-            border: 3px solid transparent;
-            background: 
-                linear-gradient(var(--card-bg), var(--card-bg)) padding-box,
-                var(--boost-gradient) border-box;
-            box-shadow: 0 0 15px rgba(255, 152, 0, 0.4);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 10px rgba(255, 152, 0, 0.4); }
-            50% { box-shadow: 0 0 20px rgba(255, 152, 0, 0.7); }
-            100% { box-shadow: 0 0 10px rgba(255, 152, 0, 0.4); }
         }
 
         .user-info {
             flex: 1;
-            position: relative;
-            z-index: 1;
         }
 
         .user-info h2 {
@@ -261,10 +268,9 @@
             gap: 12px;
             background: rgba(76, 175, 80, 0.1);
             padding: 8px 12px;
-            border-radius: 10px;
+            border-radius: 8px;
             margin-top: 8px;
             font-size: 0.85rem;
-            backdrop-filter: var(--blur);
         }
 
         .progress-label {
@@ -289,12 +295,12 @@
         .compact-stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 10px;
+            gap: 8px;
         }
 
         .stat-card {
             background: var(--card-bg);
-            border-radius: 14px;
+            border-radius: 12px;
             padding: 14px;
             box-shadow: var(--shadow);
             transition: var(--transition);
@@ -302,13 +308,11 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            backdrop-filter: var(--blur);
-            border: 1px solid var(--border);
         }
 
         .stat-card:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-hover);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
         }
 
         .stat-card::before {
@@ -325,7 +329,7 @@
             width: 36px;
             height: 36px;
             background: rgba(76, 175, 80, 0.15);
-            border-radius: 10px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -334,10 +338,9 @@
             margin-bottom: 10px;
         }
 
-        .stat-icon svg {
+        .stat-icon img {
             width: 18px;
             height: 18px;
-            fill: currentColor;
         }
 
         .stat-value {
@@ -362,7 +365,7 @@
             flex: 1;
             padding: 12px 16px;
             border: 1px solid var(--border);
-            border-radius: 12px;
+            border-radius: 10px;
             font-size: 0.9rem;
             background: var(--card-bg);
             color: var(--text);
@@ -379,15 +382,15 @@
             background: var(--primary-gradient);
             color: white;
             border: none;
-            border-radius: 12px;
-            padding: 0 20px;
+            border-radius: 10px;
+            padding: 0 22px;
             font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
 
         .search-btn:hover {
@@ -425,15 +428,14 @@
             left: 12px;
             background-color: rgba(0,0,0,0.25);
             border-radius: 50%;
-            width: 44px;
-            height: 44px;
+            width: 45px;
+            height: 45px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
             font-size: 1.1rem;
             border: 2px solid rgba(255,255,255,0.3);
-            backdrop-filter: var(--blur);
         }
 
         .profile-avatar {
@@ -471,7 +473,6 @@
             margin-bottom: 10px;
             position: relative;
             z-index: 2;
-            backdrop-filter: var(--blur);
         }
 
         .profile-gear-score {
@@ -500,8 +501,8 @@
         .tab-btn {
             background-color: var(--card-bg);
             border: none;
-            padding: 10px 8px;
-            border-radius: 12px;
+            padding: 10px 6px;
+            border-radius: 10px;
             cursor: pointer;
             transition: var(--transition);
             font-weight: 500;
@@ -513,12 +514,11 @@
             text-align: center;
             position: relative;
             overflow: hidden;
-            border: 1px solid var(--border);
         }
 
         .tab-btn:hover {
             transform: translateY(-3px);
-            box-shadow: var(--shadow-hover);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.25);
         }
 
         .tab-btn.active {
@@ -537,20 +537,28 @@
 
         .tab-content {
             display: none;
-            animation: fadeIn 0.4s ease;
+            animation: fadeIn 0.5s ease;
         }
 
         .tab-content.active {
             display: block;
         }
 
+        /* Stats Section */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
         /* Account Data Section */
         .account-data-section {
-            margin-bottom: 24px;
+            margin-bottom: 25px;
         }
 
         .account-data-title {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 600;
             margin-bottom: 12px;
             color: var(--primary);
@@ -574,7 +582,7 @@
         }
 
         .scroll-container::-webkit-scrollbar {
-            height: 5px;
+            height: 6px;
         }
 
         .scroll-container::-webkit-scrollbar-thumb {
@@ -600,12 +608,11 @@
             overflow: hidden;
             min-width: 220px;
             flex-shrink: 0;
-            border: 1px solid var(--border);
         }
 
         .equipment-card:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-hover);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.3);
         }
 
         .equipment-card::before {
@@ -632,10 +639,9 @@
             flex-shrink: 0;
         }
 
-        .equipment-icon svg {
+        .equipment-icon img {
             width: 28px;
             height: 28px;
-            fill: currentColor;
         }
 
         .equipment-info {
@@ -664,8 +670,57 @@
             font-size: 0.85rem;
         }
 
-        .equipment-stat i {
-            font-size: 0.75rem;
+        .equipment-stat img {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* Supplies Section */
+        .supplies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px;
+        }
+
+        .supply-card {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 16px 10px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .supply-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.3);
+        }
+
+        .supply-icon {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 10px;
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .supply-name {
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+            color: white;
+        }
+
+        .supply-count {
+            font-size: 1.2rem;
+            font-weight: 700;
             color: var(--primary);
         }
 
@@ -689,12 +744,11 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            border: 1px solid var(--border);
         }
 
         .service-card:hover {
             transform: translateY(-5px);
-            box-shadow: var(--shadow-hover);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
         }
 
         .service-card::before {
@@ -727,7 +781,7 @@
 
         .service-card p {
             color: var(--text-light);
-            line-height: 1.5;
+            line-height: 1.6;
             font-size: 0.9rem;
             flex: 1;
         }
@@ -740,12 +794,11 @@
             box-shadow: var(--shadow);
             margin-bottom: 20px;
             transition: var(--transition);
-            border: 1px solid var(--border);
         }
 
         .player-card:hover {
             transform: translateY(-3px);
-            box-shadow: var(--shadow-hover);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
         }
 
         .player-header {
@@ -756,8 +809,8 @@
         }
 
         .player-rank {
-            width: 44px;
-            height: 44px;
+            width: 45px;
+            height: 45px;
             background: var(--primary-gradient);
             border-radius: 50%;
             display: flex;
@@ -787,7 +840,6 @@
             border-radius: 16px;
             padding: 20px;
             box-shadow: var(--shadow);
-            border: 1px solid var(--border);
         }
 
         .player-row {
@@ -837,7 +889,6 @@
             padding: 20px;
             box-shadow: var(--shadow);
             margin-bottom: 20px;
-            border: 1px solid var(--border);
         }
 
         .setting-item {
@@ -918,7 +969,6 @@
             border-radius: 16px;
             padding: 20px;
             box-shadow: var(--shadow);
-            border: 1px solid var(--border);
         }
 
         .about-app h3 {
@@ -928,61 +978,35 @@
         }
 
         .about-app p {
-            line-height: 1.6;
+            line-height: 1.7;
             margin-bottom: 10px;
             font-size: 0.95rem;
             color: var(--text-light);
         }
 
-        /* Bottom Navigation */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: var(--surface);
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-            padding: 8px 0;
-            backdrop-filter: var(--blur);
-            background-color: rgba(30, 30, 30, 0.8);
-        }
-
-        .bottom-nav ul {
-            display: flex;
-            justify-content: space-around;
-            list-style: none;
-        }
-
-        .bottom-nav a {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: var(--text-light);
-            font-size: 0.75rem;
-            padding: 6px 10px;
-            border-radius: 12px;
-            transition: var(--transition);
-        }
-
-        .bottom-nav a.active {
-            color: var(--primary);
-            background: rgba(76, 175, 80, 0.15);
-        }
-
-        .bottom-nav a i {
-            font-size: 1.2rem;
-            margin-bottom: 4px;
-        }
-
-        .bottom-nav a span {
-            font-weight: 500;
-        }
-
         /* Footer */
         footer {
-            display: none;
+            background: var(--surface);
+            padding: 18px 0;
+            margin-top: 35px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--text-light);
         }
 
         /* Responsive styles */
@@ -991,8 +1015,27 @@
                 flex-wrap: wrap;
             }
             
+            .nav-toggle {
+                display: block;
+            }
+            
+            nav {
+                width: 100%;
+                margin-top: 10px;
+                display: none;
+            }
+            
+            nav.active {
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 4px;
+            }
+            
             .section-title {
-                font-size: 1.4rem;
+                font-size: 1.5rem;
             }
             
             .user-header {
@@ -1035,7 +1078,7 @@
             }
             
             .section-title {
-                font-size: 1.3rem;
+                font-size: 1.4rem;
             }
             
             .stats-grid {
@@ -1051,7 +1094,7 @@
             }
             
             .profile-name {
-                font-size: 1.4rem;
+                font-size: 1.5rem;
             }
             
             .search-box {
@@ -1062,15 +1105,6 @@
                 justify-content: center;
                 padding: 12px;
             }
-
-            .bottom-nav a {
-                padding: 5px 8px;
-                font-size: 0.7rem;
-            }
-
-            .bottom-nav a i {
-                font-size: 1.1rem;
-            }
         }
     </style>
 </head>
@@ -1080,20 +1114,22 @@
             <div class="header-content">
                 <div class="logo">
                     <div class="logo-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M21 11H3C2.45 11 2 11.45 2 12V14C2 14.55 2.45 15 3 15H21C21.55 15 22 14.55 22 14V12C22 11.45 21.55 11 21 11Z" fill="white"/>
-                            <path d="M3 9H6V11H3V9Z" fill="white"/>
-                            <path d="M21 9H18V11H21V9Z" fill="white"/>
-                            <path d="M4 15H5V17H4V15Z" fill="white"/>
-                            <path d="M20 15H19V17H20V15Z" fill="white"/>
-                            <path d="M18 6H15V9H18V6Z" fill="white"/>
-                            <path d="M9 6H6V9H9V6Z" fill="white"/>
-                            <path d="M15 17H9V19H15V17Z" fill="white"/>
-                            <path d="M10 15H14V17H10V15Z" fill="white"/>
-                        </svg>
+                        <img src="icons/logo.svg" alt="47bot Logo">
                     </div>
                     <h1>47bot</h1>
                 </div>
+                <button class="nav-toggle" id="navToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="#" class="nav-link active" data-section="dashboard"><img src="icons/home.svg" alt="Home" class="icon"> Главная</a></li>
+                        <li><a href="#" class="nav-link" data-section="profile"><img src="icons/user.svg" alt="Profile" class="icon"> Профиль</a></li>
+                        <li><a href="#" class="nav-link" data-section="general"><img src="icons/globe.svg" alt="General" class="icon"> Общее</a></li>
+                        <li><a href="#" class="nav-link" data-section="rating"><img src="icons/trophy.svg" alt="Rating" class="icon"> Рейтинг</a></li>
+                        <li><a href="#" class="nav-link" data-section="settings"><img src="icons/cog.svg" alt="Settings" class="icon"> Настройки</a></li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </header>
@@ -1104,16 +1140,14 @@
             <section id="dashboard" class="section active">
                 <div class="section-header">
                     <h2 class="section-title">
-                        <svg class="section-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-                        </svg>
+                        <img src="icons/stats.svg" alt="Stats" class="section-icon">
                         Статистика чата
                     </h2>
                 </div>
                 
                 <div class="dashboard-compact">
                     <div class="user-header">
-                        <div class="avatar has-boost" id="userAvatar">
+                        <div class="avatar" id="userAvatar">
                             <i class="fas fa-user"></i>
                         </div>
                         <div class="user-info">
@@ -1129,41 +1163,28 @@
                     <div class="compact-stats-grid">
                         <div class="stat-card">
                             <div class="stat-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M18 11H6C5.45 11 5 11.45 5 12C5 12.55 5.45 13 6 13H18C18.55 13 19 12.55 19 12C19 11.45 18.55 11 18 11Z"/>
-                                    <path d="M18 7H6C5.45 7 5 7.45 5 8C5 8.55 5.45 9 6 9H18C18.55 9 19 8.55 19 8C19 7.45 18.55 7 18 7Z"/>
-                                    <path d="M18 15H6C5.45 15 5 15.45 5 16C5 16.55 5.45 17 6 17H18C18.55 17 19 16.55 19 16C19 15.45 18.55 15 18 15Z"/>
-                                </svg>
+                                <img src="icons/rank.svg" alt="Rank">
                             </div>
                             <div class="stat-value">Капитан</div>
                             <div class="stat-label">Звание чата</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z"/>
-                                    <path d="M12.5 7H11V13L16.2 16.2L17 14.9L12.5 12.2V7Z"/>
-                                </svg>
+                                <img src="icons/experience.svg" alt="Experience">
                             </div>
                             <div class="stat-value">12,450</div>
                             <div class="stat-label">Опыт чата</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2ZM20 16H6L4 18V4H20V16Z"/>
-                                    <path d="M7 9H17V11H7V9ZM7 12H14V14H7V12Z"/>
-                                </svg>
+                                <img src="icons/messages.svg" alt="Messages">
                             </div>
                             <div class="stat-value">8,450</div>
                             <div class="stat-label">Сообщения</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z"/>
-                                    <path d="M12.5 7H11V13L16.2 16.2L17 14.9L12.5 12.2V7Z"/>
-                                </svg>
+                                <img src="icons/position.svg" alt="Position">
                             </div>
                             <div class="stat-value">#7</div>
                             <div class="stat-label">Место в чате</div>
@@ -1174,7 +1195,7 @@
                 <div class="search-box">
                     <input type="text" class="search-input" placeholder="Поиск профиля..." id="profileSearch">
                     <button class="search-btn">
-                        <i class="fas fa-search"></i> Найти
+                        <img src="icons/search.svg" alt="Search" class="icon"> Найти
                     </button>
                 </div>
             </section>
@@ -1183,13 +1204,11 @@
             <section id="profile" class="section">
                 <div class="section-header">
                     <h2 class="section-title">
-                        <svg class="section-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                        </svg>
+                        <img src="icons/profile.svg" alt="Profile" class="section-icon">
                         Игровой профиль
                     </h2>
                     <button class="search-btn" id="bindNicknameBtn">
-                        <i class="fas fa-link"></i> Привязать никнейм
+                        <img src="icons/link.svg" alt="Link" class="icon"> Привязать никнейм
                     </button>
                 </div>
                 
@@ -1207,10 +1226,10 @@
 
                 <div class="profile-tabs">
                     <button class="tab-btn active" data-tab="stats">
-                        <i class="fas fa-chart-bar"></i> Статистика
+                        <img src="icons/chart.svg" alt="Stats" class="icon"> Статистика
                     </button>
                     <button class="tab-btn" data-tab="account-data">
-                        <i class="fas fa-database"></i> Данные аккаунта
+                        <img src="icons/data.svg" alt="Data" class="icon"> Данные аккаунта
                     </button>
                 </div>
 
@@ -1219,61 +1238,42 @@
                     <div class="compact-stats-grid">
                         <div class="stat-card">
                             <div class="stat-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z"/>
-                                    <path d="M12.5 7H11V13L16.2 16.2L17 14.9L12.5 12.2V7Z"/>
-                                </svg>
+                                <img src="icons/destroyed.svg" alt="Destroyed">
                             </div>
                             <div class="stat-value">8,450</div>
                             <div class="stat-label">Уничтожено</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z"/>
-                                    <path d="M15 9H9V15H15V9Z"/>
-                                </svg>
+                                <img src="icons/damaged.svg" alt="Damaged">
                             </div>
                             <div class="stat-value">5,210</div>
                             <div class="stat-label">Подбито</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z"/>
-                                    <path d="M16.59 7.58L10 14.17L7.41 11.59L6 13L10 17L18 9L16.59 7.58Z"/>
-                                </svg>
+                                <img src="icons/kd.svg" alt="K/D">
                             </div>
                             <div class="stat-value">1.62</div>
                             <div class="stat-label">У/П</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M11.99 2C6.47 2 2 6.48 2 12C2 17.52 6.47 22 11.99 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 11.99 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z"/>
-                                    <path d="M12.5 7H11V13L16.2 16.2L17 14.9L12.5 12.2V7Z"/>
-                                </svg>
+                                <img src="icons/time.svg" alt="Time">
                             </div>
                             <div class="stat-value">320 ч</div>
                             <div class="stat-label">Время игры</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z"/>
-                                    <path d="M15.55 8.46L16.96 9.87L15.17 11.66L16.58 13.07L13.75 15.9L11.94 14.09L10.53 15.5L9.12 14.09L10.53 12.68L8.71 10.86L10.12 9.45L11.54 10.87L13.32 9.08L11.91 7.66L15.55 8.46Z"/>
-                                </svg>
+                                <img src="icons/crystals.svg" alt="Crystals">
                             </div>
                             <div class="stat-value">1.2M</div>
                             <div class="stat-label">Кристаллы</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V5H19V19Z"/>
-                                    <path d="M17 17H7V7H17V17Z"/>
-                                    <path d="M14 14H10V10H14V14Z"/>
-                                </svg>
+                                <img src="icons/chests.svg" alt="Chests">
                             </div>
                             <div class="stat-value">845</div>
                             <div class="stat-label">Золотые ящики</div>
@@ -1285,30 +1285,23 @@
                 <div id="account-data" class="tab-content">
                     <div class="account-data-section">
                         <h3 class="account-data-title">
-                            <i class="fas fa-gun"></i>
+                            <img src="icons/gun.svg" alt="Guns" class="icon">
                             Пушки
                         </h3>
                         <div class="scroll-container">
                             <div class="equipment-card">
                                 <div class="equipment-icon">
-                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M13 14H11V9H13V14ZM13 18H11V16H13V18Z"/>
-                                        <path d="M17.73 4.23L16.3 5.66C17.1 6.45 17.55 7.5 17.55 8.65C17.55 11.03 15.58 13 13.2 13H10V15H14V17H10V21H8V17H6V15H8V13H7.5C5 13 3 11 3 8.5C3 6.5 4.5 4.9 6.5 4.5C7 3.9 7.8 3.5 8.5 3.5C9.7 极狐极狐 10.8 4.2 11.2 5.2C11.6 5.1 12 5 12.5 5C14.1 5 15.5 5.7 极狐 6.9L17.93 5.46C16.73 4.16 15.05 3.5 13.5 3.5C12.35 3.5 11.2 3.85 10.2 4.45C9.35 3.55 8.15 3 6.9 3C5.3 3 3.极狐 4.1 3.3 5.7C1.75 6.5 0.7 8.1 0.7 10C0.7 12.6 2.7 14.6 5.2 14.6H7V12.6H5.2C3.7 12.6 2.7 11.5 2.7 10C2.7 8.9 3.45 8 4.5 7.7L5.7 7.5L极狐 6.3C6.2 5.4 7 4.7 7.9 4.7C8.4 4.7 8.8 4.9 9.1 5.2L10.2 6.3C10 7.4 10.2 8.6 10.8 9.5L12.4 8.1C11.6 7.4 11.1 6.4 11.1 极狐.3C11.1 4.8 11.2 4.3 11.4 3.9C9.8 极狐.3 8.1 4 7.2 5.3C6.5 5.1 5.7 5.4 5.3 6C4.9 6.6 5.1 7.4 5.7 7.8C6 8 6.3 8.1 6.6 8.1C7.4 8.1 8 7.5 8 6.7C8 6.6 8 6.5 7.9 6.4C7.8 6.3 7.7 6.2 7.6 6.2C7.4 6.1 7.2 6 7 6C6.4 6 6 6.4 6 7C6 7.6 6.4 8 7 8C7.6 8 8 7.6 8 7V6.7C8 6.3 8.3 6 8.7 6C8.9 6 9.1 6.1 9.2 6.2L10.4 7.4C10.9 6.8 11.1 6 11 5.3C11 5.2 11 5.1 10.9 5C10.8 4.8 10.6 4.7 10.5 4.6C10.3 4.4 10 4.3 9.8 4.3C9.3 4.3 8.9 4.6 8.7 5C8.5 5.4 极狐.5 5.8 8.极狐 6.2C8.9 6.6 9.3 6.8 9.7 6.8C10.5 6.8 11.1 6.2 11.1 5.4C11.1 4.9 11.3 4.5 11.6 4.1C12.2 4.3 12.8 4.5 13.3 4.9C14.1 5.5 14.6 6.4 14.6 7.5C14.6 8.7 13.9 9.7 12.8 10.2L11.4 11.6C12.5 12 13 13 13 14.1V15H15.5C16.3 15 17 14.3 17 13.5C17 12.7 16.3 12 15.5 12H14V10H15.5C17.4 10 19 极狐.6 19 13.5C19 15.4 17.4 17 15.5 17H14V19H16V21H12V19H14V17H12V15H10V12H13.2C14.8 12 16 10.8 16 9.2C16 8.2 15.5 7.3 14.7 6.7C14.1 6.3 13.5 6 12.8 6C12.1 6 11.4 6.2 10.8 6.6L9.4 5.2C10.1 4.5 11 4 12 4C13.3 4 14.6 4.5 15.5 5.5L16.93 4.06C15.8 2.95 14.3 2.3 12.8 2.3C11.1 2.3 9.5 3 8.3 4.2L6.87 2.77L5.46 4.18L6.89 5.61C6.3 6.3 6 7.2 6 8.1C6 9.4 6.5 10.6 7.4 11.5C8.3 12.4 9.5 12.9 10.8 12.9H13V10.9H10.8C9.8 10.9 8.9 10.4 8.3 9.8C7.7 9.2 7.3 8.3 7.3 7.3C7极狐 6.7 7.5 6.1 7.8 5.6L9.2 7C9.1 7.2 9 7.5 9 7.8C9 8.6 9.4 9.3 10 9.7L11.4 11.1C10.5 11.5 9.9 12.4 9.9 13.4V15H7.5C5.6 15 4 13.4 4 11.5C4 9.6 5.6 8 7.5 8H9V6H7.5C6.7 6 6 6.7 6 7.5C6 8.3 6.7 9 7.5 9H9V11H7.5C6.1 11 5 9.9 5 8.5C5 7.1 6.1 6 7.5 6H9V4.5C9 3.7 9.7 3 10.5 3C11.3 3 12 3.7 12 4.5V6H13.5C14.9 6 16 7.1 16 8.5C16 9.9 14.9 11 13.5 11H12V13H13.5C14.3 13 15 12.3 15 11.5C15 10.7 14.3 10 13.5 极狐H12V8H13.5C15.4 8 17 9.6 17 11.5C17 13.极狐 15.4 15 13.5 15H12V17H14V19H12V21H16V19H14V17H16.5C18.4 17 20 15.4 20 13.5C20 11.6 18.4 10 16.5 10H15V8H16.5C17.3 8 18 7.3 18 6.5C18 5.7 17.3 5 16.5 5H15V3H17.73L19.14 4.41L17.73 5.82L19.14 7.23L17.73 8.64L19.14 10.05L17.73 11.46L19.14 12.87L17.73 14.28L19.14 15.69L17.73 17.1L19.14 18.51L17.73 19.92L19.14 21.33L20.55 19.92L19极狐 18.51L20.55 17.10L19.14 15.69L20.55 14.28L19.14 12.87L20.55 11.46L19.14 10.05L20.55 8.64L19.14 7.23L20.55 5.82L19.14 4.41L17.73 5.82Z"/>
-                                    </svg>
+                                    <img src="icons/flamethrower.svg" alt="Flamethrower">
                                 </div>
                                 <div class="equipment-info">
                                     <div class="equipment-name">Огнемет</div>
                                     <div class="equipment-stats">
                                         <div class="equipment-stat">
-                                            <svg width="16" height="16" viewBox="极狐 0 24 24" fill="#4CAF50">
-                                                <path d="M13 3C13 2.45 12.55 2 12 2C11.45 2 11 2.45 11 3V13C11 13.55 11.45 14 12 极狐4C12.55 14 13 13.55 13 13V3ZM17.59 5.59L19 7L12 14L5 7L6.41 5.59L12 11.17L17.59 5.59Z"/>
-                                            </svg>
+                                            <img src="icons/points.svg" alt="Points">
                                             <span>25,400 очков</span>
                                         </div>
                                         <div class="equipment-stat">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="#4CAF50">
-                                                <path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5C22 12.28 18.6 15.36 13.45 20.04L12 21.35Z"/>
-                                            </svg>
+                                            <img src="icons/damage.svg" alt="Damage">
                                             <span>850 урона</span>
                                         </div>
                                     </div>
@@ -1316,24 +1309,17 @@
                             </div>
                             <div class="equipment-card">
                                 <div class="equipment-icon">
-                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M7 5H17V7H极狐V5ZM7 9H17V11H7V9ZM7 13H17V15H7V13Z"/>
-                                        <path d="M3 3V21H21V3H3ZM19 19H5V5H19V19Z"/>
-                                    </svg>
+                                    <img src="icons/railgun.svg" alt="Railgun">
                                 </div>
                                 <div class="equipment-info">
                                     <div class="equipment-name">Рейлган</div>
                                     <div class="equipment-stats">
                                         <div class="equipment-stat">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="#4CAF50">
-                                                <path d="M13 3C13 2.45 12.55 2 12 2C11.45 2 11 2.45 11 3V13极狐C11 13.55 11.45 14 12 14C12.55 14 13 极狐3.55 13 13V3ZM17.59 5.59L19 7L12 14L5 7L6.41 5.59L12 11.17L17.59 5.59Z"/>
-                                            </svg>
+                                            <img src="icons/points.svg" alt="Points">
                                             <span>18,700 очков</span>
                                         </div>
                                         <div class="equipment-stat">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="#4CAF50">
-                                                <path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5C22 12.28 18.6 15.36 13.45 20.04L12 21.35Z"/>
-                                            </svg>
+                                            <img src="icons/damage.svg" alt="Damage">
                                             <span>1,200 урона</span>
                                         </div>
                                     </div>
@@ -1341,23 +1327,17 @@
                             </div>
                             <div class="equipment-card">
                                 <div class="equipment-icon">
-                                    <svg width="32" height="32" viewBox="0 0 24 极狐4" fill="currentColor">
-                                        <path d="M19 14V6C19 4.9 18.1 4 17 4H7C5.9 4 5 4.9 5 6V14C5 15.1 5.9 16 7 16H17C18.1 16 19 15.1 19 14ZM17 14H7V6H17V14ZM12 8C10.9 8 10 8.9 10 10C10 11.1 10.9 12 12 12C13.1 12 14 11.1 14 10C14 8.9 13.1 8 12 8ZM8 18H16V20H8V18Z"/>
-                                    </svg>
+                                    <img src="icons/thunder.svg" alt="Thunder">
                                 </div>
                                 <div class="equipment-info">
                                     <div class="equipment-name">Гром</div>
                                     <div class="equipment-stats">
                                         <div class="equipment-stat">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="#4CAF50">
-                                                <path d="M13 3C13 2.45 12.55 2 极狐2 2C11.45 2 11 2.45 11 3V13C11 13.55 11.45 14 12 14C12.55 14 13 13.55 13 13V3ZM17.59 5.59L19 7极狐L12 14L5 7L6.41 5.59L12 11.17L17.59 5.59Z"/>
-                                            </svg>
+                                            <img src="icons/points.svg" alt="Points">
                                             <span>12,500 очков</span>
                                         </div>
                                         <div class="equipment-stat">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="#4CAF50">
-                                                <path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.09C13.09 3.81 14.76 3 16.5 3极狐C19.58 3 22 极狐.42 22 8.5C22 12.28 18.6 15.36 13.45 20.04L12 21.35Z"/>
-                                            </svg>
+                                            <img src="icons/damage.svg" alt="Damage">
                                             <span>950 урона</span>
                                         </div>
                                     </div>
@@ -1366,28 +1346,412 @@
                         </div>
                     </div>
                     
-                    <!-- Остальное содержимое секции профиля -->
+                    <div class="account-data-section">
+                        <h3 class="account-data-title">
+                            <img src="icons/shield.svg" alt="Hulls" class="icon">
+                            Корпуса
+                        </h3>
+                        <div class="scroll-container">
+                            <div class="equipment-card">
+                                <div class="equipment-icon">
+                                    <img src="icons/titan.svg" alt="Titan">
+                                </div>
+                                <div class="equipment-info">
+                                    <div class="equipment-name">Титан</div>
+                                    <div class="equipment-stats">
+                                        <div class="equipment-stat">
+                                            <img src="icons/points.svg" alt="Points">
+                                            <span>15,200 очков</span>
+                                        </div>
+                                        <div class="equipment-stat">
+                                            <img src="icons/defense.svg" alt="Defense">
+                                            <span>1,500 защиты</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="equipment-card">
+                                <div class="equipment-icon">
+                                    <img src="icons/racer.svg" alt="Racer">
+                                </div>
+                                <div class="equipment-info">
+                                    <div class="equipment-name">Гонщик</div>
+                                    <div class="equipment-stats">
+                                        <div class="equipment-stat">
+                                            <img src="icons/points.svg" alt="Points">
+                                            <span>12,800 очков</span>
+                                        </div>
+                                        <div class="equipment-stat">
+                                            <img src="icons/speed.svg" alt="Speed">
+                                            <span>120% скорости</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="account-data-section">
+                        <h3 class="account-data-title">
+                            <img src="icons/module.svg" alt="Modules" class="icon">
+                            Модули
+                        </h3>
+                        <div class="scroll-container">
+                            <div class="equipment-card">
+                                <div class="equipment-icon">
+                                    <img src="icons/damage-boost.svg" alt="Damage Boost">
+                                </div>
+                                <div class="equipment-info">
+                                    <div class="equipment-name">Усилитель урона</div>
+                                    <div class="equipment-stats">
+                                        <div class="equipment-stat">
+                                            <img src="icons/points.svg" alt="Points">
+                                            <span>8,400 очков</span>
+                                        </div>
+                                        <div class="equipment-stat">
+                                            <img src="icons/damage.svg" alt="Damage">
+                                            <span>+15% урона</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="equipment-card">
+                                <div class="equipment-icon">
+                                    <img src="icons/armor.svg" alt="Armor">
+                                </div>
+                                <div class="equipment-info">
+                                    <div class="equipment-name">Бронепластины</div>
+                                    <div class="equipment-stats">
+                                        <div class="equipment-stat">
+                                            <img src="icons/points.svg" alt="Points">
+                                            <span>7,600 очков</span>
+                                        </div>
+                                        <div class="equipment-stat">
+                                            <img src="icons/defense.svg" alt="Defense">
+                                            <span>+20% защиты</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="account-data-section">
+                        <h3 class="account-data-title">
+                            <img src="icons/drone.svg" alt="Drones" class="icon">
+                            Дроны
+                        </h3>
+                        <div class="scroll-container">
+                            <div class="equipment-card">
+                                <div class="equipment-icon">
+                                    <img src="icons/scout.svg" alt="Scout">
+                                </div>
+                                <div class="equipment-info">
+                                    <div class="equipment-name">Разведчик</div>
+                                    <div class="equipment-stats">
+                                        <div class="equipment-stat">
+                                            <img src="icons/points.svg" alt="Points">
+                                            <span>5,300 очков</span>
+                                        </div>
+                                        <div class="equipment-stat">
+                                            <img src="icons/vision.svg" alt="Vision">
+                                            <span>+30% обзор</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="account-data-section">
+                        <h3 class="account-data-title">
+                            <img src="icons/paint.svg" alt="Paints" class="icon">
+                            Краски
+                        </h3>
+                        <div class="scroll-container">
+                            <div class="equipment-card">
+                                <div class="equipment-icon" style="background-color: #ff0000; color: white;">
+                                    <img src="icons/paint-red.svg" alt="Red Paint" style="filter: invert(1);">
+                                </div>
+                                <div class="equipment-info">
+                                    <div class="equipment-name">Красный камуфляж</div>
+                                    <div class="equipment-stats">
+                                        <div class="equipment-stat">
+                                            <img src="icons/points.svg" alt="Points">
+                                            <span>3,200 очков</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="account-data-section">
+                        <h3 class="account-data-title">
+                            <img src="icons/gamemode.svg" alt="Game Modes" class="icon">
+                            Режимы
+                        </h3>
+                        <div class="scroll-container">
+                            <div class="equipment-card">
+                                <div class="equipment-icon">
+                                    <img src="icons/ctf.svg" alt="CTF">
+                                </div>
+                                <div class="equipment-info">
+                                    <div class="equipment-name">Захват флага</div>
+                                    <div class="equipment-stats">
+                                        <div class="equipment-stat">
+                                            <img src="icons/games.svg" alt="Games">
+                                            <span>42 игры</span>
+                                        </div>
+                                        <div class="equipment-stat">
+                                            <img src="icons/wins.svg" alt="Wins">
+                                            <span>28 побед</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="account-data-section">
+                        <h3 class="account-data-title">
+                            <img src="icons/supplies.svg" alt="Supplies" class="icon">
+                            Припасы
+                        </h3>
+                        <div class="scroll-container">
+                            <div class="equipment-card">
+                                <div class="equipment-icon">
+                                    <img src="icons/repair.svg" alt="Repair Kit">
+                                </div>
+                                <div class="equipment-info">
+                                    <div class="equipment-name">Ремкомплект</div>
+                                    <div class="equipment-stats">
+                                        <div class="equipment-stat">
+                                            <span>124 шт</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="equipment-card">
+                                <div class="equipment-icon">
+                                    <img src="icons/defense-supply.svg" alt="Defense">
+                                </div>
+                                <div class="equipment-info">
+                                    <div class="equipment-name">Защита</div>
+                                    <div class="equipment-stats">
+                                        <div class="equipment-stat">
+                                            <span>87 шт</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="equipment-card">
+                                <div class="equipment-icon">
+                                    <img src="icons/double-damage.svg" alt="Double Damage">
+                                </div>
+                                <div class="equipment-info">
+                                    <div class="equipment-name">Урон x2</div>
+                                    <div class="equipment-stats">
+                                        <div class="equipment-stat">
+                                            <span>56 шт</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            <!-- Остальные секции (Общее, Рейтинг, Настройки) -->
+            <!-- General Section -->
+            <section id="general" class="section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <img src="icons/globe.svg" alt="General" class="section-icon">
+                        Общие разделы
+                    </h2>
+                </div>
+                
+                <div class="services-grid">
+                    <div class="service-card">
+                        <img src="icons/news.svg" alt="News" class="icon">
+                        <h3>Новости</h3>
+                        <p>Последние обновления и события в Tanki Online</p>
+                    </div>
+                    <div class="service-card">
+                        <img src="icons/esports.svg" alt="eSports" class="icon">
+                        <h3>Киберспорт</h3>
+                        <p>Турниры, команды и результаты киберспортивных событий</p>
+                    </div>
+                    <div class="service-card">
+                        <img src="icons/challenge.svg" alt="Challenge" class="icon">
+                        <h3>Вызов принят</h3>
+                        <p>Еженедельные задания и испытания для игроков</p>
+                    </div>
+                    <div class="service-card">
+                        <img src="icons/wiki.svg" alt="Wiki" class="icon">
+                        <h3>Википедия</h3>
+                        <p>База знаний по игре: тактики, гайды, характеристики</p>
+                    </div>
+                    <div class="service-card">
+                        <img src="icons/chat.svg" alt="Chat" class="icon">
+                        <h3>Чат танкистов</h3>
+                        <p>Общайтесь с другими игроками, делитесь тактиками и советами</p>
+                    </div>
+                    <div class="service-card">
+                        <img src="icons/lock.svg" alt="Lock" class="icon">
+                        <h3>По вопросам блокировки в ЧТ</h3>
+                        <p>Помощь по вопросам блокировки в чате танкистов</p>
+                    </div>
+                </div>
+            </section>
 
+            <!-- Rating Section -->
+            <section id="rating" class="section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <img src="icons/rating.svg" alt="Rating" class="section-icon">
+                        Рейтинг игроков
+                    </h2>
+                </div>
+                
+                <div class="search-box">
+                    <input type="text" class="search-input" id="playerSearch" placeholder="Введите никнейм игрока...">
+                    <button class="search-btn" id="searchPlayerBtn">
+                        <img src="icons/search.svg" alt="Search" class="icon"> Поиск
+                    </button>
+                </div>
+                
+                <div class="player-card" id="playerCard" style="display: none;">
+                    <div class="player-header">
+                        <div class="player-rank" id="playerRank">7</div>
+                        <div class="player-info">
+                            <h2 id="playerName">TankMaster47</h2>
+                            <p>Опыт: <span id="playerExp">25,400</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="player-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <img src="icons/kd.svg" alt="K/D">
+                            </div>
+                            <div class="stat-value">1.62</div>
+                            <div class="stat-label">У/П</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <img src="icons/chests.svg" alt="Chests">
+                            </div>
+                            <div class="stat-value">845</div>
+                            <div class="stat-label">Золотые ящики</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <img src="icons/score.svg" alt="Score">
+                            </div>
+                            <div class="stat-value">12,850</div>
+                            <div class="stat-label">Gear Score</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="top-players">
+                    <h3 class="section-title" style="font-size: 1.5rem; margin-bottom: 16px;">Топ-5 игроков</h3>
+                    <div class="player-row">
+                        <div class="player-position">1</div>
+                        <div class="player-name">ProTanker</div>
+                        <div class="player-score">42,150</div>
+                    </div>
+                    <div class="player-row">
+                        <div class="player-position">2</div>
+                        <div class="player-name">Destroyer</div>
+                        <div class="player-score">38,900</div>
+                    </div>
+                    <div class="player-row">
+                        <div class="player-position">3</div>
+                        <div class="player-name">TankMaster</div>
+                        <div class="player-score">36,750</div>
+                    </div>
+                    <div class="player-row">
+                        <div class="player-position">4</div>
+                        <div class="player-name">Warrior47</div>
+                        <div class="player-score">32,400</div>
+                    </div>
+                    <div class="player-row">
+                        <div class="player-position">5</div>
+                        <div class="player-name">IronSide</div>
+                        <div class="player-score">29,800</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings" class="section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <img src="icons/settings.svg" alt="Settings" class="section-icon">
+                        Настройки
+                    </h2>
+                </div>
+                
+                <div class="settings-card">
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h3>Внешний вид</h3>
+                            <p>Темная или светлая тема оформления</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="themeSwitch" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h3>Приватность профиля</h3>
+                            <p>Скрыть ваш профиль от других пользователей</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="privacySwitch">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h3>Приватность игрового аккаунта</h3>
+                            <p>Скрыть вашу игровую статистику</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="gamePrivacySwitch">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="about-app">
+                    <h3>О приложении</h3>
+                    <p>47bot - официальное приложение для чата танкистов.</p>
+                    <p>Версия: 1.0.0</p>
+                    <p>© vseporchuu.</p>
+                </div>
+            </section>
         </div>
     </main>
 
-    <!-- Bottom Navigation -->
-    <nav class="bottom-nav">
-        <ul>
-            <li><a href="#" class="nav-link active" data-section="dashboard"><i class="fas fa-home"></i> <span>Главная</span></a></li>
-            <li><a href="#" class="nav-link" data-section="profile"><i class="fas fa-user"></i> <span>Профиль</span></a></li>
-            <li><a href="#" class="nav-link" data-section="general"><i class="fas fa-globe"></i> <span>Общее</span></a></li>
-            <li><a href="#" class="nav-link" data-section="rating"><i class="fas fa-trophy"></i> <span>Рейтинг</span></a></li>
-            <li><a href="#" class="nav-link" data-section="settings"><极狐 class="fas fa-cog"></i> <span>Настройки</span></a></li>
-        </ul>
-    </nav>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="icons/tank.svg" alt="Tank" class="icon">
+                    <span>47bot - Tanki Online Assistant</span>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <script>
-        // JavaScript код остается практически без изменений
         document.addEventListener('DOMContentLoaded', function() {
             // Инициализация Telegram WebApp
             const tg = window.Telegram.WebApp;
@@ -1435,8 +1799,14 @@
             }
             
             // Navigation
+            const navToggle = document.getElementById('navToggle');
+            const mainNav = document.getElementById('mainNav');
             const navLinks = document.querySelectorAll('.nav-link');
             const sections = document.querySelectorAll('.section');
+            
+            navToggle.addEventListener('click', () => {
+                mainNav.classList.toggle('active');
+            });
             
             navLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
@@ -1457,6 +1827,11 @@
                     const targetSection = this.getAttribute('data-section');
                     document.getElementById(targetSection).classList.add('active');
                     
+                    // Close mobile menu
+                    if (window.innerWidth <= 900) {
+                        mainNav.classList.remove('active');
+                    }
+                    
                     // Прокрутка вверх
                     window.scrollTo(0, 0);
                 });
@@ -1465,7 +1840,7 @@
             // Theme toggle
             const themeSwitch = document.getElementById('themeSwitch');
             
-            themeSwitch.addEventListener('change', ()极狐 {
+            themeSwitch.addEventListener('change', () => {
                 document.body.classList.toggle('dark-theme');
                 saveThemePreference();
             });
