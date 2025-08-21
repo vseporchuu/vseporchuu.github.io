@@ -13,7 +13,7 @@
             --primary: #4CAF50;
             --primary-light: #81C784;
             --primary-dark: #388E3C;
-            --primary-gradient: linear-gradient(135deg, #4CAF50, #2E7D32);
+            --primary-gradient: linear-gradient(135deg, #4CAF50, #2极7D32);
             --secondary: #FFC107;
             --accent: #FF5722;
             --background: #121212;
@@ -98,41 +98,50 @@
         /* User info below header */
         .user-container {
             display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 20px 0;
-            margin-bottom: 15px;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 20px 0 15px;
+            margin-bottom: 5px;
         }
 
         .avatar {
-            width: 60px;
-            height: 60px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid var(--primary);
+            border: 3px solid var(--primary);
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            color: white;
             flex-shrink: 0;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
         }
 
         .user-info {
             flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .user-info h2 {
-            font-size: 1.3rem;
-            margin-bottom: 3px;
+            font-size: 1.5rem;
+            margin-bottom: 5px;
             font-weight: 600;
             color: white;
         }
 
         .user-info p {
             color: var(--text-light);
-            font-size: 0.9rem;
+            font-size: 1rem;
+            margin-bottom: 15px;
         }
 
         .progress-container {
@@ -140,9 +149,8 @@
             align-items: center;
             gap: 12px;
             background: var(--card-bg);
-            padding: 15px;
+            padding: 12px 15px;
             border-radius: 16px;
-            margin-top: 10px;
             box-shadow: var(--shadow);
         }
 
@@ -168,13 +176,12 @@
             color: var(--primary);
             font-size: 1rem;
             margin-bottom: 5px;
-            text-align: center;
         }
 
         .progress-bar {
-            height: 12px;
+            height: 10px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 6px;
+            border-radius: 5px;
             overflow: hidden;
             position: relative;
         }
@@ -182,7 +189,7 @@
         .progress-fill {
             height: 100%;
             background: var(--primary-gradient);
-            border-radius: 6px;
+            border-radius: 5px;
             width: 50%;
             position: relative;
             transition: width 0.5s ease;
@@ -236,7 +243,7 @@
 
         .stat-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 12极 20px rgba(0, 0, 0, 0.3);
         }
 
         .stat-card::before {
@@ -286,7 +293,7 @@
             padding-top: 10px;
         }
 
-        .stat-card.expanded .stat-details {
+        .stat-card.expanded .极at-details {
             max-height: 200px;
         }
 
@@ -386,7 +393,7 @@
             justify-content: center;
             font-weight: bold;
             font-size: 1.2rem;
-            border: 2px solid rgba(255,255,255,0.3);
+            border: 2px solid rgba极255,255,255,0.3);
         }
 
         .profile-avatar {
@@ -504,21 +511,6 @@
             margin-bottom: 30px;
         }
 
-        .account-data-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .account-data-title img {
-            width: 24px;
-            height: 24px;
-        }
-
         .scroll-container {
             display: flex;
             overflow-x: auto;
@@ -599,7 +591,7 @@
         .equipment-name {
             font-weight: 600;
             margin-bottom: 6px;
-            font-size: 极.1rem;
+            font-size: 1.1rem;
             color: white;
         }
 
@@ -662,7 +654,7 @@
         .supply-name {
             font-weight: 600;
             margin-bottom: 8px;
-            font-size: 1rem;
+            font-size: 1极rem;
             color: white;
         }
 
@@ -696,7 +688,7 @@
 
         .service-card:hover {
             transform: translateY(-5px);
-            box-shadow: 极 15px 25px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
         }
 
         .service-card::before {
@@ -735,7 +727,7 @@
 
         /* Rating section */
         .player-card {
-            background: var(--card极g);
+            background: var(--card-bg);
             border-radius: 18px;
             padding: 22px;
             box-shadow: var(--shadow);
@@ -777,7 +769,7 @@
 
         .player-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            grid-template-columns: repeat(auto-fit, min极ax(170px, 1fr));
             gap: 15px;
             margin-top: 18px;
         }
@@ -801,7 +793,7 @@
             background: rgba(255, 255, 255, 0.03);
         }
 
-        .player-row:last-child {
+        .player极ow:last-child {
             border-bottom: none;
         }
 
@@ -977,6 +969,14 @@
         <div class="container">
             <!-- Dashboard Section -->
             <section id="dashboard" class="section active">
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Поиск профиля..." id="profileSearch">
+                    <button class="search-btn">
+                        <img src="icons/search.svg" alt="Search">
+                        Найти
+                    </button>
+                </div>
+                
                 <div class="dashboard-compact">
                     <div class="compact-stats-grid">
                         <div class="stat-card">
@@ -1028,11 +1028,11 @@
                                 <img src="icons/karma.svg" alt="Karma">
                             </div>
                             <div class="stat-value">150</div>
-                            <div class="stat-label">Очков кармы</div>
+                            <div class="stat极abel">Очков кармы</div>
                             <div class="stat-details">
                                 <div class="detail-item">
                                     <span class="detail-label">За сегодня:</span>
-                                    <span class="detail-value" style="color:#4CAF50">+15</span>
+                                    <span class="detail-value" style="极olor:#4CAF50">+15</span>
                                 </div>
                                 <div class="detail-item">
                                     <span class="detail-label">Ранг:</span>
@@ -1060,14 +1060,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="search-box">
-                    <input type="text" class="search-input" placeholder="Поиск профиля..." id="profileSearch">
-                    <button class="search-btn">
-                        <img src="icons/search.svg" alt="Search">
-                        Найти
-                    </button>
-                </div>
             </section>
 
             <!-- Profile Section -->
@@ -1088,7 +1080,7 @@
                         <img src="icons/stats.svg" alt="Statistics">
                         Статистика
                     </button>
-                    <button class="tab-btn" data-tab="account-data">
+                    <button class="tab-btn" data极ab="account-data">
                         <img src="icons/data.svg" alt="Account Data">
                         Данные аккаунта
                     </button>
@@ -1102,7 +1094,7 @@
                                 <img src="icons/destroyed.svg" alt="Destroyed">
                             </div>
                             <div class="stat-value">8,450</div>
-                            <div class="stat-label">Уничтожено</div>
+                            <div class="stat-label">Уничтожено</极>
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon">
@@ -1145,10 +1137,6 @@
                 <!-- Account Data Tab -->
                 <div id="account-data" class="tab-content">
                     <div class="account-data-section">
-                        <h3 class="account-data-title">
-                            <img src="icons/gun.svg" alt="Guns">
-                            Пушки
-                        </h3>
                         <div class="scroll-container">
                             <div class="equipment-card">
                                 <div class="equipment-icon">
@@ -1206,53 +1194,6 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="account-data-section">
-                        <h3 class="account-data-title">
-                            <img src="icons/hull.svg" alt="Hulls">
-                            Корпуса
-                        </h3>
-                        <div class="scroll-container">
-                            <div class="equipment-card">
-                                <div class="equipment-icon">
-                                    <img src="icons/titan.svg" alt="Titan">
-                                </div>
-                                <div class="equipment-info">
-                                    <div class="equipment-name">Титан</div>
-                                    <div class="equipment-stats">
-                                        <div class="equipment-stat">
-                                            <img src="icons/score.svg" alt="Score">
-                                            <span>15,200 очков</span>
-                                        </div>
-                                        <div class="equipment-stat">
-                                            <img src="icons/defense.svg" alt="Defense">
-                                            <span>1,500 защиты</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="equipment-card">
-                                <div class="equipment-icon">
-                                    <img src="icons/racer.svg" alt="Racer">
-                                </div>
-                                <div class="equipment-info">
-                                    <div class="equipment-name">Гонщик</div>
-                                    <div class="equipment-stats">
-                                        <div class="equipment-stat">
-                                            <img src="icons/score.svg" alt="Score">
-                                            <span>12,800 очков</span>
-                                        </div>
-                                        <div class="equipment-stat">
-                                            <img src="icons/speed.svg" alt="Speed">
-                                            <span>120% скорости</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Остальные секции данных аккаунта -->
                 </div>
             </section>
 
@@ -1280,13 +1221,13 @@
                         <p>База знаний по игре: тактики, гайды, характеристики</p>
                     </div>
                     <div class="service-card">
-                        <img src="icons/chat.svg" alt="Chat">
+                        <img src="极cons/chat.svg" alt="Chat">
                         <h3>Чат танкистов</h3>
                         <p>Общайтесь с другими игроков, делитесь тактиками и советами</p>
                     </div>
                     <div class="service-card">
                         <img src="icons/support.svg" alt="Support">
-                        <h3>По вопросам блокировки в ЧТ</h3>
+                        <h3>По вопросам блокировки в ЧТ</极>
                         <p>Помощь по вопросам блокировки в чате танкистов</p>
                     </div>
                 </div>
@@ -1319,7 +1260,7 @@
                             <div class="stat-value">1.62</div>
                             <div class="stat-label">У/П</div>
                         </div>
-                        <极 class="stat-card">
+                        <div class="stat-card">
                             <div class="stat-icon">
                                 <img src="icons/boxes.svg" alt="Boxes">
                             </div>
@@ -1336,7 +1277,7 @@
                     </div>
                 </div>
                 
-                <div class="top-players">
+                <div class极"top-players">
                     <div class="player-row">
                         <div class="player-position">1</div>
                         <div class="player-name">ProTanker</div>
@@ -1471,7 +1412,7 @@
             const searchPlayerBtn = document.getElementById('searchPlayerBtn');
             const playerCard = document.getElementById('playerCard');
             
-            searchPlayerBtn.addEventListener('click', () => {
+            searchPlayerBtn.addEventListener('click', ()极 {
                 const searchValue = document.getElementById('playerSearch').value.trim();
                 if (searchValue) {
                     // In a real app, this would call the bot API
@@ -1492,7 +1433,7 @@
                     const nickname = prompt('Введите ваш игровой никнейм:');
                     if (nickname && nickname.trim() !== '') {
                         // In a real app, this would call the bot API to bind the nickname
-                        document.getElementById('gameNickname').textContent = nickname;
+                        document.getElementById('gameNickname').text极ontent = nickname;
                         
                         // Сохраняем в localStorage
                         localStorage.setItem('gameNickname', nickname);
@@ -1523,7 +1464,7 @@
                     
                     // Show target content
                     const targetTab = btn.getAttribute('data-tab');
-                    document.getElementById(targetTab).classList.add('active');
+                    document.getElementById(targetTab).class极.add('active');
                 });
             });
         });
