@@ -1,1 +1,681 @@
-nen tncn
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tankionline Assistant</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #40a7e3;
+            --secondary-color: #2b6cb0;
+            --background-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --border-color: #e2e8f0;
+            --success-color: #48bb78;
+            --warning-color: #ecc94b;
+            --danger-color: #f56565;
+            --progress-bg: #edf2f7;
+            --tab-active-bg: #ebf4ff;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #63b3ed;
+            --secondary-color: #4299e1;
+            --background-color: #1a202c;
+            --card-bg: #2d3748;
+            --text-color: #e2e8f0;
+            --border-color: #4a5568;
+            --progress-bg: #2d3748;
+            --tab-active-bg: #2c5282;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        .container {
+            max-width: 100%;
+            padding: 12px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .active {
+            display: block;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            background-color: var(--card-bg);
+            justify-content: space-around;
+            padding: 12px 0;
+            border-top: 1px solid var(--border-color);
+            z-index: 100;
+        }
+
+        .tab {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 12px;
+            color: var(--text-color);
+            transition: all 0.3s;
+        }
+
+        .tab i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .tab.active {
+            background-color: var(--tab-active-bg);
+            color: var(--primary-color);
+        }
+
+        .progress-bar {
+            height: 20px;
+            background-color: var(--progress-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 10px;
+            transition: width 0.5s ease-in-out;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .stat-item {
+            background-color: var(--progress-bg);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .user-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-color);
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .username {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .user-handle {
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        .tank-rank {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        .tabs-horizontal {
+            display: flex;
+            overflow-x: auto;
+            gap: 5px;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+        }
+
+        .tab-h {
+            padding: 8px 15px;
+            background-color: var(--progress-bg);
+            border-radius: 20px;
+            font-size: 14px;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        .tab-h.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .scroll-horizontal {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding: 10px 0;
+            scrollbar-width: none;
+        }
+
+        .scroll-horizontal::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scroll-item {
+            min-width: 120px;
+            text-align: center;
+            background-color: var(--progress-bg);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .scroll-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            margin-bottom: 5px;
+        }
+
+        .news-item {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .news-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            color: var(--text-color);
+        }
+
+        .search-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0 15px;
+            cursor: pointer;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .setting-info {
+            flex: 1;
+        }
+
+        .setting-desc {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-top: 4px;
+        }
+
+        .team-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s;
+        }
+
+        .achievement {
+            display: inline-block;
+            background-color: var(--warning-color);
+            color: #000;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin: 4px 4px 4px 0;
+        }
+
+        .premium-badge {
+            background: linear-gradient(90deg, #f6d365 0%, #fda085 100%);
+            color: #000;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <img src="https://i.imgur.com/7QqB0Ok.png" alt="Tankionline Logo">
+            <h1>Tankionline Assistant</h1>
+        </div>
+        <div id="theme-toggle">
+            <i class="fas fa-moon"></i>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Главная -->
+        <div id="home" class="section active">
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-chart-line"></i> Статистика чата</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">15</div>
+                        <div class="stat-label">Звание чата</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2,458</div>
+                        <div class="stat-label">Сообщений</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">27</div>
+                        <div class="stat-label">Место в топе</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">143</div>
+                        <div class="stat-label">Очков кармы</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2</div>
+                        <div class="stat-label">Нарушений</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">8</div>
+                        <div class="stat-label">Достижений</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-search"></i> Поиск пользователя</h2>
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Введите имя пользователя..." id="user-search">
+                    <button class="search-button" onclick="searchUser()"><i class="fas fa-search"></i></button>
+                </div>
+                <div id="user-result">
+                    <div class="user-profile">
+                        <img src="https://i.imgur.com/7QqB0Ok.png" alt="User Avatar" class="user-avatar">
+                        <div class="user-info">
+                            <div class="username">Иван Иванов</div>
+                            <div class="user-handle">@ivanov</div>
+                            <div class="tank-rank"><i class="fas fa-shield-alt"></i> Майор</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 65%"></div>
+                    </div>
+                    <div style="text-align: center; font-size: 14px;">Опыт: 6,540/10,000</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-trophy"></i> Достижения в чате</h2>
+                <div>
+                    <span class="achievement">Активный участник</span>
+                    <span class="achievement">Помощник новичков</span>
+                    <span class="achievement">Знаток тактики</span>
+                    <span class="achievement">Стратег</span>
+                    <span class="achievement">Ветеран</span>
+                    <span class="achievement">Лидер мнений</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Профиль -->
+        <div id="profile" class="section">
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-user"></i> Игровой профиль</h2>
+                <div class="user-profile">
+                    <img src="https://i.imgur.com/7QqB0Ok.png" alt="User Avatar" class="user-avatar">
+                    <div class="user-info">
+                        <div class="username">Иван Иванов <span class="premium-badge"><i class="fas fa-crown"></i> PREMIUM</span></div>
+                        <div class="user-handle">Привязанный ник: TankMaster</div>
+                        <div class="tank-rank"><i class="fas fa-shield-alt"></i> Звание: Майор | GS: 12,450</div>
+                    </div>
+                </div>
+                <button style="width: 100%; padding: 12px; background-color: var(--primary-color); color: white; border: none; border-radius: 8px; cursor: pointer;">
+                    <i class="fas fa-link"></i> Привязать игровой ник
+                </button>
+            </div>
+
+            <div class="tabs-horizontal">
+                <div class="tab-h active" onclick="switchProfileTab('stats')">Статистика</div>
+                <div class="tab-h" onclick="switchProfileTab('data')">Данные</div>
+            </div>
+
+            <div id="stats-tab">
+                <div class="card">
+                    <h2 class="card-title"><i class="fas fa-chart-bar"></i> Боевая статистика</h2>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value">1,245</div>
+                            <div class="stat-label">Уничтожено</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">3,542</div>
+                            <div class="stat-label">Подбито</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">2.85</div>
+                            <div class="stat-label">У/П</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">127ч</div>
+                            <div class="stat-label">Время игры</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">8,745</div>
+                            <div class="stat-label">Кристаллов</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">24</div>
+                            <div class="stat-label">Золотые ящики</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="card-title"><i class="fas fa-trophy"></i> Текущие рейтинги</h2>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value">#48</div>
+                            <div class="stat-label">По кристаллам</div>
+                            <div>8,745</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">#52</div>
+                            <div class="stat-label">По опыту</div>
+                            <div>64,320</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="card-title"><i class="fas fa-box-open"></i> Использовано припасов</h2>
+                    <div class="stat-value" style="text-align: center; font-size: 24px;">328</div>
+                </div>
+            </div>
+
+            <div id="data-tab" style="display: none;">
+                <div class="card">
+                    <h2 class="card-title"><i class="fas fa-cog"></i> Данные аккаунта</h2>
+                    <div class="scroll-horizontal">
+                        <div class="scroll-item">
+                            <img src="https://i.imgur.com/gzLRa9P.png" alt="Cannon">
+                            <div>Пушки</div>
+                            <div>12 шт</div>
+                        </div>
+                        <div class="scroll-item">
+                            <img src="https://i.imgur.com/3QXaLjM.png" alt="Hull">
+                            <div>Корпуса</div>
+                            <div>8 шт</div>
+                        </div>
+                        <div class="scroll-item">
+                            <img src="https://i.imgur.com/5R3W2yQ.png" alt="Module">
+                            <div>Модули</div>
+                            <div>15 шт</div>
+                        </div>
+                        <div class="scroll-item">
+                            <img src="https://i.imgur.com/7QqB0Ok.png" alt="Drone">
+                            <div>Дроны</div>
+                            <div>5 шт</div>
+                        </div>
+                        <div class="scroll-item">
+                            <img src="https://i.imgur.com/2qR4jR6.png" alt="Paint">
+                            <div>Краски</div>
+                            <div>20 шт</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Остальные разделы (Общее, Рейтинг, Настройки) -->
+        <!-- Код остальных разделов будет здесь -->
+        
+    </div>
+
+    <div class="tab-bar">
+        <div class="tab active" onclick="showSection('home')">
+            <i class="fas fa-home"></i>
+            <span>Главная</span>
+        </div>
+        <div class="tab" onclick="showSection('profile')">
+            <i class="fas fa-user"></i>
+            <span>Профиль</span>
+        </div>
+        <div class="tab" onclick="showSection('general')">
+            <i class="fas fa-globe"></i>
+            <span>Общее</span>
+        </div>
+        <div class="tab" onclick="showSection('rating')">
+            <i class="fas fa-star"></i>
+            <span>Рейтинг</span>
+        </div>
+        <div class="tab" onclick="showSection('settings')">
+            <i class="fas fa-cog"></i>
+            <span>Настройки</span>
+        </div>
+    </div>
+
+    <script>
+        // Инициализация Telegram WebApp
+        let tg = window.Telegram.WebApp;
+        tg.expand();
+        tg.enableClosingConfirmation();
+
+        // Текущая тема
+        let isDarkTheme = false;
+
+        // Функция переключения между разделами
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+        }
+
+        // Функция переключения между вкладками профиля
+        function switchProfileTab(tabId) {
+            if (tabId === 'stats') {
+                document.getElementById('stats-tab').style.display = 'block';
+                document.getElementById('data-tab').style.display = 'none';
+                document.querySelectorAll('.tab-h').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-h')[0].classList.add('active');
+            } else {
+                document.getElementById('stats-tab').style.display = 'none';
+                document.getElementById('data-tab').style.display = 'block';
+                document.querySelectorAll('.tab-h').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-h')[1].classList.add('active');
+            }
+        }
+
+        // Функция поиска пользователя
+        function searchUser() {
+            const searchTerm = document.getElementById('user-search').value;
+            if (searchTerm.trim() === '') {
+                alert('Введите имя пользователя для поиска');
+                return;
+            }
+            
+            // Здесь будет запрос к бэкенду
+            alert('Поиск пользователя: ' + searchTerm);
+        }
+
+        // Переключение темы
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            isDarkTheme = !isDarkTheme;
+            document.documentElement.setAttribute('data-theme', isDarkTheme ? 'dark' : 'light');
+            document.getElementById('theme-toggle').innerHTML = isDarkTheme ? 
+                '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        });
+
+        // Имитация загрузки данных
+        document.addEventListener('DOMContentLoaded', function() {
+            // Здесь будут запросы к вашему бэкенду
+            console.log('Mini App loaded');
+        });
+    </script>
+</body>
+</html>
