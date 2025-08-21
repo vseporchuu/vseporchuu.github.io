@@ -23,6 +23,8 @@
             --border: #333333;
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --card-radius: 12px;
+            --section-padding: 1.5rem;
         }
 
         * {
@@ -41,6 +43,7 @@
             overflow-x: hidden;
             line-height: 1.6;
             font-size: 15px;
+            padding-bottom: 70px; /* Добавляем отступ для нижней навигации */
         }
 
         .container {
@@ -73,10 +76,10 @@
         }
 
         .logo-icon {
-            width: 34px;
-            height: 34px;
+            width: 32px;
+            height: 32px;
             background: var(--primary-gradient);
-            border-radius: 10px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -89,7 +92,7 @@
         }
 
         .logo h1 {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 700;
             background: linear-gradient(90deg, #4CAF50, #8BC34A);
             -webkit-background-clip: text;
@@ -97,65 +100,16 @@
             letter-spacing: -0.5px;
         }
 
-        .nav-toggle {
-            background: none;
-            border: none;
-            color: var(--text);
-            font-size: 1.4rem;
-            cursor: pointer;
-            display: none;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 8px;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: var(--text-light);
-            font-weight: 500;
-            padding: 8px 14px;
-            border-radius: 10px;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.9rem;
-            position: relative;
-        }
-
-        nav a:hover {
-            color: var(--text);
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-
-        nav a.active {
-            color: white;
-            background: rgba(76, 175, 80, 0.15);
-        }
-
-        nav a.active::after {
-            content: "";
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: var(--primary);
-            border-radius: 3px;
-        }
-
         /* Main content */
         .main-content {
             flex: 1;
-            padding: 25px 0;
+            padding: 20px 0;
         }
 
         .section {
             display: none;
             animation: fadeIn 0.5s ease;
+            padding: var(--section-padding) 0;
         }
 
         .section.active {
@@ -168,7 +122,7 @@
         }
 
         .section-header {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -177,7 +131,7 @@
         }
 
         .section-title {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: 600;
             color: #e0f0e0;
             position: relative;
@@ -207,8 +161,8 @@
         /* Dashboard styles - COMPACT VERSION */
         .dashboard-compact {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            grid-template-columns: 1fr;
+            gap: 16px;
             margin-bottom: 20px;
         }
 
@@ -216,13 +170,12 @@
             display: flex;
             align-items: center;
             gap: 16px;
-            margin-bottom: 16px;
+            margin-bottom: 0;
             background: var(--card-bg);
-            border-radius: 14px;
-            padding: 14px;
+            border-radius: var(--card-radius);
+            padding: 16px;
             box-shadow: var(--shadow);
             transition: var(--transition);
-            grid-column: span 2;
         }
 
         .user-header:hover {
@@ -243,6 +196,13 @@
             font-size: 1.5rem;
             color: white;
             flex-shrink: 0;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
         }
 
         .user-info {
@@ -295,12 +255,12 @@
         .compact-stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 8px;
+            gap: 10px;
         }
 
         .stat-card {
             background: var(--card-bg);
-            border-radius: 12px;
+            border-radius: var(--card-radius);
             padding: 14px;
             box-shadow: var(--shadow);
             transition: var(--transition);
@@ -333,14 +293,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
-            color: var(--primary);
             margin-bottom: 10px;
         }
 
         .stat-icon img {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
         }
 
         .stat-value {
@@ -358,7 +316,7 @@
         .search-box {
             display: flex;
             gap: 10px;
-            margin: 20px 0 16px;
+            margin: 20px 0;
         }
 
         .search-input {
@@ -383,14 +341,14 @@
             color: white;
             border: none;
             border-radius: 10px;
-            padding: 0 22px;
+            padding: 0 20px;
             font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .search-btn:hover {
@@ -402,7 +360,7 @@
         .profile-header {
             background: var(--primary-gradient);
             color: white;
-            border-radius: 16px;
+            border-radius: var(--card-radius);
             padding: 18px;
             margin-bottom: 20px;
             text-align: center;
@@ -455,6 +413,13 @@
             z-index: 2;
         }
 
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
         .profile-name {
             font-size: 1.6rem;
             margin-bottom: 6px;
@@ -501,7 +466,7 @@
         .tab-btn {
             background-color: var(--card-bg);
             border: none;
-            padding: 10px 6px;
+            padding: 10px 8px;
             border-radius: 10px;
             cursor: pointer;
             transition: var(--transition);
@@ -526,13 +491,13 @@
             color: white;
         }
 
-        .tab-btn i {
-            font-size: 1.3rem;
-            color: var(--text);
+        .tab-btn img {
+            width: 20px;
+            height: 20px;
         }
 
-        .tab-btn.active i {
-            color: white;
+        .tab-btn.active img {
+            filter: brightness(0) invert(1);
         }
 
         .tab-content {
@@ -554,11 +519,11 @@
 
         /* Account Data Section */
         .account-data-section {
-            margin-bottom: 25px;
+            margin-bottom: 24px;
         }
 
         .account-data-title {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 600;
             margin-bottom: 12px;
             color: var(--primary);
@@ -567,8 +532,9 @@
             gap: 8px;
         }
 
-        .account-data-title i {
-            font-size: 1.1rem;
+        .account-data-title img {
+            width: 20px;
+            height: 20px;
         }
 
         .scroll-container {
@@ -597,7 +563,7 @@
 
         .equipment-card {
             background: var(--card-bg);
-            border-radius: 14px;
+            border-radius: var(--card-radius);
             padding: 16px;
             box-shadow: var(--shadow);
             display: flex;
@@ -634,7 +600,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.6rem;
             color: var(--primary);
             flex-shrink: 0;
         }
@@ -684,7 +649,7 @@
 
         .supply-card {
             background: var(--card-bg);
-            border-radius: 14px;
+            border-radius: var(--card-radius);
             padding: 16px 10px;
             box-shadow: var(--shadow);
             text-align: center;
@@ -707,8 +672,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             color: var(--primary);
+        }
+
+        .supply-icon img {
+            width: 24px;
+            height: 24px;
         }
 
         .supply-name {
@@ -733,7 +703,7 @@
 
         .service-card {
             background: var(--card-bg);
-            border-radius: 16px;
+            border-radius: var(--card-radius);
             padding: 20px;
             box-shadow: var(--shadow);
             transition: var(--transition);
@@ -761,16 +731,15 @@
             background: var(--primary);
         }
 
-        .service-card i {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 16px;
+        .service-card img {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 14px;
             transition: var(--transition);
         }
 
-        .service-card:hover i {
+        .service-card:hover img {
             transform: scale(1.1);
-            color: var(--primary-light);
         }
 
         .service-card h3 {
@@ -789,7 +758,7 @@
         /* Rating section */
         .player-card {
             background: var(--card-bg);
-            border-radius: 16px;
+            border-radius: var(--card-radius);
             padding: 20px;
             box-shadow: var(--shadow);
             margin-bottom: 20px;
@@ -837,7 +806,7 @@
 
         .top-players {
             background: var(--card-bg);
-            border-radius: 16px;
+            border-radius: var(--card-radius);
             padding: 20px;
             box-shadow: var(--shadow);
         }
@@ -885,7 +854,7 @@
         /* Settings section */
         .settings-card {
             background: var(--card-bg);
-            border-radius: 16px;
+            border-radius: var(--card-radius);
             padding: 20px;
             box-shadow: var(--shadow);
             margin-bottom: 20px;
@@ -966,7 +935,7 @@
 
         .about-app {
             background: var(--card-bg);
-            border-radius: 16px;
+            border-radius: var(--card-radius);
             padding: 20px;
             box-shadow: var(--shadow);
         }
@@ -984,29 +953,54 @@
             color: var(--text-light);
         }
 
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--surface);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            padding: 6px 0;
+        }
+
+        .bottom-nav ul {
+            display: flex;
+            justify-content: space-around;
+            list-style: none;
+        }
+
+        .bottom-nav a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-light);
+            font-size: 0.75rem;
+            padding: 6px 10px;
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+
+        .bottom-nav a.active {
+            color: var(--primary);
+            background: rgba(76, 175, 80, 0.15);
+        }
+
+        .bottom-nav a img {
+            width: 20px;
+            height: 20px;
+            margin-bottom: 3px;
+        }
+
+        .bottom-nav a span {
+            font-weight: 500;
+        }
+
         /* Footer */
         footer {
-            background: var(--surface);
-            padding: 18px 0;
-            margin-top: 35px;
-            border-top: 1px solid var(--border);
-        }
-
-        .footer-content {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 500;
-            font-size: 0.95rem;
-            color: var(--text-light);
+            display: none; /* Скрываем старый футер */
         }
 
         /* Responsive styles */
@@ -1015,27 +1009,8 @@
                 flex-wrap: wrap;
             }
             
-            .nav-toggle {
-                display: block;
-            }
-            
-            nav {
-                width: 100%;
-                margin-top: 10px;
-                display: none;
-            }
-            
-            nav.active {
-                display: block;
-            }
-            
-            nav ul {
-                flex-direction: column;
-                gap: 4px;
-            }
-            
             .section-title {
-                font-size: 1.5rem;
+                font-size: 1.4rem;
             }
             
             .user-header {
@@ -1078,7 +1053,7 @@
             }
             
             .section-title {
-                font-size: 1.4rem;
+                font-size: 1.3rem;
             }
             
             .stats-grid {
@@ -1094,7 +1069,7 @@
             }
             
             .profile-name {
-                font-size: 1.5rem;
+                font-size: 1.4rem;
             }
             
             .search-box {
@@ -1104,6 +1079,16 @@
             .search-btn {
                 justify-content: center;
                 padding: 12px;
+            }
+
+            .bottom-nav a {
+                padding: 5px 6px;
+                font-size: 0.7rem;
+            }
+
+            .bottom-nav a img {
+                width: 18px;
+                height: 18px;
             }
         }
     </style>
@@ -1118,18 +1103,6 @@
                     </div>
                     <h1>47bot</h1>
                 </div>
-                <button class="nav-toggle" id="navToggle">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <nav id="mainNav">
-                    <ul>
-                        <li><a href="#" class="nav-link active" data-section="dashboard"><img src="icons/home.svg" alt="Home" class="icon"> Главная</a></li>
-                        <li><a href="#" class="nav-link" data-section="profile"><img src="icons/user.svg" alt="Profile" class="icon"> Профиль</a></li>
-                        <li><a href="#" class="nav-link" data-section="general"><img src="icons/globe.svg" alt="General" class="icon"> Общее</a></li>
-                        <li><a href="#" class="nav-link" data-section="rating"><img src="icons/trophy.svg" alt="Rating" class="icon"> Рейтинг</a></li>
-                        <li><a href="#" class="nav-link" data-section="settings"><img src="icons/cog.svg" alt="Settings" class="icon"> Настройки</a></li>
-                    </ul>
-                </nav>
             </div>
         </div>
     </header>
@@ -1140,7 +1113,7 @@
             <section id="dashboard" class="section active">
                 <div class="section-header">
                     <h2 class="section-title">
-                        <img src="icons/stats.svg" alt="Stats" class="section-icon">
+                        <img src="icons/dashboard.svg" class="section-icon" alt="Dashboard">
                         Статистика чата
                     </h2>
                 </div>
@@ -1195,7 +1168,8 @@
                 <div class="search-box">
                     <input type="text" class="search-input" placeholder="Поиск профиля..." id="profileSearch">
                     <button class="search-btn">
-                        <img src="icons/search.svg" alt="Search" class="icon"> Найти
+                        <img src="icons/search.svg" alt="Search" style="width: 16px; height: 16px;">
+                        Найти
                     </button>
                 </div>
             </section>
@@ -1204,11 +1178,12 @@
             <section id="profile" class="section">
                 <div class="section-header">
                     <h2 class="section-title">
-                        <img src="icons/profile.svg" alt="Profile" class="section-icon">
+                        <img src="icons/profile.svg" class="section-icon" alt="Profile">
                         Игровой профиль
                     </h2>
                     <button class="search-btn" id="bindNicknameBtn">
-                        <img src="icons/link.svg" alt="Link" class="icon"> Привязать никнейм
+                        <img src="icons/link.svg" alt="Link" style="width: 16px; height: 16px;">
+                        Привязать никнейм
                     </button>
                 </div>
                 
@@ -1226,10 +1201,12 @@
 
                 <div class="profile-tabs">
                     <button class="tab-btn active" data-tab="stats">
-                        <img src="icons/chart.svg" alt="Stats" class="icon"> Статистика
+                        <img src="icons/stats.svg" alt="Stats">
+                        Статистика
                     </button>
                     <button class="tab-btn" data-tab="account-data">
-                        <img src="icons/data.svg" alt="Data" class="icon"> Данные аккаунта
+                        <img src="icons/data.svg" alt="Data">
+                        Данные аккаунта
                     </button>
                 </div>
 
@@ -1252,14 +1229,14 @@
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon">
-                                <img src="icons/kd.svg" alt="K/D">
+                                <img src="icons/kd.svg" alt="K/D Ratio">
                             </div>
                             <div class="stat-value">1.62</div>
                             <div class="stat-label">У/П</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon">
-                                <img src="icons/time.svg" alt="Time">
+                                <img src="icons/time.svg" alt="Play Time">
                             </div>
                             <div class="stat-value">320 ч</div>
                             <div class="stat-label">Время игры</div>
@@ -1273,7 +1250,7 @@
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon">
-                                <img src="icons/chests.svg" alt="Chests">
+                                <img src="icons/boxes.svg" alt="Boxes">
                             </div>
                             <div class="stat-value">845</div>
                             <div class="stat-label">Золотые ящики</div>
@@ -1285,7 +1262,7 @@
                 <div id="account-data" class="tab-content">
                     <div class="account-data-section">
                         <h3 class="account-data-title">
-                            <img src="icons/gun.svg" alt="Guns" class="icon">
+                            <img src="icons/gun.svg" alt="Gun">
                             Пушки
                         </h3>
                         <div class="scroll-container">
@@ -1297,7 +1274,7 @@
                                     <div class="equipment-name">Огнемет</div>
                                     <div class="equipment-stats">
                                         <div class="equipment-stat">
-                                            <img src="icons/points.svg" alt="Points">
+                                            <img src="icons/score.svg" alt="Score">
                                             <span>25,400 очков</span>
                                         </div>
                                         <div class="equipment-stat">
@@ -1315,7 +1292,7 @@
                                     <div class="equipment-name">Рейлган</div>
                                     <div class="equipment-stats">
                                         <div class="equipment-stat">
-                                            <img src="icons/points.svg" alt="Points">
+                                            <img src="icons/score.svg" alt="Score">
                                             <span>18,700 очков</span>
                                         </div>
                                         <div class="equipment-stat">
@@ -1333,7 +1310,7 @@
                                     <div class="equipment-name">Гром</div>
                                     <div class="equipment-stats">
                                         <div class="equipment-stat">
-                                            <img src="icons/points.svg" alt="Points">
+                                            <img src="icons/score.svg" alt="Score">
                                             <span>12,500 очков</span>
                                         </div>
                                         <div class="equipment-stat">
@@ -1348,7 +1325,7 @@
                     
                     <div class="account-data-section">
                         <h3 class="account-data-title">
-                            <img src="icons/shield.svg" alt="Hulls" class="icon">
+                            <img src="icons/hull.svg" alt="Hull">
                             Корпуса
                         </h3>
                         <div class="scroll-container">
@@ -1360,11 +1337,11 @@
                                     <div class="equipment-name">Титан</div>
                                     <div class="equipment-stats">
                                         <div class="equipment-stat">
-                                            <img src="icons/points.svg" alt="Points">
+                                            <img src="icons/score.svg" alt="Score">
                                             <span>15,200 очков</span>
                                         </div>
                                         <div class="equipment-stat">
-                                            <img src="icons/defense.svg" alt="Defense">
+                                            <img src="icons/armor.svg" alt="Armor">
                                             <span>1,500 защиты</span>
                                         </div>
                                     </div>
@@ -1378,7 +1355,7 @@
                                     <div class="equipment-name">Гонщик</div>
                                     <div class="equipment-stats">
                                         <div class="equipment-stat">
-                                            <img src="icons/points.svg" alt="Points">
+                                            <img src="icons/score.svg" alt="Score">
                                             <span>12,800 очков</span>
                                         </div>
                                         <div class="equipment-stat">
@@ -1393,7 +1370,7 @@
                     
                     <div class="account-data-section">
                         <h3 class="account-data-title">
-                            <img src="icons/module.svg" alt="Modules" class="icon">
+                            <img src="icons/module.svg" alt="Module">
                             Модули
                         </h3>
                         <div class="scroll-container">
@@ -1405,7 +1382,7 @@
                                     <div class="equipment-name">Усилитель урона</div>
                                     <div class="equipment-stats">
                                         <div class="equipment-stat">
-                                            <img src="icons/points.svg" alt="Points">
+                                            <img src="icons/score.svg" alt="Score">
                                             <span>8,400 очков</span>
                                         </div>
                                         <div class="equipment-stat">
@@ -1417,17 +1394,17 @@
                             </div>
                             <div class="equipment-card">
                                 <div class="equipment-icon">
-                                    <img src="icons/armor.svg" alt="Armor">
+                                    <img src="icons/armor-plates.svg" alt="Armor Plates">
                                 </div>
                                 <div class="equipment-info">
                                     <div class="equipment-name">Бронепластины</div>
                                     <div class="equipment-stats">
                                         <div class="equipment-stat">
-                                            <img src="icons/points.svg" alt="Points">
+                                            <img src="icons/score.svg" alt="Score">
                                             <span>7,600 очков</span>
                                         </div>
                                         <div class="equipment-stat">
-                                            <img src="icons/defense.svg" alt="Defense">
+                                            <img src="icons/armor.svg" alt="Armor">
                                             <span>+20% защиты</span>
                                         </div>
                                     </div>
@@ -1438,7 +1415,7 @@
                     
                     <div class="account-data-section">
                         <h3 class="account-data-title">
-                            <img src="icons/drone.svg" alt="Drones" class="icon">
+                            <img src="icons/drone.svg" alt="Drone">
                             Дроны
                         </h3>
                         <div class="scroll-container">
@@ -1450,7 +1427,7 @@
                                     <div class="equipment-name">Разведчик</div>
                                     <div class="equipment-stats">
                                         <div class="equipment-stat">
-                                            <img src="icons/points.svg" alt="Points">
+                                            <img src="icons/score.svg" alt="Score">
                                             <span>5,300 очков</span>
                                         </div>
                                         <div class="equipment-stat">
@@ -1465,19 +1442,19 @@
                     
                     <div class="account-data-section">
                         <h3 class="account-data-title">
-                            <img src="icons/paint.svg" alt="Paints" class="icon">
+                            <img src="icons/paint.svg" alt="Paint">
                             Краски
                         </h3>
                         <div class="scroll-container">
                             <div class="equipment-card">
                                 <div class="equipment-icon" style="background-color: #ff0000; color: white;">
-                                    <img src="icons/paint-red.svg" alt="Red Paint" style="filter: invert(1);">
+                                    <img src="icons/camouflage.svg" alt="Camouflage" style="filter: invert(1);">
                                 </div>
                                 <div class="equipment-info">
                                     <div class="equipment-name">Красный камуфляж</div>
                                     <div class="equipment-stats">
                                         <div class="equipment-stat">
-                                            <img src="icons/points.svg" alt="Points">
+                                            <img src="icons/score.svg" alt="Score">
                                             <span>3,200 очков</span>
                                         </div>
                                     </div>
@@ -1488,13 +1465,13 @@
                     
                     <div class="account-data-section">
                         <h3 class="account-data-title">
-                            <img src="icons/gamemode.svg" alt="Game Modes" class="icon">
+                            <img src="icons/mode.svg" alt="Mode">
                             Режимы
                         </h3>
                         <div class="scroll-container">
                             <div class="equipment-card">
                                 <div class="equipment-icon">
-                                    <img src="icons/ctf.svg" alt="CTF">
+                                    <img src="icons/ctf.svg" alt="Capture the Flag">
                                 </div>
                                 <div class="equipment-info">
                                     <div class="equipment-name">Захват флага</div>
@@ -1515,7 +1492,7 @@
                     
                     <div class="account-data-section">
                         <h3 class="account-data-title">
-                            <img src="icons/supplies.svg" alt="Supplies" class="icon">
+                            <img src="icons/supplies.svg" alt="Supplies">
                             Припасы
                         </h3>
                         <div class="scroll-container">
@@ -1534,7 +1511,7 @@
                             </div>
                             <div class="equipment-card">
                                 <div class="equipment-icon">
-                                    <img src="icons/defense-supply.svg" alt="Defense">
+                                    <img src="icons/defense.svg" alt="Defense">
                                 </div>
                                 <div class="equipment-info">
                                     <div class="equipment-name">Защита</div>
@@ -1567,39 +1544,39 @@
             <section id="general" class="section">
                 <div class="section-header">
                     <h2 class="section-title">
-                        <img src="icons/globe.svg" alt="General" class="section-icon">
+                        <img src="icons/globe.svg" class="section-icon" alt="Globe">
                         Общие разделы
                     </h2>
                 </div>
                 
                 <div class="services-grid">
                     <div class="service-card">
-                        <img src="icons/news.svg" alt="News" class="icon">
+                        <img src="icons/news.svg" alt="News">
                         <h3>Новости</h3>
                         <p>Последние обновления и события в Tanki Online</p>
                     </div>
                     <div class="service-card">
-                        <img src="icons/esports.svg" alt="eSports" class="icon">
+                        <img src="icons/esports.svg" alt="eSports">
                         <h3>Киберспорт</h3>
                         <p>Турниры, команды и результаты киберспортивных событий</p>
                     </div>
                     <div class="service-card">
-                        <img src="icons/challenge.svg" alt="Challenge" class="icon">
+                        <img src="icons/challenge.svg" alt="Challenge">
                         <h3>Вызов принят</h3>
                         <p>Еженедельные задания и испытания для игроков</p>
                     </div>
                     <div class="service-card">
-                        <img src="icons/wiki.svg" alt="Wiki" class="icon">
+                        <img src="icons/wiki.svg" alt="Wiki">
                         <h3>Википедия</h3>
                         <p>База знаний по игре: тактики, гайды, характеристики</p>
                     </div>
                     <div class="service-card">
-                        <img src="icons/chat.svg" alt="Chat" class="icon">
+                        <img src="icons/chat.svg" alt="Chat">
                         <h3>Чат танкистов</h3>
-                        <p>Общайтесь с другими игроками, делитесь тактиками и советами</p>
+                        <p>Общайтесь с другими игроков, делитесь тактиками и советами</p>
                     </div>
                     <div class="service-card">
-                        <img src="icons/lock.svg" alt="Lock" class="icon">
+                        <img src="icons/lock.svg" alt="Lock">
                         <h3>По вопросам блокировки в ЧТ</h3>
                         <p>Помощь по вопросам блокировки в чате танкистов</p>
                     </div>
@@ -1610,7 +1587,7 @@
             <section id="rating" class="section">
                 <div class="section-header">
                     <h2 class="section-title">
-                        <img src="icons/rating.svg" alt="Rating" class="section-icon">
+                        <img src="icons/trophy.svg" class="section-icon" alt="Trophy">
                         Рейтинг игроков
                     </h2>
                 </div>
@@ -1618,7 +1595,8 @@
                 <div class="search-box">
                     <input type="text" class="search-input" id="playerSearch" placeholder="Введите никнейм игрока...">
                     <button class="search-btn" id="searchPlayerBtn">
-                        <img src="icons/search.svg" alt="Search" class="icon"> Поиск
+                        <img src="icons/search.svg" alt="Search" style="width: 16px; height: 16px;">
+                        Поиск
                     </button>
                 </div>
                 
@@ -1634,21 +1612,21 @@
                     <div class="player-stats">
                         <div class="stat-card">
                             <div class="stat-icon">
-                                <img src="icons/kd.svg" alt="K/D">
+                                <img src="icons/kd.svg" alt="K/D Ratio">
                             </div>
                             <div class="stat-value">1.62</div>
                             <div class="stat-label">У/П</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon">
-                                <img src="icons/chests.svg" alt="Chests">
+                                <img src="icons/boxes.svg" alt="Boxes">
                             </div>
                             <div class="stat-value">845</div>
                             <div class="stat-label">Золотые ящики</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon">
-                                <img src="icons/score.svg" alt="Score">
+                                <img src="icons/score.svg" alt="Gear Score">
                             </div>
                             <div class="stat-value">12,850</div>
                             <div class="stat-label">Gear Score</div>
@@ -1657,7 +1635,7 @@
                 </div>
                 
                 <div class="top-players">
-                    <h3 class="section-title" style="font-size: 1.5rem; margin-bottom: 16px;">Топ-5 игроков</h3>
+                    <h3 class="section-title" style="font-size: 1.4rem; margin-bottom: 16px;">Топ-5 игроков</h3>
                     <div class="player-row">
                         <div class="player-position">1</div>
                         <div class="player-name">ProTanker</div>
@@ -1690,7 +1668,7 @@
             <section id="settings" class="section">
                 <div class="section-header">
                     <h2 class="section-title">
-                        <img src="icons/settings.svg" alt="Settings" class="section-icon">
+                        <img src="icons/settings.svg" class="section-icon" alt="Settings">
                         Настройки
                     </h2>
                 </div>
@@ -1740,11 +1718,22 @@
         </div>
     </main>
 
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <ul>
+            <li><a href="#" class="nav-link active" data-section="dashboard"><img src="icons/home.svg" alt="Home"> <span>Главная</span></a></li>
+            <li><a href="#" class="nav-link" data-section="profile"><img src="icons/user.svg" alt="Profile"> <span>Профиль</span></a></li>
+            <li><a href="#" class="nav-link" data-section="general"><img src="icons/globe.svg" alt="Globe"> <span>Общее</span></a></li>
+            <li><a href="#" class="nav-link" data-section="rating"><img src="icons/trophy.svg" alt="Trophy"> <span>Рейтинг</span></a></li>
+            <li><a href="#" class="nav-link" data-section="settings"><img src="icons/settings.svg" alt="Settings"> <span>Настройки</span></a></li>
+        </ul>
+    </nav>
+
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <img src="icons/tank.svg" alt="Tank" class="icon">
+                    <img src="icons/tank.svg" alt="Tank" style="width: 20px; height: 20px;">
                     <span>47bot - Tanki Online Assistant</span>
                 </div>
             </div>
@@ -1799,14 +1788,8 @@
             }
             
             // Navigation
-            const navToggle = document.getElementById('navToggle');
-            const mainNav = document.getElementById('mainNav');
             const navLinks = document.querySelectorAll('.nav-link');
             const sections = document.querySelectorAll('.section');
-            
-            navToggle.addEventListener('click', () => {
-                mainNav.classList.toggle('active');
-            });
             
             navLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
@@ -1826,11 +1809,6 @@
                     // Show target section
                     const targetSection = this.getAttribute('data-section');
                     document.getElementById(targetSection).classList.add('active');
-                    
-                    // Close mobile menu
-                    if (window.innerWidth <= 900) {
-                        mainNav.classList.remove('active');
-                    }
                     
                     // Прокрутка вверх
                     window.scrollTo(0, 0);
