@@ -13,7 +13,7 @@
             --primary: #4CAF50;
             --primary-light: #81C784;
             --primary-dark: #388E3C;
-            --primary-gradient: linear-gradient(135deg, #4CAF50, #2极7D32);
+            --primary-gradient: linear-gradient(135deg, #4CAF50, #2E7D32);
             --secondary: #FFC107;
             --accent: #FF5722;
             --background: #121212;
@@ -23,7 +23,7 @@
             --text-light: #b0b0b0;
             --text-lighter: #8a8a8a;
             --border: #333333;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            --shadow: 0 4极 12px rgba(0, 0, 0, 0.25);
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
@@ -105,8 +105,8 @@
         }
 
         .avatar {
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             object-fit: cover;
             border: 3px solid var(--primary);
@@ -132,7 +132,7 @@
         }
 
         .user-info h2 {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             margin-bottom: 5px;
             font-weight: 600;
             color: white;
@@ -140,7 +140,7 @@
 
         .user-info p {
             color: var(--text-light);
-            font-size: 1rem;
+            font-size: 1.1rem;
             margin-bottom: 15px;
         }
 
@@ -174,7 +174,7 @@
         .progress-value {
             font-weight: 700;
             color: var(--primary);
-            font-size: 1rem;
+            font-size: 1.1rem;
             margin-bottom: 5px;
         }
 
@@ -186,7 +186,7 @@
             position: relative;
         }
 
-        .progress-fill {
+极 .progress-fill {
             height: 100%;
             background: var(--primary-gradient);
             border-radius: 5px;
@@ -243,7 +243,7 @@
 
         .stat-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12极 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
         }
 
         .stat-card::before {
@@ -293,7 +293,7 @@
             padding-top: 10px;
         }
 
-        .stat-card.expanded .极at-details {
+        .stat-card.expanded .stat-details {
             max-height: 200px;
         }
 
@@ -376,13 +376,13 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%);
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,极) 70%);
             transform: rotate(30deg);
         }
 
         .profile-rank {
             position: absolute;
-            top: 15px;
+            top: 15极;
             left: 15px;
             background-color: rgba(0,0,0,0.25);
             border-radius: 50%;
@@ -393,12 +393,12 @@
             justify-content: center;
             font-weight: bold;
             font-size: 1.2rem;
-            border: 2px solid rgba极255,255,255,0.3);
+            border: 2px solid rgba(255,255,255,0.3);
         }
 
         .profile-avatar {
-            width: 90px;
-            height: 90px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
             object-fit: cover;
             border: 4px solid rgba(255,255,255,0.5);
@@ -430,7 +430,7 @@
             font-size: 0.9rem;
             margin-bottom: 12px;
             position: relative;
-            z-index: 2;
+            z极n: 2;
         }
 
         .profile-gear-score {
@@ -511,11 +511,26 @@
             margin-bottom: 30px;
         }
 
+        .account-data-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .account-data-title img {
+            width: 24px;
+            height: 24px;
+        }
+
         .scroll-container {
             display: flex;
             overflow-x: auto;
             gap: 15px;
-            padding-bottom: 10px;
+            padding-bottom: 10极;
             margin-bottom: 25px;
             scrollbar-width: thin;
             scrollbar-color: var(--primary) var(--card-bg);
@@ -530,7 +545,7 @@
             border-radius: 3px;
         }
 
-        .scroll-container::-webkit-scrollbar-track {
+        .scroll-container::-webkit极scrollbar-track {
             background: var(--card-bg);
             border-radius: 3px;
         }
@@ -652,9 +667,9 @@
         }
 
         .supply-name {
-            font-weight: 600;
+            font-weight: 极00;
             margin-bottom: 8px;
-            font-size: 1极rem;
+            font-size: 1rem;
             color: white;
         }
 
@@ -672,7 +687,7 @@
         }
 
         .service-card {
-            background: var(--card-bg);
+            background: var(--card极g);
             border-radius: 18px;
             padding: 22px;
             box-shadow: var(--shadow);
@@ -684,8 +699,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-        }
-
+极
         .service-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
@@ -705,7 +719,7 @@
             width: 48px;
             height: 48px;
             margin-bottom: 18px;
-            transition: var(--transition);
+            transition: var极transition);
         }
 
         .service-card:hover img {
@@ -769,7 +783,7 @@
 
         .player-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, min极ax(170px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
             gap: 15px;
             margin-top: 18px;
         }
@@ -793,7 +807,7 @@
             background: rgba(255, 255, 255, 0.03);
         }
 
-        .player极ow:last-child {
+        .player-row:last-child {
             border-bottom: none;
         }
 
@@ -808,7 +822,7 @@
         .player-name {
             flex: 1;
             font-weight: 500;
-            font-size: 1rem;
+            font-size: 1极rem;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -903,6 +917,11 @@
                 gap: 15px;
             }
             
+            .avatar {
+                width: 80px;
+                height: 80px;
+            }
+            
             .progress-container {
                 width: 100%;
             }
@@ -957,7 +976,7 @@
                     <div class="progress-info">
                         <div class="progress-value">250 / 500</div>
                         <div class="progress-bar">
-                            <div class="progress-fill" style="width: 50%"></div>
+                            <div class="progress-fill" style="width: 50%"></极>
                         </div>
                     </div>
                 </div>
@@ -1028,11 +1047,11 @@
                                 <img src="icons/karma.svg" alt="Karma">
                             </div>
                             <div class="stat-value">150</div>
-                            <div class="stat极abel">Очков кармы</div>
+                            <div class="stat-label">Очков кармы</div>
                             <div class="stat-details">
                                 <div class="detail-item">
                                     <span class="detail-label">За сегодня:</span>
-                                    <span class="detail-value" style="极olor:#4CAF50">+15</span>
+                                    <span class="detail-value" style="color:#4CAF50">+15</span>
                                 </div>
                                 <div class="detail-item">
                                     <span class="detail-label">Ранг:</span>
@@ -1049,7 +1068,7 @@
                             <div class="stat-label">Достижений</div>
                             <div class="stat-details">
                                 <div class="detail-item">
-                                    <span class="detail-label">Последнее:</span>
+                                    <span class="detail极abel">Последнее:</span>
                                     <span class="detail-value">Активный участник</span>
                                 </div>
                                 <div class="detail-item">
@@ -1057,7 +1076,7 @@
                                     <span class="detail-value">75%</span>
                                 </div>
                             </div>
-                        </div>
+                        </极>
                     </div>
                 </div>
             </section>
@@ -1080,7 +1099,7 @@
                         <img src="icons/stats.svg" alt="Statistics">
                         Статистика
                     </button>
-                    <button class="tab-btn" data极ab="account-data">
+                    <button class="tab-btn" data-tab="account-data">
                         <img src="icons/data.svg" alt="Account Data">
                         Данные аккаунта
                     </button>
@@ -1094,7 +1113,7 @@
                                 <img src="icons/destroyed.svg" alt="Destroyed">
                             </div>
                             <div class="stat-value">8,450</div>
-                            <div class="stat-label">Уничтожено</极>
+                            <div class="stat-label">Уничтожено</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon">
@@ -1119,9 +1138,9 @@
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon">
-                                <img src="icons/crystals.svg" alt="Crystals">
+                                <img src="极cons/crystals.svg" alt="Crystals">
                             </div>
-                            <div class="stat-value">1.2M</div>
+                            <div class="stat-value">1.2M</极>
                             <div class="stat-label">Кристаллы</div>
                         </div>
                         <div class="stat-card">
@@ -1137,6 +1156,10 @@
                 <!-- Account Data Tab -->
                 <div id="account-data" class="tab-content">
                     <div class="account-data-section">
+                        <h3 class="account-data-title">
+                            <img src="icons/gun.svg" alt="Guns">
+                            Пушки
+                        </h3>
                         <div class="scroll-container">
                             <div class="equipment-card">
                                 <div class="equipment-icon">
@@ -1166,7 +1189,7 @@
                                         <div class="equipment-stat">
                                             <img src="icons/score.svg" alt="Score">
                                             <span>18,700 очков</span>
-                                        </div>
+                                        </极>
                                         <div class="equipment-stat">
                                             <img src="icons/damage.svg" alt="Damage">
                                             <span>1,200 урона</span>
@@ -1191,6 +1214,221 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="account-data-section">
+                        <h3 class="account-data-title">
+                            <img src="icons/hull.svg" alt="Hulls">
+                            Корпуса
+                        </h3>
+                        <div class="scroll-container">
+                            <div class="equipment-card">
+                                <div class="equipment-icon">
+                                    <img src="icons/titan.svg" alt="Titan">
+                                </div>
+                                <div class="equipment-info">
+                                    <div class="极uipment-name">Титан</div>
+                                    <div class="equipment-stats">
+                                        <div class="equipment-stat">
+                                            <img src="icons/score.svg" alt="Score">
+                                            <span>15,200 очков</span>
+                                        </div>
+                                        <div class="equipment-stat">
+                                            <img src="icons/defense.svg" alt="Defense">
+                                            <span>1,500 защиты</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="equipment-card">
+                                <div class="equipment-icon">
+                                    <img src="icons/racer.svg" alt="Racer">
+                                </div>
+                                <div class="equipment-info">
+                                    <div class="equipment-name">Гонщик</div>
+                                    <极 class="equipment-stats">
+                                        <div class="equipment-stat">
+                                            <img src="icons/score.svg" alt="Score">
+                                            <span>12,800 очков</span>
+                                        </div>
+                                        <div class="equipment-stat">
+                                            <img src="icons/speed.svg" alt="Speed">
+                                            <span>120% скорости</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="account-data-section">
+                        <h3 class="account-data-title">
+                            <img src="icons/modules.svg" alt="Modules">
+                            Модули
+                        </h3>
+                        <div class="scroll-container">
+                            <div class="equipment-card">
+                                <div class="equipment-icon">
+                                    <img src="icons/damage-boost.svg" alt="Damage Boost">
+                                </div>
+                                <div class="equipment-info">
+                                    <div class="equipment-name">Усилитель урона</div>
+                                    <div class="equipment-stats">
+                                        <div class="equipment-stat">
+                                            <img src="icons/score.svg" alt="Score">
+                                            <span>8,400 очков</span>
+                                        </div>
+                                        <div class="equipment-stat">
+                                            <img src="icons/damage.svg" alt="Damage">
+                                            <span>+15% урона</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="equipment-card">
+                                <div class="equipment-icon">
+                                    <img src="icons/armor.svg" alt="Armor">
+                                </div>
+                                <div class="equipment-info">
+                                    <div class="equipment-name">Бронепластины</div>
+                                    <div class="equipment-stats">
+                                        <div class="equipment-stat">
+                                            <img src="icons/score.svg" alt="Score">
+                                            <span>7,600 очков</span>
+                                        </div>
+                                        <div class="equipment-stat">
+                                            <img src="icons/defense.svg" alt="Defense">
+                                            <span>+20% защиты</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="account-data-section">
+                        <h3 class="account-data-title">
+                            <img src="icons/drone.svg" alt="Drones">
+                            Дроны
+                        </h3>
+                        <div class="scroll-container">
+                            <div class="equipment-card">
+                                <div class="equipment-icon">
+                                    <img src="icons/scout.svg" alt="Scout">
+                                </div>
+                                <div class="equipment-info">
+                                    <div class="equipment-name">Разведчик</div>
+                                    <div class="equipment-stats">
+                                        <div class="equipment-stat">
+                                            <img src="icons/score.svg" alt="Score">
+                                            <span>5,300 очков</span>
+                                        </div>
+                                        <div class="equipment-stat">
+                                            <img src="icons/vision.svg" alt="Vision">
+                                            <span>+30% обзор</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="account-data-section">
+                        <h3 class="account-data-title">
+                            <img src="icons/paint.svg" alt="Paints">
+                            Краски
+                        </h3>
+                        <div class="scroll-container">
+                            <div class="equipment-card">
+                                <div class="equipment-icon" style="background-color: #ff0000;">
+                                    <img src="icons/red-camouflage.svg" alt="Red Camouflage" style="filter: invert(1);">
+                                </div>
+                                <div class="equipment-info">
+                                    <div class="equipment-name">Красный камуфляж</div>
+                                    <div class="equipment-stats">
+                                        <div class="equipment-stat">
+                                            <img src="icons/score.svg" alt="Score">
+                                            <span>3,200 очков</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="account-data-section">
+                        <h3 class="account-data-title">
+                            <img src="icons/mode.svg" alt="Modes">
+                            Режимы
+                        </h3>
+                        <div class="scroll-container">
+                            <div class="equipment-card">
+                                <div class="equipment-icon">
+                                    <img src="icons/ctf.svg" alt="Capture the Flag">
+                                </div>
+                                <div class="equipment-info">
+                                    <div class="equipment-name">Захват флага</div>
+                                    <div class="equipment-stats">
+                                        <div class="equipment-stat">
+                                            <img src="icons/games.svg" alt="Games">
+                                            <span>42 игры</span>
+                                        </div>
+                                        <div class="equipment-stat">
+                                            <img src="icons/wins.svg" alt="Wins">
+                                            <span>28 побед</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="account-data-section">
+                        <h3 class="account-data-title">
+                            <img src="icons/supplies.svg" alt="Supplies">
+                            Припасы
+                        </h3>
+                        <div class="scroll-container">
+                            <div class="equipment-card">
+                                <div class="equipment-icon">
+                                    <img src="icons/repair.svg" alt="Repair Kit">
+                                </div>
+                                <div class="equipment-info">
+                                    <div class="equipment-name">Ремкомплект</div>
+                                    <div class="equipment-stats">
+                                        <div class="equipment-stat">
+                                            <span>124 шт</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="equipment-card">
+                                <div class="equipment-icon">
+                                    <img src="icons/protection.svg" alt="Protection">
+                                </div>
+                                <div class="equipment-info">
+                                    <div class="equipment-name">Защита</div>
+                                    <div class="equipment-stats">
+                                        <div class="equipment-stat">
+                                            <span>87 шт</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="equipment-card">
+                                <div class="equipment-icon">
+                                    <img src="icons/double-damage.svg" alt="Double Damage">
+                                </div>
+                                <div class="equipment-info">
+                                    <div class="equipment-name">Урон x2</div>
+                                    <div class="equipment-stats">
+                                        <div class="equipment-stat">
+                                            <span>56 шт</span>
+                                        </div>
+                                    </div>
+                                </极>
                             </div>
                         </div>
                     </div>
@@ -1221,13 +1459,13 @@
                         <p>База знаний по игре: тактики, гайды, характеристики</p>
                     </div>
                     <div class="service-card">
-                        <img src="极cons/chat.svg" alt="Chat">
+                        <img src="icons/chat.svg" alt="Chat">
                         <h3>Чат танкистов</h3>
                         <p>Общайтесь с другими игроков, делитесь тактиками и советами</p>
                     </div>
                     <div class="service-card">
                         <img src="icons/support.svg" alt="Support">
-                        <h3>По вопросам блокировки в ЧТ</极>
+                        <h3>По вопросам блокировки в ЧТ</h3>
                         <p>Помощь по вопросам блокировки в чате танкистов</p>
                     </div>
                 </div>
@@ -1277,7 +1515,7 @@
                     </div>
                 </div>
                 
-                <div class极"top-players">
+                <div class="top-players">
                     <div class="player-row">
                         <div class="player-position">1</div>
                         <div class="player-name">ProTanker</div>
@@ -1295,7 +1533,7 @@
                     </div>
                     <div class="player-row">
                         <div class="player-position">4</div>
-                        <div class="player-name">Warrior47</div>
+                        <div class="极ayer-name">Warrior47</div>
                         <div class="player-score">32,400</div>
                     </div>
                     <div class="player-row">
@@ -1412,7 +1650,7 @@
             const searchPlayerBtn = document.getElementById('searchPlayerBtn');
             const playerCard = document.getElementById('playerCard');
             
-            searchPlayerBtn.addEventListener('click', ()极 {
+            searchPlayerBtn.addEventListener('click', () => {
                 const searchValue = document.getElementById('playerSearch').value.trim();
                 if (searchValue) {
                     // In a real app, this would call the bot API
@@ -1433,7 +1671,7 @@
                     const nickname = prompt('Введите ваш игровой никнейм:');
                     if (nickname && nickname.trim() !== '') {
                         // In a real app, this would call the bot API to bind the nickname
-                        document.getElementById('gameNickname').text极ontent = nickname;
+                        document.getElementById('gameNickname').textContent = nickname;
                         
                         // Сохраняем в localStorage
                         localStorage.setItem('gameNickname', nickname);
@@ -1464,7 +1702,7 @@
                     
                     // Show target content
                     const targetTab = btn.getAttribute('data-tab');
-                    document.getElementById(targetTab).class极.add('active');
+                    document.getElementById(targetTab).classList.add('active');
                 });
             });
         });
