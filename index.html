@@ -25,6 +25,7 @@
             --border: #333333;
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --stats-bg: #02231c;
         }
 
         * {
@@ -53,7 +54,7 @@
             width: 100%;
         }
 
-        
+        /* User info */
         .user-container {
             display: flex;
             align-items: center;
@@ -68,7 +69,7 @@
             height: 128px;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid var(--primary);
+            border: 1px solid var(--primary);
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             display: flex;
             align-items: center;
@@ -116,7 +117,7 @@
             white-space: nowrap;
         }
 
-        .user-info p {
+        .user-gs {
             color: var(--text-light);
             font-size: 1.1rem;
             margin-bottom: 20px;
@@ -154,16 +155,18 @@
         }
 
         .progress-value {
-            font-weight: 700;
+            font-weight: 400;
             color: white;
             font-size: 1.1rem;
             margin-bottom: 8px;
-            text-align: center;
+            text-align: left;
             width: 54px;
             height: 17px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            margin-left: 0;
+            margin-right: auto;
         }
 
         .progress-bar {
@@ -182,7 +185,7 @@
             border-radius: 3px;
             width: 50%;
             position: relative;
-            transition: width 0.5s ease;
+            transition: width 极.5s ease;
         }
 
         /* Main content */
@@ -205,12 +208,12 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        
+        /* Dashboard styles - COMPACT VERSION */
         .dashboard-compact {
             margin-bottom: 25px;
         }
 
-        
+        /* Compact stats */
         .compact-stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -280,7 +283,7 @@
             transition: max-height 0.3s ease;
             margin-top: 10px;
             border-top: 1px solid var(--border);
-            padding-top: 10px;
+            padding-top: 10极;
         }
 
         .stat-card.expanded .stat-details {
@@ -311,13 +314,32 @@
 
         .search-input {
             flex: 1;
-            padding: 14px 18px;
+            padding: 14px 18px 14px 50px;
             border: 1px solid var(--border);
-            border-radius: 12px;
+            border-radius: 90px;
             font-size: 0.95rem;
             background: var(--card-bg);
             color: var(--text);
             transition: var(--transition);
+            height: 44px;
+            width: 364px;
+            position: relative;
+        }
+
+        .search-input-wrapper {
+            position: relative;
+            flex: 1;
+            max-width: 364px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            z-index: 2;
         }
 
         .search-input:focus {
@@ -330,7 +352,7 @@
             background: var(--primary-gradient);
             color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: 90px;
             padding: 0 25px;
             font-size: 0.95rem;
             font-weight: 600;
@@ -339,6 +361,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            height: 44px;
         }
 
         .search-btn:hover {
@@ -346,7 +369,7 @@
             box-shadow: 0 6px 12px rgba(76, 175, 80, 0.25);
         }
 
-        
+        /* Profile styles */
         .profile-header {
             background: var(--primary-gradient);
             color: white;
@@ -391,7 +414,7 @@
             height: 150px;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid rgba(255,255,255,0.5);
+            border: 1px solid rgba(255,255,255,0.5);
             margin: 0 auto 15px;
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             display: flex;
@@ -410,6 +433,10 @@
             position: relative;
             z-index: 2;
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .profile-title {
@@ -449,7 +476,7 @@
         .tab-btn {
             background-color: var(--card-bg);
             border: none;
-            padding: 12px 8px;
+            padding: 12极 8px;
             border-radius: 12px;
             cursor: pointer;
             transition: var(--transition);
@@ -474,14 +501,14 @@
             color: white;
         }
 
-        .tab-btn img {
+极      .tab-btn img {
             width: 24px;
             height: 24px;
         }
 
         .tab-content {
             display: none;
-            animation: fadeIn 0.5s ease;
+            animation: fade极 0.5s ease;
         }
 
         .tab-content.active {
@@ -496,7 +523,7 @@
             margin-bottom: 25px;
         }
 
-        
+        /* Account Data Section */
         .account-data-section {
             margin-bottom: 30px;
         }
@@ -535,7 +562,7 @@
             border-radius: 3px;
         }
 
-        .scroll-container::-webkit-scrollbar-track {
+        .scroll-container::-webkit-sc极lbar-track {
             background: var(--card-bg);
             border-radius: 3px;
         }
@@ -551,7 +578,7 @@
             transition: var(--transition);
             position: relative;
             overflow: hidden;
-            min-width: 240px;
+            min-width: 240极;
             flex-shrink: 0;
         }
 
@@ -620,7 +647,54 @@
             height: 16px;
         }
 
-        
+        /* New Stats Panel */
+        .stats-panel {
+            background-color: var(--stats-bg);
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+
+        .stat-item-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-item-icon img {
+            width: 16px;
+            height: 16px;
+        }
+
+        .stat-item-label {
+            flex: 1;
+            font-size: 22px;
+            font-weight: 500;
+            color: white;
+        }
+
+        .stat-item-value {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Supplies Section */
         .supplies-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -669,7 +743,7 @@
             color: var(--primary);
         }
 
-        
+        /* General section */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -677,7 +751,7 @@
         }
 
         .service-card {
-            background: var(--card-bg);
+            background: var(--card极g);
             border-radius: 18px;
             padding: 22px;
             box-shadow: var(--shadow);
@@ -730,7 +804,7 @@
             flex: 1;
         }
 
-       
+        /* Rating section */
         .player-card {
             background: var(--card-bg);
             border-radius: 18px;
@@ -768,7 +842,7 @@
 
         .player-info h2 {
             font-size: 1.5rem;
-            margin-bottom: 6px;
+            margin-bottom: 6极;
             color: white;
         }
 
@@ -826,7 +900,7 @@
             font-size: 1rem;
         }
 
-        
+        /* Bottom Navigation */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -867,12 +941,12 @@
             margin-bottom: 4px;
         }
 
-      
+        /* Footer */
         footer {
             display: none;
         }
 
-       
+        /* Responsive styles */
         @media (max-width: 768px) {
             .stats-grid {
                 grid-template-columns: 1fr 1fr;
@@ -897,7 +971,7 @@
                 height: auto;
             }
             
-            .user-info p {
+            .user-gs {
                 font-size: 1rem;
                 width: auto;
                 height: auto;
@@ -906,6 +980,18 @@
             .progress-value {
                 width: auto;
                 height: auto;
+            }
+            
+            .search-input-wrapper {
+                max-width: 100%;
+            }
+            
+            .search-input {
+                width: 100%;
+            }
+            
+            .stat-item-label, .stat-item-value {
+                font-size: 18px;
             }
         }
 
@@ -938,7 +1024,7 @@
             }
             
             .compact-stats-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1极;
             }
             
             .stat-card.expandable {
@@ -956,7 +1042,7 @@
                 height: auto;
             }
             
-            .user-info p {
+            .user-gs {
                 font-size: 0.9rem;
                 width: auto;
                 height: auto;
@@ -970,6 +1056,10 @@
             .progress-value {
                 width: auto;
                 height: auto;
+            }
+            
+            .stat-item-label, .stat-item-value {
+                font-size: 16px;
             }
         }
     </style>
@@ -985,7 +1075,7 @@
                     <img src="icons/rank.svg" alt="Rank" class="name-icon">
                     <h2 id="userName">TankMaster47</h2>
                 </div>
-                <p id="userUsername">@tankmaster</p>
+                <p class="user-gs" id="userGS">gs: 12,850</p>
                 <div class="progress-container">
                     <div class="progress-icon">
                         <img src="icons/rank.svg" alt="Rank">
@@ -1003,12 +1093,14 @@
 
     <main class="main-content">
         <div class="container">
-            
+            <!-- Dashboard Section -->
             <section id="dashboard" class="section active">
                 <div class="search-box">
-                    <input type="text" class="search-input" placeholder="Поиск профиля..." id="profileSearch">
+                    <div class="search-input-wrapper">
+                        <img src="icons/search.svg" alt="Search" class="search-icon">
+                        <input type="text" class="search-input" placeholder="Поиск профиля..." id="profileSearch">
+                    </div>
                     <button class="search-btn">
-                        <img src="icons/search.svg" alt="Search">
                         Найти
                     </button>
                 </div>
@@ -1046,7 +1138,7 @@
                                 <img src="icons/warnings.svg" alt="Warnings">
                             </div>
                             <div class="stat-value">2</div>
-                            <div class="stat-label">Нарушения</div>
+                            <div class="stat极abel">Нарушения</div>
                             <div class="stat-details">
                                 <div class="detail-item">
                                     <span class="detail-label">Последнее:</span>
@@ -1061,7 +1153,7 @@
                         
                         <div class="stat-card expandable">
                             <div class="stat-icon">
-                                <img src="icons/karma.svg" alt="Karma">
+                                <img src极icons/karma.svg" alt="Karma">
                             </div>
                             <div class="stat-value">150</div>
                             <div class="stat-label">Очков кармы</div>
@@ -1098,17 +1190,81 @@
                 </div>
             </section>
 
-            
+            <!-- Profile Section -->
             <section id="profile" class="section">
                 <div class="profile-header">
                     <div class="profile-rank">#7</div>
                     <div class="profile-avatar" id="profileAvatar">
                         <img src="icons/avatar.svg" alt="Profile Avatar">
                     </div>
-                    <h1 class="profile-name" id="gameNickname">Kris_My_Queen</h1>
-                    <div class="profile-title">Звание: Легенда</div>
-                    <div class="profile-gear-score">9999</div>
+                    <h1 class="profile-name">
+                        <img src="icons/rank.svg" alt="Rank" class="name-icon">
+                        <span id="gameNickname">TankMaster47</span>
+                    </h1>
+                    <div class="profile-gear-score">12,850</div>
                     <div class="profile-gear-label">Gear Score</div>
+                </div>
+
+                <div class="search-box">
+                    <div class="search-input-wrapper">
+                        <img src="icons/search.svg" alt="Search" class="search-icon">
+                        <input type="text" class="search-input" id="playerSearchProfile" placeholder="Введите никнейм игрока...">
+                    </div>
+                    <button class="search-btn" id="searchPlayerProfileBtn">
+                        Поиск
+                    </button>
+                </div>
+
+                <div class="stats-panel">
+                    <div class="stat-item">
+                        <div class="stat-item-icon">
+                            <img src="icons/damage.svg" alt="Damage">
+                        </div>
+                        <div class="stat-item-label">Подбил в битвах</div>
+                        <div class="stat-item-value">8,450</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-icon">
+                            <img src="icons/damaged.svg" alt="Damaged">
+                        </div>
+                        <div class="stat-item-label">Подбит в битвах</div>
+                        <div class="stat-item-value">5,210</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-icon">
+                            <img src="icons/kd.svg" alt="K/D Ratio">
+                        </div>
+                        <div class="stat-item-label">У/П</div>
+                        <div class="stat-item-value">1.62</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-icon">
+                            <img src="icons/time.svg" alt="Play Time">
+                        </div>
+                        <div class="stat-item-label">Время в игре</div>
+                        <div class="stat-item-value">320 ч</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-icon">
+                            <img src="icons/crystals.svg" alt="Crystals">
+                        </div>
+                        <div class="stat-item-label">Заработал кристаллов</div>
+                        <div class="stat-item-value">1.2M</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat极tem-icon">
+                            <img src="icons/boxes.svg" alt="Boxes">
+                        </div>
+                        <div class="stat-item-label">Поймал голдов</div>
+                        <div class="stat-item-value">845</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-icon">
+                            <img src="icons/supplies.svg" alt="Supplies">
+                        </div>
+                        <div class="stat-item-label">Использовал припасов</div>
+                        <div class="stat-item-value">1,240</div>
+                    </div>
                 </div>
 
                 <div class="profile-tabs">
@@ -1122,55 +1278,12 @@
                     </button>
                 </div>
 
-             
+                <!-- Stats Tab -->
                 <div id="stats" class="tab-content active">
-                    <div class="compact-stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <img src="icons/destroyed.svg" alt="Destroyed">
-                            </div>
-                            <div class="stat-value">8,450</div>
-                            <div class="stat-label">Уничтожено</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <img src="icons/damaged.svg" alt="Damaged">
-                            </div>
-                            <div class="stat-value">5,210</div>
-                            <div class="stat-label">Подбит</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <img src="icons/kd.svg" alt="K/D Ratio">
-                            </div>
-                            <div class="stat-value">1.62</div>
-                            <div class="stat-label">У/П</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <img src="icons/time.svg" alt="Play Time">
-                            </div>
-                            <div class="stat-value">320 ч</div>
-                            <div class="stat-label">Время игры</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <img src="icons/crystals.svg" alt="Crystals">
-                            </div>
-                            <div class="stat-value">1.2M</div>
-                            <div class="stat-label">Кристаллы</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <img src="icons/boxes.svg" alt="Boxes">
-                            </div>
-                            <div class="stat-value">845</div>
-                            <div class="stat-label">Золотые ящики</div>
-                        </div>
-                    </div>
+                    <!-- Stats content will be loaded here -->
                 </div>
 
-                
+                <!-- Account Data Tab -->
                 <div id="account-data" class="tab-content">
                     <div class="account-data-section">
                         <h3 class="account-data-title">
@@ -1189,9 +1302,9 @@
                                             <img src="icons/score.svg" alt="Score">
                                             <span>25,400 очков</span>
                                         </div>
-                                        <div class="equipment-stat">
+                                        <极iv class="equipment-stat">
                                             <img src="icons/damage.svg" alt="Damage">
-                                            <span>111</span>
+                                            <span>850 урона</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1201,15 +1314,15 @@
                                     <img src="icons/railgun.svg" alt="Railgun">
                                 </div>
                                 <div class="equipment-info">
-                                    <div class="equipment-name">Рельса</div>
+                                    <div class="equipment-name">Рейлган</div>
                                     <div class="equipment-stats">
                                         <div class="equipment-stat">
                                             <img src="icons/score.svg" alt="Score">
                                             <span>18,700 очков</span>
                                         </div>
                                         <div class="equipment-stat">
-                                            <img src="icons/damage.svg" alt="Damage">
-                                            <span>111</span>
+                                            <img src="icons/damage.svg" alt极"Damage">
+                                            <span>1,200 урона</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1227,7 +1340,7 @@
                                         </div>
                                         <div class="equipment-stat">
                                             <img src="icons/damage.svg" alt="Damage">
-                                            <span>111</span>
+                                            <span>950 урона</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1235,11 +1348,11 @@
                         </div>
                     </div>
                     
-                   
+                    <!-- Остальные секции данных аккаунта -->
                 </div>
             </section>
 
-            
+            <!-- General Section -->
             <section id="general" class="section">
                 <div class="services-grid">
                     <div class="service-card">
@@ -1255,17 +1368,17 @@
                     <div class="service-card">
                         <img src="icons/challenge.svg" alt="Challenge">
                         <h3>Вызов принят</h3>
-                        <p>Топ по звездам</p>
+                        <p>Еженедельные задания и испытания для игроков</极>
                     </div>
                     <div class="service-card">
                         <img src="icons/wiki.svg" alt="Wiki">
                         <h3>Википедия</h3>
-                        <p>База знаний по игре</p>
+                        <p>База знаний по игре: тактики, гайды, характеристики</p>
                     </div>
                     <div class="service-card">
                         <img src="icons/chat.svg" alt="Chat">
                         <h3>Чат танкистов</h3>
-                        <p>Общайтесь с другими игроками</p>
+                        <p>Общайтесь с другими игроков, делитесь тактиками и советами</p>
                     </div>
                     <div class="service-card">
                         <img src="icons/support.svg" alt="Support">
@@ -1275,12 +1388,14 @@
                 </div>
             </section>
 
-           
+            <!-- Rating Section -->
             <section id="rating" class="section">
                 <div class="search-box">
-                    <input type="text" class="search-input" id="playerSearch" placeholder="Введите никнейм игрока...">
+                    <div class="search-input-wrapper">
+                        <img src="icons/search.svg" alt="Search" class="search-icon">
+                        <input type="text" class="search-input" id="playerSearch" placeholder="Введите никнейм игрока...">
+                    </div>
                     <button class="search-btn" id="searchPlayerBtn">
-                        <img src="icons/search.svg" alt="Search">
                         Поиск
                     </button>
                 </div>
@@ -1289,7 +1404,7 @@
                     <div class="player-header">
                         <div class="player-rank" id="playerRank">7</div>
                         <div class="player-info">
-                            <h2 id="playerName">Theosima</h2>
+                            <h2 id="playerName">TankMaster47</h2>
                             <p>Опыт: <span id="playerExp">25,400</span></p>
                         </div>
                     </div>
@@ -1313,7 +1428,7 @@
                             <div class="stat-icon">
                                 <img src="icons/score.svg" alt="Gear Score">
                             </div>
-                            <div class="stat-value">9999</div>
+                            <div class="stat-value">12,850</div>
                             <div class="stat-label">Gear Score</div>
                         </div>
                     </div>
@@ -1322,27 +1437,27 @@
                 <div class="top-players">
                     <div class="player-row">
                         <div class="player-position">1</div>
-                        <div class="player-name">vser</div>
+                        <div class="player-name">ProTanker</div>
                         <div class="player-score">42,150</div>
                     </div>
                     <div class="player-row">
                         <div class="player-position">2</div>
-                        <div class="player-name">Theosima</div>
+                        <div class="player-name">Destroyer</div>
                         <div class="player-score">38,900</div>
                     </div>
                     <div class="player-row">
                         <div class="player-position">3</div>
-                        <div class="player-name">47x</div>
+                        <div class="player-name">TankMaster</div>
                         <div class="player-score">36,750</div>
                     </div>
                     <div class="player-row">
                         <div class="player-position">4</div>
-                        <div class="player-name">Z</div>
+                        <div class="player-name">Warrior47</div>
                         <div class="player-score">32,400</div>
                     </div>
                     <div class="player-row">
                         <div class="player-position">5</div>
-                        <div class="player-name">V</div>
+                        <div class="player-name">IronSide</div>
                         <div class="player-score">29,800</div>
                     </div>
                 </div>
@@ -1350,6 +1465,7 @@
         </div>
     </main>
 
+    <!-- Bottom Navigation -->
     <nav class="bottom-nav">
         <ul>
             <li><a href="#" class="nav-link active" data-section="dashboard">
@@ -1382,7 +1498,7 @@
             const headerAvatar = document.getElementById('headerAvatar');
             const profileAvatar = document.getElementById('profileAvatar');
             const userNameEl = document.getElementById('userName');
-            const userUsernameEl = document.getElementById('userUsername');
+            const userGSEl = document.getElementById('userGS');
             
             function setAvatar(element) {
                 if (user.photo_url) {
@@ -1404,14 +1520,14 @@
             if (profileAvatar) setAvatar(profileAvatar);
             
             userNameEl.textContent = `${userName} ${userLastName}`;
-            userUsernameEl.textContent = userUsername;
+            userGSEl.textContent = 'gs: 12,850';
             
             // Установка темы Telegram
             if (tg.colorScheme === 'dark') {
                 document.body.classList.add('dark-theme');
             }
             
-            
+            // Navigation
             const navLinks = document.querySelectorAll('.nav-link');
             const sections = document.querySelectorAll('.section');
             
@@ -1419,30 +1535,30 @@
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     
-                    
+                    // Remove active class from all links
                     navLinks.forEach(l => l.classList.remove('active'));
                     
-                   
+                    // Add active class to clicked link
                     this.classList.add('active');
                     
-                    
+                    // Hide all sections
                     sections.forEach(section => {
                         section.classList.remove('active');
                     });
                     
-                  
+                    // Show target section
                     const targetSection = this.getAttribute('data-section');
                     const targetElement = document.getElementById(targetSection);
                     if (targetElement) {
                         targetElement.classList.add('active');
                     }
                     
-                    
+                    // Прокрутка вверх
                     window.scrollTo(0, 0);
                 });
             });
             
-            
+            // Expandable stat cards
             const expandableCards = document.querySelectorAll('.stat-card.expandable');
             
             expandableCards.forEach(card => {
@@ -1451,7 +1567,7 @@
                 });
             });
             
-            
+            // Player search
             const searchPlayerBtn = document.getElementById('searchPlayerBtn');
             const playerCard = document.getElementById('playerCard');
             
@@ -1459,10 +1575,10 @@
                 searchPlayerBtn.addEventListener('click', () => {
                     const searchValue = document.getElementById('playerSearch').value.trim();
                     if (searchValue) {
-                        
+                        // In a real app, this would call the bot API
                         playerCard.style.display = 'block';
                         
-                        
+                        // Simulate API response
                         document.getElementById('playerName').textContent = searchValue;
                         document.getElementById('playerRank').textContent = Math.floor(Math.random() * 10) + 1;
                         document.getElementById('playerExp').textContent = Math.floor(Math.random() * 50000);
@@ -1470,17 +1586,30 @@
                 });
             }
             
+            // Player search in profile
+            const searchPlayerProfileBtn = document.getElementById('searchPlayerProfileBtn');
             
+            if (searchPlayerProfileBtn) {
+                searchPlayerProfileBtn.addEventListener('click', () => {
+                    const searchValue = document.getElementById('playerSearchProfile').value.trim();
+                    if (searchValue) {
+                        // In a real app, this would call the bot API
+                        tg.showAlert(`Поиск игрока: ${searchValue}`);
+                    }
+                });
+            }
+            
+            // Bind nickname
             const bindNicknameBtn = document.getElementById('bindNicknameBtn');
             
             if (bindNicknameBtn) {
                 bindNicknameBtn.addEventListener('click', () => {
                     const nickname = prompt('Введите ваш игровой никнейм:');
                     if (nickname && nickname.trim() !== '') {
-                        
+                        // In a real app, this would call the bot API to bind the nickname
                         document.getElementById('gameNickname').textContent = nickname;
                         
-                       
+                        // Сохраняем в localStorage
                         localStorage.setItem('gameNickname', nickname);
                         
                         tg.showAlert(`Никнейм "${nickname}" успешно привязан!`);
@@ -1494,20 +1623,20 @@
                 document.getElementById('gameNickname').textContent = savedNickname;
             }
             
-            
+            // Tab switching
             const tabBtns = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
             
             tabBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
-                   
+                    // Remove active class from all buttons and contents
                     tabBtns.forEach(b => b.classList.remove('active'));
                     tabContents.forEach(c => c.classList.remove('active'));
                     
-                    
+                    // Add active class to clicked button
                     btn.classList.add('active');
                     
-                    
+                    // Show target content
                     const targetTab = btn.getAttribute('data-tab');
                     document.getElementById(targetTab).classList.add('active');
                 });
@@ -1516,5 +1645,3 @@
     </script>
 </body>
 </html>
-
-
