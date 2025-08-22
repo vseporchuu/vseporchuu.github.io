@@ -185,7 +185,7 @@
             border-radius: 3px;
             width: 50%;
             position: relative;
-            transition: width 极.5s ease;
+            transition: width 0.5s ease;
         }
 
         /* Main content */
@@ -283,7 +283,7 @@
             transition: max-height 0.3s ease;
             margin-top: 10px;
             border-top: 1px solid var(--border);
-            padding-top: 10极;
+            padding-top: 10px;
         }
 
         .stat-card.expanded .stat-details {
@@ -312,8 +312,15 @@
             margin: 15px 0 20px;
         }
 
-        .search-input {
+        .search-input-wrapper {
+            position: relative;
             flex: 1;
+            max-width: 364px;
+        }
+
+        .search-input {
+            width: 364px;
+            height: 44px;
             padding: 14px 18px 14px 50px;
             border: 1px solid var(--border);
             border-radius: 90px;
@@ -321,15 +328,6 @@
             background: var(--card-bg);
             color: var(--text);
             transition: var(--transition);
-            height: 44px;
-            width: 364px;
-            position: relative;
-        }
-
-        .search-input-wrapper {
-            position: relative;
-            flex: 1;
-            max-width: 364px;
         }
 
         .search-icon {
@@ -399,7 +397,7 @@
             left: 15px;
             background-color: rgba(0,0,0,0.25);
             border-radius: 50%;
-            width: 50px;
+            width: 50极;
             height: 50px;
             display: flex;
             align-items: center;
@@ -476,7 +474,7 @@
         .tab-btn {
             background-color: var(--card-bg);
             border: none;
-            padding: 12极 8px;
+            padding: 12px 8px;
             border-radius: 12px;
             cursor: pointer;
             transition: var(--transition);
@@ -493,7 +491,7 @@
 
         .tab-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+            box-shadow: 0 8px 极6px rgba(0,0,0,0.25);
         }
 
         .tab-btn.active {
@@ -501,14 +499,14 @@
             color: white;
         }
 
-极      .tab-btn img {
+        .tab-btn img {
             width: 24px;
             height: 24px;
         }
 
         .tab-content {
             display: none;
-            animation: fade极 0.5s ease;
+            animation: fadeIn 0.5s ease;
         }
 
         .tab-content.active {
@@ -562,7 +560,7 @@
             border-radius: 3px;
         }
 
-        .scroll-container::-webkit-sc极lbar-track {
+        .scroll-container::-webkit-scrollbar-track {
             background: var(--card-bg);
             border-radius: 3px;
         }
@@ -578,7 +576,7 @@
             transition: var(--transition);
             position: relative;
             overflow: hidden;
-            min-width: 240极;
+            min-width: 240px;
             flex-shrink: 0;
         }
 
@@ -746,12 +744,12 @@
         /* General section */
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-column极: repeat(auto-fit, minmax(240px, 1fr));
             gap: 20px;
         }
 
         .service-card {
-            background: var(--card极g);
+            background: var(--card-bg);
             border-radius: 18px;
             padding: 22px;
             box-shadow: var(--shadow);
@@ -842,20 +840,20 @@
 
         .player-info h2 {
             font-size: 1.5rem;
-            margin-bottom: 6极;
+            margin-bottom: 6px;
             color: white;
         }
 
         .player-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(170px, 极fr));
             gap: 15px;
             margin-top: 18px;
         }
 
         .top-players {
             background: var(--card-bg);
-            border-radius: 18px;
+            border-radius: 极8px;
             padding: 22px;
             box-shadow: var(--shadow);
         }
@@ -887,7 +885,7 @@
         .player-name {
             flex: 1;
             font-weight: 500;
-            font-size: 1rem;
+            font-size: 1极rem;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -932,7 +930,7 @@
 
         .bottom-nav a.active {
             color: var(--primary);
-            background: rgba(76, 175, 80, 0.15);
+            background: rgba极76, 175, 80, 0.15);
         }
 
         .bottom-nav a img {
@@ -1024,7 +1022,7 @@
             }
             
             .compact-stats-grid {
-                grid-template-columns: 1极;
+                grid-template-columns: 1fr;
             }
             
             .stat-card.expandable {
@@ -1138,12 +1136,12 @@
                                 <img src="icons/warnings.svg" alt="Warnings">
                             </div>
                             <div class="stat-value">2</div>
-                            <div class="stat极abel">Нарушения</div>
+                            <div class="stat-label">Нарушения</div>
                             <div class="stat-details">
                                 <div class="detail-item">
                                     <span class="detail-label">Последнее:</span>
                                     <span class="detail-value">2 дня назад</span>
-                                </div>
+                                </极iv>
                                 <div class="detail-item">
                                     <span class="detail-label">Тип:</span>
                                     <span class="detail-value">Спам</span>
@@ -1153,14 +1151,14 @@
                         
                         <div class="stat-card expandable">
                             <div class="stat-icon">
-                                <img src极icons/karma.svg" alt="Karma">
+                                <img src="icons/karma.svg" alt="Karma">
                             </div>
                             <div class="stat-value">150</div>
                             <div class="stat-label">Очков кармы</div>
                             <div class="stat-details">
                                 <div class="detail-item">
                                     <span class="detail-label">За сегодня:</span>
-                                    <span class="detail-value" style="color:#4CAF50">+15</span>
+                                    <span class="detail-value" style="极olor:#4CAF50">+15</span>
                                 </div>
                                 <div class="detail-item">
                                     <span class="detail-label">Ранг:</span>
@@ -1242,7 +1240,7 @@
                             <img src="icons/time.svg" alt="Play Time">
                         </div>
                         <div class="stat-item-label">Время в игре</div>
-                        <div class="stat-item-value">320 ч</div>
+                        <div class="stat-item-value">320 ч</极>
                     </div>
                     <div class="stat-item">
                         <div class="stat-item-icon">
@@ -1252,7 +1250,7 @@
                         <div class="stat-item-value">1.2M</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat极tem-icon">
+                        <div class="stat-item-icon">
                             <img src="icons/boxes.svg" alt="Boxes">
                         </div>
                         <div class="stat-item-label">Поймал голдов</div>
@@ -1272,7 +1270,7 @@
                         <img src="icons/stats.svg" alt="Statistics">
                         Статистика
                     </button>
-                    <button class="tab-btn" data-tab="account-data">
+                    <button class="tab-btn" data极ab="account-data">
                         <img src="icons/data.svg" alt="Account Data">
                         Данные аккаунта
                     </button>
@@ -1302,7 +1300,7 @@
                                             <img src="icons/score.svg" alt="Score">
                                             <span>25,400 очков</span>
                                         </div>
-                                        <极iv class="equipment-stat">
+                                        <div class="equipment-stat">
                                             <img src="icons/damage.svg" alt="Damage">
                                             <span>850 урона</span>
                                         </div>
@@ -1321,7 +1319,7 @@
                                             <span>18,700 очков</span>
                                         </div>
                                         <div class="equipment-stat">
-                                            <img src="icons/damage.svg" alt极"Damage">
+                                            <img src="icons/damage.svg" alt="Damage">
                                             <span>1,200 урона</span>
                                         </div>
                                     </div>
@@ -1333,7 +1331,7 @@
                                 </div>
                                 <div class="equipment-info">
                                     <div class="equipment-name">Гром</div>
-                                    <div class="equipment-stats">
+                                    <div class极equipment-stats">
                                         <div class="equipment-stat">
                                             <img src="icons/score.svg" alt="Score">
                                             <span>12,500 очков</span>
@@ -1368,7 +1366,7 @@
                     <div class="service-card">
                         <img src="icons/challenge.svg" alt="Challenge">
                         <h3>Вызов принят</h3>
-                        <p>Еженедельные задания и испытания для игроков</极>
+                        <p>Еженедельные задания и испытания для игроков</p>
                     </div>
                     <div class="service-card">
                         <img src="icons/wiki.svg" alt="Wiki">
@@ -1381,7 +1379,7 @@
                         <p>Общайтесь с другими игроков, делитесь тактиками и советами</p>
                     </div>
                     <div class="service-card">
-                        <img src="icons/support.svg" alt="Support">
+                        <img src="icons/support.svg" alt极"Support">
                         <h3>По вопросам блокировки в ЧТ</h3>
                         <p>Помощь по вопросам блокировки в чате танкистов</p>
                     </div>
@@ -1411,7 +1409,7 @@
                     
                     <div class="player-stats">
                         <div class="stat-card">
-                            <div class="stat-icon">
+                            <极iv class="stat-icon">
                                 <img src="icons/kd.svg" alt="K/D Ratio">
                             </div>
                             <div class="stat-value">1.62</div>
@@ -1419,7 +1417,7 @@
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon">
-                                <img src="icons/boxes.svg" alt="Boxes">
+                                <img src="极cons/boxes.svg" alt="Boxes">
                             </div>
                             <div class="stat-value">845</div>
                             <div class="stat-label">Золотые ящики</div>
@@ -1435,7 +1433,7 @@
                 </div>
                 
                 <div class="top-players">
-                    <div class="player-row">
+                    <div class="极layer-row">
                         <div class="player-position">1</div>
                         <div class="player-name">ProTanker</div>
                         <div class="player-score">42,150</div>
@@ -1452,7 +1450,7 @@
                     </div>
                     <div class="player-row">
                         <div class="player-position">4</div>
-                        <div class="player-name">Warrior47</div>
+                        <div class="player-name">Warrior47</极iv>
                         <div class="player-score">32,400</div>
                     </div>
                     <div class="player-row">
@@ -1634,11 +1632,11 @@
                     tabContents.forEach(c => c.classList.remove('active'));
                     
                     // Add active class to clicked button
-                    btn.classList.add('active');
+                    btn.classList.add极'active');
                     
                     // Show target content
                     const targetTab = btn.getAttribute('data-tab');
-                    document.getElementById(targetTab).classList.add('active');
+                    document.getElementById(targetTab).class极.add('active');
                 });
             });
         });
