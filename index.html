@@ -53,7 +53,7 @@
             width: 100%;
         }
 
-        /* User info */
+        
         .user-container {
             display: flex;
             align-items: center;
@@ -205,12 +205,12 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Dashboard styles - COMPACT VERSION */
+        
         .dashboard-compact {
             margin-bottom: 25px;
         }
 
-        /* Compact stats */
+        
         .compact-stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -346,7 +346,7 @@
             box-shadow: 0 6px 12px rgba(76, 175, 80, 0.25);
         }
 
-        /* Profile styles */
+        
         .profile-header {
             background: var(--primary-gradient);
             color: white;
@@ -496,7 +496,7 @@
             margin-bottom: 25px;
         }
 
-        /* Account Data Section */
+        
         .account-data-section {
             margin-bottom: 30px;
         }
@@ -620,7 +620,7 @@
             height: 16px;
         }
 
-        /* Supplies Section */
+        
         .supplies-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -669,7 +669,7 @@
             color: var(--primary);
         }
 
-        /* General section */
+        
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -730,7 +730,7 @@
             flex: 1;
         }
 
-        /* Rating section */
+       
         .player-card {
             background: var(--card-bg);
             border-radius: 18px;
@@ -826,7 +826,7 @@
             font-size: 1rem;
         }
 
-        /* Bottom Navigation */
+        
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -867,12 +867,12 @@
             margin-bottom: 4px;
         }
 
-        /* Footer */
+      
         footer {
             display: none;
         }
 
-        /* Responsive styles */
+       
         @media (max-width: 768px) {
             .stats-grid {
                 grid-template-columns: 1fr 1fr;
@@ -1003,7 +1003,7 @@
 
     <main class="main-content">
         <div class="container">
-            <!-- Dashboard Section -->
+            
             <section id="dashboard" class="section active">
                 <div class="search-box">
                     <input type="text" class="search-input" placeholder="Поиск профиля..." id="profileSearch">
@@ -1098,7 +1098,7 @@
                 </div>
             </section>
 
-            <!-- Profile Section -->
+            
             <section id="profile" class="section">
                 <div class="profile-header">
                     <div class="profile-rank">#7</div>
@@ -1122,7 +1122,7 @@
                     </button>
                 </div>
 
-                <!-- Stats Tab -->
+             
                 <div id="stats" class="tab-content active">
                     <div class="compact-stats-grid">
                         <div class="stat-card">
@@ -1170,7 +1170,7 @@
                     </div>
                 </div>
 
-                <!-- Account Data Tab -->
+                
                 <div id="account-data" class="tab-content">
                     <div class="account-data-section">
                         <h3 class="account-data-title">
@@ -1235,11 +1235,11 @@
                         </div>
                     </div>
                     
-                    <!-- Остальные секции данных аккаунта -->
+                   
                 </div>
             </section>
 
-            <!-- General Section -->
+            
             <section id="general" class="section">
                 <div class="services-grid">
                     <div class="service-card">
@@ -1275,7 +1275,7 @@
                 </div>
             </section>
 
-            <!-- Rating Section -->
+           
             <section id="rating" class="section">
                 <div class="search-box">
                     <input type="text" class="search-input" id="playerSearch" placeholder="Введите никнейм игрока...">
@@ -1350,7 +1350,6 @@
         </div>
     </main>
 
-    <!-- Bottom Navigation -->
     <nav class="bottom-nav">
         <ul>
             <li><a href="#" class="nav-link active" data-section="dashboard">
@@ -1412,7 +1411,7 @@
                 document.body.classList.add('dark-theme');
             }
             
-            // Navigation
+            
             const navLinks = document.querySelectorAll('.nav-link');
             const sections = document.querySelectorAll('.section');
             
@@ -1420,30 +1419,30 @@
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     
-                    // Remove active class from all links
+                    
                     navLinks.forEach(l => l.classList.remove('active'));
                     
-                    // Add active class to clicked link
+                   
                     this.classList.add('active');
                     
-                    // Hide all sections
+                    
                     sections.forEach(section => {
                         section.classList.remove('active');
                     });
                     
-                    // Show target section
+                  
                     const targetSection = this.getAttribute('data-section');
                     const targetElement = document.getElementById(targetSection);
                     if (targetElement) {
                         targetElement.classList.add('active');
                     }
                     
-                    // Прокрутка вверх
+                    
                     window.scrollTo(0, 0);
                 });
             });
             
-            // Expandable stat cards
+            
             const expandableCards = document.querySelectorAll('.stat-card.expandable');
             
             expandableCards.forEach(card => {
@@ -1452,7 +1451,7 @@
                 });
             });
             
-            // Player search
+            
             const searchPlayerBtn = document.getElementById('searchPlayerBtn');
             const playerCard = document.getElementById('playerCard');
             
@@ -1460,10 +1459,10 @@
                 searchPlayerBtn.addEventListener('click', () => {
                     const searchValue = document.getElementById('playerSearch').value.trim();
                     if (searchValue) {
-                        // In a real app, this would call the bot API
+                        
                         playerCard.style.display = 'block';
                         
-                        // Simulate API response
+                        
                         document.getElementById('playerName').textContent = searchValue;
                         document.getElementById('playerRank').textContent = Math.floor(Math.random() * 10) + 1;
                         document.getElementById('playerExp').textContent = Math.floor(Math.random() * 50000);
@@ -1471,17 +1470,17 @@
                 });
             }
             
-            // Bind nickname
+            
             const bindNicknameBtn = document.getElementById('bindNicknameBtn');
             
             if (bindNicknameBtn) {
                 bindNicknameBtn.addEventListener('click', () => {
                     const nickname = prompt('Введите ваш игровой никнейм:');
                     if (nickname && nickname.trim() !== '') {
-                        // In a real app, this would call the bot API to bind the nickname
+                        
                         document.getElementById('gameNickname').textContent = nickname;
                         
-                        // Сохраняем в localStorage
+                       
                         localStorage.setItem('gameNickname', nickname);
                         
                         tg.showAlert(`Никнейм "${nickname}" успешно привязан!`);
@@ -1495,20 +1494,20 @@
                 document.getElementById('gameNickname').textContent = savedNickname;
             }
             
-            // Tab switching
+            
             const tabBtns = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
             
             tabBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
-                    // Remove active class from all buttons and contents
+                   
                     tabBtns.forEach(b => b.classList.remove('active'));
                     tabContents.forEach(c => c.classList.remove('active'));
                     
-                    // Add active class to clicked button
+                    
                     btn.classList.add('active');
                     
-                    // Show target content
+                    
                     const targetTab = btn.getAttribute('data-tab');
                     document.getElementById(targetTab).classList.add('active');
                 });
@@ -1517,4 +1516,5 @@
     </script>
 </body>
 </html>
+
 
