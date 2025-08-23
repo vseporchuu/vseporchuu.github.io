@@ -185,6 +185,131 @@
             transition: width 0.5s ease;
         }
 
+        /* Шапка для второй вкладки */
+        .profile-header-container {
+            display: none; /* Скрыта по умолчанию */
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 25px 0 15px;
+            margin-bottom: 5px;
+        }
+
+        .profile-header-avatar {
+            width: 128px;
+            height: 128px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .profile-header-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .profile-header-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-end;
+            text-align: right;
+        }
+
+        .profile-header-name-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-bottom: 5px;
+        }
+
+        .profile-header-info h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0;
+            font-weight: 600;
+            color: white;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .profile-header-info p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .profile-header-progress-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            justify-content: flex-end;
+        }
+
+        .profile-header-progress-icon {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-header-progress-icon img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .profile-header-progress-info {
+            flex: 1;
+            max-width: 250px;
+        }
+
+        .profile-header-progress-value {
+            font-weight: 400;
+            color: white;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            text-align: left;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .profile-header-progress-bar {
+            height: 10px;
+            width: 180px;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+            background: transparent;
+            border: 2px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .profile-header-progress-fill {
+            height: 100%;
+            background: var(--primary-gradient);
+            border-radius: 3px;
+            width: 50%;
+            position: relative;
+            transition: width 0.5s ease;
+        }
+
         /* Main content */
         .main-content {
             flex: 1;
@@ -342,10 +467,6 @@
         }
 
         /* Profile styles */
-        .profile-header {
-            display: none; /* Скрываем заголовок профиля */
-        }
-
         .profile-tabs {
             display: none; /* Скрываем вкладки профиля */
         }
@@ -356,69 +477,7 @@
         }
 
         .profile-account-info {
-            background: var(--card-bg);
-            border-radius: 18px;
-            padding: 22px;
-            box-shadow: var(--shadow);
-            margin-bottom: 25px;
-            text-align: center;
-        }
-
-        .profile-avatar {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 1px solid var(--primary);
-            margin: 0 auto 15px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.2rem;
-            color: white;
-        }
-
-        .profile-avatar img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .profile-name {
-            font-size: 1.8rem;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .profile-gs {
-            color: var(--text-light);
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-        }
-
-        .bind-btn {
-            background: var(--primary-gradient);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            padding: 12px 24px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            margin: 10px 0;
-        }
-
-        .bind-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(76, 175, 80, 0.25);
+            display: none; /* Скрываем старую плашку */
         }
 
         .profile-stats-container {
@@ -454,6 +513,27 @@
         .profile-stat-value {
             color: var(--primary);
             font-weight: 600;
+        }
+
+        .bind-btn {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin: 10px 0;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .bind-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(76, 175, 80, 0.25);
         }
 
         /* General section */
@@ -679,24 +759,24 @@
                 grid-template-columns: 1fr;
             }
             
-            .avatar {
+            .avatar, .profile-header-avatar {
                 width: 100px;
                 height: 100px;
             }
             
-            .user-info h2 {
+            .user-info h2, .profile-header-info h2 {
                 font-size: 1.5rem;
                 width: auto;
                 height: auto;
             }
             
-            .user-info p {
+            .user-info p, .profile-header-info p {
                 font-size: 1rem;
                 width: auto;
                 height: auto;
             }
             
-            .progress-value {
+            .progress-value, .profile-header-progress-value {
                 width: auto;
                 height: auto;
             }
@@ -711,7 +791,7 @@
                 padding: 0 15px;
             }
             
-            .progress-container {
+            .progress-container, .profile-header-progress-container {
                 width: 100%;
             }
             
@@ -743,29 +823,29 @@
                 grid-column: span 1;
             }
             
-            .avatar {
+            .avatar, .profile-header-avatar {
                 width: 80px;
                 height: 80px;
             }
             
-            .user-info h2 {
+            .user-info h2, .profile-header-info h2 {
                 font-size: 1.3rem;
                 width: auto;
                 height: auto;
             }
             
-            .user-info p {
+            .user-info p, .profile-header-info p {
                 font-size: 0.9rem;
                 width: auto;
                 height: auto;
             }
             
-            .user-container {
+            .user-container, .profile-header {
                 flex-direction: row;
                 justify-content: space-between;
             }
             
-            .progress-value {
+            .progress-value, .profile-header-progress-value {
                 width: auto;
                 height: auto;
             }
@@ -773,20 +853,12 @@
             .profile-stat-item {
                 font-size: 18px;
             }
-            
-            .profile-avatar {
-                width: 120px;
-                height: 120px;
-            }
-            
-            .profile-name {
-                font-size: 1.5rem;
-            }
         }
     </style>
 </head>
 <body class="dark-theme">
     <div class="container">
+        <!-- Шапка для главной страницы -->
         <div class="user-container">
             <div class="avatar" id="headerAvatar">
                 <img src="icons/avatar.svg" alt="User Avatar">
@@ -805,6 +877,33 @@
                         <div class="progress-value">250 / 500</div>
                         <div class="progress-bar">
                             <div class="progress-fill" style="width: 50%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Шапка для второй вкладки (скрыта по умолчанию) -->
+        <div class="profile-header-container" id="profileHeaderContainer">
+            <div class="profile-header">
+                <div class="profile-header-avatar" id="profileHeaderAvatar">
+                    <img src="icons/avatar.svg" alt="User Avatar">
+                </div>
+                <div class="profile-header-info">
+                    <div class="profile-header-name-container">
+                        <img src="icons/rank.svg" alt="Rank" class="name-icon">
+                        <h2 id="profileHeaderName">Привязать никнейм</h2>
+                    </div>
+                    <p id="profileHeaderGS">GS: --</p>
+                    <div class="profile-header-progress-container">
+                        <div class="profile-header-progress-icon">
+                            <img src="icons/rank.svg" alt="Rank">
+                        </div>
+                        <div class="profile-header-progress-info">
+                            <div class="profile-header-progress-value">12,850 / 25,000</div>
+                            <div class="profile-header-progress-bar">
+                                <div class="profile-header-progress-fill" style="width: 51.4%"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -908,55 +1007,43 @@
 
             <!-- Profile Section -->
             <section id="profile" class="section">
-                <div class="profile-container">
-                    <div class="profile-account-info">
-                        <div class="profile-avatar" id="profileAvatar">
-                            <img src="icons/avatar.svg" alt="Profile Avatar">
-                        </div>
-                        <h1 class="profile-name" id="profileGameNickname">
-                            <img src="icons/rank.svg" alt="Rank" class="name-icon">
-                            <span id="gameNickname">Привязать никнейм</span>
-                        </h1>
-                        <div class="profile-gs" id="profileGS">GS: --</div>
-                        <button class="bind-btn" id="bindNicknameBtn">Привязать аккаунт</button>
+                <button class="bind-btn" id="bindNicknameBtn">Привязать аккаунт</button>
+                
+                <div class="profile-stats-container">
+                    <div class="profile-stat-item">
+                        <img src="icons/destroyed.svg" alt="Destroyed">
+                        <span class="profile-stat-label">Подбил в битвах</span>
+                        <span class="profile-stat-value">8,450</span>
                     </div>
-                    
-                    <div class="profile-stats-container">
-                        <div class="profile-stat-item">
-                            <img src="icons/destroyed.svg" alt="Destroyed">
-                            <span class="profile-stat-label">Подбил в битвах</span>
-                            <span class="profile-stat-value">8,450</span>
-                        </div>
-                        <div class="profile-stat-item">
-                            <img src="icons/damaged.svg" alt="Damaged">
-                            <span class="profile-stat-label">Подбит в битвах</span>
-                            <span class="profile-stat-value">5,210</span>
-                        </div>
-                        <div class="profile-stat-item">
-                            <img src="icons/kd.svg" alt="K/D Ratio">
-                            <span class="profile-stat-label">У/П</span>
-                            <span class="profile-stat-value">1.62</span>
-                        </div>
-                        <div class="profile-stat-item">
-                            <img src="icons/time.svg" alt="Play Time">
-                            <span class="profile-stat-label">Время в игре</span>
-                            <span class="profile-stat-value">320 ч</span>
-                        </div>
-                        <div class="profile-stat-item">
-                            <img src="icons/crystals.svg" alt="Crystals">
-                            <span class="profile-stat-label">Заработал кристаллов</span>
-                            <span class="profile-stat-value">1.2M</span>
-                        </div>
-                        <div class="profile-stat-item">
-                            <img src="icons/boxes.svg" alt="Boxes">
-                            <span class="profile-stat-label">Поймал голдов</span>
-                            <span class="profile-stat-value">845</span>
-                        </div>
-                        <div class="profile-stat-item">
-                            <img src="icons/supplies.svg" alt="Supplies">
-                            <span class="profile-stat-label">Использовал припасов</span>
-                            <span class="profile-stat-value">1,240</span>
-                        </div>
+                    <div class="profile-stat-item">
+                        <img src="icons/damaged.svg" alt="Damaged">
+                        <span class="profile-stat-label">Подбит в битвах</span>
+                        <span class="profile-stat-value">5,210</span>
+                    </div>
+                    <div class="profile-stat-item">
+                        <img src="icons/kd.svg" alt="K/D Ratio">
+                        <span class="profile-stat-label">У/П</span>
+                        <span class="profile-stat-value">1.62</span>
+                    </div>
+                    <div class="profile-stat-item">
+                        <img src="icons/time.svg" alt="Play Time">
+                        <span class="profile-stat-label">Время в игре</span>
+                        <span class="profile-stat-value">320 ч</span>
+                    </div>
+                    <div class="profile-stat-item">
+                        <img src="icons/crystals.svg" alt="Crystals">
+                        <span class="profile-stat-label">Заработал кристаллов</span>
+                        <span class="profile-stat-value">1.2M</span>
+                    </div>
+                    <div class="profile-stat-item">
+                        <img src="icons/boxes.svg" alt="Boxes">
+                        <span class="profile-stat-label">Поймал голдов</span>
+                        <span class="profile-stat-value">845</span>
+                    </div>
+                    <div class="profile-stat-item">
+                        <img src="icons/supplies.svg" alt="Supplies">
+                        <span class="profile-stat-label">Использовал припасов</span>
+                        <span class="profile-stat-value">1,240</span>
                     </div>
                 </div>
             </section>
@@ -1104,7 +1191,7 @@
             
             // Установка аватара
             const headerAvatar = document.getElementById('headerAvatar');
-            const profileAvatar = document.getElementById('profileAvatar');
+            const profileHeaderAvatar = document.getElementById('profileHeaderAvatar');
             const userNameEl = document.getElementById('userName');
             const userUsernameEl = document.getElementById('userUsername');
             
@@ -1125,7 +1212,7 @@
             }
             
             if (headerAvatar) setAvatar(headerAvatar);
-            if (profileAvatar) setAvatar(profileAvatar);
+            if (profileHeaderAvatar) setAvatar(profileHeaderAvatar);
             
             userNameEl.textContent = `${userName} ${userLastName}`;
             userUsernameEl.textContent = userUsername;
@@ -1138,6 +1225,8 @@
             // Navigation
             const navLinks = document.querySelectorAll('.nav-link');
             const sections = document.querySelectorAll('.section');
+            const profileHeaderContainer = document.getElementById('profileHeaderContainer');
+            const userContainer = document.querySelector('.user-container');
             
             navLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
@@ -1159,6 +1248,15 @@
                     const targetElement = document.getElementById(targetSection);
                     if (targetElement) {
                         targetElement.classList.add('active');
+                    }
+                    
+                    // Показываем/скрываем шапки в зависимости от вкладки
+                    if (targetSection === 'profile') {
+                        userContainer.style.display = 'none';
+                        profileHeaderContainer.style.display = 'block';
+                    } else {
+                        userContainer.style.display = 'flex';
+                        profileHeaderContainer.style.display = 'none';
                     }
                     
                     // Прокрутка вверх
@@ -1198,19 +1296,19 @@
             
             // Bind nickname
             const bindNicknameBtn = document.getElementById('bindNicknameBtn');
-            const gameNicknameEl = document.getElementById('gameNickname');
-            const profileGS = document.getElementById('profileGS');
+            const profileHeaderName = document.getElementById('profileHeaderName');
+            const profileHeaderGS = document.getElementById('profileHeaderGS');
             
             if (bindNicknameBtn) {
                 bindNicknameBtn.addEventListener('click', () => {
                     const nickname = prompt('Введите ваш игровой никнейм:');
                     if (nickname && nickname.trim() !== '') {
                         // In a real app, this would call the bot API to bind the nickname
-                        gameNicknameEl.textContent = nickname;
+                        profileHeaderName.textContent = nickname;
                         
                         // Generate random GS value
                         const randomGS = Math.floor(Math.random() * 20000) + 5000;
-                        profileGS.textContent = `GS: ${randomGS}`;
+                        profileHeaderGS.textContent = `GS: ${randomGS}`;
                         
                         // Change button text
                         bindNicknameBtn.textContent = 'Изменить никнейм';
@@ -1229,12 +1327,12 @@
             const savedGS = localStorage.getItem('gameGS');
             
             if (savedNickname) {
-                gameNicknameEl.textContent = savedNickname;
+                profileHeaderName.textContent = savedNickname;
                 bindNicknameBtn.textContent = 'Изменить никнейм';
             }
             
             if (savedGS) {
-                profileGS.textContent = `GS: ${savedGS}`;
+                profileHeaderGS.textContent = `GS: ${savedGS}`;
             }
         });
     </script>
