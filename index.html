@@ -16,7 +16,7 @@
             --primary-gradient: linear-gradient(135deg, #4CAF50, #2E7D32);
             --secondary: #FFC107;
             --accent: #FF5722;
-            --background: #02231c; /* Изменен цвет фона */
+            --background: #02231c;
             --surface: #1e1e1e;
             --card-bg: #252525;
             --text: #e0e0e0;
@@ -68,7 +68,7 @@
             height: 128px;
             border-radius: 50%;
             object-fit: cover;
-            border: 1px solid var(--primary); /* Уменьшена обводка до 1px */
+            border: 1px solid var(--primary);
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             display: flex;
             align-items: center;
@@ -154,11 +154,11 @@
         }
 
         .progress-value {
-            font-weight: 400; /* Сделано тоньше */
+            font-weight: 400;
             color: white;
             font-size: 1.1rem;
             margin-bottom: 8px;
-            text-align: left; /* Выравнивание по левому краю */
+            text-align: left;
             width: 54px;
             height: 17px;
             overflow: hidden;
@@ -316,7 +316,7 @@
             flex: 1;
             padding: 14px 18px 14px 50px;
             border: 1px solid var(--border);
-            border-radius: 90px; /* Закругление 90px */
+            border-radius: 90px;
             font-size: 0.95rem;
             background: var(--card-bg);
             color: var(--text);
@@ -343,42 +343,25 @@
 
         /* Profile styles */
         .profile-header {
-            background: var(--primary-gradient);
-            color: white;
+            display: none; /* Скрываем заголовок профиля */
+        }
+
+        .profile-tabs {
+            display: none; /* Скрываем вкладки профиля */
+        }
+
+        /* Новые стили для раздела профиля */
+        .profile-container {
+            margin-bottom: 25px;
+        }
+
+        .profile-account-info {
+            background: var(--card-bg);
             border-radius: 18px;
-            padding: 20px;
+            padding: 22px;
+            box-shadow: var(--shadow);
             margin-bottom: 25px;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-        }
-
-        .profile-header::before {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%);
-            transform: rotate(30deg);
-        }
-
-        .profile-rank {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background-color: rgba(0,0,0,0.25);
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-            border: 2px solid rgba(255,255,255,0.3);
         }
 
         .profile-avatar {
@@ -386,7 +369,7 @@
             height: 150px;
             border-radius: 50%;
             object-fit: cover;
-            border: 1px solid rgba(255,255,255,0.5); /* Уменьшена обводка до 1px */
+            border: 1px solid var(--primary);
             margin: 0 auto 15px;
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             display: flex;
@@ -394,278 +377,83 @@
             justify-content: center;
             font-size: 2.2rem;
             color: white;
-            position: relative;
-            z-index: 2;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
         }
 
         .profile-name {
             font-size: 1.8rem;
             margin-bottom: 8px;
             font-weight: 600;
-            position: relative;
-            z-index: 2;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
         }
 
-        .profile-title {
-            display: inline-block;
-            background-color: rgba(0,0,0,0.3);
-            padding: 6px 16px;
-            border-radius: 18px;
-            font-size: 0.9rem;
-            margin-bottom: 12px;
-            position: relative;
-            z-index: 2;
+        .profile-gs {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: 20px;
         }
 
-        .profile-gear-score {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 5px;
-            position: relative;
-            z-index: 2;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .profile-gear-label {
-            font-size: 0.85rem;
-            opacity: 0.9;
-            position: relative;
-            z-index: 2;
-        }
-
-        .profile-tabs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-
-        .tab-btn {
-            background-color: var(--card-bg);
-            border: none;
-            padding: 12px 8px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 500;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            box-shadow: var(--shadow);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .tab-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.25);
-        }
-
-        .tab-btn.active {
+        .bind-btn {
             background: var(--primary-gradient);
             color: white;
-        }
-
-        .tab-btn img {
-            width: 24px;
-            height: 24px;
-        }
-
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* Stats Section */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        /* Account Data Section */
-        .account-data-section {
-            margin-bottom: 30px;
-        }
-
-        .account-data-title {
-            font-size: 1.4rem;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-size: 1rem;
             font-weight: 600;
-            margin-bottom: 15px;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .account-data-title img {
-            width: 24px;
-            height: 24px;
-        }
-
-        .scroll-container {
-            display: flex;
-            overflow-x: auto;
-            gap: 15px;
-            padding-bottom: 10px;
-            margin-bottom: 25px;
-            scrollbar-width: thin;
-            scrollbar-color: var(--primary) var(--card-bg);
-        }
-
-        .scroll-container::-webkit-scrollbar {
-            height: 6px;
-        }
-
-        .scroll-container::-webkit-scrollbar-thumb {
-            background-color: var(--primary);
-            border-radius: 3px;
-        }
-
-        .scroll-container::-webkit-scrollbar-track {
-            background: var(--card-bg);
-            border-radius: 3px;
-        }
-
-        .equipment-card {
-            background: var(--card-bg);
-            border-radius: 16px;
-            padding: 18px;
-            box-shadow: var(--shadow);
-            display: flex;
-            align-items: center;
-            gap: 15px;
+            cursor: pointer;
             transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            min-width: 240px;
-            flex-shrink: 0;
+            margin: 10px 0;
         }
 
-        .equipment-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 20px rgba(0,0,0,0.3);
+        .bind-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(76, 175, 80, 0.25);
         }
 
-        .equipment-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 5px;
-            height: 100%;
-            background: var(--primary);
-            border-radius: 2px;
+        .profile-stats-container {
+            background: var(--card-bg);
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
         }
 
-        .equipment-icon {
-            width: 55px;
-            height: 55px;
-            background: rgba(76, 175, 80, 0.15);
-            border-radius: 14px;
+        .profile-stat-item {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            color: var(--primary);
-            flex-shrink: 0;
+            margin-bottom: 18px;
+            font-size: 22px;
         }
 
-        .equipment-icon img {
-            width: 32px;
-            height: 32px;
+        .profile-stat-item:last-child {
+            margin-bottom: 0;
         }
 
-        .equipment-info {
-            flex: 1;
-        }
-
-        .equipment-name {
-            font-weight: 600;
-            margin-bottom: 6px;
-            font-size: 1.1rem;
-            color: white;
-        }
-
-        .equipment-stats {
-            font-size: 0.95rem;
-            color: var(--text-light);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .equipment-stat {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 0.9rem;
-        }
-
-        .equipment-stat img {
+        .profile-stat-item img {
             width: 16px;
             height: 16px;
+            margin-right: 12px;
         }
 
-        /* Supplies Section */
-        .supplies-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 15px;
+        .profile-stat-label {
+            flex: 1;
+            color: var(--text);
         }
 
-        .supply-card {
-            background: var(--card-bg);
-            border-radius: 16px;
-            padding: 18px 12px;
-            box-shadow: var(--shadow);
-            text-align: center;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .supply-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 20px rgba(0,0,0,0.3);
-        }
-
-        .supply-icon {
-            width: 55px;
-            height: 55px;
-            margin: 0 auto 12px;
-            background: rgba(76, 175, 80, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
+        .profile-stat-value {
             color: var(--primary);
-        }
-
-        .supply-name {
             font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 1rem;
-            color: white;
-        }
-
-        .supply-count {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--primary);
         }
 
         /* General section */
@@ -710,6 +498,7 @@
             height: 48px;
             margin-bottom: 18px;
             transition: var(--transition);
+            filter: invert(1);
         }
 
         .service-card:hover img {
@@ -864,42 +653,11 @@
             width: 24px;
             height: 24px;
             margin-bottom: 4px;
+            filter: invert(0.8);
         }
 
-        /* Новые стили для раздела профиля */
-        .profile-stats-container {
-            background: var(--card-bg);
-            border-radius: 18px;
-            padding: 22px;
-            box-shadow: var(--shadow);
-            margin-bottom: 25px;
-        }
-
-        .profile-stat-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 18px;
-            font-size: 22px;
-        }
-
-        .profile-stat-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .profile-stat-item img {
-            width: 16px;
-            height: 16px;
-            margin-right: 12px;
-        }
-
-        .profile-stat-label {
-            flex: 1;
-            color: var(--text);
-        }
-
-        .profile-stat-value {
-            color: var(--primary);
-            font-weight: 600;
+        .bottom-nav a.active img {
+            filter: invert(0.5) sepia(1) saturate(5) hue-rotate(80deg);
         }
 
         /* Footer */
@@ -1014,6 +772,15 @@
             
             .profile-stat-item {
                 font-size: 18px;
+            }
+            
+            .profile-avatar {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .profile-name {
+                font-size: 1.5rem;
             }
         }
     </style>
@@ -1141,32 +908,19 @@
 
             <!-- Profile Section -->
             <section id="profile" class="section">
-                <div class="profile-header">
-                    <div class="profile-rank">#7</div>
-                    <div class="profile-avatar" id="profileAvatar">
-                        <img src="icons/avatar.svg" alt="Profile Avatar">
+                <div class="profile-container">
+                    <div class="profile-account-info">
+                        <div class="profile-avatar" id="profileAvatar">
+                            <img src="icons/avatar.svg" alt="Profile Avatar">
+                        </div>
+                        <h1 class="profile-name" id="profileGameNickname">
+                            <img src="icons/rank.svg" alt="Rank" class="name-icon">
+                            <span id="gameNickname">Привязать никнейм</span>
+                        </h1>
+                        <div class="profile-gs" id="profileGS">GS: --</div>
+                        <button class="bind-btn" id="bindNicknameBtn">Привязать аккаунт</button>
                     </div>
-                    <h1 class="profile-name">
-                        <img src="icons/rank.svg" alt="Rank" class="name-icon">
-                        <span id="gameNickname">TankMaster47</span>
-                    </h1>
-                    <div class="profile-gear-score">12,850</div>
-                    <div class="profile-gear-label">Gear Score</div>
-                </div>
-
-                <div class="profile-tabs">
-                    <button class="tab-btn active" data-tab="stats">
-                        <img src="icons/stats.svg" alt="Statistics">
-                        Статистика
-                    </button>
-                    <button class="tab-btn" data-tab="account-data">
-                        <img src="icons/data.svg" alt="Account Data">
-                        Данные аккаунта
-                    </button>
-                </div>
-
-                <!-- Stats Tab -->
-                <div id="stats" class="tab-content active">
+                    
                     <div class="profile-stats-container">
                         <div class="profile-stat-item">
                             <img src="icons/destroyed.svg" alt="Destroyed">
@@ -1204,74 +958,6 @@
                             <span class="profile-stat-value">1,240</span>
                         </div>
                     </div>
-                </div>
-
-                <!-- Account Data Tab -->
-                <div id="account-data" class="tab-content">
-                    <div class="account-data-section">
-                        <h3 class="account-data-title">
-                            <img src="icons/gun.svg" alt="Guns">
-                            Пушки
-                        </h3>
-                        <div class="scroll-container">
-                            <div class="equipment-card">
-                                <div class="equipment-icon">
-                                    <img src="icons/flamethrower.svg" alt="Flamethrower">
-                                </div>
-                                <div class="equipment-info">
-                                    <div class="equipment-name">Огнемет</div>
-                                    <div class="equipment-stats">
-                                        <div class="equipment-stat">
-                                            <img src="icons/score.svg" alt="Score">
-                                            <span>25,400 очков</span>
-                                        </div>
-                                        <div class="equipment-stat">
-                                            <img src="icons/damage.svg" alt="Damage">
-                                            <span>850 урона</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="equipment-card">
-                                <div class="equipment-icon">
-                                    <img src="icons/railgun.svg" alt="Railgun">
-                                </div>
-                                <div class="equipment-info">
-                                    <div class="equipment-name">Рейлган</div>
-                                    <div class="equipment-stats">
-                                        <div class="equipment-stat">
-                                            <img src="icons/score.svg" alt="Score">
-                                            <span>18,700 очков</span>
-                                        </div>
-                                        <div class="equipment-stat">
-                                            <img src="icons/damage.svg" alt="Damage">
-                                            <span>1,200 урона</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="equipment-card">
-                                <div class="equipment-icon">
-                                    <img src="icons/thunder.svg" alt="Thunder">
-                                </div>
-                                <div class="equipment-info">
-                                    <div class="equipment-name">Гром</div>
-                                    <div class="equipment-stats">
-                                        <div class="equipment-stat">
-                                            <img src="icons/score.svg" alt="Score">
-                                            <span>12,500 очков</span>
-                                        </div>
-                                        <div class="equipment-stat">
-                                            <img src="icons/damage.svg" alt="Damage">
-                                            <span>950 урона</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Остальные секции данных аккаунта -->
                 </div>
             </section>
 
@@ -1388,15 +1074,19 @@
         <ul>
             <li><a href="#" class="nav-link active" data-section="dashboard">
                 <img src="icons/home.svg" alt="Home">
+                <span>Главная</span>
             </a></li>
             <li><a href="#" class="nav-link" data-section="profile">
                 <img src="icons/profile.svg" alt="Profile">
+                <span>Профиль</span>
             </a></li>
             <li><a href="#" class="nav-link" data-section="general">
                 <img src="icons/general.svg" alt="General">
+                <span>Общее</span>
             </a></li>
             <li><a href="#" class="nav-link" data-section="rating">
                 <img src="icons/rating.svg" alt="Rating">
+                <span>Рейтинг</span>
             </a></li>
         </ul>
     </nav>
@@ -1486,36 +1176,48 @@
             });
             
             // Player search
-            const searchPlayerBtn = document.getElementById('searchPlayerBtn');
+            const playerSearch = document.getElementById('playerSearch');
             const playerCard = document.getElementById('playerCard');
             
-            if (searchPlayerBtn && playerCard) {
-                searchPlayerBtn.addEventListener('click', () => {
-                    const searchValue = document.getElementById('playerSearch').value.trim();
-                    if (searchValue) {
-                        // In a real app, this would call the bot API
-                        playerCard.style.display = 'block';
-                        
-                        // Simulate API response
-                        document.getElementById('playerName').textContent = searchValue;
-                        document.getElementById('playerRank').textContent = Math.floor(Math.random() * 10) + 1;
-                        document.getElementById('playerExp').textContent = Math.floor(Math.random() * 50000);
+            if (playerSearch && playerCard) {
+                playerSearch.addEventListener('keyup', (e) => {
+                    if (e.key === 'Enter') {
+                        const searchValue = playerSearch.value.trim();
+                        if (searchValue) {
+                            // In a real app, this would call the bot API
+                            playerCard.style.display = 'block';
+                            
+                            // Simulate API response
+                            document.getElementById('playerName').textContent = searchValue;
+                            document.getElementById('playerRank').textContent = Math.floor(Math.random() * 10) + 1;
+                            document.getElementById('playerExp').textContent = Math.floor(Math.random() * 50000);
+                        }
                     }
                 });
             }
             
             // Bind nickname
             const bindNicknameBtn = document.getElementById('bindNicknameBtn');
+            const gameNicknameEl = document.getElementById('gameNickname');
+            const profileGS = document.getElementById('profileGS');
             
             if (bindNicknameBtn) {
                 bindNicknameBtn.addEventListener('click', () => {
                     const nickname = prompt('Введите ваш игровой никнейм:');
                     if (nickname && nickname.trim() !== '') {
                         // In a real app, this would call the bot API to bind the nickname
-                        document.getElementById('gameNickname').textContent = nickname;
+                        gameNicknameEl.textContent = nickname;
+                        
+                        // Generate random GS value
+                        const randomGS = Math.floor(Math.random() * 20000) + 5000;
+                        profileGS.textContent = `GS: ${randomGS}`;
+                        
+                        // Change button text
+                        bindNicknameBtn.textContent = 'Изменить никнейм';
                         
                         // Сохраняем в localStorage
                         localStorage.setItem('gameNickname', nickname);
+                        localStorage.setItem('gameGS', randomGS);
                         
                         tg.showAlert(`Никнейм "${nickname}" успешно привязан!`);
                     }
@@ -1524,28 +1226,16 @@
             
             // Загрузка привязанного никнейма
             const savedNickname = localStorage.getItem('gameNickname');
+            const savedGS = localStorage.getItem('gameGS');
+            
             if (savedNickname) {
-                document.getElementById('gameNickname').textContent = savedNickname;
+                gameNicknameEl.textContent = savedNickname;
+                bindNicknameBtn.textContent = 'Изменить никнейм';
             }
             
-            // Tab switching
-            const tabBtns = document.querySelectorAll('.tab-btn');
-            const tabContents = document.querySelectorAll('.tab-content');
-            
-            tabBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    // Remove active class from all buttons and contents
-                    tabBtns.forEach(b => b.classList.remove('active'));
-                    tabContents.forEach(c => c.classList.remove('active'));
-                    
-                    // Add active class to clicked button
-                    btn.classList.add('active');
-                    
-                    // Show target content
-                    const targetTab = btn.getAttribute('data-tab');
-                    document.getElementById(targetTab).classList.add('active');
-                });
-            });
+            if (savedGS) {
+                profileGS.textContent = `GS: ${savedGS}`;
+            }
         });
     </script>
 </body>
