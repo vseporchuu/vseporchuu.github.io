@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>47bot - Tanki Online Assistant</title>
+    <title>47bot | Танки Онлайн</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -16,16 +16,16 @@
             --primary-gradient: linear-gradient(135deg, #4CAF50, #2E7D32);
             --secondary: #FFC107;
             --accent: #FF5722;
-            --background: #0F1A14; /* Изменено на #0F1A14 */
+            --background: #0F1A14; 
             --surface: #1e1e1e;
-            --card-bg: #16261E; /* Изменено на #16261E */
+            --card-bg: #16261E; 
             --text: #e0e0e0;
             --text-light: #b0b0b0;
             --text-lighter: #8a8a8a;
             --border: #333333;
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            --card-border: #66B28B; /* Добавлено для обводки плашек */
+            --card-border: #66B28B; 
         }
 
         * {
@@ -48,10 +48,42 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 412px;
             margin: 0 auto;
             padding: 0 20px;
             width: 100%;
+        }
+
+        /* Бровь сверху */
+        .top-nav {
+            width: 412px;
+            height: 56px;
+            background: var(--surface);
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .top-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .top-nav-item.active {
+            color: var(--primary);
         }
 
         /* User info */
@@ -60,13 +92,13 @@
             align-items: center;
             justify-content: space-between;
             gap: 20px;
-            padding: 25px 0 15px;
+            padding: 70px 0 15px;
             margin-bottom: 5px;
         }
 
         .avatar {
-            width: 128px; /* Уже соответствует требованиям */
-            height: 128px; /* Уже соответствует требованиям */
+            width: 128px; 
+            height: 128px; 
             border-radius: 50%;
             object-fit: cover;
             border: 1px solid var(--primary);
@@ -101,8 +133,8 @@
         }
 
         .name-icon {
-            width: 20px; /* Уже соответствует требованиям */
-            height: 20px; /* Уже соответствует требованиям */
+            width: 20px; 
+            height: 20px; 
         }
 
         .user-info h2 {
@@ -145,8 +177,8 @@
         }
 
         .progress-icon img {
-            width: 20px; /* Изменено на 20px */
-            height: 20px; /* Изменено на 20px */
+            width: 20px; 
+            height: 20px; 
         }
 
         .progress-info {
@@ -168,8 +200,8 @@
         }
 
         .progress-bar {
-            height: 10px; /* Изменено на 10px */
-            width: 160px; /* Изменено на 160px */
+            height: 10px; 
+            width: 160px; 
             border-radius: 5px;
             overflow: hidden;
             position: relative;
@@ -188,7 +220,7 @@
 
         /* Шапка для второй вкладки */
         .profile-header-container {
-            display: none; /* Скрыта по умолчанию */
+            display: none; 
         }
 
         .profile-header {
@@ -196,13 +228,13 @@
             align-items: center;
             justify-content: space-between;
             gap: 20px;
-            padding: 25px 0 15px;
+            padding: 70px 0 15px;
             margin-bottom: 5px;
         }
 
         .profile-header-avatar {
-            width: 128px; /* Уже соответствует требованиям */
-            height: 128px; /* Уже соответствует требованиям */
+            width: 128px;
+            height: 128px;
             border-radius: 50%;
             object-fit: cover;
             border: 1px solid var(--primary);
@@ -272,8 +304,8 @@
         }
 
         .profile-header-progress-icon img {
-            width: 20px; /* Изменено на 20px */
-            height: 20px; /* Изменено на 20px */
+            width: 20px;
+            height: 20px;
         }
 
         .profile-header-progress-info {
@@ -293,8 +325,8 @@
         }
 
         .profile-header-progress-bar {
-            height: 10px; /* Изменено на 10px */
-            width: 160px; /* Изменено на 160px */
+            height: 10px;
+            width: 160px;
             border-radius: 5px;
             overflow: hidden;
             position: relative;
@@ -345,9 +377,9 @@
         }
 
         .stat-card {
-            background: var(--card-bg); /* Изменено на #16261E */
-            border: 1px solid var(--card-border); /* Добавлено: обводка #66B28B */
-            border-radius: 12px; /* Изменено на 12px */
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
             padding: 15px;
             box-shadow: var(--shadow);
             transition: var(--transition);
@@ -356,8 +388,9 @@
             display: flex;
             flex-direction: column;
             cursor: pointer;
-            width: 174px; /* Добавлено: ширина 174px */
-            height: 95px; /* Добавлено: высота 95px */
+            width: 174px;
+            height: 95px;
+            text-align: center;
         }
 
         .stat-card:hover {
@@ -383,7 +416,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 12px;
+            margin: 0 auto 8px;
         }
 
         .stat-icon img {
@@ -437,17 +470,17 @@
             display: flex;
             margin: 15px 0 20px;
             position: relative;
-            width: 304px; /* Изменено на 304px */
-            height: 44px; /* Изменено на 44px */
+            width: 304px;
+            height: 44px;
         }
 
         .search-input {
             flex: 1;
             padding: 14px 18px 14px 50px;
-            border: 1px solid #66B28B; /* Инактив: обводка #66B28B */
-            border-radius: 16px; /* Изменено на 16px */
+            border: 1px solid #66B28B;
+            border-radius: 16px;
             font-size: 0.95rem;
-            background: #16261E; /* Инактив: заполнение #16261E */
+            background: #16261E;
             color: var(--text);
             transition: var(--transition);
             width: 100%;
@@ -456,14 +489,14 @@
 
         .search-input:focus {
             outline: none;
-            border-color: #91FFC7; /* Актив: обводка #91FFC7 */
-            background: #1D3328; /* Актив: заполнение #1D3328 */
+            border-color: #91FFC7;
+            background: #1D3328;
             box-shadow: 0 0 0 2px rgba(145, 255, 199, 0.3);
         }
 
         .search-input.error {
-            border-color: #FF7474; /* Ошибка: обводка #FF7474 */
-            background: #401A1A; /* Ошибка: заполнение #401A1A */
+            border-color: #FF7474;
+            background: #401A1A;
         }
 
         .search-icon {
@@ -478,7 +511,7 @@
 
         /* Profile styles */
         .profile-tabs {
-            display: none; /* Скрываем вкладки профиля */
+            display: none;
         }
 
         /* Новые стили для раздела профиля */
@@ -487,7 +520,7 @@
         }
 
         .profile-account-info {
-            display: none; /* Скрываем старую плашку */
+            display: none;
         }
 
         .profile-stats-container {
@@ -496,6 +529,8 @@
             padding: 22px;
             box-shadow: var(--shadow);
             margin-bottom: 25px;
+            width: 364px;
+            height: 272px;
         }
 
         .profile-stat-item {
@@ -503,6 +538,19 @@
             align-items: center;
             margin-bottom: 18px;
             font-size: 22px;
+            width: 332px;
+            height: 19px;
+        }
+
+        .profile-stat-item:not(:last-child)::after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 1px;
+            background-color: var(--border);
+            position: absolute;
+            bottom: -6px;
+            left: 0;
         }
 
         .profile-stat-item:last-child {
@@ -525,25 +573,148 @@
             font-weight: 600;
         }
 
-        .bind-btn {
-            background: var(--primary-gradient);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            padding: 12px 24px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            margin: 10px 0;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
+        .supplies-details {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 18px;
+            padding-top: 18px;
+            border-top: 1px solid var(--border);
         }
 
-        .bind-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(76, 175, 80, 0.25);
+        .supply-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 77px;
+            height: 19px;
+        }
+
+        .supply-item:not(:last-child) {
+            margin-right: 25px;
+        }
+
+        .supply-item:not(:first-child) {
+            position: relative;
+        }
+
+        .supply-item:not(:first-child)::before {
+            content: "";
+            position: absolute;
+            left: -12.5px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 19px;
+            background-color: var(--border);
+        }
+
+        .supply-icon {
+            width: 16px;
+            height: 16px;
+            margin-bottom: 4px;
+        }
+
+        .supply-value {
+            font-size: 0.9rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .guns-section {
+            margin-top: 21px;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .horizontal-scroll {
+            display: flex;
+            overflow-x: auto;
+            gap: 8px;
+            padding: 10px 0;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .horizontal-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .gun-card {
+            width: 160px;
+            height: 98px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 12px;
+            box-shadow: var(--shadow);
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .gun-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: white;
+        }
+
+        .gun-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .gun-stat {
+            display: flex;
+            align-items: center;
+            font-size: 0.8rem;
+        }
+
+        .gun-stat-icon {
+            width: 14px;
+            height: 14px;
+            margin-right: 4px;
+        }
+
+        .hull-card {
+            width: 180px;
+            height: 98px;
+        }
+
+        /* Rating section styles */
+        .rating-filters {
+            display: flex;
+            justify-content: space-between;
+            margin: 42px 0 20px;
+            width: 364px;
+            height: 35px;
+        }
+
+        .rating-filter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: var(--card-bg);
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .rating-filter.active {
+            border-color: #76FF33;
+            background: rgba(118, 255, 51, 0.2);
+        }
+
+        .rating-filter-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 6px;
         }
 
         /* General section */
@@ -714,12 +885,14 @@
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
             z-index: 1000;
             padding: 12px 0;
+            height: 80px;
         }
 
         .bottom-nav ul {
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
             list-style: none;
+            padding: 0 89px;
         }
 
         .bottom-nav a {
@@ -728,21 +901,22 @@
             align-items: center;
             text-decoration: none;
             color: var(--text-light);
-            font-size: 0.8rem;
-            padding: 8px 12px;
-            border-radius: 12px;
+            padding: 8px;
+            border-radius: 8px;
             transition: var(--transition);
+            width: 56px;
+            height: 56px;
+            justify-content: center;
         }
 
         .bottom-nav a.active {
-            color: var(--primary);
             background: rgba(76, 175, 80, 0.15);
+            border: 1px solid var(--primary);
         }
 
         .bottom-nav a img {
             width: 24px;
             height: 24px;
-            margin-bottom: 4px;
             filter: invert(0.8);
         }
 
@@ -796,8 +970,8 @@
             }
             
             .stat-card {
-                width: auto; /* Для мобильных убираем фиксированную ширину */
-                height: auto; /* Для мобильных убираем фиксированную высоту */
+                width: auto;
+                height: auto;
             }
         }
 
@@ -813,7 +987,7 @@
             .search-box {
                 flex-direction: column;
                 height: auto;
-                width: 100%; /* На мобильных занимает всю ширину */
+                width: 100%;
             }
             
             .search-input {
@@ -875,13 +1049,21 @@
             }
             
             .stat-card {
-                width: auto; /* Для мобильных убираем фиксированную ширину */
-                height: auto; /* Для мобильных убираем фиксированную высоту */
+                width: auto;
+                height: auto;
             }
         }
     </style>
 </head>
 <body class="dark-theme">
+    <!-- Бровь сверху -->
+    <nav class="top-nav">
+        <div class="top-nav-item active" data-section="dashboard">Главная</div>
+        <div class="top-nav-item" data-section="profile">Игровой профиль</div>
+        <div class="top-nav-item" data-section="rating">Рейтинг</div>
+        <div class="top-nav-item" data-section="general">Дополнительно</div>
+    </nav>
+
     <div class="container">
         <!-- Шапка для главной страницы -->
         <div class="user-container">
@@ -1032,8 +1214,6 @@
 
             <!-- Profile Section -->
             <section id="profile" class="section">
-                <button class="bind-btn" id="bindNicknameBtn">Привязать аккаунт</button>
-                
                 <div class="profile-stats-container">
                     <div class="profile-stat-item">
                         <img src="icons/destroyed.svg" alt="Destroyed">
@@ -1069,6 +1249,163 @@
                         <img src="icons/supplies.svg" alt="Supplies">
                         <span class="profile-stat-label">Использовал припасов</span>
                         <span class="profile-stat-value">1,240</span>
+                    </div>
+                    
+                    <div class="supplies-details">
+                        <div class="supply-item">
+                            <img src="icons/repair.svg" alt="Repair" class="supply-icon">
+                            <span class="supply-value">650</span>
+                        </div>
+                        <div class="supply-item">
+                            <img src="icons/armor.svg" alt="Armor" class="supply-icon">
+                            <span class="supply-value">320</span>
+                        </div>
+                        <div class="supply-item">
+                            <img src="icons/damage.svg" alt="Damage" class="supply-icon">
+                            <span class="supply-value">270</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="guns-section">
+                    <h3 class="section-title">Пушки</h3>
+                    <div class="horizontal-scroll">
+                        <div class="gun-card">
+                            <div class="gun-name">Рейлган</div>
+                            <div class="gun-stats">
+                                <div class="gun-stat">
+                                    <img src="icons/damage.svg" alt="Damage" class="gun-stat-icon">
+                                    <span>120</span>
+                                </div>
+                                <div class="gun-stat">
+                                    <img src="icons/range.svg" alt="Range" class="gun-stat-icon">
+                                    <span>85</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gun-card">
+                            <div class="gun-name">Гром</div>
+                            <div class="gun-stats">
+                                <div class="gun-stat">
+                                    <img src="icons/damage.svg" alt="Damage" class="gun-stat-icon">
+                                    <span>95</span>
+                                </div>
+                                <div class="gun-stat">
+                                    <img src="icons/range.svg" alt="Range" class="gun-stat-icon">
+                                    <span>70</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gun-card">
+                            <div class="gun-name">Огнемёт</div>
+                            <div class="gun-stats">
+                                <div class="gun-stat">
+                                    <img src="icons/damage.svg" alt="Damage" class="gun-stat-icon">
+                                    <span>80</span>
+                                </div>
+                                <div class="gun-stat">
+                                    <img src="icons/range.svg" alt="Range" class="gun-stat-icon">
+                                    <span>45</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gun-card">
+                            <div class="gun-name">Смок</div>
+                            <div class="gun-stats">
+                                <div class="gun-stat">
+                                    <img src="icons/damage.svg" alt="Damage" class="gun-stat-icon">
+                                    <span>65</span>
+                                </div>
+                                <div class="gun-stat">
+                                    <img src="icons/range.svg" alt="Range" class="gun-stat-icon">
+                                    <span>60</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gun-card">
+                            <div class="gun-name">Изида</div>
+                            <div class="gun-stats">
+                                <div class="gun-stat">
+                                    <img src="icons/damage.svg" alt="Damage" class="gun-stat-icon">
+                                    <span>110</span>
+                                </div>
+                                <div class="gun-stat">
+                                    <img src="icons/range.svg" alt="Range" class="gun-stat-icon">
+                                    <span>75</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="guns-section">
+                    <h3 class="section-title">Корпуса</h3>
+                    <div class="horizontal-scroll">
+                        <div class="gun-card hull-card">
+                            <div class="gun-name">Хорнет</div>
+                            <div class="gun-stats">
+                                <div class="gun-stat">
+                                    <img src="icons/health.svg" alt="Health" class="gun-stat-icon">
+                                    <span>500</span>
+                                </div>
+                                <div class="gun-stat">
+                                    <img src="icons/speed.svg" alt="Speed" class="gun-stat-icon">
+                                    <span>85</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gun-card hull-card">
+                            <div class="gun-name">Титан</div>
+                            <div class="gun-stats">
+                                <div class="gun-stat">
+                                    <img src="icons/health.svg" alt="Health" class="gun-stat-icon">
+                                    <span>800</span>
+                                </div>
+                                <div class="gun-stat">
+                                    <img src="icons/speed.svg" alt="Speed" class="gun-stat-icon">
+                                    <span>45</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gun-card hull-card">
+                            <div class="gun-name">Викинг</div>
+                            <div class="gun-stats">
+                                <div class="gun-stat">
+                                    <img src="icons/health.svg" alt="Health" class="gun-stat-icon">
+                                    <span>650</span>
+                                </div>
+                                <div class="gun-stat">
+                                    <img src="icons/speed.svg" alt="Speed" class="gun-stat-icon">
+                                    <span>65</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gun-card hull-card">
+                            <div class="gun-name">Маммонт</div>
+                            <div class="gun-stats">
+                                <div class="gun-stat">
+                                    <img src="icons/health.svg" alt="Health" class="gun-stat-icon">
+                                    <span>950</span>
+                                </div>
+                                <div class="gun-stat">
+                                    <img src="icons/speed.svg" alt="Speed" class="gun-stat-icon">
+                                    <span>35</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gun-card hull-card">
+                            <div class="gun-name">Хаммер</div>
+                            <div class="gun-stats">
+                                <div class="gun-stat">
+                                    <img src="icons/health.svg" alt="Health" class="gun-stat-icon">
+                                    <span>700</span>
+                                </div>
+                                <div class="gun-stat">
+                                    <img src="icons/speed.svg" alt="Speed" class="gun-stat-icon">
+                                    <span>60</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -1114,6 +1451,21 @@
                 <div class="search-box">
                     <img src="icons/search.svg" alt="Search" class="search-icon">
                     <input type="text" class="search-input" id="playerSearch" placeholder="Введите никнейм игрока...">
+                </div>
+                
+                <div class="rating-filters">
+                    <div class="rating-filter active">
+                        <img src="icons/exp.svg" alt="Experience" class="rating-filter-icon">
+                        <span>Опыт</span>
+                    </div>
+                    <div class="rating-filter">
+                        <img src="icons/crystals.svg" alt="Crystals" class="rating-filter-icon">
+                        <span>Кристаллы</span>
+                    </div>
+                    <div class="rating-filter">
+                        <img src="icons/gold.svg" alt="Gold" class="rating-filter-icon">
+                        <span>Голды</span>
+                    </div>
                 </div>
                 
                 <div class="player-card" id="playerCard" style="display: none;">
@@ -1186,19 +1538,15 @@
         <ul>
             <li><a href="#" class="nav-link active" data-section="dashboard">
                 <img src="icons/home.svg" alt="Home">
-                <span>Главная</span>
             </a></li>
             <li><a href="#" class="nav-link" data-section="profile">
                 <img src="icons/profile.svg" alt="Profile">
-                <span>Профиль</span>
             </a></li>
             <li><a href="#" class="nav-link" data-section="general">
                 <img src="icons/general.svg" alt="General">
-                <span>Общее</span>
             </a></li>
             <li><a href="#" class="nav-link" data-section="rating">
                 <img src="icons/rating.svg" alt="Rating">
-                <span>Рейтинг</span>
             </a></li>
         </ul>
     </nav>
@@ -1249,43 +1597,60 @@
             
             // Navigation
             const navLinks = document.querySelectorAll('.nav-link');
+            const topNavItems = document.querySelectorAll('.top-nav-item');
             const sections = document.querySelectorAll('.section');
             const profileHeaderContainer = document.getElementById('profileHeaderContainer');
             const userContainer = document.querySelector('.user-container');
             
+            function activateSection(sectionName) {
+                // Remove active class from all links
+                navLinks.forEach(l => l.classList.remove('active'));
+                topNavItems.forEach(l => l.classList.remove('active'));
+                
+                // Add active class to clicked link
+                const targetNavLink = document.querySelector(`.nav-link[data-section="${sectionName}"]`);
+                const targetTopNavItem = document.querySelector(`.top-nav-item[data-section="${sectionName}"]`);
+                
+                if (targetNavLink) targetNavLink.classList.add('active');
+                if (targetTopNavItem) targetTopNavItem.classList.add('active');
+                
+                // Hide all sections
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show target section
+                const targetElement = document.getElementById(sectionName);
+                if (targetElement) {
+                    targetElement.classList.add('active');
+                }
+                
+                // Показываем/скрываем шапки в зависимости от вкладки
+                if (sectionName === 'profile') {
+                    userContainer.style.display = 'none';
+                    profileHeaderContainer.style.display = 'block';
+                } else {
+                    userContainer.style.display = 'flex';
+                    profileHeaderContainer.style.display = 'none';
+                }
+                
+                // Прокрутка вверх
+                window.scrollTo(0, 0);
+            }
+            
             navLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
-                    
-                    // Remove active class from all links
-                    navLinks.forEach(l => l.classList.remove('active'));
-                    
-                    // Add active class to clicked link
-                    this.classList.add('active');
-                    
-                    // Hide all sections
-                    sections.forEach(section => {
-                        section.classList.remove('active');
-                    });
-                    
-                    // Show target section
                     const targetSection = this.getAttribute('data-section');
-                    const targetElement = document.getElementById(targetSection);
-                    if (targetElement) {
-                        targetElement.classList.add('active');
-                    }
-                    
-                    // Показываем/скрываем шапки в зависимости от вкладки
-                    if (targetSection === 'profile') {
-                        userContainer.style.display = 'none';
-                        profileHeaderContainer.style.display = 'block';
-                    } else {
-                        userContainer.style.display = 'flex';
-                        profileHeaderContainer.style.display = 'none';
-                    }
-                    
-                    // Прокрутка вверх
-                    window.scrollTo(0, 0);
+                    activateSection(targetSection);
+                });
+            });
+            
+            topNavItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetSection = this.getAttribute('data-section');
+                    activateSection(targetSection);
                 });
             });
             
@@ -1319,41 +1684,24 @@
                 });
             }
             
-            // Bind nickname
-            const bindNicknameBtn = document.getElementById('bindNicknameBtn');
-            const profileHeaderName = document.getElementById('profileHeaderName');
-            const profileHeaderGS = document.getElementById('profileHeaderGS');
+            // Rating filters
+            const ratingFilters = document.querySelectorAll('.rating-filter');
             
-            if (bindNicknameBtn) {
-                bindNicknameBtn.addEventListener('click', () => {
-                    const nickname = prompt('Введите ваш игровой никнейм:');
-                    if (nickname && nickname.trim() !== '') {
-                        // In a real app, this would call the bot API to bind the nickname
-                        profileHeaderName.textContent = nickname;
-                        
-                        // Generate random GS value
-                        const randomGS = Math.floor(Math.random() * 20000) + 5000;
-                        profileHeaderGS.textContent = `GS: ${randomGS}`;
-                        
-                        // Change button text
-                        bindNicknameBtn.textContent = 'Изменить никнейм';
-                        
-                        // Сохраняем в localStorage
-                        localStorage.setItem('gameNickname', nickname);
-                        localStorage.setItem('gameGS', randomGS);
-                        
-                        tg.showAlert(`Никнейм "${nickname}" успешно привязан!`);
-                    }
+            ratingFilters.forEach(filter => {
+                filter.addEventListener('click', () => {
+                    ratingFilters.forEach(f => f.classList.remove('active'));
+                    filter.classList.add('active');
                 });
-            }
+            });
             
             // Загрузка привязанного никнейма
             const savedNickname = localStorage.getItem('gameNickname');
             const savedGS = localStorage.getItem('gameGS');
+            const profileHeaderName = document.getElementById('profileHeaderName');
+            const profileHeaderGS = document.getElementById('profileHeaderGS');
             
             if (savedNickname) {
                 profileHeaderName.textContent = savedNickname;
-                bindNicknameBtn.textContent = 'Изменить никнейм';
             }
             
             if (savedGS) {
