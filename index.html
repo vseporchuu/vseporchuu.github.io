@@ -4,8 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Telegram App</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-color: #16261E;
+            --dark-bg: #0f1a15;
+            --accent-color: #579977;
+            --active-color: #91FFC7;
+            --error-bg: #401A1A;
+            --error-color: #FF7474;
+            --border-color: #66B28B;
+            --progress-bg: #2C4D3C;
+            --card-bg: #1D3328;
+            --text-light: #FFFFFF;
+            --text-dim: #AAAAAA;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -14,31 +28,35 @@
         }
 
         body {
-            background-color: #16261E;
-            color: white;
-            width: 412px;
-            height: 744px;
-            overflow: hidden;
-            position: relative;
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
         }
 
         .app-container {
             width: 100%;
-            height: 100%;
+            max-width: 412px;
+            min-height: 744px;
+            margin: 0 auto;
             display: flex;
             flex-direction: column;
+            position: relative;
         }
 
         /* Head стили */
         .head {
             height: 56px;
             width: 100%;
-            background-color: #0f1a15;
+            background-color: var(--dark-bg);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 24px;
             font-weight: 500;
+            flex-shrink: 0;
         }
 
         /* Рабочая область */
@@ -46,16 +64,19 @@
             flex: 1;
             overflow-y: auto;
             padding: 16px;
+            display: flex;
+            flex-direction: column;
         }
 
         /* Active Menu */
         .active-menu {
             height: 80px;
             width: 100%;
-            background-color: #0f1a15;
+            background-color: var(--dark-bg);
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-shrink: 0;
         }
 
         .menu-icons {
@@ -71,32 +92,42 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            transition: background-color 0.2s;
         }
 
         .menu-icon.active {
-            background-color: #1D3328;
+            background-color: var(--card-bg);
+        }
+
+        .menu-icon svg {
+            width: 24px;
+            height: 24px;
         }
 
         /* Стили для главной страницы */
         .profile-card {
-            width: 350px;
+            width: 100%;
+            max-width: 350px;
             height: 128px;
             display: flex;
-            margin-bottom: 24px;
+            margin: 0 auto 24px;
         }
 
         .avatar-container {
             position: relative;
             width: 128px;
             height: 128px;
+            flex-shrink: 0;
         }
 
         .avatar {
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            border: 1px solid #579977;
-            background-color: #2C4D3C;
+            border: 1px solid var(--accent-color);
+            background-color: var(--progress-bg);
+            background-size: cover;
+            background-position: center;
         }
 
         .profile-info {
@@ -104,6 +135,7 @@
             padding-left: 16px;
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
         }
 
         .profile-name {
@@ -118,99 +150,120 @@
             margin-right: 8px;
         }
 
+        .profile-icon {
+            width: 20px;
+            height: 20px;
+        }
+
         .username {
             font-size: 14px;
-            font-weight: 400;
-            color: #aaa;
+            font-weight: 300;
+            color: var(--text-dim);
         }
 
         .exp-bar {
-            margin-top: auto;
-            width: 210px;
+            width: 100%;
+            max-width: 210px;
         }
 
         .exp-text {
             font-size: 14px;
             margin-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
         }
 
         .exp-progress {
             height: 10px;
-            background-color: #2C4D3C;
+            background-color: var(--progress-bg);
             border-radius: 5px;
             overflow: hidden;
+            position: relative;
         }
 
         .exp-fill {
             height: 100%;
-            background-color: #579977;
+            background-color: var(--accent-color);
             border-radius: 5px;
-            width: 60%; /* Пример заполнения */
+            width: 45%; /* Пример заполнения */
+        }
+
+        .exp-icon {
+            position: absolute;
+            right: -40px;
+            top: -13px;
+            width: 36px;
+            height: 36px;
         }
 
         .search-container {
-            width: 364px;
+            width: 100%;
+            max-width: 364px;
             height: 44px;
             border-radius: 22px;
-            border: 1px solid #579977;
-            background-color: #16261E;
+            border: 1px solid var(--accent-color);
+            background-color: var(--bg-color);
             display: flex;
             align-items: center;
             padding: 0 16px;
-            margin-bottom: 24px;
+            margin: 0 auto 24px;
+            transition: all 0.2s;
         }
 
         .search-container.active {
-            background-color: #1D3328;
-            border-color: #91FFC7;
+            background-color: var(--card-bg);
+            border-color: var(--active-color);
         }
 
         .search-container.error {
-            background-color: #401A1A;
-            border-color: #FF7474;
+            background-color: var(--error-bg);
+            border-color: var(--error-color);
         }
 
         .search-input {
             flex: 1;
             background: transparent;
             border: none;
-            color: #579977;
+            color: var(--accent-color);
             font-size: 16px;
             outline: none;
         }
 
         .search-container.active .search-input {
-            color: #91FFC7;
+            color: var(--active-color);
         }
 
         .search-container.error .search-input {
-            color: #FF7474;
+            color: var(--error-color);
         }
 
         .search-icon {
             width: 20px;
             height: 20px;
-            color: #579977;
+            color: var(--accent-color);
         }
 
         .search-container.active .search-icon {
-            color: #91FFC7;
+            color: var(--active-color);
         }
 
         .search-container.error .search-icon {
-            color: #FF7474;
+            color: var(--error-color);
         }
 
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 16px;
+            width: 100%;
+            max-width: 364px;
+            margin: 0 auto;
         }
 
         .stat-card {
-            width: 174px;
+            width: 100%;
             height: 95px;
-            border: 1px solid #66B28B;
+            border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 12px;
             display: flex;
@@ -230,16 +283,31 @@
 
         /* Стили для страницы игрового профиля */
         .game-profile {
-            display: none;
+            width: 100%;
+        }
+
+        .profile-link {
+            width: 100%;
+            max-width: 364px;
+            height: 44px;
+            border-radius: 22px;
+            background-color: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 24px auto;
+            cursor: pointer;
+            border: 1px solid var(--accent-color);
         }
 
         .data-block {
-            width: 364px;
-            height: 272px;
+            width: 100%;
+            max-width: 364px;
+            min-height: 272px;
             border-radius: 12px;
-            background-color: #1D3328;
+            background-color: var(--card-bg);
             padding: 16px;
-            margin-top: 24px;
+            margin: 24px auto 0;
         }
 
         .data-row {
@@ -253,6 +321,7 @@
             width: 16px;
             height: 16px;
             margin-right: 8px;
+            flex-shrink: 0;
         }
 
         .data-text {
@@ -271,12 +340,32 @@
             height: 0.5px;
             background-color: #2C4D3C;
             margin: 6px 0;
+            width: 100%;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .stat-item .data-icon {
+            margin-right: 4px;
         }
 
         .guns-title {
             font-size: 20px;
             font-weight: 700;
             margin: 20px 0 16px 0;
+            width: 100%;
+            max-width: 364px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .guns-slider {
@@ -284,29 +373,68 @@
             gap: 16px;
             overflow-x: auto;
             padding-bottom: 8px;
+            width: 100%;
+            max-width: 364px;
+            margin: 0 auto;
+        }
+
+        .guns-slider::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .guns-slider::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
+            border-radius: 2px;
         }
 
         .gun-card {
             width: 160px;
             height: 98px;
             border-radius: 8px;
-            background-color: #2C4D3C;
+            background-color: var(--progress-bg);
             padding: 8px;
             flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .gun-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .gun-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .gun-stat {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .gun-stat-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .gun-stat-value {
+            font-size: 12px;
         }
 
         /* Стили для страницы рейтинга */
-        .rating-page {
-            display: none;
-        }
-
         .rating-tabs {
-            width: 340px;
+            width: 100%;
+            max-width: 340px;
             height: 35px;
-            background-color: #1D3328;
+            background-color: var(--card-bg);
             border-radius: 17.5px;
             display: flex;
-            margin-bottom: 16px;
+            margin: 0 auto 16px;
+            padding: 2px;
         }
 
         .rating-tab {
@@ -317,6 +445,7 @@
             border-radius: 17.5px;
             font-size: 14px;
             cursor: pointer;
+            transition: all 0.2s;
         }
 
         .rating-tab.active {
@@ -327,13 +456,25 @@
         .rating-list {
             height: 500px;
             overflow-y: auto;
+            width: 100%;
+            max-width: 364px;
+            margin: 0 auto;
+        }
+
+        .rating-list::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .rating-list::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
+            border-radius: 2px;
         }
 
         .rating-item {
             display: flex;
             align-items: center;
             padding: 8px 0;
-            border-bottom: 1px solid #2C4D3C;
+            border-bottom: 1px solid var(--progress-bg);
         }
 
         .rating-position {
@@ -346,8 +487,9 @@
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            background-color: #2C4D3C;
+            background-color: var(--progress-bg);
             margin: 0 12px;
+            flex-shrink: 0;
         }
 
         .rating-name {
@@ -361,19 +503,19 @@
         }
 
         /* Стили для страницы дополнительно */
-        .additional-page {
-            display: none;
-        }
-
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 16px;
             margin-bottom: 24px;
+            width: 100%;
+            max-width: 374px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .main-card {
-            width: 179px;
+            width: 100%;
             height: 97.63px;
             border-radius: 12px;
             display: flex;
@@ -382,10 +524,10 @@
             justify-content: center;
         }
 
-        .main-card:first-child,
+        .main-card:nth-child(1),
         .main-card:nth-child(2) {
-            background-color: #1D3328;
-            border: 1px solid #91FFC7;
+            background-color: var(--card-bg);
+            border: 1px solid var(--active-color);
         }
 
         .main-card:nth-child(n+3) {
@@ -408,10 +550,14 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 12px;
             margin-bottom: 24px;
+            width: 100%;
+            max-width: 374px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .small-card {
-            width: 117.33px;
+            width: 100%;
             height: 64px;
             border-radius: 8px;
             display: flex;
@@ -459,25 +605,29 @@
         .bottom-settings {
             display: flex;
             gap: 16px;
+            width: 100%;
+            max-width: 374px;
+            margin: 0 auto;
         }
 
         .settings-icon {
             width: 64px;
             height: 64px;
             border-radius: 12px;
-            background-color: #1D3328;
-            border: 1px solid #91FFC7;
+            background-color: var(--card-bg);
+            border: 1px solid var(--active-color);
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
         }
 
         .settings-card {
-            width: 294px;
+            width: 100%;
             height: 64px;
             border-radius: 12px;
-            background-color: #1D3328;
-            border: 1px solid #91FFC7;
+            background-color: var(--card-bg);
+            border: 1px solid var(--active-color);
             padding: 12px 16px;
             display: flex;
             align-items: center;
@@ -491,7 +641,7 @@
         .settings-arrow {
             width: 20px;
             height: 20px;
-            color: #91FFC7;
+            color: var(--active-color);
         }
 
         /* Утилитарные классы */
@@ -499,16 +649,90 @@
             display: none;
         }
 
-        .flex {
-            display: flex;
-        }
-
         .page {
             display: none;
+            width: 100%;
+            flex: 1;
         }
 
         .page.active {
-            display: block;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 412px) {
+            .app-container {
+                min-height: 100vh;
+            }
+            
+            .profile-card {
+                height: auto;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .avatar-container {
+                margin-bottom: 12px;
+            }
+            
+            .profile-info {
+                padding-left: 0;
+                width: 100%;
+            }
+            
+            .profile-name {
+                justify-content: center;
+            }
+            
+            .exp-bar {
+                margin: 0 auto;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .guns-slider {
+                max-width: 100%;
+            }
+            
+            .rating-list {
+                max-width: 100%;
+            }
+            
+            .cards-grid, .small-cards-grid {
+                grid-template-columns: 1fr;
+                max-width: 100%;
+            }
+            
+            .bottom-settings {
+                flex-direction: column;
+                max-width: 100%;
+            }
+            
+            .settings-card {
+                width: 100%;
+            }
+        }
+
+        @media (max-height: 744px) {
+            .work-area {
+                padding: 12px;
+            }
+            
+            .profile-card {
+                margin-bottom: 16px;
+            }
+            
+            .stats-grid {
+                gap: 12px;
+            }
+            
+            .rating-list {
+                height: 400px;
+            }
         }
     </style>
 </head>
@@ -526,18 +750,27 @@
                     <div class="profile-info">
                         <div class="profile-name">
                             <div class="name" id="user-name">Имя пользователя</div>
-                            <div class="icon">
-                                <!-- SVG иконка -->
-                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                    <path d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 3C11.66 3 13 4.34 13 6C13 7.66 11.66 9 10 9C8.34 9 7 7.66 7 6C7 4.34 8.34 3 10 3ZM10 17.2C7.5 17.2 5.29 15.92 4 13.98C4.03 11.99 8 10.9 10 10.9C11.99 10.9 15.97 11.99 16 13.98C14.71 15.92 12.5 17.2 10 17.2Z" fill="#579977"/>
+                            <div class="profile-icon">
+                                <svg viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 3C11.66 3 13 4.34 13 6C13 7.66 11.66 9 10 9C8.34 9 7 7.66 7 6C7 4.34 8.34 3 10 3ZM10 17.2C7.5 17.2 5.29 15.92 4 13.98C4.03 11.99 8 10.9 10 10.9C11.99 10.9 15.97 11.99 16 13.98C14.71 15.92 12.5 17.2 10 17.2Z"/>
                                 </svg>
                             </div>
                         </div>
                         <div class="username" id="user-username">@username</div>
                         <div class="exp-bar">
-                            <div class="exp-text">45 / 100</div>
+                            <div class="exp-text">
+                                <span>45</span>
+                                <span>/ 100</span>
+                            </div>
                             <div class="exp-progress">
                                 <div class="exp-fill"></div>
+                                <div class="exp-icon">
+                                    <svg viewBox="0 0 36 36" fill="currentColor">
+                                        <path d="M18 2C8.06 2 0 10.06 0 20C0 29.94 8.06 38 18 38C27.94 38 36 29.94 36 20C36 10.06 27.94 2 18 2ZM18 34C9.73 34 3 27.27 3 19C3 10.73 9.73 4 18 4C26.27 4 33 10.73 33 19C33 27.27 26.27 34 18 34Z"/>
+                                        <path d="M18 7C12.48 7 8 11.48 8 17C8 22.52 12.48 27 18 27C23.52 27 28 22.52 28 17C28 11.48 23.52 7 18 7ZM18 25C13.59 25 10 21.41 10 17C10 12.59 13.59 9 18 9C22.41 9 26 12.59 26 17C26 21.41 22.41 25 18 25Z"/>
+                                        <path d="M18 11C15.24 11 13 13.24 13 16C13 18.76 15.24 21 18 21C20.76 21 23 18.76 23 16C23 13.24 20.76 11 18 11ZM18 19C16.34 19 15 17.66 15 16C15 14.34 16.34 13 18 13C19.66 13 21 14.34 21 16C21 17.66 19.66 19 18 19Z"/>
+                                    </svg>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -546,9 +779,8 @@
                 <div class="search-container" id="search-container">
                     <input type="text" class="search-input" placeholder="Поиск пользователя">
                     <div class="search-icon">
-                        <!-- SVG иконка поиска -->
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                            <path d="M15.5 14H14.71L14.43 13.73C15.41 12.59 16 11.11 16 9.5C16 5.91 13.09 3 9.5 3C5.91 3 3 5.91 3 9.5C3 13.09 5.91 16 9.5 16C11.11 16 12.59 15.41 13.73 14.43L14 14.71V15.5L19 20.49L20.49 19L15.5 14ZM9.5 14C7.01 14 5 11.99 5 9.5C5 7.01 7.01 5 9.5 5C11.99 5 14 7.01 14 9.5C14 11.99 11.99 14 9.5 14Z" fill="currentColor"/>
+                        <svg viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M15.5 14H14.71L14.43 13.73C15.41 12.59 16 11.11 16 9.5C16 5.91 13.09 3 9.5 3C5.91 3 3 5.91 3 9.5C3 13.09 5.91 16 9.5 16C11.11 16 12.59 15.41 13.73 14.43L14 14.71V15.5L19 20.49L20.49 19L15.5 14ZM9.5 14C7.01 14 5 11.99 5 9.5C5 7.01 7.01 5 9.5 5C11.99 5 14 7.01 14 9.5C14 11.99 11.99 14 9.5 14Z"/>
                         </svg>
                     </div>
                 </div>
@@ -579,35 +811,47 @@
             
             <!-- Страница игрового профиля -->
             <div class="page" id="game-profile-page">
-                <div class="profile-card">
+                <div class="profile-link" id="link-profile">
+                    Привязать игровой профиль
+                </div>
+                
+                <div class="profile-card hidden" id="linked-profile">
                     <div class="avatar-container">
                         <div class="avatar"></div>
                     </div>
                     <div class="profile-info">
                         <div class="profile-name">
-                            <div class="name">Игровой ник</div>
-                            <div class="icon">
-                                <!-- SVG иконка -->
-                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                    <path d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 3C11.66 3 13 4.34 13 6C13 7.66 11.66 9 10 9C8.34 9 7 7.66 7 6C7 4.34 8.34 3 10 3ZM10 17.2C7.5 17.2 5.29 15.92 4 13.98C4.03 11.99 8 10.9 10 10.9C11.99 10.9 15.97 11.99 16 13.98C14.71 15.92 12.5 17.2 10 17.2Z" fill="#579977"/>
+                            <div class="name" id="game-name">Игровой ник</div>
+                            <div class="profile-icon">
+                                <svg viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 3C11.66 3 13 4.34 13 6C13 7.66 11.66 9 10 9C8.34 9 7 7.66 7 6C7 4.34 8.34 3 10 3ZM10 17.2C7.5 17.2 5.29 15.92 4 13.98C4.03 11.99 8 10.9 10 10.9C11.99 10.9 15.97 11.99 16 13.98C14.71 15.92 12.5 17.2 10 17.2Z"/>
                                 </svg>
                             </div>
                         </div>
                         <div class="username" style="font-weight: 700;">GS 1234</div>
                         <div class="exp-bar">
-                            <div class="exp-text">45 / 100</div>
+                            <div class="exp-text">
+                                <span>45</span>
+                                <span>/ 100</span>
+                            </div>
                             <div class="exp-progress">
                                 <div class="exp-fill"></div>
+                                <div class="exp-icon">
+                                    <svg viewBox="0 0 36 36" fill="currentColor">
+                                        <path d="M18 2C8.06 2 0 10.06 0 20C0 29.94 8.06 38 18 38C27.94 38 36 29.94 36 20C36 10.06 27.94 2 18 2ZM18 34C9.73 34 3 27.27 3 19C3 10.73 9.73 4 18 4C26.27 4 33 10.73 33 19C33 27.27 26.27 34 18 34Z"/>
+                                        <path d="M18 7C12.48 7 8 11.48 8 17C8 22.52 12.48 27 18 27C23.52 27 28 22.52 28 17C28 11.48 23.52 7 18 7ZM18 25C13.59 25 10 21.41 10 17C10 12.59 13.59 9 18 9C22.41 9 26 12.59 26 17C26 21.41 22.41 25 18 25Z"/>
+                                        <path d="M18 11C15.24 11 13 13.24 13 16C13 18.76 15.24 21 18 21C20.76 21 23 18.76 23 16C23 13.24 20.76 11 18 11ZM18 19C16.34 19 15 17.66 15 16C15 14.34 16.34 13 18 13C19.66 13 21 14.34 21 16C21 17.66 19.66 19 18 19Z"/>
+                                    </svg>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="data-block">
+                <div class="data-block hidden" id="game-stats">
                     <div class="data-row">
                         <div class="data-icon">
-                            <!-- SVG иконка -->
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="#579977">
+                            <svg viewBox="0 0 16 16" fill="currentColor">
                                 <circle cx="8" cy="8" r="8"/>
                             </svg>
                         </div>
@@ -616,10 +860,9 @@
                     </div>
                     <div class="divider"></div>
                     
-                    <!-- Повторяющиеся строки данных -->
                     <div class="data-row">
                         <div class="data-icon">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="#579977">
+                            <svg viewBox="0 0 16 16" fill="currentColor">
                                 <circle cx="8" cy="8" r="8"/>
                             </svg>
                         </div>
@@ -630,7 +873,7 @@
                     
                     <div class="data-row">
                         <div class="data-icon">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="#579977">
+                            <svg viewBox="0 0 16 16" fill="currentColor">
                                 <circle cx="8" cy="8" r="8"/>
                             </svg>
                         </div>
@@ -641,7 +884,7 @@
                     
                     <div class="data-row">
                         <div class="data-icon">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="#579977">
+                            <svg viewBox="0 0 16 16" fill="currentColor">
                                 <circle cx="8" cy="8" r="8"/>
                             </svg>
                         </div>
@@ -652,7 +895,7 @@
                     
                     <div class="data-row">
                         <div class="data-icon">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="#579977">
+                            <svg viewBox="0 0 16 16" fill="currentColor">
                                 <circle cx="8" cy="8" r="8"/>
                             </svg>
                         </div>
@@ -663,7 +906,7 @@
                     
                     <div class="data-row">
                         <div class="data-icon">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="#579977">
+                            <svg viewBox="0 0 16 16" fill="currentColor">
                                 <circle cx="8" cy="8" r="8"/>
                             </svg>
                         </div>
@@ -674,7 +917,7 @@
                     
                     <div class="data-row">
                         <div class="data-icon">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="#579977">
+                            <svg viewBox="0 0 16 16" fill="currentColor">
                                 <circle cx="8" cy="8" r="8"/>
                             </svg>
                         </div>
@@ -682,49 +925,125 @@
                         <div class="data-value">A+</div>
                     </div>
                     
-                    <div style="height: 20px;"></div>
-                    
-                    <div class="data-row">
-                        <div class="data-icon">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="#579977">
-                                <circle cx="8" cy="8" r="8"/>
-                            </svg>
+                    <div class="stats-row">
+                        <div class="stat-item">
+                            <div class="data-icon">
+                                <svg viewBox="0 0 16 16" fill="currentColor">
+                                    <circle cx="8" cy="8" r="8"/>
+                                </svg>
+                            </div>
+                            <div class="data-text">Достижения</div>
+                            <div class="data-value">7/15</div>
                         </div>
-                        <div class="data-text">Достижения</div>
-                        <div class="data-value">7/15</div>
-                    </div>
-                    
-                    <div class="data-row">
-                        <div class="data-icon">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="#579977">
-                                <circle cx="8" cy="8" r="8"/>
-                            </svg>
+                        
+                        <div class="stat-item">
+                            <div class="data-icon">
+                                <svg viewBox="0 0 16 16" fill="currentColor">
+                                    <circle cx="8" cy="8" r="8"/>
+                                </svg>
+                            </div>
+                            <div class="data-text">Награды</div>
+                            <div class="data-value">3</div>
                         </div>
-                        <div class="data-text">Награды</div>
-                        <div class="data-value">3</div>
-                    </div>
-                    
-                    <div class="data-row">
-                        <div class="data-icon">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="#579977">
-                                <circle cx="8" cy="8" r="8"/>
-                            </svg>
+                        
+                        <div class="stat-item">
+                            <div class="data-icon">
+                                <svg viewBox="0 0 16 16" fill="currentColor">
+                                    <circle cx="8" cy="8" r="8"/>
+                                </svg>
+                            </div>
+                            <div class="data-text">Медалей</div>
+                            <div class="data-value">12</div>
                         </div>
-                        <div class="data-text">Медалей</div>
-                        <div class="data-value">12</div>
                     </div>
                 </div>
                 
                 <div class="guns-title">Пушки</div>
                 <div class="guns-slider">
-                    <!-- Карточки пушек -->
-                    <div class="gun-card">Пушка 1</div>
-                    <div class="gun-card">Пушка 2</div>
-                    <div class="gun-card">Пушка 3</div>
-                    <div class="gun-card">Пушка 4</div>
-                    <div class="gun-card">Пушка 5</div>
-                    <div class="gun-card">Пушка 6</div>
-                    <div class="gun-card">Пушка 7</div>
+                    <div class="gun-card">
+                        <div class="gun-name">AK-47</div>
+                        <div class="gun-stats">
+                            <div class="gun-stat">
+                                <div class="gun-stat-icon">
+                                    <svg viewBox="0 0 16 16" fill="currentColor">
+                                        <circle cx="8" cy="8" r="8"/>
+                                    </svg>
+                                </div>
+                                <div class="gun-stat-value">Урон: 35</div>
+                            </div>
+                            <div class="gun-stat">
+                                <div class="gun-stat-icon">
+                                    <svg viewBox="0 0 16 16" fill="currentColor">
+                                        <circle cx="8" cy="8" r="8"/>
+                                    </svg>
+                                </div>
+                                <div class="gun-stat-value">Скорость: 600</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gun-card">
+                        <div class="gun-name">M4A1</div>
+                        <div class="gun-stats">
+                            <div class="gun-stat">
+                                <div class="gun-stat-icon">
+                                    <svg viewBox="0 0 16 16" fill="currentColor">
+                                        <circle cx="8" cy="8" r="8"/>
+                                    </svg>
+                                </div>
+                                <div class="gun-stat-value">Урон: 30</div>
+                            </div>
+                            <div class="gun-stat">
+                                <div class="gun-stat-icon">
+                                    <svg viewBox="0 0 16 16" fill="currentColor">
+                                        <circle cx="8" cy="8" r="8"/>
+                                    </svg>
+                                </div>
+                                <div class="gun-stat-value">Скорость: 750</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gun-card">
+                        <div class="gun-name">AWP</div>
+                        <div class="gun-stats">
+                            <div class="gun-stat">
+                                <div class="gun-stat-icon">
+                                    <svg viewBox="0 0 16 16" fill="currentColor">
+                                        <circle cx="8" cy="8" r="8"/>
+                                    </svg>
+                                </div>
+                                <div class="gun-stat-value">Урон: 115</div>
+                            </div>
+                            <div class="gun-stat">
+                                <div class="gun-stat-icon">
+                                    <svg viewBox="0 0 16 16" fill="currentColor">
+                                        <circle cx="8" cy="8" r="8"/>
+                                    </svg>
+                                </div>
+                                <div class="gun-stat-value">Скорость: 50</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gun-card">
+                        <div class="gun-name">Desert Eagle</div>
+                        <div class="gun-stats">
+                            <div class="gun-stat">
+                                <div class="gun-stat-icon">
+                                    <svg viewBox="0 0 16 16" fill="currentColor">
+                                        <circle cx="8" cy="8" r="8"/>
+                                    </svg>
+                                </div>
+                                <div class="gun-stat-value">Урон: 63</div>
+                            </div>
+                            <div class="gun-stat">
+                                <div class="gun-stat-icon">
+                                    <svg viewBox="0 0 16 16" fill="currentColor">
+                                        <circle cx="8" cy="8" r="8"/>
+                                    </svg>
+                                </div>
+                                <div class="gun-stat-value">Скорость: 267</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
@@ -733,20 +1052,19 @@
                 <div class="search-container">
                     <input type="text" class="search-input" placeholder="Поиск пользователя">
                     <div class="search-icon">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                            <path d="M15.5 14H14.71L14.43 13.73C15.41 12.59 16 11.11 16 9.5C16 5.91 13.09 3 9.5 3C5.91 3 3 5.91 3 9.5C3 13.09 5.91 16 9.5 16C11.11 16 12.59 15.41 13.73 14.43L14 14.71V15.5L19 20.49L20.49 19L15.5 14ZM9.5 14C7.01 14 5 11.99 5 9.5C5 7.01 7.01 5 9.5 5C11.99 5 14 7.01 14 9.5C14 11.99 11.99 14 9.5 14Z" fill="currentColor"/>
+                        <svg viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M15.5 14H14.71L14.43 13.73C15.41 12.59 16 11.11 16 9.5C16 5.91 13.09 3 9.5 3C5.91 3 3 5.91 3 9.5C3 13.09 5.91 16 9.5 16C11.11 16 12.59 15.41 13.73 14.43L14 14.71V15.5L19 20.49L20.49 19L15.5 14ZM9.5 14C7.01 14 5 11.99 5 9.5C5 7.01 7.01 5 9.5 5C11.99 5 14 7.01 14 9.5C14 11.99 11.99 14 9.5 14Z"/>
                         </svg>
                     </div>
                 </div>
                 
                 <div class="rating-tabs">
-                    <div class="rating-tab active">Опыт</div>
-                    <div class="rating-tab">Кристаллы</div>
-                    <div class="rating-tab">Голды</div>
+                    <div class="rating-tab active" data-tab="exp">Опыт</div>
+                    <div class="rating-tab" data-tab="crystals">Кристаллы</div>
+                    <div class="rating-tab" data-tab="gold">Голды</div>
                 </div>
                 
                 <div class="rating-list">
-                    <!-- Список рейтинга -->
                     <div class="rating-item">
                         <div class="rating-position">1</div>
                         <div class="rating-avatar"></div>
@@ -761,6 +1079,13 @@
                         <div class="rating-value">14,987</div>
                     </div>
                     
+                    <div class="rating-item">
+                        <div class="rating-position">3</div>
+                        <div class="rating-avatar"></div>
+                        <div class="rating-name">Игрок 3</div>
+                        <div class="rating-value">14,567</div>
+                    </div>
+                    
                     <!-- Добавьте больше элементов рейтинга по необходимости -->
                 </div>
             </div>
@@ -770,8 +1095,7 @@
                 <div class="cards-grid">
                     <div class="main-card">
                         <div class="card-icon">
-                            <!-- SVG иконка -->
-                            <svg width="46" height="46" viewBox="0 0 46 46" fill="#91FFC7">
+                            <svg viewBox="0 0 46 46" fill="currentColor">
                                 <circle cx="23" cy="23" r="23"/>
                             </svg>
                         </div>
@@ -779,7 +1103,7 @@
                     </div>
                     <div class="main-card">
                         <div class="card-icon">
-                            <svg width="46" height="46" viewBox="0 0 46 46" fill="#91FFC7">
+                            <svg viewBox="0 0 46 46" fill="currentColor">
                                 <circle cx="23" cy="23" r="23"/>
                             </svg>
                         </div>
@@ -787,7 +1111,7 @@
                     </div>
                     <div class="main-card">
                         <div class="card-icon">
-                            <svg width="46" height="46" viewBox="0 0 46 46" fill="#76FF33">
+                            <svg viewBox="0 0 46 46" fill="currentColor">
                                 <circle cx="23" cy="23" r="23"/>
                             </svg>
                         </div>
@@ -795,7 +1119,7 @@
                     </div>
                     <div class="main-card">
                         <div class="card-icon">
-                            <svg width="46" height="46" viewBox="0 0 46 46" fill="#76FF33">
+                            <svg viewBox="0 0 46 46" fill="currentColor">
                                 <circle cx="23" cy="23" r="23"/>
                             </svg>
                         </div>
@@ -803,7 +1127,7 @@
                     </div>
                     <div class="main-card">
                         <div class="card-icon">
-                            <svg width="46" height="46" viewBox="0 0 46 46" fill="#76FF33">
+                            <svg viewBox="0 0 46 46" fill="currentColor">
                                 <circle cx="23" cy="23" r="23"/>
                             </svg>
                         </div>
@@ -811,7 +1135,7 @@
                     </div>
                     <div class="main-card">
                         <div class="card-icon">
-                            <svg width="46" height="46" viewBox="0 0 46 46" fill="#76FF33">
+                            <svg viewBox="0 0 46 46" fill="currentColor">
                                 <circle cx="23" cy="23" r="23"/>
                             </svg>
                         </div>
@@ -822,7 +1146,7 @@
                 <div class="small-cards-grid">
                     <div class="small-card">
                         <div class="small-card-icon">
-                            <svg width="32" height="32" viewBox="0 0 32 32" fill="#2E8FFF">
+                            <svg viewBox="0 0 32 32" fill="currentColor">
                                 <circle cx="16" cy="16" r="16"/>
                             </svg>
                         </div>
@@ -830,7 +1154,7 @@
                     </div>
                     <div class="small-card">
                         <div class="small-card-icon">
-                            <svg width="32" height="32" viewBox="0 0 32 32" fill="#6673FF">
+                            <svg viewBox="0 0 32 32" fill="currentColor">
                                 <circle cx="16" cy="16" r="16"/>
                             </svg>
                         </div>
@@ -838,7 +1162,7 @@
                     </div>
                     <div class="small-card">
                         <div class="small-card-icon">
-                            <svg width="32" height="32" viewBox="0 0 32 32" fill="#2EB9FF">
+                            <svg viewBox="0 0 32 32" fill="currentColor">
                                 <circle cx="16" cy="16" r="16"/>
                             </svg>
                         </div>
@@ -846,7 +1170,7 @@
                     </div>
                     <div class="small-card">
                         <div class="small-card-icon">
-                            <svg width="32" height="32" viewBox="0 0 32 32" fill="#FF0033">
+                            <svg viewBox="0 0 32 32" fill="currentColor">
                                 <circle cx="16" cy="16" r="16"/>
                             </svg>
                         </div>
@@ -854,7 +1178,7 @@
                     </div>
                     <div class="small-card">
                         <div class="small-card-icon">
-                            <svg width="32" height="32" viewBox="0 0 32 32" fill="#9D5CFF">
+                            <svg viewBox="0 0 32 32" fill="currentColor">
                                 <circle cx="16" cy="16" r="16"/>
                             </svg>
                         </div>
@@ -862,7 +1186,7 @@
                     </div>
                     <div class="small-card">
                         <div class="small-card-icon">
-                            <svg width="32" height="32" viewBox="0 0 32 32" fill="#28E6E0">
+                            <svg viewBox="0 0 32 32" fill="currentColor">
                                 <circle cx="16" cy="16" r="16"/>
                             </svg>
                         </div>
@@ -872,14 +1196,14 @@
                 
                 <div class="bottom-settings">
                     <div class="settings-icon">
-                        <svg width="32" height="32" viewBox="0 0 32 32" fill="#91FFC7">
+                        <svg viewBox="0 0 32 32" fill="currentColor">
                             <path d="M28,16c0-1.1-0.9-2-2-2h-2.2c-0.2-0.7-0.5-1.3-0.8-1.9l1.6-1.6c0.8-0.8,0.8-2,0-2.8l-2.8-2.8c-0.8-0.8-2-0.8-2.8,0l-1.6,1.6c-0.6-0.3-1.2-0.6-1.9-0.8V4c0-1.1-0.9-2-2-2h-4c-1.1,0-2,0.9-2,2v2.2c-0.7,0.2-1.3,0.5-1.9,0.8L6.8,5.4c-0.8-0.8-2-0.8-2.8,0L1.2,8.2c-0.8,0.8-0.8,2,0,2.8l1.6,1.6c-0.3,0.6-0.6,1.2-0.8,1.9H2c-1.1,0-2,0.9-2,2v4c0,1.1,0.9,2,2,2h2.2c0.2,0.7,0.5,1.3,0.8,1.9l-1.6,1.6c-0.8,0.8-0.8,2,0,2.8l2.8,2.8c0.8,0.8,2,0.8,2.8,0l1.6-1.6c0.6,0.3,1.2,0.6,1.9,0.8V28c0,1.1,0.9,2,2,2h4c1.1,0,2-0.9,2-2v-2.2c0.7-0.2,1.3-0.5,1.9-0.8l1.6,1.6c0.8,0.8,2,0.8,2.8,0l2.8-2.8c0.8-0.8,0.8-2,0-2.8l-1.6-1.6c0.3-0.6,0.6-1.2,0.8-1.9H26c1.1,0,2-0.9,2-2V16z M16,20c-2.2,0-4-1.8-4-4s1.8-4,4-4s4,1.8,4,4S18.2,20,16,20z"/>
                         </svg>
                     </div>
                     <div class="settings-card">
                         <div class="settings-text">Есть идеи для улучшения бота? Можешь поделиться!</div>
                         <div class="settings-arrow">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="#91FFC7">
+                            <svg viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
                             </svg>
                         </div>
@@ -891,26 +1215,22 @@
         <div class="active-menu">
             <div class="menu-icons">
                 <div class="menu-icon active" data-page="home-page">
-                    <!-- SVG иконка для главной -->
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#91FFC7">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
                     </svg>
                 </div>
                 <div class="menu-icon" data-page="game-profile-page">
-                    <!-- SVG иконка для игрового профиля -->
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#91FFC7">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                     </svg>
                 </div>
                 <div class="menu-icon" data-page="rating-page">
-                    <!-- SVG иконка для рейтинга -->
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#91FFC7">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
                     </svg>
                 </div>
                 <div class="menu-icon" data-page="additional-page">
-                    <!-- SVG иконка для дополнительного -->
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#91FFC7">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/>
                     </svg>
                 </div>
@@ -920,25 +1240,30 @@
 
     <script>
         // Инициализация Telegram Web App
-        let tg = window.Telegram.WebApp;
+        let tg = window.Telegram?.WebApp;
         
-        // Расширяем приложение на весь экран
-        tg.expand();
-        
-        // Получаем данные пользователя из Telegram
-        const user = tg.initDataUnsafe.user;
-        
-        // Заполняем данные пользователя, если они доступны
-        if (user) {
-            document.getElementById('user-name').textContent = user.first_name || 'Пользователь';
-            document.getElementById('user-username').textContent = '@' + (user.username || 'username');
+        if (tg) {
+            // Расширяем приложение на весь экран
+            tg.expand();
             
-            // Установка аватара (в реальном приложении нужно загружать фото)
-            const avatar = document.getElementById('user-avatar');
-            if (user.photo_url) {
-                avatar.style.backgroundImage = `url(${user.photo_url})`;
-                avatar.style.backgroundSize = 'cover';
+            // Получаем данные пользователя из Telegram
+            const user = tg.initDataUnsafe?.user;
+            
+            // Заполняем данные пользователя, если они доступны
+            if (user) {
+                document.getElementById('user-name').textContent = user.first_name || 'Пользователь';
+                document.getElementById('user-username').textContent = '@' + (user.username || 'username');
+                
+                // Установка аватара (в реальном приложении нужно загружать фото)
+                const avatar = document.getElementById('user-avatar');
+                if (user.photo_url) {
+                    avatar.style.backgroundImage = `url(${user.photo_url})`;
+                }
             }
+        } else {
+            // Заглушка для локального тестирования
+            document.getElementById('user-name').textContent = 'Тестовый пользователь';
+            document.getElementById('user-username').textContent = '@testuser';
         }
         
         // Навигация между страницами
@@ -976,16 +1301,79 @@
         const searchContainer = document.getElementById('search-container');
         const searchInput = document.querySelector('.search-input');
         
-        searchInput.addEventListener('focus', () => {
-            searchContainer.classList.add('active');
+        if (searchInput && searchContainer) {
+            searchInput.addEventListener('focus', () => {
+                searchContainer.classList.add('active');
+            });
+            
+            searchInput.addEventListener('blur', () => {
+                searchContainer.classList.remove('active');
+                // Сброс состояния ошибки при потере фокуса
+                searchContainer.classList.remove('error');
+            });
+            
+            // Пример обработки поиска с ошибкой
+            searchInput.addEventListener('input', (e) => {
+                if (e.target.value.toLowerCase().includes('ошибка')) {
+                    searchContainer.classList.add('error');
+                } else {
+                    searchContainer.classList.remove('error');
+                }
+            });
+        }
+        
+        // Обработка привязки игрового профиля
+        const linkProfile = document.getElementById('link-profile');
+        const linkedProfile = document.getElementById('linked-profile');
+        const gameStats = document.getElementById('game-stats');
+        
+        if (linkProfile && linkedProfile && gameStats) {
+            linkProfile.addEventListener('click', () => {
+                // В реальном приложении здесь будет логика привязки профиля
+                const gameName = prompt('Введите ваш игровой никнейм:');
+                if (gameName) {
+                    document.getElementById('game-name').textContent = gameName;
+                    linkProfile.classList.add('hidden');
+                    linkedProfile.classList.remove('hidden');
+                    gameStats.classList.remove('hidden');
+                }
+            });
+        }
+        
+        // Обработка вкладок рейтинга
+        const ratingTabs = document.querySelectorAll('.rating-tab');
+        
+        ratingTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                ratingTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // В реальном приложении здесь будет загрузка данных для выбранной вкладки
+                const tabType = tab.getAttribute('data-tab');
+                console.log(`Загрузка рейтинга для: ${tabType}`);
+            });
         });
         
-        searchInput.addEventListener('blur', () => {
-            searchContainer.classList.remove('active');
-        });
+        // Адаптация под размер экрана
+        function adjustLayout() {
+            const appContainer = document.querySelector('.app-container');
+            const workArea = document.querySelector('.work-area');
+            
+            if (window.innerHeight < 744) {
+                appContainer.style.minHeight = '100vh';
+            } else {
+                appContainer.style.minHeight = '744px';
+            }
+            
+            if (window.innerWidth < 412) {
+                appContainer.style.maxWidth = '100%';
+            } else {
+                appContainer.style.maxWidth = '412px';
+            }
+        }
         
-        // В реальном приложении здесь будет логика обработки поиска
-        // и отображения состояния ошибки при необходимости
+        window.addEventListener('resize', adjustLayout);
+        adjustLayout(); // Вызов при загрузке
     </script>
 </body>
 </html>
