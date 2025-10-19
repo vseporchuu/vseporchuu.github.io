@@ -3,1623 +3,989 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>47bot | Танки Онлайн</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>Telegram App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #4CAF50;
-            --primary-light: #81C784;
-            --primary-dark: #388E3C;
-            --primary-gradient: linear-gradient(135deg, #4CAF50, #2E7D32);
-            --secondary: #FFC107;
-            --accent: #FF5722;
-            --background: #0F1A14; 
-            --surface: #1e1e1e;
-            --card-bg: #16261E; 
-            --text: #e0e0e0;
-            --text-light: #b0b0b0;
-            --text-lighter: #8a8a8a;
-            --border: #333333;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            --card-border: #66B28B; 
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Rubik', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
         }
 
         body {
-            background-color: var(--background);
-            color: var(--text);
-            min-height: 100vh;
+            background-color: #16261E;
+            color: white;
+            width: 412px;
+            height: 744px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .app-container {
+            width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
-            overflow-x: hidden;
-            line-height: 1.6;
-            font-size: 16px;
-            padding-top: 56px;
-            padding-bottom: 80px;
         }
 
-        .container {
-            max-width: 412px;
-            margin: 0 auto;
-            padding: 0 20px;
-            width: 100%;
-        }
-
-        /* Бровь сверху */
-        .top-nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
+        /* Head стили */
+        .head {
             height: 56px;
-            background: var(--surface);
+            width: 100%;
+            background-color: #0f1a15;
             display: flex;
-            justify-content: space-around;
-            align-items: center;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .top-nav-item {
-            display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 8px 16px;
-            color: var(--text-light);
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: var(--transition);
+            font-size: 24px;
+            font-weight: 500;
         }
 
-        .top-nav-item.active {
-            color: var(--primary);
+        /* Рабочая область */
+        .work-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
         }
 
-        /* User info */
-        .user-container {
+        /* Active Menu */
+        .active-menu {
+            height: 80px;
+            width: 100%;
+            background-color: #0f1a15;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .menu-icons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .menu-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-            padding: 25px 0 15px;
-            margin-bottom: 5px;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .menu-icon.active {
+            background-color: #1D3328;
+        }
+
+        /* Стили для главной страницы */
+        .profile-card {
+            width: 350px;
+            height: 128px;
+            display: flex;
+            margin-bottom: 24px;
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 128px;
+            height: 128px;
         }
 
         .avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--primary);
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .avatar img {
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            object-fit: cover;
+            border: 1px solid #579977;
+            background-color: #2C4D3C;
         }
 
-        .user-info {
+        .profile-info {
+            flex: 1;
+            padding-left: 16px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: flex-end;
-            text-align: right;
         }
 
-        .name-container {
+        .profile-name {
             display: flex;
             align-items: center;
-            justify-content: flex-end;
-            gap: 8px;
-            margin-bottom: 5px;
-        }
-
-        .name-icon {
-            width: 20px;
-            height: 20px;
-        }
-
-        .user-info h2 {
-            font-size: 1.5rem;
-            margin-bottom: 0;
-            font-weight: 600;
-            color: white;
-            max-width: 150px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .user-info p {
-            color: var(--text-light);
-            font-size: 1rem;
-            margin-bottom: 15px;
-            max-width: 150px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .progress-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            width: 100%;
-            justify-content: flex-end;
-        }
-
-        .progress-icon {
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .progress-icon img {
-            width: 20px;
-            height: 20px;
-        }
-
-        .progress-info {
-            flex: 1;
-            max-width: 250px;
-        }
-
-        .progress-value {
-            font-weight: 400;
-            color: white;
-            font-size: 1rem;
             margin-bottom: 8px;
-            text-align: left;
         }
 
-        .progress-bar {
-            height: 10px;
-            width: 160px;
-            border-radius: 5px;
-            overflow: hidden;
-            position: relative;
-            background: transparent;
-            border: 2px solid rgba(76, 175, 80, 0.3);
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: var(--primary-gradient);
-            border-radius: 3px;
-            width: 50%;
-            position: relative;
-            transition: width 0.5s ease;
-        }
-
-        /* Шапка для второй вкладки */
-        .profile-header-container {
-            display: none;
-            padding: 25px 0 15px;
-        }
-
-        .profile-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        .profile-header-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--primary);
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .profile-header-avatar img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .profile-header-info {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-end;
-            text-align: right;
-        }
-
-        .profile-header-name-container {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 8px;
-            margin-bottom: 5px;
-        }
-
-        .profile-header-info h2 {
-            font-size: 1.5rem;
-            margin-bottom: 0;
-            font-weight: 600;
-            color: white;
-            max-width: 150px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .profile-header-info p {
-            color: var(--text-light);
-            font-size: 1rem;
-            margin-bottom: 15px;
-            max-width: 150px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .profile-header-progress-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            width: 100%;
-            justify-content: flex-end;
-        }
-
-        .profile-header-progress-icon {
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .profile-header-progress-icon img {
-            width: 20px;
-            height: 20px;
-        }
-
-        .profile-header-progress-info {
-            flex: 1;
-            max-width: 250px;
-        }
-
-        .profile-header-progress-value {
-            font-weight: 400;
-            color: white;
-            font-size: 1rem;
-            margin-bottom: 8px;
-            text-align: left;
-        }
-
-        .profile-header-progress-bar {
-            height: 10px;
-            width: 160px;
-            border-radius: 5px;
-            overflow: hidden;
-            position: relative;
-            background: transparent;
-            border: 2px solid rgba(76, 175, 80, 0.3);
-        }
-
-        .profile-header-progress-fill {
-            height: 100%;
-            background: var(--primary-gradient);
-            border-radius: 3px;
-            width: 50%;
-            position: relative;
-            transition: width 0.5s ease;
-        }
-
-        /* Main content */
-        .main-content {
-            flex: 1;
-            padding: 0 0 30px;
-        }
-
-        .section {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Dashboard styles - COMPACT VERSION */
-        .dashboard-compact {
-            margin-bottom: 25px;
-        }
-
-        /* Compact stats */
-        .compact-stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .stat-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 15px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-            width: 174px;
-            height: 95px;
-            text-align: center;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .stat-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--primary);
-        }
-
-        .stat-icon {
-            width: 40px;
-            height: 40px;
-            background: rgba(76, 175, 80, 0.15);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 8px;
-        }
-
-        .stat-icon img {
-            width: 24px;
-            height: 24px;
-        }
-
-        .stat-value {
-            font-size: 1.6rem;
+        .name {
+            font-size: 18px;
             font-weight: 700;
-            margin-bottom: 5px;
-            color: #e0f0e0;
+            margin-right: 8px;
         }
 
-        .stat-label {
-            font-size: 0.85rem;
-            color: var(--text-light);
+        .username {
+            font-size: 14px;
+            font-weight: 400;
+            color: #aaa;
         }
 
-        .stat-details {
-            max-height: 0;
+        .exp-bar {
+            margin-top: auto;
+            width: 210px;
+        }
+
+        .exp-text {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .exp-progress {
+            height: 10px;
+            background-color: #2C4D3C;
+            border-radius: 5px;
             overflow: hidden;
-            transition: max-height 0.3s ease;
-            margin-top: 10px;
-            border-top: 1px solid var(--border);
-            padding-top: 10px;
         }
 
-        .stat-card.expanded .stat-details {
-            max-height: 200px;
+        .exp-fill {
+            height: 100%;
+            background-color: #579977;
+            border-radius: 5px;
+            width: 60%; /* Пример заполнения */
         }
 
-        .detail-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
-        }
-
-        .detail-label {
-            color: var(--text-light);
-        }
-
-        .detail-value {
-            font-weight: 600;
-            color: var(--primary);
-        }
-
-        /* Новый стиль для поля поиска */
-        .search-box {
-            display: flex;
-            margin: 15px 0 20px;
-            position: relative;
-            width: 100%;
+        .search-container {
+            width: 364px;
             height: 44px;
+            border-radius: 22px;
+            border: 1px solid #579977;
+            background-color: #16261E;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            margin-bottom: 24px;
+        }
+
+        .search-container.active {
+            background-color: #1D3328;
+            border-color: #91FFC7;
+        }
+
+        .search-container.error {
+            background-color: #401A1A;
+            border-color: #FF7474;
         }
 
         .search-input {
             flex: 1;
-            padding: 14px 18px 14px 50px;
-            border: 1px solid #66B28B;
-            border-radius: 16px;
-            font-size: 0.95rem;
-            background: #16261E;
-            color: var(--text);
-            transition: var(--transition);
-            width: 100%;
-            height: 100%;
-        }
-
-        .search-input:focus {
+            background: transparent;
+            border: none;
+            color: #579977;
+            font-size: 16px;
             outline: none;
-            border-color: #91FFC7;
-            background: #1D3328;
-            box-shadow: 0 0 0 2px rgba(145, 255, 199, 0.3);
         }
 
-        .search-input.error {
-            border-color: #FF7474;
-            background: #401A1A;
+        .search-container.active .search-input {
+            color: #91FFC7;
+        }
+
+        .search-container.error .search-input {
+            color: #FF7474;
         }
 
         .search-icon {
-            position: absolute;
-            left: 18px;
-            top: 50%;
-            transform: translateY(-50%);
             width: 20px;
             height: 20px;
-            z-index: 2;
+            color: #579977;
         }
 
-        /* Profile styles */
-        .profile-tabs {
-            display: none;
+        .search-container.active .search-icon {
+            color: #91FFC7;
         }
 
-        /* Новые стили для раздела профиля */
-        .profile-container {
-            margin-bottom: 25px;
+        .search-container.error .search-icon {
+            color: #FF7474;
         }
 
-        .profile-account-info {
-            display: none;
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
         }
 
-        .profile-stats-container {
-            background: var(--card-bg);
-            border-radius: 18px;
-            padding: 22px;
-            box-shadow: var(--shadow);
-            margin-bottom: 25px;
-            width: 100%;
-        }
-
-        .profile-stat-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 18px;
-            font-size: 1rem;
-            padding-bottom: 6px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .profile-stat-item:last-child {
-            margin-bottom: 0;
-            border-bottom: none;
-        }
-
-        .profile-stat-item img {
-            width: 16px;
-            height: 16px;
-            margin-right: 12px;
-        }
-
-        .profile-stat-label {
-            flex: 1;
-            color: var(--text);
-        }
-
-        .profile-stat-value {
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .supplies-details {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 18px;
-            padding-top: 18px;
-            border-top: 1px solid var(--border);
-        }
-
-        .supply-item {
+        .stat-card {
+            width: 174px;
+            height: 95px;
+            border: 1px solid #66B28B;
+            border-radius: 12px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Стили для страницы игрового профиля */
+        .game-profile {
+            display: none;
+        }
+
+        .data-block {
+            width: 364px;
+            height: 272px;
+            border-radius: 12px;
+            background-color: #1D3328;
+            padding: 16px;
+            margin-top: 24px;
+        }
+
+        .data-row {
+            display: flex;
             align-items: center;
-            width: 77px;
-        }
-
-        .supply-item:not(:last-child) {
-            margin-right: 25px;
-        }
-
-        .supply-item:not(:first-child) {
-            position: relative;
-        }
-
-        .supply-item:not(:first-child)::before {
-            content: "";
-            position: absolute;
-            left: -12.5px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 1px;
             height: 19px;
-            background-color: var(--border);
+            margin-bottom: 6px;
         }
 
-        .supply-icon {
+        .data-icon {
             width: 16px;
             height: 16px;
-            margin-bottom: 4px;
+            margin-right: 8px;
         }
 
-        .supply-value {
-            font-size: 0.9rem;
-            color: var(--primary);
-            font-weight: 600;
+        .data-text {
+            flex: 1;
+            font-size: 14px;
         }
 
-        .guns-section {
-            margin-top: 21px;
+        .data-value {
+            font-size: 14px;
+            font-weight: 500;
+            width: 41px;
+            text-align: right;
         }
 
-        .section-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: white;
+        .divider {
+            height: 0.5px;
+            background-color: #2C4D3C;
+            margin: 6px 0;
         }
 
-        .horizontal-scroll {
+        .guns-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 20px 0 16px 0;
+        }
+
+        .guns-slider {
             display: flex;
+            gap: 16px;
             overflow-x: auto;
-            gap: 8px;
-            padding: 10px 0;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-
-        .horizontal-scroll::-webkit-scrollbar {
-            display: none;
+            padding-bottom: 8px;
         }
 
         .gun-card {
             width: 160px;
             height: 98px;
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 12px;
-            box-shadow: var(--shadow);
-            flex-shrink: 0;
-            position: relative;
-        }
-
-        .gun-name {
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: white;
-        }
-
-        .gun-stats {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .gun-stat {
-            display: flex;
-            align-items: center;
-            font-size: 0.8rem;
-        }
-
-        .gun-stat-icon {
-            width: 14px;
-            height: 14px;
-            margin-right: 4px;
-        }
-
-        .hull-card {
-            width: 180px;
-            height: 98px;
-        }
-
-        /* Rating section styles */
-        .rating-filters {
-            display: flex;
-            justify-content: space-between;
-            margin: 20px 0;
-            width: 100%;
-        }
-
-        .rating-filter {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 8px 12px;
             border-radius: 8px;
-            background: var(--card-bg);
-            border: 1px solid transparent;
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 0.9rem;
-        }
-
-        .rating-filter.active {
-            border-color: #76FF33;
-            background: rgba(118, 255, 51, 0.2);
-        }
-
-        .rating-filter-icon {
-            width: 16px;
-            height: 16px;
-            margin-right: 6px;
-        }
-
-        /* General section */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-        }
-
-        .service-card {
-            background: var(--card-bg);
-            border-radius: 18px;
-            padding: 18px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            cursor: pointer;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .service-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--primary);
-        }
-
-        .service-card img {
-            width: 40px;
-            height: 40px;
-            margin-bottom: 12px;
-            transition: var(--transition);
-            filter: invert(1);
-        }
-
-        .service-card:hover img {
-            transform: scale(1.1);
-        }
-
-        .service-card h3 {
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-            color: white;
-        }
-
-        .service-card p {
-            color: var(--text-light);
-            line-height: 1.4;
-            font-size: 0.85rem;
-        }
-
-        /* Rating section */
-        .player-card {
-            background: var(--card-bg);
-            border-radius: 18px;
-            padding: 18px;
-            box-shadow: var(--shadow);
-            margin-bottom: 20px;
-            transition: var(--transition);
-        }
-
-        .player-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .player-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .player-rank {
-            width: 40px;
-            height: 40px;
-            background: var(--primary-gradient);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: white;
-            flex-shrink: 0;
-        }
-
-        .player-info h2 {
-            font-size: 1.3rem;
-            margin-bottom: 5px;
-            color: white;
-        }
-
-        .player-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 12px;
-            margin-top: 15px;
-        }
-
-        .top-players {
-            background: var(--card-bg);
-            border-radius: 18px;
-            padding: 18px;
-            box-shadow: var(--shadow);
-        }
-
-        .player-row {
-            display: flex;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid var(--border);
-            transition: var(--transition);
-        }
-
-        .player-row:hover {
-            background: rgba(255, 255, 255, 0.03);
-        }
-
-        .player-row:last-child {
-            border-bottom: none;
-        }
-
-        .player-position {
-            width: 30px;
-            font-weight: 700;
-            color: var(--primary);
-            font-size: 0.9rem;
-            text-align: center;
-        }
-
-        .player-name {
-            flex: 1;
-            font-weight: 500;
-            font-size: 0.9rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            color: white;
-        }
-
-        .player-score {
-            color: var(--primary);
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        /* Bottom Navigation */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: var(--surface);
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-            padding: 12px 0;
-            height: 80px;
-        }
-
-        .bottom-nav ul {
-            display: flex;
-            justify-content: space-between;
-            list-style: none;
-            padding: 0 24px;
-        }
-
-        .bottom-nav a {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: var(--text-light);
+            background-color: #2C4D3C;
             padding: 8px;
-            border-radius: 8px;
-            transition: var(--transition);
-            width: 56px;
-            height: 56px;
-            justify-content: center;
+            flex-shrink: 0;
         }
 
-        .bottom-nav a.active {
-            background: rgba(76, 175, 80, 0.15);
-            border: 1px solid var(--primary);
-        }
-
-        .bottom-nav a img {
-            width: 24px;
-            height: 24px;
-            filter: invert(0.8);
-        }
-
-        .bottom-nav a.active img {
-            filter: invert(0.5) sepia(1) saturate(5) hue-rotate(80deg);
-        }
-
-        /* Footer */
-        footer {
+        /* Стили для страницы рейтинга */
+        .rating-page {
             display: none;
         }
 
-        /* Responsive styles */
-        @media (max-width: 412px) {
-            .container {
-                padding: 0 15px;
-            }
-            
-            .compact-stats-grid {
-                grid-template-columns: 1fr;
-                justify-items: center;
-            }
-            
-            .stat-card {
-                width: 100%;
-                max-width: 174px;
-            }
-            
-            .stat-card.expandable {
-                grid-column: span 1;
-            }
-            
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .rating-filters {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .rating-filter {
-                width: 100%;
-            }
+        .rating-tabs {
+            width: 340px;
+            height: 35px;
+            background-color: #1D3328;
+            border-radius: 17.5px;
+            display: flex;
+            margin-bottom: 16px;
         }
 
-        @media (max-width: 360px) {
-            .user-container, .profile-header {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-            
-            .user-info, .profile-header-info {
-                align-items: center;
-                text-align: center;
-            }
-            
-            .progress-container, .profile-header-progress-container {
-                justify-content: center;
-            }
-            
-            .progress-info, .profile-header-progress-info {
-                text-align: center;
-            }
-            
-            .progress-value, .profile-header-progress-value {
-                text-align: center;
-            }
+        .rating-tab {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 17.5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .rating-tab.active {
+            background-color: rgba(118, 255, 51, 0.2);
+            border: 1px solid #76FF33;
+        }
+
+        .rating-list {
+            height: 500px;
+            overflow-y: auto;
+        }
+
+        .rating-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #2C4D3C;
+        }
+
+        .rating-position {
+            width: 30px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .rating-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #2C4D3C;
+            margin: 0 12px;
+        }
+
+        .rating-name {
+            flex: 1;
+            font-size: 14px;
+        }
+
+        .rating-value {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Стили для страницы дополнительно */
+        .additional-page {
+            display: none;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .main-card {
+            width: 179px;
+            height: 97.63px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main-card:first-child,
+        .main-card:nth-child(2) {
+            background-color: #1D3328;
+            border: 1px solid #91FFC7;
+        }
+
+        .main-card:nth-child(n+3) {
+            background-color: rgba(118, 255, 51, 0.2);
+            border: 1px solid #76FF33;
+        }
+
+        .card-icon {
+            width: 46px;
+            height: 46px;
+            margin-bottom: 8px;
+        }
+
+        .card-text {
+            font-size: 14px;
+        }
+
+        .small-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .small-card {
+            width: 117.33px;
+            height: 64px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .small-card:nth-child(1) {
+            background-color: rgba(46, 143, 255, 0.2);
+            border: 1px solid #2E8FFF;
+        }
+
+        .small-card:nth-child(2) {
+            background-color: rgba(102, 115, 255, 0.2);
+            border: 1px solid #6673FF;
+        }
+
+        .small-card:nth-child(3) {
+            background-color: rgba(46, 185, 255, 0.2);
+            border: 1px solid #2EB9FF;
+        }
+
+        .small-card:nth-child(4) {
+            background-color: rgba(255, 0, 51, 0.2);
+            border: 1px solid #FF0033;
+        }
+
+        .small-card:nth-child(5) {
+            background-color: rgba(157, 92, 255, 0.2);
+            border: 1px solid #9D5CFF;
+        }
+
+        .small-card:nth-child(6) {
+            background-color: rgba(40, 230, 224, 0.2);
+            border: 1px solid #28E6E0;
+        }
+
+        .small-card-icon {
+            width: 32px;
+            height: 32px;
+            margin-bottom: 4px;
+        }
+
+        .bottom-settings {
+            display: flex;
+            gap: 16px;
+        }
+
+        .settings-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 12px;
+            background-color: #1D3328;
+            border: 1px solid #91FFC7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .settings-card {
+            width: 294px;
+            height: 64px;
+            border-radius: 12px;
+            background-color: #1D3328;
+            border: 1px solid #91FFC7;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .settings-text {
+            font-size: 16px;
+        }
+
+        .settings-arrow {
+            width: 20px;
+            height: 20px;
+            color: #91FFC7;
+        }
+
+        /* Утилитарные классы */
+        .hidden {
+            display: none;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
         }
     </style>
 </head>
-<body class="dark-theme">
-    <!-- Бровь сверху -->
-    <nav class="top-nav">
-        <div class="top-nav-item active" data-section="dashboard">Главная</div>
-        <div class="top-nav-item" data-section="profile">Игровой профиль</div>
-        <div class="top-nav-item" data-section="rating">Рейтинг</div>
-        <div class="top-nav-item" data-section="general">Дополнительно</div>
-    </nav>
-
-    <div class="container">
-        <!-- Шапка для главной страницы -->
-        <div class="user-container">
-            <div class="avatar" id="headerAvatar">
-                <img src="icons/avatar.svg" alt="User Avatar">
-            </div>
-            <div class="user-info">
-                <div class="name-container">
-                    <img src="icons/rank.svg" alt="Rank" class="name-icon">
-                    <h2 id="userName">TankMaster47</h2>
-                </div>
-                <p id="userUsername">@tankmaster</p>
-                <div class="progress-container">
-                    <div class="progress-icon">
-                        <img src="icons/rank.svg" alt="Rank">
+<body>
+    <div class="app-container">
+        <div class="head" id="head">Главная</div>
+        
+        <div class="work-area">
+            <!-- Главная страница -->
+            <div class="page active" id="home-page">
+                <div class="profile-card">
+                    <div class="avatar-container">
+                        <div class="avatar" id="user-avatar"></div>
                     </div>
-                    <div class="progress-info">
-                        <div class="progress-value">250 / 500</div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 50%"></div>
+                    <div class="profile-info">
+                        <div class="profile-name">
+                            <div class="name" id="user-name">Имя пользователя</div>
+                            <div class="icon">
+                                <!-- SVG иконка -->
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 3C11.66 3 13 4.34 13 6C13 7.66 11.66 9 10 9C8.34 9 7 7.66 7 6C7 4.34 8.34 3 10 3ZM10 17.2C7.5 17.2 5.29 15.92 4 13.98C4.03 11.99 8 10.9 10 10.9C11.99 10.9 15.97 11.99 16 13.98C14.71 15.92 12.5 17.2 10 17.2Z" fill="#579977"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="username" id="user-username">@username</div>
+                        <div class="exp-bar">
+                            <div class="exp-text">45 / 100</div>
+                            <div class="exp-progress">
+                                <div class="exp-fill"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="search-container" id="search-container">
+                    <input type="text" class="search-input" placeholder="Поиск пользователя">
+                    <div class="search-icon">
+                        <!-- SVG иконка поиска -->
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M15.5 14H14.71L14.43 13.73C15.41 12.59 16 11.11 16 9.5C16 5.91 13.09 3 9.5 3C5.91 3 3 5.91 3 9.5C3 13.09 5.91 16 9.5 16C11.11 16 12.59 15.41 13.73 14.43L14 14.71V15.5L19 20.49L20.49 19L15.5 14ZM9.5 14C7.01 14 5 11.99 5 9.5C5 7.01 7.01 5 9.5 5C11.99 5 14 7.01 14 9.5C14 11.99 11.99 14 9.5 14Z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">1,234</div>
+                        <div class="stat-label">Сообщений</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">15</div>
+                        <div class="stat-label">Место в топе</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">0</div>
+                        <div class="stat-label">Нарушения</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">245</div>
+                        <div class="stat-label">Очков кармы</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">7</div>
+                        <div class="stat-label">Достижений</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Страница игрового профиля -->
+            <div class="page" id="game-profile-page">
+                <div class="profile-card">
+                    <div class="avatar-container">
+                        <div class="avatar"></div>
+                    </div>
+                    <div class="profile-info">
+                        <div class="profile-name">
+                            <div class="name">Игровой ник</div>
+                            <div class="icon">
+                                <!-- SVG иконка -->
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 3C11.66 3 13 4.34 13 6C13 7.66 11.66 9 10 9C8.34 9 7 7.66 7 6C7 4.34 8.34 3 10 3ZM10 17.2C7.5 17.2 5.29 15.92 4 13.98C4.03 11.99 8 10.9 10 10.9C11.99 10.9 15.97 11.99 16 13.98C14.71 15.92 12.5 17.2 10 17.2Z" fill="#579977"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="username" style="font-weight: 700;">GS 1234</div>
+                        <div class="exp-bar">
+                            <div class="exp-text">45 / 100</div>
+                            <div class="exp-progress">
+                                <div class="exp-fill"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="data-block">
+                    <div class="data-row">
+                        <div class="data-icon">
+                            <!-- SVG иконка -->
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="#579977">
+                                <circle cx="8" cy="8" r="8"/>
+                            </svg>
+                        </div>
+                        <div class="data-text">Уровень</div>
+                        <div class="data-value">15</div>
+                    </div>
+                    <div class="divider"></div>
+                    
+                    <!-- Повторяющиеся строки данных -->
+                    <div class="data-row">
+                        <div class="data-icon">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="#579977">
+                                <circle cx="8" cy="8" r="8"/>
+                            </svg>
+                        </div>
+                        <div class="data-text">Побед</div>
+                        <div class="data-value">127</div>
+                    </div>
+                    <div class="divider"></div>
+                    
+                    <div class="data-row">
+                        <div class="data-icon">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="#579977">
+                                <circle cx="8" cy="8" r="8"/>
+                            </svg>
+                        </div>
+                        <div class="data-text">Поражений</div>
+                        <div class="data-value">45</div>
+                    </div>
+                    <div class="divider"></div>
+                    
+                    <div class="data-row">
+                        <div class="data-icon">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="#579977">
+                                <circle cx="8" cy="8" r="8"/>
+                            </svg>
+                        </div>
+                        <div class="data-text">K/D</div>
+                        <div class="data-value">2.8</div>
+                    </div>
+                    <div class="divider"></div>
+                    
+                    <div class="data-row">
+                        <div class="data-icon">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="#579977">
+                                <circle cx="8" cy="8" r="8"/>
+                            </svg>
+                        </div>
+                        <div class="data-text">Точность</div>
+                        <div class="data-value">78%</div>
+                    </div>
+                    <div class="divider"></div>
+                    
+                    <div class="data-row">
+                        <div class="data-icon">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="#579977">
+                                <circle cx="8" cy="8" r="8"/>
+                            </svg>
+                        </div>
+                        <div class="data-text">Время игры</div>
+                        <div class="data-value">45ч</div>
+                    </div>
+                    <div class="divider"></div>
+                    
+                    <div class="data-row">
+                        <div class="data-icon">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="#579977">
+                                <circle cx="8" cy="8" r="8"/>
+                            </svg>
+                        </div>
+                        <div class="data-text">Рейтинг</div>
+                        <div class="data-value">A+</div>
+                    </div>
+                    
+                    <div style="height: 20px;"></div>
+                    
+                    <div class="data-row">
+                        <div class="data-icon">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="#579977">
+                                <circle cx="8" cy="8" r="8"/>
+                            </svg>
+                        </div>
+                        <div class="data-text">Достижения</div>
+                        <div class="data-value">7/15</div>
+                    </div>
+                    
+                    <div class="data-row">
+                        <div class="data-icon">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="#579977">
+                                <circle cx="8" cy="8" r="8"/>
+                            </svg>
+                        </div>
+                        <div class="data-text">Награды</div>
+                        <div class="data-value">3</div>
+                    </div>
+                    
+                    <div class="data-row">
+                        <div class="data-icon">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="#579977">
+                                <circle cx="8" cy="8" r="8"/>
+                            </svg>
+                        </div>
+                        <div class="data-text">Медалей</div>
+                        <div class="data-value">12</div>
+                    </div>
+                </div>
+                
+                <div class="guns-title">Пушки</div>
+                <div class="guns-slider">
+                    <!-- Карточки пушек -->
+                    <div class="gun-card">Пушка 1</div>
+                    <div class="gun-card">Пушка 2</div>
+                    <div class="gun-card">Пушка 3</div>
+                    <div class="gun-card">Пушка 4</div>
+                    <div class="gun-card">Пушка 5</div>
+                    <div class="gun-card">Пушка 6</div>
+                    <div class="gun-card">Пушка 7</div>
+                </div>
+            </div>
+            
+            <!-- Страница рейтинга -->
+            <div class="page" id="rating-page">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Поиск пользователя">
+                    <div class="search-icon">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M15.5 14H14.71L14.43 13.73C15.41 12.59 16 11.11 16 9.5C16 5.91 13.09 3 9.5 3C5.91 3 3 5.91 3 9.5C3 13.09 5.91 16 9.5 16C11.11 16 12.59 15.41 13.73 14.43L14 14.71V15.5L19 20.49L20.49 19L15.5 14ZM9.5 14C7.01 14 5 11.99 5 9.5C5 7.01 7.01 5 9.5 5C11.99 5 14 7.01 14 9.5C14 11.99 11.99 14 9.5 14Z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="rating-tabs">
+                    <div class="rating-tab active">Опыт</div>
+                    <div class="rating-tab">Кристаллы</div>
+                    <div class="rating-tab">Голды</div>
+                </div>
+                
+                <div class="rating-list">
+                    <!-- Список рейтинга -->
+                    <div class="rating-item">
+                        <div class="rating-position">1</div>
+                        <div class="rating-avatar"></div>
+                        <div class="rating-name">Игрок 1</div>
+                        <div class="rating-value">15,234</div>
+                    </div>
+                    
+                    <div class="rating-item">
+                        <div class="rating-position">2</div>
+                        <div class="rating-avatar"></div>
+                        <div class="rating-name">Игрок 2</div>
+                        <div class="rating-value">14,987</div>
+                    </div>
+                    
+                    <!-- Добавьте больше элементов рейтинга по необходимости -->
+                </div>
+            </div>
+            
+            <!-- Страница дополнительно -->
+            <div class="page" id="additional-page">
+                <div class="cards-grid">
+                    <div class="main-card">
+                        <div class="card-icon">
+                            <!-- SVG иконка -->
+                            <svg width="46" height="46" viewBox="0 0 46 46" fill="#91FFC7">
+                                <circle cx="23" cy="23" r="23"/>
+                            </svg>
+                        </div>
+                        <div class="card-text">Функция 1</div>
+                    </div>
+                    <div class="main-card">
+                        <div class="card-icon">
+                            <svg width="46" height="46" viewBox="0 0 46 46" fill="#91FFC7">
+                                <circle cx="23" cy="23" r="23"/>
+                            </svg>
+                        </div>
+                        <div class="card-text">Функция 2</div>
+                    </div>
+                    <div class="main-card">
+                        <div class="card-icon">
+                            <svg width="46" height="46" viewBox="0 0 46 46" fill="#76FF33">
+                                <circle cx="23" cy="23" r="23"/>
+                            </svg>
+                        </div>
+                        <div class="card-text">Функция 3</div>
+                    </div>
+                    <div class="main-card">
+                        <div class="card-icon">
+                            <svg width="46" height="46" viewBox="0 0 46 46" fill="#76FF33">
+                                <circle cx="23" cy="23" r="23"/>
+                            </svg>
+                        </div>
+                        <div class="card-text">Функция 4</div>
+                    </div>
+                    <div class="main-card">
+                        <div class="card-icon">
+                            <svg width="46" height="46" viewBox="0 0 46 46" fill="#76FF33">
+                                <circle cx="23" cy="23" r="23"/>
+                            </svg>
+                        </div>
+                        <div class="card-text">Функция 5</div>
+                    </div>
+                    <div class="main-card">
+                        <div class="card-icon">
+                            <svg width="46" height="46" viewBox="0 0 46 46" fill="#76FF33">
+                                <circle cx="23" cy="23" r="23"/>
+                            </svg>
+                        </div>
+                        <div class="card-text">Функция 6</div>
+                    </div>
+                </div>
+                
+                <div class="small-cards-grid">
+                    <div class="small-card">
+                        <div class="small-card-icon">
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="#2E8FFF">
+                                <circle cx="16" cy="16" r="16"/>
+                            </svg>
+                        </div>
+                        <div class="card-text">Опция 1</div>
+                    </div>
+                    <div class="small-card">
+                        <div class="small-card-icon">
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="#6673FF">
+                                <circle cx="16" cy="16" r="16"/>
+                            </svg>
+                        </div>
+                        <div class="card-text">Опция 2</div>
+                    </div>
+                    <div class="small-card">
+                        <div class="small-card-icon">
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="#2EB9FF">
+                                <circle cx="16" cy="16" r="16"/>
+                            </svg>
+                        </div>
+                        <div class="card-text">Опция 3</div>
+                    </div>
+                    <div class="small-card">
+                        <div class="small-card-icon">
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="#FF0033">
+                                <circle cx="16" cy="16" r="16"/>
+                            </svg>
+                        </div>
+                        <div class="card-text">Опция 4</div>
+                    </div>
+                    <div class="small-card">
+                        <div class="small-card-icon">
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="#9D5CFF">
+                                <circle cx="16" cy="16" r="16"/>
+                            </svg>
+                        </div>
+                        <div class="card-text">Опция 5</div>
+                    </div>
+                    <div class="small-card">
+                        <div class="small-card-icon">
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="#28E6E0">
+                                <circle cx="16" cy="16" r="16"/>
+                            </svg>
+                        </div>
+                        <div class="card-text">Опция 6</div>
+                    </div>
+                </div>
+                
+                <div class="bottom-settings">
+                    <div class="settings-icon">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="#91FFC7">
+                            <path d="M28,16c0-1.1-0.9-2-2-2h-2.2c-0.2-0.7-0.5-1.3-0.8-1.9l1.6-1.6c0.8-0.8,0.8-2,0-2.8l-2.8-2.8c-0.8-0.8-2-0.8-2.8,0l-1.6,1.6c-0.6-0.3-1.2-0.6-1.9-0.8V4c0-1.1-0.9-2-2-2h-4c-1.1,0-2,0.9-2,2v2.2c-0.7,0.2-1.3,0.5-1.9,0.8L6.8,5.4c-0.8-0.8-2-0.8-2.8,0L1.2,8.2c-0.8,0.8-0.8,2,0,2.8l1.6,1.6c-0.3,0.6-0.6,1.2-0.8,1.9H2c-1.1,0-2,0.9-2,2v4c0,1.1,0.9,2,2,2h2.2c0.2,0.7,0.5,1.3,0.8,1.9l-1.6,1.6c-0.8,0.8-0.8,2,0,2.8l2.8,2.8c0.8,0.8,2,0.8,2.8,0l1.6-1.6c0.6,0.3,1.2,0.6,1.9,0.8V28c0,1.1,0.9,2,2,2h4c1.1,0,2-0.9,2-2v-2.2c0.7-0.2,1.3-0.5,1.9-0.8l1.6,1.6c0.8,0.8,2,0.8,2.8,0l2.8-2.8c0.8-0.8,0.8-2,0-2.8l-1.6-1.6c0.3-0.6,0.6-1.2,0.8-1.9H26c1.1,0,2-0.9,2-2V16z M16,20c-2.2,0-4-1.8-4-4s1.8-4,4-4s4,1.8,4,4S18.2,20,16,20z"/>
+                        </svg>
+                    </div>
+                    <div class="settings-card">
+                        <div class="settings-text">Есть идеи для улучшения бота? Можешь поделиться!</div>
+                        <div class="settings-arrow">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="#91FFC7">
+                                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+                            </svg>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Шапка для второй вкладки (скрыта по умолчанию) -->
-        <div class="profile-header-container" id="profileHeaderContainer">
-            <div class="profile-header">
-                <div class="profile-header-avatar" id="profileHeaderAvatar">
-                    <img src="icons/avatar.svg" alt="User Avatar">
+        
+        <div class="active-menu">
+            <div class="menu-icons">
+                <div class="menu-icon active" data-page="home-page">
+                    <!-- SVG иконка для главной -->
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#91FFC7">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                    </svg>
                 </div>
-                <div class="profile-header-info">
-                    <div class="profile-header-name-container">
-                        <img src="icons/rank.svg" alt="Rank" class="name-icon">
-                        <h2 id="profileHeaderName">Привязать никнейм</h2>
-                    </div>
-                    <p id="profileHeaderGS">GS: --</p>
-                    <div class="profile-header-progress-container">
-                        <div class="profile-header-progress-icon">
-                            <img src="icons/rank.svg" alt="Rank">
-                        </div>
-                        <div class="profile-header-progress-info">
-                            <div class="profile-header-progress-value">12,850 / 25,000</div>
-                            <div class="profile-header-progress-bar">
-                                <div class="profile-header-progress-fill" style="width: 51.4%"></div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="menu-icon" data-page="game-profile-page">
+                    <!-- SVG иконка для игрового профиля -->
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#91FFC7">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                </div>
+                <div class="menu-icon" data-page="rating-page">
+                    <!-- SVG иконка для рейтинга -->
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#91FFC7">
+                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                    </svg>
+                </div>
+                <div class="menu-icon" data-page="additional-page">
+                    <!-- SVG иконка для дополнительного -->
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#91FFC7">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/>
+                    </svg>
                 </div>
             </div>
         </div>
     </div>
 
-    <main class="main-content">
-        <div class="container">
-            <!-- Dashboard Section -->
-            <section id="dashboard" class="section active">
-                <div class="search-box">
-                    <img src="icons/search.svg" alt="Search" class="search-icon">
-                    <input type="text" class="search-input" placeholder="Поиск профиля..." id="profileSearch">
-                </div>
-                
-                <div class="dashboard-compact">
-                    <div class="compact-stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <img src="icons/messages.svg" alt="Messages">
-                            </div>
-                            <div class="stat-value">8,450</div>
-                            <div class="stat-label">Сообщений</div>
-                        </div>
-                        
-                        <div class="stat-card expandable">
-                            <div class="stat-icon">
-                                <img src="icons/top-place.svg" alt="Top Place">
-                            </div>
-                            <div class="stat-value">#7</div>
-                            <div class="stat-label">Место в топе</div>
-                            <div class="stat-details">
-                                <div class="detail-item">
-                                    <span class="detail-label">Лучшая позиция:</span>
-                                    <span class="detail-value">#3</span>
-                                </div>
-                                <div class="detail-item">
-                                    <span class="detail-label">Изменение:</span>
-                                    <span class="detail-value" style="color:#4CAF50">↑2</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="stat-card expandable">
-                            <div class="stat-icon">
-                                <img src="icons/warnings.svg" alt="Warnings">
-                            </div>
-                            <div class="stat-value">2</div>
-                            <div class="stat-label">Нарушения</div>
-                            <div class="stat-details">
-                                <div class="detail-item">
-                                    <span class="detail-label">Последнее:</span>
-                                    <span class="detail-value">2 дня назад</span>
-                                </div>
-                                <div class="detail-item">
-                                    <span class="detail-label">Тип:</span>
-                                    <span class="detail-value">Спам</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="stat-card expandable">
-                            <div class="stat-icon">
-                                <img src="icons/karma.svg" alt="Karma">
-                            </div>
-                            <div class="stat-value">150</div>
-                            <div class="stat-label">Очков кармы</div>
-                            <div class="stat-details">
-                                <div class="detail-item">
-                                    <span class="detail-label">За сегодня:</span>
-                                    <span class="detail-value" style="color:#4CAF50">+15</span>
-                                </div>
-                                <div class="detail-item">
-                                    <span class="detail-label">Ранг:</span>
-                                    <span class="detail-value">Хорошая</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="stat-card expandable" style="grid-column: span 2;">
-                            <div class="stat-icon">
-                                <img src="icons/achievements.svg" alt="Achievements">
-                            </div>
-                            <div class="stat-value">12</div>
-                            <div class="stat-label">Достижений</div>
-                            <div class="stat-details">
-                                <div class="detail-item">
-                                    <span class="detail-label">Последнее:</span>
-                                    <span class="detail-value">Активный участник</span>
-                                </div>
-                                <div class="detail-item">
-                                    <span class="detail-label">Прогресс:</span>
-                                    <span class="detail-value">75%</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Profile Section -->
-            <section id="profile" class="section">
-                <div class="profile-stats-container">
-                    <div class="profile-stat-item">
-                        <img src="icons/destroyed.svg" alt="Destroyed">
-                        <span class="profile-stat-label">Подбил в битвах</span>
-                        <span class="profile-stat-value">8,450</span>
-                    </div>
-                    <div class="profile-stat-item">
-                        <img src="icons/damaged.svg" alt="Damaged">
-                        <span class="profile-stat-label">Подбит в битвах</span>
-                        <span class="profile-stat-value">5,210</span>
-                    </div>
-                    <div class="profile-stat-item">
-                        <img src="icons/kd.svg" alt="K/D Ratio">
-                        <span class="profile-stat-label">У/П</span>
-                        <span class="profile-stat-value">1.62</span>
-                    </div>
-                    <div class="profile-stat-item">
-                        <img src="icons/time.svg" alt="Play Time">
-                        <span class="profile-stat-label">Время в игре</span>
-                        <span class="profile-stat-value">320 ч</span>
-                    </div>
-                    <div class="profile-stat-item">
-                        <img src="icons/crystals.svg" alt="Crystals">
-                        <span class="profile-stat-label">Заработал кристаллов</span>
-                        <span class="profile-stat-value">1.2M</span>
-                    </div>
-                    <div class="profile-stat-item">
-                        <img src="icons/boxes.svg" alt="Boxes">
-                        <span class="profile-stat-label">Поймал голдов</span>
-                        <span class="profile-stat-value">845</span>
-                    </div>
-                    <div class="profile-stat-item">
-                        <img src="icons/supplies.svg" alt="Supplies">
-                        <span class="profile-stat-label">Использовал припасов</span>
-                        <span class="profile-stat-value">1,240</span>
-                    </div>
-                    
-                    <div class="supplies-details">
-                        <div class="supply-item">
-                            <img src="icons/repair.svg" alt="Repair" class="supply-icon">
-                            <span class="supply-value">650</span>
-                        </div>
-                        <div class="supply-item">
-                            <img src="icons/armor.svg" alt="Armor" class="supply-icon">
-                            <span class="supply-value">320</span>
-                        </div>
-                        <div class="supply-item">
-                            <img src="icons/damage.svg" alt="Damage" class="supply-icon">
-                            <span class="supply-value">270</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="guns-section">
-                    <h3 class="section-title">Пушки</h3>
-                    <div class="horizontal-scroll">
-                        <div class="gun-card">
-                            <div class="gun-name">Рейлган</div>
-                            <div class="gun-stats">
-                                <div class="gun-stat">
-                                    <img src="icons/damage.svg" alt="Damage" class="gun-stat-icon">
-                                    <span>120</span>
-                                </div>
-                                <div class="gun-stat">
-                                    <img src="icons/range.svg" alt="Range" class="gun-stat-icon">
-                                    <span>85</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="gun-card">
-                            <div class="gun-name">Гром</div>
-                            <div class="gun-stats">
-                                <div class="gun-stat">
-                                    <img src="icons/damage.svg" alt="Damage" class="gun-stat-icon">
-                                    <span>95</span>
-                                </div>
-                                <div class="gun-stat">
-                                    <img src="icons/range.svg" alt="Range" class="gun-stat-icon">
-                                    <span>70</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="gun-card">
-                            <div class="gun-name">Огнемёт</div>
-                            <div class="gun-stats">
-                                <div class="gun-stat">
-                                    <img src="icons/damage.svg" alt="Damage" class="gun-stat-icon">
-                                    <span>80</span>
-                                </div>
-                                <div class="gun-stat">
-                                    <img src="icons/range.svg" alt="Range" class="gun-stat-icon">
-                                    <span>45</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="gun-card">
-                            <div class="gun-name">Смок</div>
-                            <div class="gun-stats">
-                                <div class="gun-stat">
-                                    <img src="icons/damage.svg" alt="Damage" class="gun-stat-icon">
-                                    <span>65</span>
-                                </div>
-                                <div class="gun-stat">
-                                    <img src="icons/range.svg" alt="Range" class="gun-stat-icon">
-                                    <span>60</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="gun-card">
-                            <div class="gun-name">Изида</div>
-                            <div class="gun-stats">
-                                <div class="gun-stat">
-                                    <img src="icons/damage.svg" alt="Damage" class="gun-stat-icon">
-                                    <span>110</span>
-                                </div>
-                                <div class="gun-stat">
-                                    <img src="icons/range.svg" alt="Range" class="gun-stat-icon">
-                                    <span>75</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="guns-section">
-                    <h3 class="section-title">Корпуса</h3>
-                    <div class="horizontal-scroll">
-                        <div class="gun-card hull-card">
-                            <div class="gun-name">Хорнет</div>
-                            <div class="gun-stats">
-                                <div class="gun-stat">
-                                    <img src="icons/health.svg" alt="Health" class="gun-stat-icon">
-                                    <span>500</span>
-                                </div>
-                                <div class="gun-stat">
-                                    <img src="icons/speed.svg" alt="Speed" class="gun-stat-icon">
-                                    <span>85</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="gun-card hull-card">
-                            <div class="gun-name">Титан</div>
-                            <div class="gun-stats">
-                                <div class="gun-stat">
-                                    <img src="icons/health.svg" alt="Health" class="gun-stat-icon">
-                                    <span>800</span>
-                                </div>
-                                <div class="gun-stat">
-                                    <img src="icons/speed.svg" alt="Speed" class="gun-stat-icon">
-                                    <span>45</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="gun-card hull-card">
-                            <div class="gun-name">Викинг</div>
-                            <div class="gun-stats">
-                                <div class="gun-stat">
-                                    <img src="icons/health.svg" alt="Health" class="gun-stat-icon">
-                                    <span>650</span>
-                                </div>
-                                <div class="gun-stat">
-                                    <img src="icons/speed.svg" alt="Speed" class="gun-stat-icon">
-                                    <span>65</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="gun-card hull-card">
-                            <div class="gun-name">Маммонт</div>
-                            <div class="gun-stats">
-                                <div class="gun-stat">
-                                    <img src="icons/health.svg" alt="Health" class="gun-stat-icon">
-                                    <span>950</span>
-                                </div>
-                                <div class="gun-stat">
-                                    <img src="icons/speed.svg" alt="Speed" class="gun-stat-icon">
-                                    <span>35</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="gun-card hull-card">
-                            <div class="gun-name">Хаммер</div>
-                            <div class="gun-stats">
-                                <div class="gun-stat">
-                                    <img src="icons/health.svg" alt="Health" class="gun-stat-icon">
-                                    <span>700</span>
-                                </div>
-                                <div class="gun-stat">
-                                    <img src="icons/speed.svg" alt="Speed" class="gun-stat-icon">
-                                    <span>60</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- General Section -->
-            <section id="general" class="section">
-                <div class="services-grid">
-                    <div class="service-card">
-                        <img src="icons/news.svg" alt="News">
-                        <h3>Новости</h3>
-                        <p>Последние обновления и события в Tanki Online</p>
-                    </div>
-                    <div class="service-card">
-                        <img src="icons/esports.svg" alt="eSports">
-                        <h3>Киберспорт</h3>
-                        <p>Турниры, команды и результаты киберспортивных событий</p>
-                    </div>
-                    <div class="service-card">
-                        <img src="icons/challenge.svg" alt="Challenge">
-                        <h3>Вызов принят</h3>
-                        <p>Топ по звездам</p>
-                    </div>
-                    <div class="service-card">
-                        <img src="icons/wiki.svg" alt="Wiki">
-                        <h3>Википедия</h3>
-                        <p>База знаний по игре</p>
-                    </div>
-                    <div class="service-card">
-                        <img src="icons/chat.svg" alt="Chat">
-                        <h3>Чат танкистов</h3>
-                        <p>Общайтесь с другими игроками</p>
-                    </div>
-                    <div class="service-card">
-                        <img src="icons/support.svg" alt="Support">
-                        <h3>По вопросам блокировки в ЧТ</h3>
-                        <p>Помощь по вопросам блокировки в чате танкистов</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Rating Section -->
-            <section id="rating" class="section">
-                <div class="search-box">
-                    <img src="icons/search.svg" alt="Search" class="search-icon">
-                    <input type="text" class="search-input" id="playerSearch" placeholder="Введите никнейм игрока...">
-                </div>
-                
-                <div class="rating-filters">
-                    <div class="rating-filter active">
-                        <img src="icons/exp.svg" alt="Experience" class="rating-filter-icon">
-                        <span>Опыт</span>
-                    </div>
-                    <div class="rating-filter">
-                        <img src="icons/crystals.svg" alt="Crystals" class="rating-filter-icon">
-                        <span>Кристаллы</span>
-                    </div>
-                    <div class="rating-filter">
-                        <img src="icons/gold.svg" alt="Gold" class="rating-filter-icon">
-                        <span>Голды</span>
-                    </div>
-                </div>
-                
-                <div class="player-card" id="playerCard" style="display: none;">
-                    <div class="player-header">
-                        <div class="player-rank" id="playerRank">7</div>
-                        <div class="player-info">
-                            <h2 id="playerName">HUYLAN</h2>
-                            <p>Опыт: <span id="playerExp">25,400</span></p>
-                        </div>
-                    </div>
-                    
-                    <div class="player-stats">
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <img src="icons/kd.svg" alt="K/D Ratio">
-                            </div>
-                            <div class="stat-value">1.62</div>
-                            <div class="stat-label">У/П</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <img src="icons/boxes.svg" alt="Boxes">
-                            </div>
-                            <div class="stat-value">845</div>
-                            <div class="stat-label">Золотые ящики</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon">
-                                <img src="icons/score.svg" alt="Gear Score">
-                            </div>
-                            <div class="stat-value">9999</div>
-                            <div class="stat-label">Gear Score</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="top-players">
-                    <div class="player-row">
-                        <div class="player-position">1</div>
-                        <div class="player-name">vse</div>
-                        <div class="player-score">42,150</div>
-                    </div>
-                    <div class="player-row">
-                        <div class="player-position">2</div>
-                        <div class="player-name">Z</div>
-                        <div class="player-score">38,900</div>
-                    </div>
-                    <div class="player-row">
-                        <div class="player-position">3</div>
-                        <div class="player-name">V</div>
-                        <div class="player-score">36,750</div>
-                    </div>
-                    <div class="player-row">
-                        <div class="player-position">4</div>
-                        <div class="player-name">47x</div>
-                        <div class="player-score">32,400</div>
-                    </div>
-                    <div class="player-row">
-                        <div class="player-position">5</div>
-                        <div class="player-name">Theosima</div>
-                        <div class="player-score">29,800</div>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </main>
-
-    <!-- Bottom Navigation -->
-    <nav class="bottom-nav">
-        <ul>
-            <li><a href="#" class="nav-link active" data-section="dashboard">
-                <img src="icons/home.svg" alt="Home">
-            </a></li>
-            <li><a href="#" class="nav-link" data-section="profile">
-                <img src="icons/profile.svg" alt="Profile">
-            </a></li>
-            <li><a href="#" class="nav-link" data-section="general">
-                <img src="icons/general.svg" alt="General">
-            </a></li>
-            <li><a href="#" class="nav-link" data-section="rating">
-                <img src="icons/rating.svg" alt="Rating">
-            </a></li>
-        </ul>
-    </nav>
-
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Инициализация Telegram WebApp
-            const tg = window.Telegram.WebApp;
+        // Инициализация Telegram Web App
+        let tg = window.Telegram.WebApp;
+        
+        // Расширяем приложение на весь экран
+        tg.expand();
+        
+        // Получаем данные пользователя из Telegram
+        const user = tg.initDataUnsafe.user;
+        
+        // Заполняем данные пользователя, если они доступны
+        if (user) {
+            document.getElementById('user-name').textContent = user.first_name || 'Пользователь';
+            document.getElementById('user-username').textContent = '@' + (user.username || 'username');
             
-            // Получение данных пользователя из Telegram
-            const user = tg.initDataUnsafe?.user || {};
-            const userName = user.first_name || 'Пользователь';
-            const userLastName = user.last_name || '';
-            const userUsername = user.username ? '@' + user.username : 'без username';
-            
-            // Установка аватара
-            const headerAvatar = document.getElementById('headerAvatar');
-            const profileHeaderAvatar = document.getElementById('profileHeaderAvatar');
-            const userNameEl = document.getElementById('userName');
-            const userUsernameEl = document.getElementById('userUsername');
-            
-            function setAvatar(element) {
-                if (user.photo_url) {
-                    element.innerHTML = '';
-                    const avatarImg = document.createElement('img');
-                    avatarImg.src = user.photo_url;
-                    avatarImg.alt = userName;
-                    avatarImg.style.width = '100%';
-                    avatarImg.style.height = '100%';
-                    avatarImg.style.borderRadius = '50%';
-                    avatarImg.style.objectFit = 'cover';
-                    element.appendChild(avatarImg);
-                } else {
-                    element.innerHTML = '<img src="icons/avatar.svg" alt="Avatar">';
-                }
+            // Установка аватара (в реальном приложении нужно загружать фото)
+            const avatar = document.getElementById('user-avatar');
+            if (user.photo_url) {
+                avatar.style.backgroundImage = `url(${user.photo_url})`;
+                avatar.style.backgroundSize = 'cover';
             }
-            
-            if (headerAvatar) setAvatar(headerAvatar);
-            if (profileHeaderAvatar) setAvatar(profileHeaderAvatar);
-            
-            userNameEl.textContent = `${userName} ${userLastName}`;
-            userUsernameEl.textContent = userUsername;
-            
-            // Установка темы Telegram
-            if (tg.colorScheme === 'dark') {
-                document.body.classList.add('dark-theme');
-            }
-            
-            // Navigation
-            const navLinks = document.querySelectorAll('.nav-link');
-            const topNavItems = document.querySelectorAll('.top-nav-item');
-            const sections = document.querySelectorAll('.section');
-            const profileHeaderContainer = document.getElementById('profileHeaderContainer');
-            const userContainer = document.querySelector('.user-container');
-            
-            function activateSection(sectionName) {
-                // Remove active class from all links
-                navLinks.forEach(l => l.classList.remove('active'));
-                topNavItems.forEach(l => l.classList.remove('active'));
+        }
+        
+        // Навигация между страницами
+        const menuIcons = document.querySelectorAll('.menu-icon');
+        const pages = document.querySelectorAll('.page');
+        const head = document.getElementById('head');
+        
+        // Тексты для заголовков
+        const pageTitles = {
+            'home-page': 'Главная',
+            'game-profile-page': 'Игровой профиль',
+            'rating-page': 'Рейтинг',
+            'additional-page': 'Дополнительно'
+        };
+        
+        menuIcons.forEach(icon => {
+            icon.addEventListener('click', () => {
+                // Убираем активный класс у всех иконок и страниц
+                menuIcons.forEach(i => i.classList.remove('active'));
+                pages.forEach(page => page.classList.remove('active'));
                 
-                // Add active class to clicked link
-                const targetNavLink = document.querySelector(`.nav-link[data-section="${sectionName}"]`);
-                const targetTopNavItem = document.querySelector(`.top-nav-item[data-section="${sectionName}"]`);
+                // Добавляем активный класс к выбранной иконке
+                icon.classList.add('active');
                 
-                if (targetNavLink) targetNavLink.classList.add('active');
-                if (targetTopNavItem) targetTopNavItem.classList.add('active');
+                // Показываем выбранную страницу
+                const pageId = icon.getAttribute('data-page');
+                document.getElementById(pageId).classList.add('active');
                 
-                // Hide all sections
-                sections.forEach(section => {
-                    section.classList.remove('active');
-                });
-                
-                // Show target section
-                const targetElement = document.getElementById(sectionName);
-                if (targetElement) {
-                    targetElement.classList.add('active');
-                }
-                
-                // Показываем/скрываем шапки в зависимости от вкладки
-                if (sectionName === 'profile') {
-                    userContainer.style.display = 'none';
-                    profileHeaderContainer.style.display = 'block';
-                } else {
-                    userContainer.style.display = 'flex';
-                    profileHeaderContainer.style.display = 'none';
-                }
-                
-                // Прокрутка вверх
-                window.scrollTo(0, 0);
-            }
-            
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetSection = this.getAttribute('data-section');
-                    activateSection(targetSection);
-                });
+                // Обновляем заголовок
+                head.textContent = pageTitles[pageId];
             });
-            
-            topNavItems.forEach(item => {
-                item.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetSection = this.getAttribute('data-section');
-                    activateSection(targetSection);
-                });
-            });
-            
-            // Expandable stat cards
-            const expandableCards = document.querySelectorAll('.stat-card.expandable');
-            
-            expandableCards.forEach(card => {
-                card.addEventListener('click', () => {
-                    card.classList.toggle('expanded');
-                });
-            });
-            
-            // Player search
-            const playerSearch = document.getElementById('playerSearch');
-            const playerCard = document.getElementById('playerCard');
-            
-            if (playerSearch && playerCard) {
-                playerSearch.addEventListener('keyup', (e) => {
-                    if (e.key === 'Enter') {
-                        const searchValue = playerSearch.value.trim();
-                        if (searchValue) {
-                            // In a real app, this would call the bot API
-                            playerCard.style.display = 'block';
-                            
-                            // Simulate API response
-                            document.getElementById('playerName').textContent = searchValue;
-                            document.getElementById('playerRank').textContent = Math.floor(Math.random() * 10) + 1;
-                            document.getElementById('playerExp').textContent = Math.floor(Math.random() * 50000);
-                        }
-                    }
-                });
-            }
-            
-            // Rating filters
-            const ratingFilters = document.querySelectorAll('.rating-filter');
-            
-            ratingFilters.forEach(filter => {
-                filter.addEventListener('click', () => {
-                    ratingFilters.forEach(f => f.classList.remove('active'));
-                    filter.classList.add('active');
-                });
-            });
-            
-            // Загрузка привязанного никнейма
-            const savedNickname = localStorage.getItem('gameNickname');
-            const savedGS = localStorage.getItem('gameGS');
-            const profileHeaderName = document.getElementById('profileHeaderName');
-            const profileHeaderGS = document.getElementById('profileHeaderGS');
-            
-            if (savedNickname) {
-                profileHeaderName.textContent = savedNickname;
-            }
-            
-            if (savedGS) {
-                profileHeaderGS.textContent = `GS: ${savedGS}`;
-            }
         });
+        
+        // Обработка поиска
+        const searchContainer = document.getElementById('search-container');
+        const searchInput = document.querySelector('.search-input');
+        
+        searchInput.addEventListener('focus', () => {
+            searchContainer.classList.add('active');
+        });
+        
+        searchInput.addEventListener('blur', () => {
+            searchContainer.classList.remove('active');
+        });
+        
+        // В реальном приложении здесь будет логика обработки поиска
+        // и отображения состояния ошибки при необходимости
     </script>
 </body>
 </html>
