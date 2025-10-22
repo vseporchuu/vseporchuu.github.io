@@ -3,21 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Telegram App</title>
+    <title>Telegram Web App</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #16261E;
-            --dark-bg: #0f1a15;
-            --accent-color: #579977;
-            --active-color: #91FFC7;
-            --error-bg: #401A1A;
+            --main-bg: #16261E;
+            --header-bg: #0F1A14;
+            --active-color: #579977;
+            --accent-color: #91FFC7;
             --error-color: #FF7474;
-            --border-color: #66B28B;
-            --progress-bg: #2C4D3C;
             --card-bg: #1D3328;
-            --text-light: #FFFFFF;
-            --text-dim: #AAAAAA;
+            --border-color: #66B28B;
+            --text-color: #FFFFFF;
+            --secondary-text: #CCCCCC;
         }
 
         * {
@@ -28,300 +26,316 @@
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-light);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-        }
-
-        .app-container {
-            width: 100%;
-            max-width: 412px;
-            min-height: 744px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
+            background-color: var(--main-bg);
+            color: var(--text-color);
+            width: 412px;
+            height: 744px;
+            overflow: hidden;
             position: relative;
         }
 
-        /* Head стили */
-        .head {
-            height: 56px;
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            background-color: var(--dark-bg);
+            height: 56px;
+            background-color: var(--header-bg);
             display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 100;
             font-size: 24px;
             font-weight: 500;
-            flex-shrink: 0;
         }
 
-        /* Рабочая область */
-        .work-area {
-            flex: 1;
+        /* Main Content */
+        .main-content {
+            position: absolute;
+            top: 56px;
+            bottom: 80px;
+            width: 100%;
             overflow-y: auto;
             padding: 16px;
-            display: flex;
-            flex-direction: column;
         }
 
-        /* Active Menu */
-        .active-menu {
-            height: 80px;
+        /* Navigation Menu */
+        .nav-menu {
+            position: fixed;
+            bottom: 0;
+            left: 0;
             width: 100%;
-            background-color: var(--dark-bg);
+            height: 80px;
+            background-color: var(--header-bg);
             display: flex;
-            justify-content: center;
             align-items: center;
-            flex-shrink: 0;
+            justify-content: space-between;
+            padding: 0 76px 0 76px;
         }
 
-        .menu-icons {
-            display: flex;
-            gap: 12px;
-        }
-
-        .menu-icon {
+        .nav-icon {
             width: 56px;
             height: 56px;
-            border-radius: 12px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: background-color 0.3s;
         }
 
-        .menu-icon.active {
-            background-color: var(--card-bg);
+        .nav-icon.active {
+            background-color: var(--active-color);
         }
 
-        .menu-icon svg {
+        .nav-icon svg {
             width: 24px;
             height: 24px;
+            fill: var(--text-color);
         }
 
-        /* Стили для главной страницы */
-        .profile-card {
-            width: 100%;
-            max-width: 350px;
+        /* Page Styles */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Profile Section */
+        .profile-section {
+            width: 350px;
             height: 128px;
+            margin: 0 auto 20px;
             display: flex;
-            margin: 0 auto 24px;
-        }
-
-        .avatar-container {
-            position: relative;
-            width: 128px;
-            height: 128px;
-            flex-shrink: 0;
+            align-items: center;
         }
 
         .avatar {
+            width: 128px;
+            height: 128px;
+            border-radius: 50%;
+            border: 1px solid var(--active-color);
+            margin-right: 16px;
+            background-color: #2C4D3C;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .avatar img {
             width: 100%;
             height: 100%;
-            border-radius: 50%;
-            border: 1px solid var(--accent-color);
-            background-color: var(--progress-bg);
-            background-size: cover;
-            background-position: center;
+            object-fit: cover;
         }
 
         .profile-info {
             flex: 1;
-            padding-left: 16px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
         }
 
-        .profile-name {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .name {
+        .nickname {
             font-size: 18px;
             font-weight: 700;
-            margin-right: 8px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 4px;
         }
 
-        .profile-icon {
+        .nickname svg {
             width: 20px;
             height: 20px;
+            margin-left: 8px;
+            fill: var(--active-color);
         }
 
         .username {
             font-size: 14px;
             font-weight: 300;
-            color: var(--text-dim);
+            color: var(--secondary-text);
+            margin-bottom: 12px;
         }
 
-        .exp-bar {
-            width: 100%;
-            max-width: 210px;
+        .progress-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .progress-info {
+            display: flex;
+            flex-direction: column;
+            margin-right: 12px;
         }
 
         .exp-text {
             font-size: 14px;
             margin-bottom: 4px;
-            display: flex;
-            justify-content: space-between;
         }
 
-        .exp-progress {
+        .progress-bar {
+            width: 168px;
             height: 10px;
-            background-color: var(--progress-bg);
+            background-color: #2C4D3C;
             border-radius: 5px;
             overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--active-color);
+            border-radius: 5px;
+            width: 60%; /* Example value */
+        }
+
+        .progress-icon {
+            width: 36px;
+            height: 36px;
+            margin-left: 12px;
+        }
+
+        /* Search Field */
+        .search-container {
+            width: 364px;
+            margin: 0 auto 20px;
             position: relative;
         }
 
-        .exp-fill {
-            height: 100%;
-            background-color: var(--accent-color);
-            border-radius: 5px;
-            width: 45%; /* Пример заполнения */
-        }
-
-        .exp-icon {
-            position: absolute;
-            right: -40px;
-            top: -13px;
-            width: 36px;
-            height: 36px;
-        }
-
-        .search-container {
+        .search-field {
             width: 100%;
-            max-width: 364px;
             height: 44px;
             border-radius: 22px;
-            border: 1px solid var(--accent-color);
-            background-color: var(--bg-color);
-            display: flex;
-            align-items: center;
-            padding: 0 16px;
-            margin: 0 auto 24px;
-            transition: all 0.2s;
-        }
-
-        .search-container.active {
-            background-color: var(--card-bg);
-            border-color: var(--active-color);
-        }
-
-        .search-container.error {
-            background-color: var(--error-bg);
-            border-color: var(--error-color);
-        }
-
-        .search-input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: var(--accent-color);
+            background-color: var(--main-bg);
+            border: 1px solid var(--active-color);
+            padding: 0 16px 0 44px;
+            color: var(--active-color);
             font-size: 16px;
             outline: none;
+            transition: all 0.3s;
         }
 
-        .search-container.active .search-input {
-            color: var(--active-color);
+        .search-field:focus {
+            background-color: var(--card-bg);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
         }
 
-        .search-container.error .search-input {
+        .search-field.error {
+            background-color: #401A1A;
+            border-color: var(--error-color);
             color: var(--error-color);
         }
 
         .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
             width: 20px;
             height: 20px;
-            color: var(--accent-color);
+            fill: var(--active-color);
         }
 
-        .search-container.active .search-icon {
-            color: var(--active-color);
+        .search-field:focus + .search-icon {
+            fill: var(--accent-color);
         }
 
-        .search-container.error .search-icon {
-            color: var(--error-color);
+        .search-field.error + .search-icon {
+            fill: var(--error-color);
         }
 
+        /* Stats Grid */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-            width: 100%;
-            max-width: 364px;
-            margin: 0 auto;
+            grid-gap: 12px;
+            margin-bottom: 20px;
         }
 
         .stat-card {
-            width: 100%;
+            width: 174px;
             height: 95px;
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 12px;
+            border-radius: 8px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
         }
 
         .stat-value {
-            font-size: 32px;
+            font-size: 24px;
             font-weight: 700;
+            margin-bottom: 8px;
         }
 
         .stat-label {
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 400;
         }
 
-        /* Стили для страницы игрового профиля */
-        .game-profile {
+        .achievements-card {
+            grid-column: 1 / span 2;
             width: 100%;
+            height: 95px;
         }
 
-        .profile-link {
-            width: 100%;
-            max-width: 364px;
+        /* Game Profile Page */
+        .link-profile {
+            text-align: center;
+            padding: 40px 0;
+            font-size: 18px;
+        }
+
+        .nickname-input {
+            width: 364px;
             height: 44px;
-            border-radius: 22px;
-            background-color: var(--card-bg);
+            margin: 20px auto;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 24px auto;
+            background-color: var(--card-bg);
+            border-radius: 8px;
             cursor: pointer;
-            border: 1px solid var(--accent-color);
+        }
+
+        .profile-card {
+            width: 364px;
+            margin: 0 auto 20px;
+            padding: 16px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
         }
 
         .data-block {
-            width: 100%;
-            max-width: 364px;
-            min-height: 272px;
-            border-radius: 12px;
+            width: 364px;
+            height: 272px;
+            margin: 0 auto 20px;
             background-color: var(--card-bg);
+            border-radius: 8px;
             padding: 16px;
-            margin: 24px auto 0;
         }
 
         .data-row {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             height: 19px;
             margin-bottom: 6px;
+            padding-bottom: 6px;
+            border-bottom: 0.5px solid #2C4D3C;
+        }
+
+        .data-row:last-child {
+            border-bottom: none;
         }
 
         .data-icon {
             width: 16px;
             height: 16px;
             margin-right: 8px;
-            flex-shrink: 0;
         }
 
         .data-text {
@@ -330,238 +344,220 @@
         }
 
         .data-value {
-            font-size: 14px;
-            font-weight: 500;
             width: 41px;
             text-align: right;
-        }
-
-        .divider {
-            height: 0.5px;
-            background-color: #2C4D3C;
-            margin: 6px 0;
-            width: 100%;
+            font-size: 14px;
         }
 
         .stats-row {
             display: flex;
             justify-content: space-between;
+            margin-top: 16px;
+        }
+
+        .mini-stat {
+            display: flex;
+            align-items: center;
+        }
+
+        .mini-stat-text {
+            font-size: 14px;
+            margin-left: 8px;
+        }
+
+        .weapons-section {
             margin-top: 20px;
         }
 
-        .stat-item {
+        .weapons-title {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .weapons-slider {
             display: flex;
-            align-items: center;
-        }
-
-        .stat-item .data-icon {
-            margin-right: 4px;
-        }
-
-        .guns-title {
-            font-size: 20px;
-            font-weight: 700;
-            margin: 20px 0 16px 0;
-            width: 100%;
-            max-width: 364px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .guns-slider {
-            display: flex;
-            gap: 16px;
             overflow-x: auto;
+            gap: 12px;
             padding-bottom: 8px;
-            width: 100%;
-            max-width: 364px;
-            margin: 0 auto;
         }
 
-        .guns-slider::-webkit-scrollbar {
-            height: 4px;
-        }
-
-        .guns-slider::-webkit-scrollbar-thumb {
-            background: var(--accent-color);
-            border-radius: 2px;
-        }
-
-        .gun-card {
+        .weapon-card {
             width: 160px;
             height: 98px;
+            background-color: var(--card-bg);
             border-radius: 8px;
-            background-color: var(--progress-bg);
-            padding: 8px;
+            padding: 12px;
             flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
         }
 
-        .gun-name {
+        .weapon-bg {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 60px;
+            height: 60px;
+            opacity: 0.3;
+        }
+
+        .weapon-name {
             font-size: 14px;
-            font-weight: 500;
+            margin-bottom: 8px;
         }
 
-        .gun-stats {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .gun-stat {
+        .weapon-stats {
             display: flex;
             align-items: center;
-            gap: 4px;
+            margin-bottom: 4px;
         }
 
-        .gun-stat-icon {
+        .weapon-icon {
             width: 16px;
             height: 16px;
+            margin-right: 6px;
         }
 
-        .gun-stat-value {
+        .weapon-value {
             font-size: 12px;
+            margin-right: 12px;
         }
 
-        /* Стили для страницы рейтинга */
-        .rating-tabs {
-            width: 100%;
-            max-width: 340px;
+        /* Rating Page */
+        .category-tabs {
+            width: 340px;
             height: 35px;
+            margin: 20px auto;
             background-color: var(--card-bg);
             border-radius: 17.5px;
             display: flex;
-            margin: 0 auto 16px;
             padding: 2px;
         }
 
-        .rating-tab {
+        .category-tab {
             flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 17.5px;
-            font-size: 14px;
+            border-radius: 15px;
             cursor: pointer;
-            transition: all 0.2s;
+            font-size: 12px;
+            transition: all 0.3s;
         }
 
-        .rating-tab.active {
-            background-color: rgba(118, 255, 51, 0.2);
+        .category-tab.active {
+            background-color: var(--active-color);
+        }
+
+        .category-tab.exp.active {
             border: 1px solid #76FF33;
         }
 
-        .rating-list {
-            height: 500px;
-            overflow-y: auto;
-            width: 100%;
-            max-width: 364px;
-            margin: 0 auto;
+        .category-tab.crystals.active {
+            border: 1px solid #00D4FF;
         }
 
-        .rating-list::-webkit-scrollbar {
-            width: 4px;
+        .category-tab.gold.active {
+            border: 1px solid #FF8E3C;
         }
 
-        .rating-list::-webkit-scrollbar-thumb {
-            background: var(--accent-color);
-            border-radius: 2px;
+        .category-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 6px;
         }
 
-        .rating-item {
+        .top-list {
+            margin-top: 20px;
+        }
+
+        .top-item {
             display: flex;
             align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px solid var(--progress-bg);
+            padding: 12px 16px;
+            border-bottom: 0.5px solid #2C4D3C;
         }
 
-        .rating-position {
-            width: 30px;
+        .rank {
+            width: 24px;
             text-align: center;
             font-weight: 500;
+            margin-right: 12px;
         }
 
-        .rating-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background-color: var(--progress-bg);
-            margin: 0 12px;
-            flex-shrink: 0;
+        .rank-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
         }
 
-        .rating-name {
+        .top-username {
             flex: 1;
             font-size: 14px;
         }
 
-        .rating-value {
+        .top-value {
             font-size: 14px;
             font-weight: 500;
         }
 
-        /* Стили для страницы дополнительно */
-        .cards-grid {
+        /* Additional Page */
+        .large-cards {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-            margin-bottom: 24px;
-            width: 100%;
-            max-width: 374px;
-            margin-left: auto;
-            margin-right: auto;
+            grid-gap: 12px;
+            margin-bottom: 20px;
         }
 
-        .main-card {
-            width: 100%;
-            height: 97.63px;
-            border-radius: 12px;
+        .large-card {
+            width: 179px;
+            height: 98px;
+            border-radius: 8px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            padding: 12px;
         }
 
-        .main-card:nth-child(1),
-        .main-card:nth-child(2) {
+        .large-card:nth-child(1),
+        .large-card:nth-child(2) {
             background-color: var(--card-bg);
-            border: 1px solid var(--active-color);
+            border: 1px solid var(--accent-color);
         }
 
-        .main-card:nth-child(n+3) {
+        .large-card:nth-child(3),
+        .large-card:nth-child(4),
+        .large-card:nth-child(5),
+        .large-card:nth-child(6) {
             background-color: rgba(118, 255, 51, 0.2);
             border: 1px solid #76FF33;
         }
 
-        .card-icon {
+        .large-card-icon {
             width: 46px;
             height: 46px;
             margin-bottom: 8px;
         }
 
-        .card-text {
-            font-size: 14px;
+        .large-card-text {
+            font-size: 12px;
+            text-align: center;
         }
 
-        .small-cards-grid {
+        .small-cards {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 24px;
-            width: 100%;
-            max-width: 374px;
-            margin-left: auto;
-            margin-right: auto;
+            grid-gap: 12px;
+            margin-bottom: 20px;
         }
 
         .small-card {
-            width: 100%;
+            width: 117px;
             height: 64px;
             border-radius: 8px;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
         }
@@ -599,781 +595,559 @@
         .small-card-icon {
             width: 32px;
             height: 32px;
-            margin-bottom: 4px;
         }
 
-        .bottom-settings {
+        .bottom-panel {
             display: flex;
-            gap: 16px;
-            width: 100%;
-            max-width: 374px;
-            margin: 0 auto;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 20px;
         }
 
         .settings-icon {
             width: 64px;
             height: 64px;
-            border-radius: 12px;
-            background-color: var(--card-bg);
-            border: 1px solid var(--active-color);
+            border-radius: 50%;
+            border: 1px solid var(--accent-color);
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
         }
 
-        .settings-card {
-            width: 100%;
+        .settings-icon svg {
+            width: 32px;
+            height: 32px;
+            fill: var(--accent-color);
+        }
+
+        .suggestion-panel {
+            width: 294px;
             height: 64px;
-            border-radius: 12px;
             background-color: var(--card-bg);
-            border: 1px solid var(--active-color);
+            border-radius: 8px;
             padding: 12px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
 
-        .settings-text {
-            font-size: 16px;
-        }
-
-        .settings-arrow {
-            width: 20px;
-            height: 20px;
-            color: var(--active-color);
-        }
-
-        /* Утилитарные классы */
-        .hidden {
-            display: none;
-        }
-
-        .page {
-            display: none;
-            width: 100%;
+        .suggestion-text {
+            font-size: 12px;
             flex: 1;
         }
 
-        .page.active {
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Адаптивность */
-        @media (max-width: 412px) {
-            .app-container {
-                min-height: 100vh;
-            }
-            
-            .profile-card {
-                height: auto;
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-            
-            .avatar-container {
-                margin-bottom: 12px;
-            }
-            
-            .profile-info {
-                padding-left: 0;
-                width: 100%;
-            }
-            
-            .profile-name {
-                justify-content: center;
-            }
-            
-            .exp-bar {
-                margin: 0 auto;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .guns-slider {
-                max-width: 100%;
-            }
-            
-            .rating-list {
-                max-width: 100%;
-            }
-            
-            .cards-grid, .small-cards-grid {
-                grid-template-columns: 1fr;
-                max-width: 100%;
-            }
-            
-            .bottom-settings {
-                flex-direction: column;
-                max-width: 100%;
-            }
-            
-            .settings-card {
-                width: 100%;
-            }
-        }
-
-        @media (max-height: 744px) {
-            .work-area {
-                padding: 12px;
-            }
-            
-            .profile-card {
-                margin-bottom: 16px;
-            }
-            
-            .stats-grid {
-                gap: 12px;
-            }
-            
-            .rating-list {
-                height: 400px;
-            }
+        .suggestion-arrow {
+            width: 20px;
+            height: 20px;
+            fill: var(--text-color);
         }
     </style>
 </head>
 <body>
-    <div class="app-container">
-        <div class="head" id="head">Главная</div>
-        
-        <div class="work-area">
-            <!-- Главная страница -->
-            <div class="page active" id="home-page">
-                <div class="profile-card">
-                    <div class="avatar-container">
-                        <div class="avatar" id="user-avatar"></div>
-                    </div>
-                    <div class="profile-info">
-                        <div class="profile-name">
-                            <div class="name" id="user-name">Имя пользователя</div>
-                            <div class="profile-icon">
-                                <svg viewBox="0 0 20 20" fill="currentColor">
-                                    <path d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 3C11.66 3 13 4.34 13 6C13 7.66 11.66 9 10 9C8.34 9 7 7.66 7 6C7 4.34 8.34 3 10 3ZM10 17.2C7.5 17.2 5.29 15.92 4 13.98C4.03 11.99 8 10.9 10 10.9C11.99 10.9 15.97 11.99 16 13.98C14.71 15.92 12.5 17.2 10 17.2Z"/>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="username" id="user-username">@username</div>
-                        <div class="exp-bar">
-                            <div class="exp-text">
-                                <span>45</span>
-                                <span>/ 100</span>
-                            </div>
-                            <div class="exp-progress">
-                                <div class="exp-fill"></div>
-                                <div class="exp-icon">
-                                    <svg viewBox="0 0 36 36" fill="currentColor">
-                                        <path d="M18 2C8.06 2 0 10.06 0 20C0 29.94 8.06 38 18 38C27.94 38 36 29.94 36 20C36 10.06 27.94 2 18 2ZM18 34C9.73 34 3 27.27 3 19C3 10.73 9.73 4 18 4C26.27 4 33 10.73 33 19C33 27.27 26.27 34 18 34Z"/>
-                                        <path d="M18 7C12.48 7 8 11.48 8 17C8 22.52 12.48 27 18 27C23.52 27 28 22.52 28 17C28 11.48 23.52 7 18 7ZM18 25C13.59 25 10 21.41 10 17C10 12.59 13.59 9 18 9C22.41 9 26 12.59 26 17C26 21.41 22.41 25 18 25Z"/>
-                                        <path d="M18 11C15.24 11 13 13.24 13 16C13 18.76 15.24 21 18 21C20.76 21 23 18.76 23 16C23 13.24 20.76 11 18 11ZM18 19C16.34 19 15 17.66 15 16C15 14.34 16.34 13 18 13C19.66 13 21 14.34 21 16C21 17.66 19.66 19 18 19Z"/>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <!-- Header -->
+    <div class="header" id="header">Главная</div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Page 1: Main Screen -->
+        <div class="page active" id="page-main">
+            <!-- Profile Section -->
+            <div class="profile-section">
+                <div class="avatar" id="user-avatar">
+                    <!-- Avatar will be set by JavaScript -->
                 </div>
-                
-                <div class="search-container" id="search-container">
-                    <input type="text" class="search-input" placeholder="Поиск пользователя">
-                    <div class="search-icon">
-                        <svg viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M15.5 14H14.71L14.43 13.73C15.41 12.59 16 11.11 16 9.5C16 5.91 13.09 3 9.5 3C5.91 3 3 5.91 3 9.5C3 13.09 5.91 16 9.5 16C11.11 16 12.59 15.41 13.73 14.43L14 14.71V15.5L19 20.49L20.49 19L15.5 14ZM9.5 14C7.01 14 5 11.99 5 9.5C5 7.01 7.01 5 9.5 5C11.99 5 14 7.01 14 9.5C14 11.99 11.99 14 9.5 14Z"/>
+                <div class="profile-info">
+                    <div class="nickname">
+                        <span id="user-nickname">Username</span>
+                        <svg viewBox="0 0 20 20">
+                            <path d="M10 0C4.48 0 0 4.48 0 10s4.48 10 10 10 10-4.48 10-10S15.52 0 10 0zm-1 15l-5-5 1.41-1.41L9 12.17l7.59-7.59L18 6l-9 9z"/>
                         </svg>
                     </div>
-                </div>
-                
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-value">1,234</div>
-                        <div class="stat-label">Сообщений</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">15</div>
-                        <div class="stat-label">Место в топе</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">0</div>
-                        <div class="stat-label">Нарушения</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">245</div>
-                        <div class="stat-label">Очков кармы</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">7</div>
-                        <div class="stat-label">Достижений</div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Страница игрового профиля -->
-            <div class="page" id="game-profile-page">
-                <div class="profile-link" id="link-profile">
-                    Привязать игровой профиль
-                </div>
-                
-                <div class="profile-card hidden" id="linked-profile">
-                    <div class="avatar-container">
-                        <div class="avatar"></div>
-                    </div>
-                    <div class="profile-info">
-                        <div class="profile-name">
-                            <div class="name" id="game-name">Игровой ник</div>
-                            <div class="profile-icon">
-                                <svg viewBox="0 0 20 20" fill="currentColor">
-                                    <path d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 3C11.66 3 13 4.34 13 6C13 7.66 11.66 9 10 9C8.34 9 7 7.66 7 6C7 4.34 8.34 3 10 3ZM10 17.2C7.5 17.2 5.29 15.92 4 13.98C4.03 11.99 8 10.9 10 10.9C11.99 10.9 15.97 11.99 16 13.98C14.71 15.92 12.5 17.2 10 17.2Z"/>
-                                </svg>
+                    <div class="username" id="user-username">@username</div>
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <div class="exp-text">125 / 1000</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
                             </div>
                         </div>
-                        <div class="username" style="font-weight: 700;">GS 1234</div>
-                        <div class="exp-bar">
-                            <div class="exp-text">
-                                <span>45</span>
-                                <span>/ 100</span>
-                            </div>
-                            <div class="exp-progress">
-                                <div class="exp-fill"></div>
-                                <div class="exp-icon">
-                                    <svg viewBox="0 0 36 36" fill="currentColor">
-                                        <path d="M18 2C8.06 2 0 10.06 0 20C0 29.94 8.06 38 18 38C27.94 38 36 29.94 36 20C36 10.06 27.94 2 18 2ZM18 34C9.73 34 3 27.27 3 19C3 10.73 9.73 4 18 4C26.27 4 33 10.73 33 19C33 27.27 26.27 34 18 34Z"/>
-                                        <path d="M18 7C12.48 7 8 11.48 8 17C8 22.52 12.48 27 18 27C23.52 27 28 22.52 28 17C28 11.48 23.52 7 18 7ZM18 25C13.59 25 10 21.41 10 17C10 12.59 13.59 9 18 9C22.41 9 26 12.59 26 17C26 21.41 22.41 25 18 25Z"/>
-                                        <path d="M18 11C15.24 11 13 13.24 13 16C13 18.76 15.24 21 18 21C20.76 21 23 18.76 23 16C23 13.24 20.76 11 18 11ZM18 19C16.34 19 15 17.66 15 16C15 14.34 16.34 13 18 13C19.66 13 21 14.34 21 16C21 17.66 19.66 19 18 19Z"/>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="data-block hidden" id="game-stats">
-                    <div class="data-row">
-                        <div class="data-icon">
-                            <svg viewBox="0 0 16 16" fill="currentColor">
-                                <circle cx="8" cy="8" r="8"/>
+                        <div class="progress-icon">
+                            <svg viewBox="0 0 36 36">
+                                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#579977" stroke-width="3"/>
+                                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#91FFC7" stroke-width="3" stroke-dasharray="60, 100"/>
                             </svg>
-                        </div>
-                        <div class="data-text">Уровень</div>
-                        <div class="data-value">15</div>
-                    </div>
-                    <div class="divider"></div>
-                    
-                    <div class="data-row">
-                        <div class="data-icon">
-                            <svg viewBox="0 0 16 16" fill="currentColor">
-                                <circle cx="8" cy="8" r="8"/>
-                            </svg>
-                        </div>
-                        <div class="data-text">Побед</div>
-                        <div class="data-value">127</div>
-                    </div>
-                    <div class="divider"></div>
-                    
-                    <div class="data-row">
-                        <div class="data-icon">
-                            <svg viewBox="0 0 16 16" fill="currentColor">
-                                <circle cx="8" cy="8" r="8"/>
-                            </svg>
-                        </div>
-                        <div class="data-text">Поражений</div>
-                        <div class="data-value">45</div>
-                    </div>
-                    <div class="divider"></div>
-                    
-                    <div class="data-row">
-                        <div class="data-icon">
-                            <svg viewBox="0 0 16 16" fill="currentColor">
-                                <circle cx="8" cy="8" r="8"/>
-                            </svg>
-                        </div>
-                        <div class="data-text">K/D</div>
-                        <div class="data-value">2.8</div>
-                    </div>
-                    <div class="divider"></div>
-                    
-                    <div class="data-row">
-                        <div class="data-icon">
-                            <svg viewBox="0 0 16 16" fill="currentColor">
-                                <circle cx="8" cy="8" r="8"/>
-                            </svg>
-                        </div>
-                        <div class="data-text">Точность</div>
-                        <div class="data-value">78%</div>
-                    </div>
-                    <div class="divider"></div>
-                    
-                    <div class="data-row">
-                        <div class="data-icon">
-                            <svg viewBox="0 0 16 16" fill="currentColor">
-                                <circle cx="8" cy="8" r="8"/>
-                            </svg>
-                        </div>
-                        <div class="data-text">Время игры</div>
-                        <div class="data-value">45ч</div>
-                    </div>
-                    <div class="divider"></div>
-                    
-                    <div class="data-row">
-                        <div class="data-icon">
-                            <svg viewBox="0 0 16 16" fill="currentColor">
-                                <circle cx="8" cy="8" r="8"/>
-                            </svg>
-                        </div>
-                        <div class="data-text">Рейтинг</div>
-                        <div class="data-value">A+</div>
-                    </div>
-                    
-                    <div class="stats-row">
-                        <div class="stat-item">
-                            <div class="data-icon">
-                                <svg viewBox="0 0 16 16" fill="currentColor">
-                                    <circle cx="8" cy="8" r="8"/>
-                                </svg>
-                            </div>
-                            <div class="data-text">Достижения</div>
-                            <div class="data-value">7/15</div>
-                        </div>
-                        
-                        <div class="stat-item">
-                            <div class="data-icon">
-                                <svg viewBox="0 0 16 16" fill="currentColor">
-                                    <circle cx="8" cy="8" r="8"/>
-                                </svg>
-                            </div>
-                            <div class="data-text">Награды</div>
-                            <div class="data-value">3</div>
-                        </div>
-                        
-                        <div class="stat-item">
-                            <div class="data-icon">
-                                <svg viewBox="0 0 16 16" fill="currentColor">
-                                    <circle cx="8" cy="8" r="8"/>
-                                </svg>
-                            </div>
-                            <div class="data-text">Медалей</div>
-                            <div class="data-value">12</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="guns-title">Пушки</div>
-                <div class="guns-slider">
-                    <div class="gun-card">
-                        <div class="gun-name">AK-47</div>
-                        <div class="gun-stats">
-                            <div class="gun-stat">
-                                <div class="gun-stat-icon">
-                                    <svg viewBox="0 0 16 16" fill="currentColor">
-                                        <circle cx="8" cy="8" r="8"/>
-                                    </svg>
-                                </div>
-                                <div class="gun-stat-value">Урон: 35</div>
-                            </div>
-                            <div class="gun-stat">
-                                <div class="gun-stat-icon">
-                                    <svg viewBox="0 0 16 16" fill="currentColor">
-                                        <circle cx="8" cy="8" r="8"/>
-                                    </svg>
-                                </div>
-                                <div class="gun-stat-value">Скорость: 600</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="gun-card">
-                        <div class="gun-name">M4A1</div>
-                        <div class="gun-stats">
-                            <div class="gun-stat">
-                                <div class="gun-stat-icon">
-                                    <svg viewBox="0 0 16 16" fill="currentColor">
-                                        <circle cx="8" cy="8" r="8"/>
-                                    </svg>
-                                </div>
-                                <div class="gun-stat-value">Урон: 30</div>
-                            </div>
-                            <div class="gun-stat">
-                                <div class="gun-stat-icon">
-                                    <svg viewBox="0 0 16 16" fill="currentColor">
-                                        <circle cx="8" cy="8" r="8"/>
-                                    </svg>
-                                </div>
-                                <div class="gun-stat-value">Скорость: 750</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="gun-card">
-                        <div class="gun-name">AWP</div>
-                        <div class="gun-stats">
-                            <div class="gun-stat">
-                                <div class="gun-stat-icon">
-                                    <svg viewBox="0 0 16 16" fill="currentColor">
-                                        <circle cx="8" cy="8" r="8"/>
-                                    </svg>
-                                </div>
-                                <div class="gun-stat-value">Урон: 115</div>
-                            </div>
-                            <div class="gun-stat">
-                                <div class="gun-stat-icon">
-                                    <svg viewBox="0 0 16 16" fill="currentColor">
-                                        <circle cx="8" cy="8" r="8"/>
-                                    </svg>
-                                </div>
-                                <div class="gun-stat-value">Скорость: 50</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="gun-card">
-                        <div class="gun-name">Desert Eagle</div>
-                        <div class="gun-stats">
-                            <div class="gun-stat">
-                                <div class="gun-stat-icon">
-                                    <svg viewBox="0 0 16 16" fill="currentColor">
-                                        <circle cx="8" cy="8" r="8"/>
-                                    </svg>
-                                </div>
-                                <div class="gun-stat-value">Урон: 63</div>
-                            </div>
-                            <div class="gun-stat">
-                                <div class="gun-stat-icon">
-                                    <svg viewBox="0 0 16 16" fill="currentColor">
-                                        <circle cx="8" cy="8" r="8"/>
-                                    </svg>
-                                </div>
-                                <div class="gun-stat-value">Скорость: 267</div>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <!-- Страница рейтинга -->
-            <div class="page" id="rating-page">
-                <div class="search-container">
-                    <input type="text" class="search-input" placeholder="Поиск пользователя">
-                    <div class="search-icon">
-                        <svg viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M15.5 14H14.71L14.43 13.73C15.41 12.59 16 11.11 16 9.5C16 5.91 13.09 3 9.5 3C5.91 3 3 5.91 3 9.5C3 13.09 5.91 16 9.5 16C11.11 16 12.59 15.41 13.73 14.43L14 14.71V15.5L19 20.49L20.49 19L15.5 14ZM9.5 14C7.01 14 5 11.99 5 9.5C5 7.01 7.01 5 9.5 5C11.99 5 14 7.01 14 9.5C14 11.99 11.99 14 9.5 14Z"/>
-                        </svg>
-                    </div>
-                </div>
-                
-                <div class="rating-tabs">
-                    <div class="rating-tab active" data-tab="exp">Опыт</div>
-                    <div class="rating-tab" data-tab="crystals">Кристаллы</div>
-                    <div class="rating-tab" data-tab="gold">Голды</div>
-                </div>
-                
-                <div class="rating-list">
-                    <div class="rating-item">
-                        <div class="rating-position">1</div>
-                        <div class="rating-avatar"></div>
-                        <div class="rating-name">Игрок 1</div>
-                        <div class="rating-value">15,234</div>
-                    </div>
-                    
-                    <div class="rating-item">
-                        <div class="rating-position">2</div>
-                        <div class="rating-avatar"></div>
-                        <div class="rating-name">Игрок 2</div>
-                        <div class="rating-value">14,987</div>
-                    </div>
-                    
-                    <div class="rating-item">
-                        <div class="rating-position">3</div>
-                        <div class="rating-avatar"></div>
-                        <div class="rating-name">Игрок 3</div>
-                        <div class="rating-value">14,567</div>
-                    </div>
-                    
-                    <!-- Добавьте больше элементов рейтинга по необходимости -->
-                </div>
+
+            <!-- Search Field -->
+            <div class="search-container">
+                <input type="text" class="search-field" placeholder="Поиск пользователя">
+                <svg class="search-icon" viewBox="0 0 20 20">
+                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                </svg>
             </div>
-            
-            <!-- Страница дополнительно -->
-            <div class="page" id="additional-page">
-                <div class="cards-grid">
-                    <div class="main-card">
-                        <div class="card-icon">
-                            <svg viewBox="0 0 46 46" fill="currentColor">
-                                <circle cx="23" cy="23" r="23"/>
-                            </svg>
-                        </div>
-                        <div class="card-text">Функция 1</div>
-                    </div>
-                    <div class="main-card">
-                        <div class="card-icon">
-                            <svg viewBox="0 0 46 46" fill="currentColor">
-                                <circle cx="23" cy="23" r="23"/>
-                            </svg>
-                        </div>
-                        <div class="card-text">Функция 2</div>
-                    </div>
-                    <div class="main-card">
-                        <div class="card-icon">
-                            <svg viewBox="0 0 46 46" fill="currentColor">
-                                <circle cx="23" cy="23" r="23"/>
-                            </svg>
-                        </div>
-                        <div class="card-text">Функция 3</div>
-                    </div>
-                    <div class="main-card">
-                        <div class="card-icon">
-                            <svg viewBox="0 0 46 46" fill="currentColor">
-                                <circle cx="23" cy="23" r="23"/>
-                            </svg>
-                        </div>
-                        <div class="card-text">Функция 4</div>
-                    </div>
-                    <div class="main-card">
-                        <div class="card-icon">
-                            <svg viewBox="0 0 46 46" fill="currentColor">
-                                <circle cx="23" cy="23" r="23"/>
-                            </svg>
-                        </div>
-                        <div class="card-text">Функция 5</div>
-                    </div>
-                    <div class="main-card">
-                        <div class="card-icon">
-                            <svg viewBox="0 0 46 46" fill="currentColor">
-                                <circle cx="23" cy="23" r="23"/>
-                            </svg>
-                        </div>
-                        <div class="card-text">Функция 6</div>
-                    </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">1,234</div>
+                    <div class="stat-label">Сообщения</div>
                 </div>
-                
-                <div class="small-cards-grid">
-                    <div class="small-card">
-                        <div class="small-card-icon">
-                            <svg viewBox="0 0 32 32" fill="currentColor">
-                                <circle cx="16" cy="16" r="16"/>
-                            </svg>
-                        </div>
-                        <div class="card-text">Опция 1</div>
-                    </div>
-                    <div class="small-card">
-                        <div class="small-card-icon">
-                            <svg viewBox="0 0 32 32" fill="currentColor">
-                                <circle cx="16" cy="16" r="16"/>
-                            </svg>
-                        </div>
-                        <div class="card-text">Опция 2</div>
-                    </div>
-                    <div class="small-card">
-                        <div class="small-card-icon">
-                            <svg viewBox="0 0 32 32" fill="currentColor">
-                                <circle cx="16" cy="16" r="16"/>
-                            </svg>
-                        </div>
-                        <div class="card-text">Опция 3</div>
-                    </div>
-                    <div class="small-card">
-                        <div class="small-card-icon">
-                            <svg viewBox="0 0 32 32" fill="currentColor">
-                                <circle cx="16" cy="16" r="16"/>
-                            </svg>
-                        </div>
-                        <div class="card-text">Опция 4</div>
-                    </div>
-                    <div class="small-card">
-                        <div class="small-card-icon">
-                            <svg viewBox="0 0 32 32" fill="currentColor">
-                                <circle cx="16" cy="16" r="16"/>
-                            </svg>
-                        </div>
-                        <div class="card-text">Опция 5</div>
-                    </div>
-                    <div class="small-card">
-                        <div class="small-card-icon">
-                            <svg viewBox="0 0 32 32" fill="currentColor">
-                                <circle cx="16" cy="16" r="16"/>
-                            </svg>
-                        </div>
-                        <div class="card-text">Опция 6</div>
-                    </div>
+                <div class="stat-card">
+                    <div class="stat-value">56</div>
+                    <div class="stat-label">Ранг</div>
                 </div>
-                
-                <div class="bottom-settings">
-                    <div class="settings-icon">
-                        <svg viewBox="0 0 32 32" fill="currentColor">
-                            <path d="M28,16c0-1.1-0.9-2-2-2h-2.2c-0.2-0.7-0.5-1.3-0.8-1.9l1.6-1.6c0.8-0.8,0.8-2,0-2.8l-2.8-2.8c-0.8-0.8-2-0.8-2.8,0l-1.6,1.6c-0.6-0.3-1.2-0.6-1.9-0.8V4c0-1.1-0.9-2-2-2h-4c-1.1,0-2,0.9-2,2v2.2c-0.7,0.2-1.3,0.5-1.9,0.8L6.8,5.4c-0.8-0.8-2-0.8-2.8,0L1.2,8.2c-0.8,0.8-0.8,2,0,2.8l1.6,1.6c-0.3,0.6-0.6,1.2-0.8,1.9H2c-1.1,0-2,0.9-2,2v4c0,1.1,0.9,2,2,2h2.2c0.2,0.7,0.5,1.3,0.8,1.9l-1.6,1.6c-0.8,0.8-0.8,2,0,2.8l2.8,2.8c0.8,0.8,2,0.8,2.8,0l1.6-1.6c0.6,0.3,1.2,0.6,1.9,0.8V28c0,1.1,0.9,2,2,2h4c1.1,0,2-0.9,2-2v-2.2c0.7-0.2,1.3-0.5,1.9-0.8l1.6,1.6c0.8,0.8,2,0.8,2.8,0l2.8-2.8c0.8-0.8,0.8-2,0-2.8l-1.6-1.6c0.3-0.6,0.6-1.2,0.8-1.9H26c1.1,0,2-0.9,2-2V16z M16,20c-2.2,0-4-1.8-4-4s1.8-4,4-4s4,1.8,4,4S18.2,20,16,20z"/>
-                        </svg>
-                    </div>
-                    <div class="settings-card">
-                        <div class="settings-text">Есть идеи для улучшения бота? Можешь поделиться!</div>
-                        <div class="settings-arrow">
-                            <svg viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
-                            </svg>
-                        </div>
-                    </div>
+                <div class="stat-card">
+                    <div class="stat-value">2</div>
+                    <div class="stat-label">Предупреждения</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">789</div>
+                    <div class="stat-label">Карма</div>
+                </div>
+                <div class="stat-card achievements-card">
+                    <div class="stat-value">15</div>
+                    <div class="stat-label">Достижения</div>
                 </div>
             </div>
         </div>
-        
-        <div class="active-menu">
-            <div class="menu-icons">
-                <div class="menu-icon active" data-page="home-page">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+
+        <!-- Page 2: Game Profile -->
+        <div class="page" id="page-profile">
+            <div class="link-profile" id="link-profile">
+                Привязать профиль
+            </div>
+            <div class="nickname-input" id="nickname-input">
+                Введите никнейм
+            </div>
+            
+            <div class="profile-card" id="profile-card" style="display: none;">
+                <!-- Similar to main profile but with GS ID -->
+                <div class="profile-section">
+                    <div class="avatar">
+                        <!-- Game avatar -->
+                    </div>
+                    <div class="profile-info">
+                        <div class="nickname">
+                            <span>GameNickname</span>
+                            <svg viewBox="0 0 20 20">
+                                <path d="M10 0C4.48 0 0 4.48 0 10s4.48 10 10 10 10-4.48 10-10S15.52 0 10 0zm-1 15l-5-5 1.41-1.41L9 12.17l7.59-7.59L18 6l-9 9z"/>
+                            </svg>
+                        </div>
+                        <div class="username">GS 1234</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="data-block" id="data-block" style="display: none;">
+                <!-- Data rows will be populated by JavaScript -->
+            </div>
+
+            <div class="weapons-section" id="weapons-section" style="display: none;">
+                <div class="weapons-title">Оружие</div>
+                <div class="weapons-slider">
+                    <!-- Weapon cards will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 3: Rating -->
+        <div class="page" id="page-rating">
+            <!-- Search Field -->
+            <div class="search-container">
+                <input type="text" class="search-field" placeholder="Поиск пользователя">
+                <svg class="search-icon" viewBox="0 0 20 20">
+                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                </svg>
+            </div>
+
+            <!-- Category Tabs -->
+            <div class="category-tabs">
+                <div class="category-tab exp active">
+                    <svg class="category-icon" viewBox="0 0 16 16">
+                        <path d="M8 0L9.41 5.59L15 7L9.41 8.41L8 14L6.59 8.41L1 7L6.59 5.59L8 0Z" fill="#76FF33"/>
+                    </svg>
+                    Опыт
+                </div>
+                <div class="category-tab crystals">
+                    <svg class="category-icon" viewBox="0 0 16 16">
+                        <path d="M8 0L10.5 5.5L16 8L10.5 10.5L8 16L5.5 10.5L0 8L5.5 5.5L8 0Z" fill="#00D4FF"/>
+                    </svg>
+                    Кристаллы
+                </div>
+                <div class="category-tab gold">
+                    <svg class="category-icon" viewBox="0 0 16 16">
+                        <path d="M8 0L10.5 5.5L16 8L10.5 10.5L8 16L5.5 10.5L0 8L5.5 5.5L8 0Z" fill="#FF8E3C"/>
+                    </svg>
+                    Золото
+                </div>
+            </div>
+
+            <!-- Top 100 List -->
+            <div class="top-list">
+                <!-- Top items will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Page 4: Additional -->
+        <div class="page" id="page-additional">
+            <!-- Large Cards -->
+            <div class="large-cards">
+                <div class="large-card">
+                    <svg class="large-card-icon" viewBox="0 0 46 46">
+                        <path d="M23 0C10.3 0 0 10.3 0 23s10.3 23 23 23 23-10.3 23-23S35.7 0 23 0zm0 42C12.5 42 4 33.5 4 23S12.5 4 23 4s19 8.5 19 19-8.5 19-19 19z" fill="#91FFC7"/>
+                        <path d="M23 8c-8.3 0-15 6.7-15 15s6.7 15 15 15 15-6.7 15-15-6.7-15-15-15zm0 26c-6.1 0-11-4.9-11-11s4.9-11 11-11 11 4.9 11 11-4.9 11-11 11z" fill="#91FFC7"/>
+                    </svg>
+                    <div class="large-card-text">Настройки</div>
+                </div>
+                <div class="large-card">
+                    <svg class="large-card-icon" viewBox="0 0 46 46">
+                        <path d="M23 0C10.3 0 0 10.3 0 23s10.3 23 23 23 23-10.3 23-23S35.7 0 23 0zm0 42C12.5 42 4 33.5 4 23S12.5 4 23 4s19 8.5 19 19-8.5 19-19 19z" fill="#91FFC7"/>
+                        <path d="M23 8c-8.3 0-15 6.7-15 15s6.7 15 15 15 15-6.7 15-15-6.7-15-15-15zm0 26c-6.1 0-11-4.9-11-11s4.9-11 11-11 11 4.9 11 11-4.9 11-11 11z" fill="#91FFC7"/>
+                    </svg>
+                    <div class="large-card-text">Помощь</div>
+                </div>
+                <div class="large-card">
+                    <svg class="large-card-icon" viewBox="0 0 46 46">
+                        <path d="M23 0C10.3 0 0 10.3 0 23s10.3 23 23 23 23-10.3 23-23S35.7 0 23 0zm0 42C12.5 42 4 33.5 4 23S12.5 4 23 4s19 8.5 19 19-8.5 19-19 19z" fill="#76FF33"/>
+                        <path d="M23 8c-8.3 0-15 6.7-15 15s6.7 15 15 15 15-6.7 15-15-6.7-15-15-15zm0 26c-6.1 0-11-4.9-11-11s4.9-11 11-11 11 4.9 11 11-4.9 11-11 11z" fill="#76FF33"/>
+                    </svg>
+                    <div class="large-card-text">Уведомления</div>
+                </div>
+                <div class="large-card">
+                    <svg class="large-card-icon" viewBox="0 0 46 46">
+                        <path d="M23 0C10.3 0 0 10.3 0 23s10.3 23 23 23 23-10.3 23-23S35.7 0 23 0zm0 42C12.5 42 4 33.5 4 23S12.5 4 23 4s19 8.5 19 19-8.5 19-19 19z" fill="#76FF33"/>
+                        <path d="M23 8c-8.3 0-15 6.7-15 15s6.7 15 15 15 15-6.7 15-15-6.7-15-15-15zm0 26c-6.1 0-11-4.9-11-11s4.9-11 11-11 11 4.9 11 11-4.9 11-11 11z" fill="#76FF33"/>
+                    </svg>
+                    <div class="large-card-text">История</div>
+                </div>
+                <div class="large-card">
+                    <svg class="large-card-icon" viewBox="0 0 46 46">
+                        <path d="M23 0C10.3 0 0 10.3 0 23s10.3 23 23 23 23-10.3 23-23S35.7 0 23 0zm0 42C12.5 42 4 33.5 4 23S12.5 4 23 4s19 8.5 19 19-8.5 19-19 19z" fill="#76FF33"/>
+                        <path d="M23 8c-8.3 0-15 6.7-15 15s6.7 15 15 15 15-6.7 15-15-6.7-15-15-15zm0 26c-6.1 0-11-4.9-11-11s4.9-11 11-11 11 4.9 11 11-4.9 11-11 11z" fill="#76FF33"/>
+                    </svg>
+                    <div class="large-card-text">Статистика</div>
+                </div>
+                <div class="large-card">
+                    <svg class="large-card-icon" viewBox="0 0 46 46">
+                        <path d="M23 0C10.3 0 0 10.3 0 23s10.3 23 23 23 23-10.3 23-23S35.7 0 23 0zm0 42C12.5 42 4 33.5 4 23S12.5 4 23 4s19 8.5 19 19-8.5 19-19 19z" fill="#76FF33"/>
+                        <path d="M23 8c-8.3 0-15 6.7-15 15s6.7 15 15 15 15-6.7 15-15-6.7-15-15-15zm0 26c-6.1 0-11-4.9-11-11s4.9-11 11-11 11 4.9 11 11-4.9 11-11 11z" fill="#76FF33"/>
+                    </svg>
+                    <div class="large-card-text">О программе</div>
+                </div>
+            </div>
+
+            <!-- Small Cards -->
+            <div class="small-cards">
+                <div class="small-card">
+                    <svg class="small-card-icon" viewBox="0 0 32 32">
+                        <path d="M16 0C7.2 0 0 7.2 0 16s7.2 16 16 16 16-7.2 16-16S24.8 0 16 0zm0 28C9.4 28 4 22.6 4 16S9.4 4 16 4s12 5.4 12 12-5.4 12-12 12z" fill="#2E8FFF"/>
                     </svg>
                 </div>
-                <div class="menu-icon" data-page="game-profile-page">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                <div class="small-card">
+                    <svg class="small-card-icon" viewBox="0 0 32 32">
+                        <path d="M16 0C7.2 0 0 7.2 0 16s7.2 16 16 16 16-7.2 16-16S24.8 0 16 0zm0 28C9.4 28 4 22.6 4 16S9.4 4 16 4s12 5.4 12 12-5.4 12-12 12z" fill="#6673FF"/>
                     </svg>
                 </div>
-                <div class="menu-icon" data-page="rating-page">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                <div class="small-card">
+                    <svg class="small-card-icon" viewBox="0 0 32 32">
+                        <path d="M16 0C7.2 0 0 7.2 0 16s7.2 16 16 16 16-7.2 16-16S24.8 0 16 0zm0 28C9.4 28 4 22.6 4 16S9.4 4 16 4s12 5.4 12 12-5.4 12-12 12z" fill="#2EB9FF"/>
                     </svg>
                 </div>
-                <div class="menu-icon" data-page="additional-page">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/>
+                <div class="small-card">
+                    <svg class="small-card-icon" viewBox="0 0 32 32">
+                        <path d="M16 0C7.2 0 0 7.2 0 16s7.2 16 16 16 16-7.2 16-16S24.8 0 16 0zm0 28C9.4 28 4 22.6 4 16S9.4 4 16 4s12 5.4 12 12-5.4 12-12 12z" fill="#FF0033"/>
+                    </svg>
+                </div>
+                <div class="small-card">
+                    <svg class="small-card-icon" viewBox="0 0 32 32">
+                        <path d="M16 0C7.2 0 0 7.2 0 16s7.2 16 16 16 16-7.2 16-16S24.8 0 16 0zm0 28C9.4 28 4 22.6 4 16S9.4 4 16 4s12 5.4 12 12-5.4 12-12 12z" fill="#9D5CFF"/>
+                    </svg>
+                </div>
+                <div class="small-card">
+                    <svg class="small-card-icon" viewBox="0 0 32 32">
+                        <path d="M16 0C7.2 0 0 7.2 0 16s7.2 16 16 16 16-7.2 16-16S24.8 0 16 0zm0 28C9.4 28 4 22.6 4 16S9.4 4 16 4s12 5.4 12 12-5.4 12-12 12z" fill="#28E6E0"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Bottom Panel -->
+            <div class="bottom-panel">
+                <div class="settings-icon">
+                    <svg viewBox="0 0 32 32">
+                        <path d="M28.6 14.6l-2.1-1.2c.2-.8.4-1.6.4-2.4s-.2-1.6-.4-2.4l2.1-1.2c.4-.2.6-.7.5-1.2s-.5-.8-1-.8h-2.5c-.7-1.4-1.7-2.6-2.9-3.6-.4-.3-.9-.3-1.3 0l-1.8 1.8c-.6-.2-1.2-.4-1.8-.5V1c0-.5-.5-1-1-1h-2c-.5 0-1 .5-1 1v2.5c-.6.1-1.2.3-1.8.5L9.6 2.2c-.4-.3-.9-.3-1.3 0C7.1 3.2 6.1 4.4 5.4 5.8H2.9c-.5 0-.9.3-1 .8s.1 1 .5 1.2l2.1 1.2c-.2.8-.4 1.6-.4 2.4s.2 1.6.4 2.4l-2.1 1.2c-.4.2-.6.7-.5 1.2s.5.8 1 .8h2.5c.7 1.4 1.7 2.6 2.9 3.6.4.3.9.3 1.3 0l1.8-1.8c.6.2 1.2.4 1.8.5V31c0 .5.5 1 1 1h2c.5 0 1-.5 1-1v-2.5c.6-.1 1.2-.3 1.8-.5l1.8 1.8c.4.3.9.3 1.3 0 1.2-1 2.2-2.2 2.9-3.6h2.5c.5 0 .9-.3 1-.8s-.1-1-.5-1.2zM16 20c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4z"/>
+                    </svg>
+                </div>
+                <div class="suggestion-panel">
+                    <div class="suggestion-text">Есть идеи для улучшения бота? Поделитесь!</div>
+                    <svg class="suggestion-arrow" viewBox="0 0 20 20">
+                        <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
                     </svg>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Navigation Menu -->
+    <div class="nav-menu">
+        <div class="nav-icon active" data-page="page-main">
+            <svg viewBox="0 0 24 24">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+            </svg>
+        </div>
+        <div class="nav-icon" data-page="page-profile">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+        </div>
+        <div class="nav-icon" data-page="page-rating">
+            <svg viewBox="0 0 24 24">
+                <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm4.24 16L12 15.45 7.77 18l1.12-4.81-3.73-3.23 4.92-.42L12 5l1.92 4.53 4.92.42-3.73 3.23L16.23 18z"/>
+            </svg>
+        </div>
+        <div class="nav-icon" data-page="page-additional">
+            <svg viewBox="0 0 24 24">
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+            </svg>
+        </div>
+    </div>
+
     <script>
-        // Инициализация Telegram Web App
-        let tg = window.Telegram?.WebApp;
-        
-        if (tg) {
-            // Расширяем приложение на весь экран
-            tg.expand();
-            
-            // Получаем данные пользователя из Telegram
-            const user = tg.initDataUnsafe?.user;
-            
-            // Заполняем данные пользователя, если они доступны
-            if (user) {
-                document.getElementById('user-name').textContent = user.first_name || 'Пользователь';
-                document.getElementById('user-username').textContent = '@' + (user.username || 'username');
+        // Telegram WebApp API integration
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Telegram WebApp
+            if (window.Telegram && Telegram.WebApp) {
+                const webApp = Telegram.WebApp;
                 
-                // Установка аватара (в реальном приложении нужно загружать фото)
-                const avatar = document.getElementById('user-avatar');
-                if (user.photo_url) {
-                    avatar.style.backgroundImage = `url(${user.photo_url})`;
+                // Expand the app to full height
+                webApp.expand();
+                
+                // Get user data from Telegram
+                const user = webApp.initDataUnsafe.user;
+                
+                if (user) {
+                    // Set user avatar
+                    const avatarElement = document.getElementById('user-avatar');
+                    if (user.photo_url) {
+                        avatarElement.innerHTML = `<img src="${user.photo_url}" alt="User Avatar">`;
+                    } else {
+                        // Create a placeholder avatar with user initials
+                        const initials = user.first_name ? user.first_name.charAt(0) : 'U';
+                        avatarElement.innerHTML = `<div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 48px; color: white;">${initials}</div>`;
+                    }
+                    
+                    // Set user nickname and username
+                    document.getElementById('user-nickname').textContent = user.first_name || 'User';
+                    document.getElementById('user-username').textContent = user.username ? `@${user.username}` : '';
                 }
             }
-        } else {
-            // Заглушка для локального тестирования
-            document.getElementById('user-name').textContent = 'Тестовый пользователь';
-            document.getElementById('user-username').textContent = '@testuser';
-        }
-        
-        // Навигация между страницами
-        const menuIcons = document.querySelectorAll('.menu-icon');
-        const pages = document.querySelectorAll('.page');
-        const head = document.getElementById('head');
-        
-        // Тексты для заголовков
-        const pageTitles = {
-            'home-page': 'Главная',
-            'game-profile-page': 'Игровой профиль',
-            'rating-page': 'Рейтинг',
-            'additional-page': 'Дополнительно'
-        };
-        
-        menuIcons.forEach(icon => {
-            icon.addEventListener('click', () => {
-                // Убираем активный класс у всех иконок и страниц
-                menuIcons.forEach(i => i.classList.remove('active'));
-                pages.forEach(page => page.classList.remove('active'));
+            
+            // Navigation functionality
+            const navIcons = document.querySelectorAll('.nav-icon');
+            const pages = document.querySelectorAll('.page');
+            const header = document.getElementById('header');
+            
+            navIcons.forEach(icon => {
+                icon.addEventListener('click', function() {
+                    const targetPage = this.getAttribute('data-page');
+                    
+                    // Update active nav icon
+                    navIcons.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show target page
+                    pages.forEach(page => {
+                        page.classList.remove('active');
+                        if (page.id === targetPage) {
+                            page.classList.add('active');
+                            
+                            // Update header text based on active page
+                            switch(targetPage) {
+                                case 'page-main':
+                                    header.textContent = 'Главная';
+                                    break;
+                                case 'page-profile':
+                                    header.textContent = 'Игровой профиль';
+                                    break;
+                                case 'page-rating':
+                                    header.textContent = 'Рейтинг';
+                                    break;
+                                case 'page-additional':
+                                    header.textContent = 'Дополнительно';
+                                    break;
+                            }
+                        }
+                    });
+                });
+            });
+            
+            // Game profile linking functionality
+            const linkProfile = document.getElementById('link-profile');
+            const nicknameInput = document.getElementById('nickname-input');
+            const profileCard = document.getElementById('profile-card');
+            const dataBlock = document.getElementById('data-block');
+            const weaponsSection = document.getElementById('weapons-section');
+            
+            nicknameInput.addEventListener('click', function() {
+                // In a real app, this would open a dialog for nickname input
+                const nickname = prompt('Введите ваш игровой никнейм:');
+                if (nickname) {
+                    // Hide linking elements
+                    linkProfile.style.display = 'none';
+                    nicknameInput.style.display = 'none';
+                    
+                    // Show profile elements
+                    profileCard.style.display = 'block';
+                    dataBlock.style.display = 'block';
+                    weaponsSection.style.display = 'block';
+                    
+                    // Populate data block
+                    const dataRows = [
+                        { icon: '⚔️', text: 'Убийства', value: '125' },
+                        { icon: '💀', text: 'Смерти', value: '87' },
+                        { icon: '🎯', text: 'Точность', value: '68%' },
+                        { icon: '🏆', text: 'Победы', value: '42' },
+                        { icon: '⏱️', text: 'Время игры', value: '156ч' },
+                        { icon: '⭐', text: 'Уровень', value: '24' },
+                        { icon: '🔫', text: 'Любимое оружие', value: 'AK-47' }
+                    ];
+                    
+                    dataBlock.innerHTML = '';
+                    dataRows.forEach(row => {
+                        const rowElement = document.createElement('div');
+                        rowElement.className = 'data-row';
+                        rowElement.innerHTML = `
+                            <div style="display: flex; align-items: center;">
+                                <span class="data-icon">${row.icon}</span>
+                                <span class="data-text">${row.text}</span>
+                            </div>
+                            <span class="data-value">${row.value}</span>
+                        `;
+                        dataBlock.appendChild(rowElement);
+                    });
+                    
+                    // Add stats row
+                    const statsRow = document.createElement('div');
+                    statsRow.className = 'stats-row';
+                    statsRow.innerHTML = `
+                        <div class="mini-stat">
+                            <span class="data-icon">🥇</span>
+                            <span class="mini-stat-text">Топ-5%</span>
+                        </div>
+                        <div class="mini-stat">
+                            <span class="data-icon">🔥</span>
+                            <span class="mini-stat-text">15 побед</span>
+                        </div>
+                        <div class="mini-stat">
+                            <span class="data-icon">⚡</span>
+                            <span class="mini-stat-text">Быстрая</span>
+                        </div>
+                    `;
+                    dataBlock.appendChild(statsRow);
+                    
+                    // Populate weapons slider
+                    const weapons = [
+                        { name: 'AK-47', stat1: 'Урон: 35', stat2: 'Скорость: 600' },
+                        { name: 'M4A1', stat1: 'Урон: 33', stat2: 'Скорость: 750' },
+                        { name: 'AWP', stat1: 'Урон: 115', stat2: 'Скорость: 41' }
+                    ];
+                    
+                    weaponsSection.querySelector('.weapons-slider').innerHTML = '';
+                    weapons.forEach(weapon => {
+                        const weaponCard = document.createElement('div');
+                        weaponCard.className = 'weapon-card';
+                        weaponCard.innerHTML = `
+                            <div class="weapon-name">${weapon.name}</div>
+                            <div class="weapon-stats">
+                                <span class="weapon-icon">💥</span>
+                                <span class="weapon-value">${weapon.stat1}</span>
+                            </div>
+                            <div class="weapon-stats">
+                                <span class="weapon-icon">⚡</span>
+                                <span class="weapon-value">${weapon.stat2}</span>
+                            </div>
+                            <div class="weapon-bg">🔫</div>
+                        `;
+                        weaponsSection.querySelector('.weapons-slider').appendChild(weaponCard);
+                    });
+                }
+            });
+            
+            // Category tabs functionality
+            const categoryTabs = document.querySelectorAll('.category-tab');
+            
+            categoryTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    categoryTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // In a real app, this would update the top list based on the selected category
+                    updateTopList(this.classList.contains('exp') ? 'exp' : 
+                                 this.classList.contains('crystals') ? 'crystals' : 'gold');
+                });
+            });
+            
+            // Function to update top list based on category
+            function updateTopList(category) {
+                const topList = document.querySelector('.top-list');
+                topList.innerHTML = '';
                 
-                // Добавляем активный класс к выбранной иконке
-                icon.classList.add('active');
+                // Generate sample top 10 items
+                for (let i = 1; i <= 10; i++) {
+                    const topItem = document.createElement('div');
+                    topItem.className = 'top-item';
+                    
+                    let value;
+                    switch(category) {
+                        case 'exp':
+                            value = `${(10000 - i * 100)} XP`;
+                            break;
+                        case 'crystals':
+                            value = `${(500 - i * 5)} 💎`;
+                            break;
+                        case 'gold':
+                            value = `${(10000 - i * 100)} 🪙`;
+                            break;
+                    }
+                    
+                    topItem.innerHTML = `
+                        <div class="rank">${i}</div>
+                        <div class="rank-icon">${i <= 3 ? '🏆' : '👤'}</div>
+                        <div class="top-username">User${i}</div>
+                        <div class="top-value">${value}</div>
+                    `;
+                    topList.appendChild(topItem);
+                }
+            }
+            
+            // Initialize top list
+            updateTopList('exp');
+            
+            // Search field functionality
+            const searchFields = document.querySelectorAll('.search-field');
+            
+            searchFields.forEach(field => {
+                field.addEventListener('input', function() {
+                    // Remove error state if user starts typing
+                    if (this.classList.contains('error')) {
+                        this.classList.remove('error');
+                    }
+                });
                 
-                // Показываем выбранную страницу
-                const pageId = icon.getAttribute('data-page');
-                document.getElementById(pageId).classList.add('active');
-                
-                // Обновляем заголовок
-                head.textContent = pageTitles[pageId];
+                // Simulate search error for demonstration
+                field.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        // In a real app, this would trigger a search
+                        // For demo, randomly show error state
+                        if (Math.random() > 0.7) {
+                            this.classList.add('error');
+                        }
+                    }
+                });
             });
         });
-        
-        // Обработка поиска
-        const searchContainer = document.getElementById('search-container');
-        const searchInput = document.querySelector('.search-input');
-        
-        if (searchInput && searchContainer) {
-            searchInput.addEventListener('focus', () => {
-                searchContainer.classList.add('active');
-            });
-            
-            searchInput.addEventListener('blur', () => {
-                searchContainer.classList.remove('active');
-                // Сброс состояния ошибки при потере фокуса
-                searchContainer.classList.remove('error');
-            });
-            
-            // Пример обработки поиска с ошибкой
-            searchInput.addEventListener('input', (e) => {
-                if (e.target.value.toLowerCase().includes('ошибка')) {
-                    searchContainer.classList.add('error');
-                } else {
-                    searchContainer.classList.remove('error');
-                }
-            });
-        }
-        
-        // Обработка привязки игрового профиля
-        const linkProfile = document.getElementById('link-profile');
-        const linkedProfile = document.getElementById('linked-profile');
-        const gameStats = document.getElementById('game-stats');
-        
-        if (linkProfile && linkedProfile && gameStats) {
-            linkProfile.addEventListener('click', () => {
-                // В реальном приложении здесь будет логика привязки профиля
-                const gameName = prompt('Введите ваш игровой никнейм:');
-                if (gameName) {
-                    document.getElementById('game-name').textContent = gameName;
-                    linkProfile.classList.add('hidden');
-                    linkedProfile.classList.remove('hidden');
-                    gameStats.classList.remove('hidden');
-                }
-            });
-        }
-        
-        // Обработка вкладок рейтинга
-        const ratingTabs = document.querySelectorAll('.rating-tab');
-        
-        ratingTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                ratingTabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                
-                // В реальном приложении здесь будет загрузка данных для выбранной вкладки
-                const tabType = tab.getAttribute('data-tab');
-                console.log(`Загрузка рейтинга для: ${tabType}`);
-            });
-        });
-        
-        // Адаптация под размер экрана
-        function adjustLayout() {
-            const appContainer = document.querySelector('.app-container');
-            const workArea = document.querySelector('.work-area');
-            
-            if (window.innerHeight < 744) {
-                appContainer.style.minHeight = '100vh';
-            } else {
-                appContainer.style.minHeight = '744px';
-            }
-            
-            if (window.innerWidth < 412) {
-                appContainer.style.maxWidth = '100%';
-            } else {
-                appContainer.style.maxWidth = '412px';
-            }
-        }
-        
-        window.addEventListener('resize', adjustLayout);
-        adjustLayout(); // Вызов при загрузке
     </script>
 </body>
 </html>
