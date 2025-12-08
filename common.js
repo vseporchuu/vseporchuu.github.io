@@ -51,7 +51,6 @@ function checkTelegramAuth() {
 // Обновление интерфейса в зависимости от состояния пользователя
 function updateUserInterface() {
     const userAvatar = document.getElementById('userAvatar');
-    const avatarIcon = document.getElementById('avatarIcon');
     const dropdownHeader = document.getElementById('dropdownHeader');
     const dropdownAvatar = document.getElementById('dropdownAvatar');
     const dropdownInfo = document.getElementById('dropdownInfo');
@@ -89,12 +88,12 @@ function updateUserInterface() {
     } else {
         // Пользователь не авторизован
         if (userAvatar) {
-            userAvatar.innerHTML = '<i class="fas fa-user" id="avatarIcon"></i>';
+            userAvatar.innerHTML = '<i class="fas fa-user"></i>';
             userAvatar.classList.add('unauthorized');
             userAvatar.title = "Меню пользователя";
         }
         
-        if (dropdownAvatar) dropdownAvatar.innerHTML = '<i class="fas fa-user" id="dropdownAvatarIcon"></i>';
+        if (dropdownAvatar) dropdownAvatar.innerHTML = '<i class="fas fa-user"></i>';
         if (dropdownInfo) {
             dropdownInfo.innerHTML = `
                 <h4>Войдите через Telegram</h4>
@@ -179,6 +178,7 @@ function initCommonElements() {
     const userDropdown = document.getElementById('userDropdown');
     const telegramLoginBtn = document.getElementById('telegramLoginBtn');
     const logoutBtn = document.getElementById('logoutBtn');
+    const mobileSearchBtn = document.getElementById('mobileSearchBtn');
     
     // Мобильное меню
     if (mobileMenuBtn) {
@@ -278,7 +278,6 @@ function initCommonElements() {
     
     // Мобильный поиск
     if (window.innerWidth <= 992) {
-        const mobileSearchBtn = document.getElementById('mobileSearchBtn');
         if (mobileSearchBtn) {
             mobileSearchBtn.style.display = 'block';
             mobileSearchBtn.addEventListener('click', () => {
@@ -290,8 +289,10 @@ function initCommonElements() {
         }
         
         document.addEventListener('click', (e) => {
-            if (!searchBox.contains(e.target) && !mobileSearchBtn.contains(e.target)) {
-                searchBox.classList.remove('active');
+            if (searchBox && mobileSearchBtn) {
+                if (!searchBox.contains(e.target) && !mobileSearchBtn.contains(e.target)) {
+                    searchBox.classList.remove('active');
+                }
             }
         });
     }
@@ -314,8 +315,8 @@ function initCommonElements() {
     // Закрытие меню при переходе по ссылке (для мобильных)
     document.querySelectorAll('.mobile-nav a').forEach(link => {
         link.addEventListener('click', () => {
-            mobileNav.classList.remove('active');
-            mobileNavOverlay.classList.remove('active');
+            if (mobileNav) mobileNav.classList.remove('active');
+            if (mobileNavOverlay) mobileNavOverlay.classList.remove('active');
         });
     });
 }
@@ -326,7 +327,10 @@ window.addEventListener('resize', function() {
     const searchBox = document.getElementById('searchBox');
     
     if (window.innerWidth > 992) {
-        if (searchBox) searchBox.style.display = 'flex';
+        if (searchBox) {
+            searchBox.style.display = 'flex';
+            searchBox.classList.remove('active');
+        }
         if (mobileSearchBtn) mobileSearchBtn.style.display = 'none';
     } else {
         if (mobileSearchBtn) mobileSearchBtn.style.display = 'block';
