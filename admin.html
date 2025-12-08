@@ -35,6 +35,43 @@
             color: var(--text-primary);
             line-height: 1.6;
         }
+        .notification {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    background: var(--gradient);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    z-index: 9999;
+    animation: slideIn 0.3s ease;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.notification.success {
+    background: linear-gradient(135deg, var(--success-color) 0%, #00cc88 100%);
+}
+
+.notification.warning {
+    background: linear-gradient(135deg, var(--warning-color) 0%, #ffaa00 100%);
+}
+
+.notification.error {
+    background: linear-gradient(135deg, #ff6666 0%, #ff3333 100%);
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideOut {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(100%); opacity: 0; }
+}
 
         .container {
             width: 100%;
