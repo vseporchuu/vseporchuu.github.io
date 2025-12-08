@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Жанры аниме - Youkai Studio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff66a3;
+            --secondary-color: #c77dff;
+            --dark-color: #0f0f1a;
+            --dark-light: #1a1a2e;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --card-bg: #252538;
+            --border-color: #333344;
+            --success-color: #6bffb8;
+            --warning-color: #ffd166;
+            --info-color: #7bb4ff;
+            --shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            --gradient: linear-gradient(135deg, #ff66a3 0%, #c77dff 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--dark-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 16px;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 102, 163, 0.4);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        /* Шапка сайта */
+        header {
+            background-color: rgba(15, 15, 26, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 15px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .logo svg {
+            width: 32px;
+            height: 32px;
+            margin-right: 10px;
+            fill: var(--primary-color);
+        }
+
+        .logo span {
+            color: var(--primary-color);
+        }
+
+        nav ul {
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul li {
+            margin: 0 12px;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            padding: 8px 0;
+            position: relative;
+            transition: color 0.3s;
+            font-size: 15px;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        nav ul li a.active {
+            color: var(--primary-color);
+        }
+
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background-color: var(--dark-light);
+            border-radius: 8px;
+            padding: 8px 15px;
+            width: 300px;
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-primary);
+            width: 100%;
+            margin-left: 10px;
+            font-size: 15px;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            margin-left: 20px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 102, 163, 0.4);
+        }
+
+        main {
+            margin-top: 80px;
+            min-height: calc(100vh - 200px);
+        }
+
+        .page-header {
+            background-color: var(--dark-light);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        .genres-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .genre-card {
+            background-color: var(--dark-light);
+            border-radius: 12px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .genre-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .genre-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient);
+        }
+
+        .genre-icon {
+            font-size: 32px;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .genre-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .genre-description {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .genre-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .popular-genres {
+            margin-bottom: 50px;
+        }
+
+        .popular-genres h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .popular-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .tag {
+            background-color: var(--card-bg);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tag:hover {
+            background-color: rgba(255, 102, 163, 0.2);
+            color: var(--primary-color);
+        }
+
+        .tag.active {
+            background: var(--gradient);
+            color: white;
+        }
+
+        .genre-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: var(--dark-light);
+            border-radius: 12px;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filter-group label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        select {
+            padding: 8px 12px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            min-width: 150px;
+        }
+
+        .anime-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .anime-card {
+            background-color: var(--dark-light);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .anime-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .anime-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .anime-card-content {
+            padding: 15px;
+        }
+
+        .anime-card h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-weight: 500;
+        }
+
+        .anime-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .anime-rating {
+            color: var(--warning-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .anime-rating i {
+            margin-right: 4px;
+            font-size: 12px;
+        }
+
+        .anime-genres {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .genre-badge {
+            background-color: rgba(199, 125, 255, 0.2);
+            color: var(--secondary-color);
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 11px;
+        }
+
+        footer {
+            background-color: var(--dark-light);
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: var(--text-secondary);
+            transition: color 0.3s;
+            font-size: 14px;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--gradient);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        @media (max-width: 900px) {
+            .genres-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            .anime-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+            
+            .anime-card img {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .genres-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .anime-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .genre-filters {
+                flex-direction: column;
+            }
+            
+            .filter-group {
+                width: 100%;
+            }
+            
+            select {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M50,10 C70,10 85,25 85,45 C85,55 80,64 72,70 L72,85 C72,90 67,95 62,95 L38,95 C33,95 28,90 28,85 L28,70 C20,64 15,55 15,45 C15,25 30,10 50,10 Z" fill="#ff66a3"/>
+                    <circle cx="40" cy="35" r="5" fill="#ffffff"/>
+                    <circle cx="60" cy="35" r="5" fill="#ffffff"/>
+                    <path d="M45,55 C45,58 47,60 50,60 C53,60 55,58 55,55 C55,52 53,50 50,50 C47,50 45,52 45,55 Z" fill="#ffffff"/>
+                    <path d="M35,75 L65,75 C67,75 69,77 69,79 C69,81 67,83 65,83 L35,83 C33,83 31,81 31,79 C31,77 33,75 35,75 Z" fill="#c77dff"/>
+                </svg>
+                Youkai<span>Studio</span>
+            </div>
+            
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Поиск аниме...">
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="anime-catalog.html">Каталог</a></li>
+                    <li><a href="calendar.html">Календарь</a></li>
+                    <li><a href="genres.html" class="active">Жанры</a></li>
+                    <li><a href="community.html">Сообщество</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-menu">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="page-header">
+            <h1>Жанры аниме</h1>
+            <p>Исследуйте разнообразие аниме по жанрам и найдите то, что вам по душе</p>
+        </div>
+
+        <div class="popular-genres">
+            <h2>Популярные жанры</h2>
+            <div class="popular-tags" id="popularTags">
+                <!-- Популярные теги будут добавлены через JavaScript -->
+            </div>
+        </div>
+
+        <div class="genre-filters">
+            <div class="filter-group">
+                <label for="sortBy">Сортировать:</label>
+                <select id="sortBy">
+                    <option value="popular">По популярности</option>
+                    <option value="name">По названию</option>
+                    <option value="count">По количеству</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="showCount">Показать:</label>
+                <select id="showCount">
+                    <option value="all">Все жанры</option>
+                    <option value="main">Основные</option>
+                    <option value="top20">Топ-20</option>
+                </select>
+            </div>
+            
+            <button class="btn btn-primary" id="applyFilters">
+                <i class="fas fa-filter"></i> Применить фильтры
+            </button>
+            
+            <button class="btn btn-outline" id="resetFilters">
+                <i class="fas fa-redo"></i> Сбросить
+            </button>
+        </div>
+
+        <div class="genres-grid" id="genresGrid">
+            <!-- Карточки жанров будут добавлены через JavaScript -->
+        </div>
+
+        <h2 style="font-family: 'Poppins', sans-serif; font-size: 24px; margin-bottom: 20px;">Рекомендуем по жанрам</h2>
+        <div class="anime-grid" id="recommendedAnime">
+            <!-- Рекомендуемые аниме будут добавлены через JavaScript -->
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Youkai Studio</h3>
+                    <p>Платформа для настоящих ценителей аниме. Высокое качество, удобный интерфейс и активное сообщество.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Навигация</h3>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="anime-catalog.html">Каталог аниме</a></li>
+                        <li><a href="popular.html">Популярное</a></li>
+                        <li><a href="new-episodes.html">Новые серии</a></li>
+                        <li><a href="genres.html">Жанры</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Помощь</h3>
+                    <ul>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="rules.html">Правила сайта</a></li>
+                        <li><a href="support.html">Поддержка</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Партнерам</h3>
+                    <ul>
+                        <li><a href="rights-holders.html">Для правообладателей</a></li>
+                        <li><a href="advertising.html">Реклама на сайте</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Youkai Studio. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Данные жанров
+        const genresData = [
+            { id: 1, name: "Экшен", icon: "fa-fist-raised", description: "Динамичные сражения и приключения", count: 1247, color: "#ff66a3" },
+            { id: 2, name: "Драма", icon: "fa-theater-masks", description: "Эмоциональные истории о жизни и отношениях", count: 892, color: "#6bffb8" },
+            { id: 3, name: "Комедия", icon: "fa-laugh", description: "Юмористические и веселые сюжеты", count: 765, color: "#ffd166" },
+            { id: 4, name: "Фэнтези", icon: "fa-dragon", description: "Мир магии, мифических существ и приключений", count: 943, color: "#c77dff" },
+            { id: 5, name: "Романтика", icon: "fa-heart", description: "Истории любви и отношений", count: 678, color: "#ff66a3" },
+            { id: 6, name: "Научная фантастика", icon: "fa-robot", description: "Технологии будущего и космические приключения", count: 521, color: "#7bb4ff" },
+            { id: 7, name: "Ужасы", icon: "fa-ghost", description: "Страшные и мистические истории", count: 432, color: "#ff6666" },
+            { id: 8, name: "Повседневность", icon: "fa-home", description: "Повседневная жизнь обычных людей", count: 567, color: "#66ffcc" },
+            { id: 9, name: "Приключения", icon: "fa-compass", description: "Путешествия и исследования новых миров", count: 834, color: "#ffcc66" },
+            { id: 10, name: "Мистика", icon: "fa-magic", description: "Загадочные и сверхъестественные события", count: 489, color: "#cc66ff" },
+            { id: 11, name: "Спорт", icon: "fa-running", description: "Спортивные соревнования и достижения", count: 321, color: "#66ccff" },
+            { id: 12, name: "Психология", icon: "fa-brain", description: "Глубокий анализ психики и поведения", count: 256, color: "#ff9966" }
+        ];
+
+        const popularTags = [
+            "Экшен", "Драма", "Комедия", "Фэнтези", "Романтика", "Научная фантастика",
+            "Ужасы", "Приключения", "Мистика", "Повседневность", "Спорт", "Психология",
+            "Исекай", "Меха", "Сёнен", "Сёдзё", "Сэйнэн", "Дзёсей"
+        ];
+
+        const recommendedAnime = [
+            { title: "Атака Титанов", image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", rating: "9.8", genres: ["Экшен", "Драма", "Фэнтези"] },
+            { title: "Ван Пис", image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", rating: "9.5", genres: ["Приключения", "Комедия", "Фэнтези"] },
+            { title: "Магическая битва", image: "https://images.unsplash.com/photo-1618331833071-1c0c6ee3d19e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", rating: "9.2", genres: ["Экшен", "Сверхъестественное"] },
+            { title: "Демон-убийца", image: "https://images.unsplash.com/photo-1639322537228-f710d846310a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", rating: "9.3", genres: ["Экшен", "Драма", "Фэнтези"] },
+            { title: "О моём перерождении в слизь", image: "https://images.unsplash.com/photo-1541562232579-512a21360020?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", rating: "9.0", genres: ["Фэнтези", "Приключения", "Комедия"] }
+        ];
+
+        // Функция для создания карточки жанра
+        function createGenreCard(genre) {
+            return `
+                <div class="genre-card" data-id="${genre.id}">
+                    <div class="genre-icon">
+                        <i class="fas ${genre.icon}"></i>
+                    </div>
+                    <div class="genre-title">${genre.name}</div>
+                    <div class="genre-description">${genre.description}</div>
+                    <div class="genre-stats">
+                        <span>${genre.count} тайтлов</span>
+                        <span><i class="fas fa-fire"></i> Популярно</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Функция для создания тега
+        function createTag(tag, isActive = false) {
+            return `
+                <div class="tag ${isActive ? 'active' : ''}" data-tag="${tag}">${tag}</div>
+            `;
+        }
+
+        // Функция для создания карточки аниме
+        function createAnimeCard(anime) {
+            return `
+                <div class="anime-card">
+                    <img src="${anime.image}" alt="${anime.title}">
+                    <div class="anime-card-content">
+                        <h3>${anime.title}</h3>
+                        <div class="anime-meta">
+                            <span>2023</span>
+                            <span class="anime-rating"><i class="fas fa-star"></i> ${anime.rating}</span>
+                        </div>
+                        <div class="anime-genres">
+                            ${anime.genres.map(genre => `<span class="genre-badge">${genre}</span>`).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Инициализация страницы при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            const genresGrid = document.getElementById('genresGrid');
+            const popularTagsContainer = document.getElementById('popularTags');
+            const recommendedAnimeContainer = document.getElementById('recommendedAnime');
+            const applyFiltersBtn = document.getElementById('applyFilters');
+            const resetFiltersBtn = document.getElementById('resetFilters');
+            const sortBySelect = document.getElementById('sortBy');
+            const showCountSelect = document.getElementById('showCount');
+            
+            // Заполняем популярные теги
+            popularTags.forEach(tag => {
+                popularTagsContainer.innerHTML += createTag(tag);
+            });
+            
+            // Заполняем жанры
+            genresData.forEach(genre => {
+                genresGrid.innerHTML += createGenreCard(genre);
+            });
+            
+            // Заполняем рекомендуемые аниме
+            recommendedAnime.forEach(anime => {
+                recommendedAnimeContainer.innerHTML += createAnimeCard(anime);
+            });
+            
+            // Обработка клика на жанр
+            genresGrid.addEventListener('click', function(e) {
+                const genreCard = e.target.closest('.genre-card');
+                if (genreCard) {
+                    const genreId = genreCard.getAttribute('data-id');
+                    const genre = genresData.find(g => g.id == genreId);
+                    
+                    if (genre) {
+                        // Помечаем жанр как активный
+                        document.querySelectorAll('.genre-card').forEach(card => {
+                            card.style.boxShadow = 'none';
+                            card.style.transform = 'none';
+                        });
+                        
+                        genreCard.style.boxShadow = `0 0 0 2px ${genre.color}`;
+                        genreCard.style.transform = 'translateY(-5px)';
+                        
+                        // Показываем уведомление
+                        showNotification(`Вы выбрали жанр: ${genre.name}. Показано ${genre.count} тайтлов`);
+                        
+                        // В реальном приложении здесь будет фильтрация аниме по жанру
+                        filterAnimeByGenre(genre.name);
+                    }
+                }
+            });
+            
+            // Обработка клика на тег
+            popularTagsContainer.addEventListener('click', function(e) {
+                const tag = e.target.closest('.tag');
+                if (tag) {
+                    const tagName = tag.getAttribute('data-tag');
+                    
+                    // Удаляем активный класс у всех тегов
+                    document.querySelectorAll('.tag').forEach(t => t.classList.remove('active'));
+                    
+                    // Добавляем активный класс текущему тегу
+                    tag.classList.add('active');
+                    
+                    // Фильтруем аниме по тегу
+                    filterAnimeByGenre(tagName);
+                }
+            });
+            
+            // Применение фильтров
+            applyFiltersBtn.addEventListener('click', function() {
+                const sortBy = sortBySelect.value;
+                const showCount = showCountSelect.value;
+                
+                let filteredGenres = [...genresData];
+                
+                // Сортировка
+                if (sortBy === 'name') {
+                    filteredGenres.sort((a, b) => a.name.localeCompare(b.name));
+                } else if (sortBy === 'count') {
+                    filteredGenres.sort((a, b) => b.count - a.count);
+                } else {
+                    filteredGenres.sort((a, b) => b.count - a.count); // По умолчанию по популярности
+                }
+                
+                // Ограничение количества
+                if (showCount === 'main') {
+                    filteredGenres = filteredGenres.slice(0, 6);
+                } else if (showCount === 'top20') {
+                    filteredGenres = filteredGenres.slice(0, 20);
+                }
+                
+                // Обновляем отображение
+                genresGrid.innerHTML = '';
+                filteredGenres.forEach(genre => {
+                    genresGrid.innerHTML += createGenreCard(genre);
+                });
+                
+                showNotification(`Фильтры применены: ${sortBy === 'name' ? 'по названию' : sortBy === 'count' ? 'по количеству' : 'по популярности'}, ${showCount === 'all' ? 'все жанры' : showCount === 'main' ? 'основные' : 'топ-20'}`);
+            });
+            
+            // Сброс фильтров
+            resetFiltersBtn.addEventListener('click', function() {
+                sortBySelect.value = 'popular';
+                showCountSelect.value = 'all';
+                
+                // Сбрасываем активные теги
+                document.querySelectorAll('.tag').forEach(t => t.classList.remove('active'));
+                
+                // Восстанавливаем все жанры
+                genresGrid.innerHTML = '';
+                genresData.forEach(genre => {
+                    genresGrid.innerHTML += createGenreCard(genre);
+                });
+                
+                // Восстанавливаем все аниме
+                recommendedAnimeContainer.innerHTML = '';
+                recommendedAnime.forEach(anime => {
+                    recommendedAnimeContainer.innerHTML += createAnimeCard(anime);
+                });
+                
+                showNotification('Фильтры сброшены');
+            });
+            
+            // Функция фильтрации аниме по жанру
+            function filterAnimeByGenre(genre) {
+                // В реальном приложении здесь будет запрос к серверу
+                // Для демонстрации просто покажем уведомление
+                showNotification(`Показаны аниме в жанре: ${genre}`);
+                
+                // Здесь можно добавить реальную фильтрацию
+                // Например, запрос к API для получения аниме по жанру
+            }
+            
+            // Функция показа уведомления
+            function showNotification(message) {
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 100px;
+                    right: 20px;
+                    background: var(--gradient);
+                    color: white;
+                    padding: 15px 20px;
+                    border-radius: 8px;
+                    z-index: 9999;
+                    animation: slideIn 0.3s ease;
+                    box-shadow: var(--shadow);
+                `;
+                notification.textContent = message;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.style.animation = 'slideOut 0.3s ease';
+                    setTimeout(() => notification.remove(), 300);
+                }, 3000);
+                
+                // Добавляем анимации
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes slideIn {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                    @keyframes slideOut {
+                        from { transform: translateX(0); opacity: 1; }
+                        to { transform: translateX(100%); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        });
+    </script>
+</body>
+</html>
