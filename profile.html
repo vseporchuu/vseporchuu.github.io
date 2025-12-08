@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль пользователя - Youkai Studio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff66a3;
+            --secondary-color: #c77dff;
+            --dark-color: #0f0f1a;
+            --dark-light: #1a1a2e;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --card-bg: #252538;
+            --border-color: #333344;
+            --success-color: #6bffb8;
+            --warning-color: #ffd166;
+            --info-color: #7bb4ff;
+            --shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            --gradient: linear-gradient(135deg, #ff66a3 0%, #c77dff 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--dark-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 102, 163, 0.4);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        /* Шапка сайта */
+        header {
+            background-color: rgba(15, 15, 26, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 15px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .logo svg {
+            width: 32px;
+            height: 32px;
+            margin-right: 10px;
+            fill: var(--primary-color);
+        }
+
+        .logo span {
+            color: var(--primary-color);
+        }
+
+        nav ul {
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul li {
+            margin: 0 12px;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            padding: 8px 0;
+            position: relative;
+            transition: color 0.3s;
+            font-size: 15px;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        nav ul li a.active {
+            color: var(--primary-color);
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background-color: var(--dark-light);
+            border-radius: 8px;
+            padding: 8px 15px;
+            width: 300px;
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-primary);
+            width: 100%;
+            margin-left: 10px;
+            font-size: 15px;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            margin-left: 20px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 102, 163, 0.4);
+        }
+
+        main {
+            margin-top: 80px;
+            min-height: calc(100vh - 200px);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            background-color: var(--dark-light);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            font-weight: bold;
+        }
+        
+        .profile-info h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+        
+        .profile-info p {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+        
+        .profile-stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .profile-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .profile-tab {
+            padding: 15px 25px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .profile-tab.active {
+            border-bottom: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .profile-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+        
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+        
+        .anime-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .anime-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .anime-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .anime-card img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+        }
+
+        .anime-card-content {
+            padding: 15px;
+        }
+
+        .anime-card h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-weight: 500;
+        }
+        
+        .sidebar-widget {
+            background-color: var(--dark-light);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .sidebar-widget h3 {
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .genre-tag {
+            display: inline-block;
+            background-color: rgba(199, 125, 255, 0.2);
+            color: var(--secondary-color);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin: 0 5px 8px 0;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: var(--dark-color);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 4px;
+        }
+        
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        footer {
+            background-color: var(--dark-light);
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: var(--text-secondary);
+            transition: color 0.3s;
+            font-size: 14px;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--gradient);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+        
+        @media (max-width: 900px) {
+            .profile-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-stats {
+                justify-content: center;
+            }
+            
+            .profile-tabs {
+                justify-content: center;
+            }
+            
+            .anime-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M50,10 C70,10 85,25 85,45 C85,55 80,64 72,70 L72,85 C72,90 67,95 62,95 L38,95 C33,95 28,90 28,85 L28,70 C20,64 15,55 15,45 C15,25 30,10 50,10 Z" fill="#ff66a3"/>
+                    <circle cx="40" cy="35" r="5" fill="#ffffff"/>
+                    <circle cx="60" cy="35" r="5" fill="#ffffff"/>
+                    <path d="M45,55 C45,58 47,60 50,60 C53,60 55,58 55,55 C55,52 53,50 50,50 C47,50 45,52 45,55 Z" fill="#ffffff"/>
+                    <path d="M35,75 L65,75 C67,75 69,77 69,79 C69,81 67,83 65,83 L35,83 C33,83 31,81 31,79 C31,77 33,75 35,75 Z" fill="#c77dff"/>
+                </svg>
+                Youkai<span>Studio</span>
+            </div>
+            
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Поиск аниме...">
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="anime-catalog.html">Каталог</a></li>
+                    <li><a href="calendar.html">Календарь</a></li>
+                    <li><a href="genres.html">Жанры</a></li>
+                    <li><a href="community.html">Сообщество</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-menu">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="profile-header">
+            <div class="profile-avatar">А</div>
+            <div class="profile-info">
+                <h1>Алексей Иванов</h1>
+                <p>Участник с мая 2022 • Любит экшен и фэнтези</p>
+                <button class="btn btn-primary">Редактировать профиль</button>
+                
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">127</div>
+                        <div class="stat-label">Просмотрено</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">42</div>
+                        <div class="stat-label">В избранном</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">156</div>
+                        <div class="stat-label">Комментарии</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-tabs">
+            <div class="profile-tab active">История просмотров</div>
+            <div class="profile-tab">Избранное</div>
+            <div class="profile-tab">Списки</div>
+            <div class="profile-tab">Отзывы</div>
+            <div class="profile-tab">Настройки</div>
+        </div>
+
+        <div class="profile-content">
+            <div>
+                <h2 class="section-title">Недавно просмотрено</h2>
+                <div class="anime-grid" id="recentlyWatched">
+                    <!-- Карточки недавно просмотренных аниме -->
+                </div>
+                
+                <h2 class="section-title" style="margin-top: 40px;">Продолжить просмотр</h2>
+                <div class="anime-grid" id="continueWatching">
+                    <!-- Карточки аниме для продолжения просмотра -->
+                </div>
+            </div>
+            
+            <div>
+                <div class="sidebar-widget">
+                    <h3>Любимые жанры</h3>
+                    <div>
+                        <span class="genre-tag" style="background-color: rgba(255, 102, 163, 0.2); color: var(--primary-color);">Экшен</span>
+                        <span class="genre-tag">Фэнтези</span>
+                        <span class="genre-tag" style="background-color: rgba(107, 255, 184, 0.2); color: var(--success-color);">Драма</span>
+                        <span class="genre-tag" style="background-color: rgba(255, 209, 102, 0.2); color: var(--warning-color);">Комедия</span>
+                    </div>
+                </div>
+                
+                <div class="sidebar-widget">
+                    <h3>Статистика за месяц</h3>
+                    <div>
+                        <div class="progress-info">
+                            <span>Просмотрено серий:</span>
+                            <span style="color: var(--primary-color); font-weight: 500;">47</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 70%;"></div>
+                        </div>
+                        
+                        <div class="progress-info">
+                            <span>Добавлено в избранное:</span>
+                            <span style="color: var(--primary-color); font-weight: 500;">8</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 40%;"></div>
+                        </div>
+                        
+                        <div class="progress-info">
+                            <span>Проведено времени:</span>
+                            <span style="color: var(--primary-color); font-weight: 500;">42ч</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 60%;"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-widget">
+                    <h3>Достижения</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background-color: var(--card-bg); display: flex; align-items: center; justify-content: center; font-size: 20px;" title="Новичок">
+                            🎬
+                        </div>
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background-color: var(--card-bg); display: flex; align-items: center; justify-content: center; font-size: 20px;" title="Завсегдатай">
+                            🏆
+                        </div>
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background-color: var(--card-bg); display: flex; align-items: center; justify-content: center; font-size: 20px;" title="Критик">
+                            ✍️
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Youkai Studio</h3>
+                    <p>Платформа для настоящих ценителей аниме. Высокое качество, удобный интерфейс и активное сообщество.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Навигация</h3>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="anime-catalog.html">Каталог аниме</a></li>
+                        <li><a href="popular.html">Популярное</a></li>
+                        <li><a href="new-episodes.html">Новые серии</a></li>
+                        <li><a href="genres.html">Жанры</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Помощь</h3>
+                    <ul>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="rules.html">Правила сайта</a></li>
+                        <li><a href="support.html">Поддержка</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Партнерам</h3>
+                    <ul>
+                        <li><a href="rights-holders.html">Для правообладателей</a></li>
+                        <li><a href="advertising.html">Реклама на сайте</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Youkai Studio. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Данные для профиля
+        const recentlyWatchedData = [
+            { title: "Атака Титанов: Финальный сезон", image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", year: "2023", rating: "9.8", progress: "85%" },
+            { title: "Магическая битва 2", image: "https://images.unsplash.com/photo-1618331833071-1c0c6ee3d19e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", year: "2023", rating: "9.2", progress: "60%" },
+            { title: "Демон-убийца: Деревня кузнецов", image: "https://images.unsplash.com/photo-1639322537228-f710d846310a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", year: "2023", rating: "9.3", progress: "45%" },
+            { title: "О моём перерождении в слизь 3", image: "https://images.unsplash.com/photo-1541562232579-512a21360020?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", year: "2023", rating: "9.0", progress: "100%" }
+        ];
+
+        const continueWatchingData = [
+            { title: "Восхождение героя щита", image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", year: "2023", rating: "8.9", episode: "Серия 8/12" },
+            { title: "Обещанная Страна Грёз 2", image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", year: "2023", rating: "9.1", episode: "Серия 5/11" },
+            { title: "Токийские мстители", image: "https://images.unsplash.com/photo-1618331833071-1c0c6ee3d19e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", year: "2023", rating: "8.7", episode: "Серия 15/24" }
+        ];
+
+        // Функция для создания карточки аниме
+        function createAnimeCard(anime, isContinueWatching = false) {
+            return `
+                <div class="anime-card">
+                    <img src="${anime.image}" alt="${anime.title}">
+                    <div class="anime-card-content">
+                        <h3>${anime.title}</h3>
+                        <div class="anime-meta">
+                            <span>${anime.year}</span>
+                            <span class="anime-rating"><i class="fas fa-star"></i> ${anime.rating}</span>
+                        </div>
+                        ${isContinueWatching 
+                            ? `<div style="color: var(--primary-color); font-size: 13px; margin-top: 8px;"><i class="fas fa-play-circle"></i> ${anime.episode}</div>`
+                            : `<div style="margin-top: 8px;">
+                                    <div style="height: 4px; background-color: var(--dark-color); border-radius: 2px; overflow: hidden;">
+                                        <div style="width: ${anime.progress}; height: 100%; background: var(--gradient);"></div>
+                                    </div>
+                                    <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">${anime.progress} просмотрено</div>
+                                </div>`
+                        }
+                    </div>
+                </div>
+            `;
+        }
+
+        // Инициализация профиля при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            const recentlyWatchedContainer = document.getElementById('recentlyWatched');
+            const continueWatchingContainer = document.getElementById('continueWatching');
+            
+            // Заполняем недавно просмотренные
+            recentlyWatchedData.forEach(anime => {
+                recentlyWatchedContainer.innerHTML += createAnimeCard(anime);
+            });
+            
+            // Заполняем "продолжить просмотр"
+            continueWatchingData.forEach(anime => {
+                continueWatchingContainer.innerHTML += createAnimeCard(anime, true);
+            });
+
+            // Обработка вкладок профиля
+            const profileTabs = document.querySelectorAll('.profile-tab');
+            profileTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Удаляем активный класс у всех вкладок
+                    profileTabs.forEach(t => t.classList.remove('active'));
+                    
+                    // Добавляем активный класс текущей вкладке
+                    this.classList.add('active');
+                    
+                    // Здесь можно добавить логику для загрузки контента выбранной вкладки
+                    const tabName = this.textContent;
+                    console.log(`Переключение на вкладку: ${tabName}`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
