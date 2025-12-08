@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель - Youkai Studio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff66a3;
+            --secondary-color: #c77dff;
+            --dark-color: #0f0f1a;
+            --dark-light: #1a1a2e;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --card-bg: #252538;
+            --border-color: #333344;
+            --success-color: #6bffb8;
+            --warning-color: #ffd166;
+            --info-color: #7bb4ff;
+            --shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            --gradient: linear-gradient(135deg, #ff66a3 0%, #c77dff 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--dark-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 102, 163, 0.4);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        /* Шапка сайта */
+        header {
+            background-color: rgba(15, 15, 26, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 15px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .logo svg {
+            width: 32px;
+            height: 32px;
+            margin-right: 10px;
+            fill: var(--primary-color);
+        }
+
+        .logo span {
+            color: var(--primary-color);
+        }
+
+        nav ul {
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul li {
+            margin: 0 12px;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            padding: 8px 0;
+            position: relative;
+            transition: color 0.3s;
+            font-size: 15px;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background-color: var(--dark-light);
+            border-radius: 8px;
+            padding: 8px 15px;
+            width: 300px;
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-primary);
+            width: 100%;
+            margin-left: 10px;
+            font-size: 15px;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            margin-left: 20px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 102, 163, 0.4);
+        }
+
+        main {
+            margin-top: 80px;
+            min-height: calc(100vh - 200px);
+        }
+
+        .page-header {
+            background-color: var(--dark-light);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+        
+        .admin-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 30px;
+            min-height: 600px;
+        }
+        
+        .admin-sidebar {
+            background-color: var(--dark-light);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        
+        .admin-sidebar h3 {
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            font-size: 18px;
+        }
+        
+        .admin-nav a {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            transition: all 0.3s;
+            color: var(--text-secondary);
+        }
+        
+        .admin-nav a:hover, .admin-nav a.active {
+            background-color: rgba(255, 102, 163, 0.1);
+            color: var(--primary-color);
+        }
+        
+        .admin-nav a i {
+            margin-right: 10px;
+            width: 20px;
+        }
+        
+        .admin-content {
+            background-color: var(--dark-light);
+            border-radius: 12px;
+            padding: 30px;
+        }
+        
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .admin-stat {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .admin-stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .admin-stat-label {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+        
+        .upload-area:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .upload-area i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 15px;
+        }
+
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+        }
+        
+        footer {
+            background-color: var(--dark-light);
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: var(--text-secondary);
+            transition: color 0.3s;
+            font-size: 14px;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--gradient);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+        
+        @media (max-width: 900px) {
+            .admin-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M50,10 C70,10 85,25 85,45 C85,55 80,64 72,70 L72,85 C72,90 67,95 62,95 L38,95 C33,95 28,90 28,85 L28,70 C20,64 15,55 15,45 C15,25 30,10 50,10 Z" fill="#ff66a3"/>
+                    <circle cx="40" cy="35" r="5" fill="#ffffff"/>
+                    <circle cx="60" cy="35" r="5" fill="#ffffff"/>
+                    <path d="M45,55 C45,58 47,60 50,60 C53,60 55,58 55,55 C55,52 53,50 50,50 C47,50 45,52 45,55 Z" fill="#ffffff"/>
+                    <path d="M35,75 L65,75 C67,75 69,77 69,79 C69,81 67,83 65,83 L35,83 C33,83 31,81 31,79 C31,77 33,75 35,75 Z" fill="#c77dff"/>
+                </svg>
+                Youkai<span>Studio</span>
+            </div>
+            
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Поиск в админ-панели...">
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="anime-catalog.html">Каталог</a></li>
+                    <li><a href="profile.html">Профиль</a></li>
+                    <li><a href="admin.html">Админка</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-menu">
+                <div class="user-avatar">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="page-header">
+            <h1>Админ-панель</h1>
+            <p>Управление контентом и настройками сайта</p>
+        </div>
+
+        <div class="admin-container">
+            <div class="admin-sidebar">
+                <h3>Панель управления</h3>
+                <div class="admin-nav">
+                    <a href="#" class="active"><i class="fas fa-plus-circle"></i> Добавить аниме</a>
+                    <a href="#"><i class="fas fa-edit"></i> Управление контентом</a>
+                    <a href="#"><i class="fas fa-users"></i> Пользователи</a>
+                    <a href="#"><i class="fas fa-comments"></i> Комментарии</a>
+                    <a href="#"><i class="fas fa-chart-bar"></i> Статистика</a>
+                    <a href="#"><i class="fas fa-cog"></i> Настройки сайта</a>
+                </div>
+            </div>
+            
+            <div class="admin-content">
+                <h2 style="margin-bottom: 20px;">Добавить новое аниме</h2>
+                
+                <div class="admin-stats">
+                    <div class="admin-stat">
+                        <div class="admin-stat-value">1,247</div>
+                        <div class="admin-stat-label">Всего тайтлов</div>
+                    </div>
+                    <div class="admin-stat">
+                        <div class="admin-stat-value">48</div>
+                        <div class="admin-stat-label">Ожидают модерации</div>
+                    </div>
+                    <div class="admin-stat">
+                        <div class="admin-stat-value">3,842</div>
+                        <div class="admin-stat-label">Всего серий</div>
+                    </div>
+                    <div class="admin-stat">
+                        <div class="admin-stat-value">127</div>
+                        <div class="admin-stat-label">Новых за месяц</div>
+                    </div>
+                </div>
+                
+                <div class="upload-area">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h3>Перетащите файлы сюда</h3>
+                    <p>или <span style="color: var(--primary-color);">выберите файлы</span> для загрузки</p>
+                    <p style="font-size: 12px; color: var(--text-secondary); margin-top: 10px;">Поддерживаются: MP4, MKV, AVI до 2GB</p>
+                </div>
+                
+                <form id="addAnimeForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="animeTitle">Название аниме (рус.)</label>
+                            <input type="text" id="animeTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="animeTitleOriginal">Оригинальное название</label>
+                            <input type="text" id="animeTitleOriginal" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="animeYear">Год выхода</label>
+                            <input type="number" id="animeYear" min="1970" max="2023" value="2023">
+                        </div>
+                        <div class="form-group">
+                            <label for="animeStatus">Статус</label>
+                            <select id="animeStatus">
+                                <option value="ongoing">Онгоинг</option>
+                                <option value="completed">Завершено</option>
+                                <option value="announced">Анонсировано</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="animeDescription">Описание</label>
+                        <textarea id="animeDescription" rows="4" placeholder="Введите описание аниме..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Жанры</label>
+                        <div class="checkbox-group">
+                            <label>
+                                <input type="checkbox"> Экшен
+                            </label>
+                            <label>
+                                <input type="checkbox"> Драма
+                            </label>
+                            <label>
+                                <input type="checkbox"> Комедия
+                            </label>
+                            <label>
+                                <input type="checkbox"> Фэнтези
+                            </label>
+                            <label>
+                                <input type="checkbox"> Романтика
+                            </label>
+                            <label>
+                                <input type="checkbox"> Приключения
+                            </label>
+                            <label>
+                                <input type="checkbox"> Научная фантастика
+                            </label>
+                            <label>
+                                <input type="checkbox"> Ужасы
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 15px; margin-top: 30px;">
+                        <button type="submit" class="btn btn-primary">Добавить аниме</button>
+                        <button type="button" class="btn btn-outline">Сохранить черновик</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Youkai Studio</h3>
+                    <p>Платформа для настоящих ценителей аниме. Высокое качество, удобный интерфейс и активное сообщество.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Навигация</h3>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="anime-catalog.html">Каталог аниме</a></li>
+                        <li><a href="popular.html">Популярное</a></li>
+                        <li><a href="new-episodes.html">Новые серии</a></li>
+                        <li><a href="genres.html">Жанры</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Помощь</h3>
+                    <ul>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="rules.html">Правила сайта</a></li>
+                        <li><a href="support.html">Поддержка</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Партнерам</h3>
+                    <ul>
+                        <li><a href="rights-holders.html">Для правообладателей</a></li>
+                        <li><a href="advertising.html">Реклама на сайте</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Youkai Studio. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Обработка формы добавления аниме
+        document.addEventListener('DOMContentLoaded', function() {
+            const addAnimeForm = document.getElementById('addAnimeForm');
+            const uploadArea = document.querySelector('.upload-area');
+            
+            // Обработка загрузки файлов
+            uploadArea.addEventListener('click', function() {
+                // В реальном приложении здесь будет вызов системного диалога выбора файлов
+                const fileInput = document.createElement('input');
+                fileInput.type = 'file';
+                fileInput.accept = 'video/*';
+                fileInput.multiple = true;
+                
+                fileInput.addEventListener('change', function(e) {
+                    const files = e.target.files;
+                    if (files.length > 0) {
+                        uploadArea.innerHTML = `
+                            <i class="fas fa-check-circle" style="color: var(--success-color);"></i>
+                            <h3>Загружено ${files.length} файл(ов)</h3>
+                            <p style="color: var(--text-secondary); font-size: 14px;">${Array.from(files).map(f => f.name).join(', ')}</p>
+                        `;
+                    }
+                });
+                
+                fileInput.click();
+            });
+            
+            // Обработка отправки формы
+            addAnimeForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Сбор данных формы
+                const formData = {
+                    title: document.getElementById('animeTitle').value,
+                    originalTitle: document.getElementById('animeTitleOriginal').value,
+                    year: document.getElementById('animeYear').value,
+                    status: document.getElementById('animeStatus').value,
+                    description: document.getElementById('animeDescription').value
+                };
+                
+                // В реальном приложении здесь будет отправка данных на сервер
+                console.log('Данные для добавления аниме:', formData);
+                
+                // Показываем уведомление об успехе
+                alert('Аниме успешно добавлено! В реальном приложении данные будут отправлены на сервер.');
+                
+                // Очищаем форму
+                addAnimeForm.reset();
+                uploadArea.innerHTML = `
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h3>Перетащите файлы сюда</h3>
+                    <p>или <span style="color: var(--primary-color);">выберите файлы</span> для загрузки</p>
+                    <p style="font-size: 12px; color: var(--text-secondary); margin-top: 10px;">Поддерживаются: MP4, MKV, AVI до 2GB</p>
+                `;
+            });
+            
+            // Обработка навигации в админ-панели
+            const adminNavLinks = document.querySelectorAll('.admin-nav a');
+            adminNavLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Удаляем активный класс у всех ссылок
+                    adminNavLinks.forEach(l => l.classList.remove('active'));
+                    
+                    // Добавляем активный класс текущей ссылке
+                    this.classList.add('active');
+                    
+                    // В реальном приложении здесь будет загрузка соответствующего контента
+                    const sectionName = this.textContent.trim();
+                    console.log(`Переход в раздел: ${sectionName}`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
