@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личные сообщения - Youkai Studio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff66a3;
+            --secondary-color: #c77dff;
+            --dark-color: #0f0f1a;
+            --dark-light: #1a1a2e;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --card-bg: #252538;
+            --border-color: #333344;
+            --success-color: #6bffb8;
+            --warning-color: #ffd166;
+            --info-color: #7bb4ff;
+            --shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            --gradient: linear-gradient(135deg, #ff66a3 0%, #c77dff 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--dark-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 102, 163, 0.4);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        /* Шапка сайта */
+        header {
+            background-color: rgba(15, 15, 26, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 15px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .logo svg {
+            width: 32px;
+            height: 32px;
+            margin-right: 10px;
+            fill: var(--primary-color);
+        }
+
+        .logo span {
+            color: var(--primary-color);
+        }
+
+        nav ul {
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul li {
+            margin: 0 12px;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            padding: 8px 0;
+            position: relative;
+            transition: color 0.3s;
+            font-size: 15px;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background-color: var(--dark-light);
+            border-radius: 8px;
+            padding: 8px 15px;
+            width: 300px;
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-primary);
+            width: 100%;
+            margin-left: 10px;
+            font-size: 15px;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            margin-left: 20px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 102, 163, 0.4);
+        }
+
+        main {
+            margin-top: 80px;
+            min-height: calc(100vh - 200px);
+        }
+
+        .page-header {
+            background-color: var(--dark-light);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+        
+        .messages-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+            min-height: 600px;
+        }
+        
+        .conversations-list {
+            background-color: var(--dark-light);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .conversations-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .conversations-header h3 {
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 0;
+        }
+        
+        .conversation-search {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .conversation-search input {
+            width: 100%;
+            padding: 10px 15px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+        
+        .conversations {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .conversation-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .conversation-item:hover, .conversation-item.active {
+            background-color: rgba(255, 102, 163, 0.1);
+        }
+        
+        .conversation-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .conversation-info {
+            flex-grow: 1;
+            min-width: 0;
+        }
+        
+        .conversation-name {
+            font-weight: 500;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .conversation-time {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        .conversation-preview {
+            color: var(--text-secondary);
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .unread-badge {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            margin-left: auto;
+        }
+        
+        .messages-area {
+            display: flex;
+            flex-direction: column;
+            background-color: var(--dark-light);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .messages-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .messages-header-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .messages-header-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .messages-header-details h4 {
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 2px;
+        }
+        
+        .messages-header-details p {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        
+        .messages-content {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            max-height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .message {
+            margin-bottom: 20px;
+            max-width: 70%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .message.received {
+            align-items: flex-start;
+        }
+        
+        .message.sent {
+            align-items: flex-end;
+        }
+        
+        .message-bubble {
+            padding: 12px 16px;
+            border-radius: 18px;
+            background-color: var(--card-bg);
+            max-width: 100%;
+        }
+        
+        .message.sent .message-bubble {
+            background: rgba(255, 102, 163, 0.2);
+            border-bottom-right-radius: 4px;
+        }
+        
+        .message.received .message-bubble {
+            border-bottom-left-radius: 4px;
+        }
+        
+        .message-time {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+        
+        .message-input-area {
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .message-input {
+            flex-grow: 1;
+            padding: 12px 15px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 15px;
+            resize: none;
+            min-height: 50px;
+            max-height: 100px;
+        }
+        
+        .message-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .send-button {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .send-button:hover {
+            transform: scale(1.05);
+        }
+        
+        footer {
+            background-color: var(--dark-light);
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: var(--text-secondary);
+            transition: color 0.3s;
+            font-size: 14px;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--gradient);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+        
+        @media (max-width: 900px) {
+            .messages-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .conversations-list {
+                max-height: 300px;
+                overflow-y: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M50,10 C70,10 85,25 85,45 C85,55 80,64 72,70 L72,85 C72,90 67,95 62,95 L38,95 C33,95 28,90 28,85 L28,70 C20,64 15,55 15,45 C15,25 30,10 50,10 Z" fill="#ff66a3"/>
+                    <circle cx="40" cy="35" r="5" fill="#ffffff"/>
+                    <circle cx="60" cy="35" r="5" fill="#ffffff"/>
+                    <path d="M45,55 C45,58 47,60 50,60 C53,60 55,58 55,55 C55,52 53,50 50,50 C47,50 45,52 45,55 Z" fill="#ffffff"/>
+                    <path d="M35,75 L65,75 C67,75 69,77 69,79 C69,81 67,83 65,83 L35,83 C33,83 31,81 31,79 C31,77 33,75 35,75 Z" fill="#c77dff"/>
+                </svg>
+                Youkai<span>Studio</span>
+            </div>
+            
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Поиск аниме...">
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="anime-catalog.html">Каталог</a></li>
+                    <li><a href="calendar.html">Календарь</a></li>
+                    <li><a href="profile.html">Профиль</a></li>
+                    <li><a href="messages.html" style="color: var(--primary-color);">Сообщения</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-menu">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="page-header">
+            <h1>Личные сообщения</h1>
+            <p>Общайтесь с другими пользователями Youkai Studio</p>
+        </div>
+
+        <div class="messages-container">
+            <div class="conversations-list">
+                <div class="conversations-header">
+                    <h3>Диалоги</h3>
+                </div>
+                
+                <div class="conversation-search">
+                    <input type="text" placeholder="Поиск диалогов...">
+                </div>
+                
+                <div class="conversations" id="conversationsList">
+                    <!-- Список диалогов будет добавлен через JavaScript -->
+                </div>
+            </div>
+            
+            <div class="messages-area">
+                <div class="messages-header">
+                    <div class="messages-header-info">
+                        <div class="messages-header-avatar">М</div>
+                        <div class="messages-header-details">
+                            <h4>Мария Соколова</h4>
+                            <p>Был(а) в сети 15 минут назад</p>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <button class="btn btn-outline"><i class="fas fa-ellipsis-h"></i></button>
+                    </div>
+                </div>
+                
+                <div class="messages-content" id="messagesContent">
+                    <!-- Сообщения будут добавлены через JavaScript -->
+                </div>
+                
+                <div class="message-input-area">
+                    <button class="btn-outline" style="padding: 10px;">
+                        <i class="fas fa-paperclip"></i>
+                    </button>
+                    <textarea class="message-input" placeholder="Введите сообщение..." id="messageInput"></textarea>
+                    <div class="send-button" id="sendButton">
+                        <i class="fas fa-paper-plane"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Youkai Studio</h3>
+                    <p>Платформа для настоящих ценителей аниме. Высокое качество, удобный интерфейс и активное сообщество.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Навигация</h3>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="anime-catalog.html">Каталог аниме</a></li>
+                        <li><a href="popular.html">Популярное</a></li>
+                        <li><a href="new-episodes.html">Новые серии</a></li>
+                        <li><a href="genres.html">Жанры</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Помощь</h3>
+                    <ul>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="rules.html">Правила сайта</a></li>
+                        <li><a href="support.html">Поддержка</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Партнерам</h3>
+                    <ul>
+                        <li><a href="rights-holders.html">Для правообладателей</a></li>
+                        <li><a href="advertising.html">Реклама на сайте</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Youkai Studio. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Данные для сообщений
+        const conversationsData = [
+            { id: 1, name: "Мария Соколова", avatar: "М", lastMessage: "Привет! Ты смотрел новую серию Атаки Титанов?", time: "15:30", unread: 3, online: true },
+            { id: 2, name: "Дмитрий Петров", avatar: "Д", lastMessage: "Как тебе новая арка в Ван Пис?", time: "Вчера", unread: 0, online: true },
+            { id: 3, name: "Анна Козлова", avatar: "А", lastMessage: "Посоветуй что-то похожее на Стального алхимика", time: "2 дня назад", unread: 1, online: false },
+            { id: 4, name: "Иван Сидоров", avatar: "И", lastMessage: "Спасибо за рекомендацию!", time: "Неделю назад", unread: 0, online: true },
+            { id: 5, name: "Екатерина Волкова", avatar: "Е", lastMessage: "Жду твоего отзыва на новую серию", time: "2 недели назад", unread: 0, online: false }
+        ];
+
+        const messagesData = {
+            1: [
+                { id: 1, text: "Привет! Ты смотрел новую серию Атаки Титанов?", time: "15:20", sender: "received" },
+                { id: 2, text: "Привет! Да, только что посмотрел. Это было невероятно!", time: "15:25", sender: "sent" },
+                { id: 3, text: "Правда? Я тоже в восторге! Особенно момент с...", time: "15:28", sender: "received" },
+                { id: 4, text: "Да, этот поворот сюжета просто взорвал мне мозг! Жду следующей серии.", time: "15:30", sender: "sent" }
+            ]
+        };
+
+        // Функция для создания элемента диалога
+        function createConversationItem(conversation) {
+            return `
+                <div class="conversation-item ${conversation.id === 1 ? 'active' : ''}" data-id="${conversation.id}">
+                    <div class="conversation-avatar">${conversation.avatar}</div>
+                    <div class="conversation-info">
+                        <div class="conversation-name">
+                            <span>${conversation.name}</span>
+                            <span class="conversation-time">${conversation.time}</span>
+                        </div>
+                        <div class="conversation-preview">${conversation.lastMessage}</div>
+                    </div>
+                    ${conversation.unread > 0 ? `<div class="unread-badge">${conversation.unread}</div>` : ''}
+                </div>
+            `;
+        }
+
+        // Функция для создания элемента сообщения
+        function createMessageItem(message) {
+            return `
+                <div class="message ${message.sender}">
+                    <div class="message-bubble">${message.text}</div>
+                    <div class="message-time">${message.time}</div>
+                </div>
+            `;
+        }
+
+        // Инициализация сообщений при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            const conversationsList = document.getElementById('conversationsList');
+            const messagesContent = document.getElementById('messagesContent');
+            const messageInput = document.getElementById('messageInput');
+            const sendButton = document.getElementById('sendButton');
+            
+            // Заполняем список диалогов
+            conversationsData.forEach(conversation => {
+                conversationsList.innerHTML += createConversationItem(conversation);
+            });
+            
+            // Заполняем сообщения для активного диалога
+            if (messagesData[1]) {
+                messagesData[1].forEach(message => {
+                    messagesContent.innerHTML += createMessageItem(message);
+                });
+            }
+            
+            // Прокручиваем к последнему сообщению
+            messagesContent.scrollTop = messagesContent.scrollHeight;
+            
+            // Обработка выбора диалога
+            const conversationItems = document.querySelectorAll('.conversation-item');
+            conversationItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Удаляем активный класс у всех диалогов
+                    conversationItems.forEach(i => i.classList.remove('active'));
+                    
+                    // Добавляем активный класс текущему диалогу
+                    this.classList.add('active');
+                    
+                    // Загружаем сообщения для выбранного диалога
+                    const conversationId = this.getAttribute('data-id');
+                    loadMessages(conversationId);
+                });
+            });
+            
+            // Обработка отправки сообщения
+            function sendMessage() {
+                const text = messageInput.value.trim();
+                if (text) {
+                    const newMessage = {
+                        id: Date.now(),
+                        text: text,
+                        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                        sender: 'sent'
+                    };
+                    
+                    // Добавляем сообщение в чат
+                    messagesContent.innerHTML += createMessageItem(newMessage);
+                    messageInput.value = '';
+                    
+                    // Прокручиваем к последнему сообщению
+                    messagesContent.scrollTop = messagesContent.scrollHeight;
+                    
+                    // В реальном приложении здесь будет отправка сообщения на сервер
+                    console.log('Отправлено сообщение:', text);
+                }
+            }
+            
+            // Отправка по кнопке
+            sendButton.addEventListener('click', sendMessage);
+            
+            // Отправка по Enter (без Shift)
+            messageInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+            
+            // Функция загрузки сообщений для диалога
+            function loadMessages(conversationId) {
+                messagesContent.innerHTML = '';
+                
+                if (messagesData[conversationId]) {
+                    messagesData[conversationId].forEach(message => {
+                        messagesContent.innerHTML += createMessageItem(message);
+                    });
+                } else {
+                    messagesContent.innerHTML = '<div style="text-align: center; padding: 40px; color: var(--text-secondary);">Нет сообщений в этом диалоге</div>';
+                }
+                
+                // Прокручиваем к последнему сообщению
+                messagesContent.scrollTop = messagesContent.scrollHeight;
+                
+                // Обновляем заголовок с информацией о собеседнике
+                const conversation = conversationsData.find(c => c.id == conversationId);
+                if (conversation) {
+                    document.querySelector('.messages-header-details h4').textContent = conversation.name;
+                    document.querySelector('.messages-header-details p').textContent = 
+                        conversation.online ? 'В сети' : 'Был(а) в сети недавно';
+                    document.querySelector('.messages-header-avatar').textContent = conversation.avatar;
+                }
+            }
+            
+            // Поиск диалогов
+            const searchInput = document.querySelector('.conversation-search input');
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const allConversations = document.querySelectorAll('.conversation-item');
+                
+                allConversations.forEach(item => {
+                    const name = item.querySelector('.conversation-name span').textContent.toLowerCase();
+                    const preview = item.querySelector('.conversation-preview').textContent.toLowerCase();
+                    
+                    if (name.includes(searchTerm) || preview.includes(searchTerm)) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
