@@ -3,911 +3,911 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Фермерский Тайкун</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>AnimeHub - Лучшая платформа для просмотра аниме</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Общие стили и переменные */
+        :root {
+            --primary-color: #ff375f;
+            --secondary-color: #6c5ce7;
+            --dark-color: #121212;
+            --dark-light: #1e1e1e;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --card-bg: #252525;
+            --border-color: #333333;
+            --success-color: #00b894;
+            --warning-color: #fdcb6e;
+            --info-color: #0984e3;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #87CEEB, #90EE90);
-            min-height: 100vh;
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--dark-color);
+            color: var(--text-primary);
+            line-height: 1.6;
             overflow-x: hidden;
         }
 
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
         .container {
-            max-width: 100%;
-            padding: 10px;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
-        /* Верхняя панель */
-        .header {
+        .btn {
+            display: inline-block;
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #e02e53;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 55, 95, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a4bd6;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 28px;
+            margin-bottom: 25px;
             display: flex;
+            align-items: center;
             justify-content: space-between;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 10px 15px;
-            border-radius: 15px;
-            margin-bottom: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
-        .user-info {
+        .section-title span {
+            color: var(--primary-color);
+        }
+
+        /* Шапка сайта */
+        header {
+            background-color: rgba(18, 18, 18, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-container {
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: space-between;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: var(--primary-color);
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+
+        nav ul {
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            padding: 8px 0;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        nav ul li a.active {
+            color: var(--primary-color);
+        }
+
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background-color: var(--dark-light);
+            border-radius: 6px;
+            padding: 8px 15px;
+            width: 300px;
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-primary);
+            width: 100%;
+            margin-left: 10px;
+            font-size: 16px;
+        }
+
+        .search-box input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-actions .btn {
+            margin-left: 10px;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            margin-left: 20px;
+            position: relative;
+            cursor: pointer;
         }
 
         .user-avatar {
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: linear-gradient(45deg, #FFD700, #FFA500);
+            background-color: var(--secondary-color);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
             font-weight: bold;
+            margin-right: 10px;
         }
 
-        .currency {
+        .user-name {
+            font-weight: 500;
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background-color: var(--dark-light);
+            border-radius: 8px;
+            width: 200px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        .user-dropdown.active {
+            display: block;
+        }
+
+        .user-dropdown a {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            transition: background-color 0.3s;
+        }
+
+        .user-dropdown a:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .user-dropdown a i {
+            margin-right: 10px;
+            width: 20px;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Основной контент */
+        main {
+            margin-top: 80px;
+            min-height: calc(100vh - 200px);
+        }
+
+        /* Герой-секция */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2068&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 100px 0;
+            border-radius: 10px;
+            margin-bottom: 50px;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 48px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+
+        /* Секция с тайтлами */
+        .anime-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .anime-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .anime-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .anime-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .anime-card-content {
+            padding: 15px;
+        }
+
+        .anime-card h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .anime-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .anime-rating {
+            color: var(--warning-color);
+        }
+
+        .anime-genres {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .genre-tag {
+            background-color: rgba(108, 92, 231, 0.2);
+            color: var(--secondary-color);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        /* Футер */
+        footer {
+            background-color: var(--dark-light);
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: var(--text-secondary);
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .social-links {
             display: flex;
             gap: 15px;
+            margin-top: 20px;
         }
 
-        .coin, .star {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-weight: bold;
-        }
-
-        .coin {
-            background: linear-gradient(45deg, #FFD700, #FFA500);
-            color: #8B4513;
-        }
-
-        .star {
-            background: linear-gradient(45deg, #9370DB, #BA55D3);
-            color: white;
-        }
-
-        /* Игровое поле */
-        .farm-container {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            padding: 15px;
-            margin-bottom: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .farm-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-
-        .grid-cell {
-            aspect-ratio: 1;
-            background: #DEB887;
-            border: 2px solid #A0522D;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .grid-cell:hover {
-            background: #D2B48C;
-            transform: scale(1.05);
-        }
-
-        .grid-cell.occupied {
-            background: #90EE90;
-        }
-
-        /* Объекты на поле */
-        .plant {
-            width: 80%;
-            height: 80%;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 12px;
-            text-align: center;
-        }
-
-        .machine {
-            width: 90%;
-            height: 90%;
-            background: #4682B4;
-            border-radius: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 10px;
-            text-align: center;
-        }
-
-        .booster {
-            width: 90%;
-            height: 90%;
-            background: linear-gradient(45deg, #FF69B4, #FF1493);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 8px;
-            text-align: center;
-        }
-
-        /* Нижнее меню */
-        .bottom-menu {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 10px;
-            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .menu-tabs {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 10px;
-        }
-
-        .tab {
-            padding: 8px 15px;
-            border: none;
-            background: #f0f0f0;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: bold;
-        }
-
-        .tab.active {
-            background: linear-gradient(45deg, #32CD32, #228B22);
-            color: white;
-        }
-
-        .shop-content {
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .shop-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-        }
-
-        .shop-item {
-            background: white;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            padding: 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .shop-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .shop-item-icon {
+        .social-links a {
             width: 40px;
             height: 40px;
-            margin: 0 auto 5px;
-            border-radius: 8px;
+            border-radius: 50%;
+            background-color: var(--card-bg);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-weight: bold;
+            transition: background-color 0.3s;
         }
 
-        .plant-icon { background: #32CD32; }
-        .machine-icon { background: #4682B4; }
-        .booster-icon { background: #FF69B4; }
-
-        .shop-item-price {
-            font-size: 12px;
-            font-weight: bold;
-            margin-top: 5px;
+        .social-links a:hover {
+            background-color: var(--primary-color);
         }
 
-        .coin-price { color: #FFA500; }
-        .star-price { color: #9370DB; }
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
 
         /* Модальные окна */
         .modal {
-            display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
         }
 
         .modal-content {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            max-width: 90%;
-            max-height: 80%;
-            overflow-y: auto;
+            background-color: var(--dark-light);
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s;
         }
 
-        .modal-header {
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        .modal h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 16px;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-footer {
+            margin-top: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
         }
 
-        .close-modal {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-        }
-
-        /* Анимации */
-        @keyframes grow {
-            0% { transform: scale(0.8); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
-        .growing {
-            animation: grow 0.5s ease-in-out;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        .pulse {
-            animation: pulse 1s infinite;
+        .form-footer a {
+            color: var(--primary-color);
         }
 
         /* Адаптивность */
-        @media (max-width: 480px) {
-            .farm-grid {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 6px;
+        @media (max-width: 1100px) {
+            .search-box {
+                width: 200px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            nav {
+                display: none;
             }
             
-            .shop-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .mobile-menu-btn {
+                display: block;
             }
             
-            .menu-tabs {
-                flex-wrap: wrap;
-                gap: 5px;
+            .search-box {
+                width: 150px;
             }
             
-            .tab {
-                flex: 1;
-                min-width: 45%;
-                font-size: 12px;
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .anime-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero {
+                padding: 60px 0;
+            }
+            
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .user-name {
+                display: none;
+            }
+            
+            .anime-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Верхняя панель -->
-        <div class="header">
-            <div class="user-info">
-                <div class="user-avatar" id="userAvatar">U</div>
-                <span id="userName">Игрок</span>
-            </div>
-            <div class="currency">
-                <div class="coin">
-                    <span>🪙</span>
-                    <span id="coinBalance">100</span>
-                </div>
-                <div class="star">
-                    <span>⭐</span>
-                    <span id="starBalance">10</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Игровое поле -->
-        <div class="farm-container">
-            <div class="farm-grid" id="farmGrid">
-                <!-- Клетки будут сгенерированы через JavaScript -->
-            </div>
-        </div>
-
-        <!-- Нижнее меню -->
-        <div class="bottom-menu">
-            <div class="menu-tabs">
-                <button class="tab active" data-tab="plants">Растения</button>
-                <button class="tab" data-tab="machines">Машины</button>
-                <button class="tab" data-tab="boosters">Бустеры</button>
-                <button class="tab" data-tab="upgrades">Улучшения</button>
-                <button class="tab" data-tab="farms">Фермы</button>
+    <!-- Шапка сайта -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-play-circle"></i>
+                Anime<span>Hub</span>
             </div>
             
-            <div class="shop-content">
-                <div class="shop-grid" id="plantsShop" style="display: grid;">
-                    <!-- Растения будут сгенерированы через JavaScript -->
-                </div>
-                <div class="shop-grid" id="machinesShop" style="display: none;">
-                    <!-- Машины будут сгенерированы через JavaScript -->
-                </div>
-                <div class="shop-grid" id="boostersShop" style="display: none;">
-                    <!-- Бустеры будут сгенерированы через JavaScript -->
-                </div>
-                <div class="shop-grid" id="upgradesShop" style="display: none;">
-                    <!-- Улучшения будут сгенерированы через JavaScript -->
-                </div>
-                <div class="shop-grid" id="farmsShop" style="display: none;">
-                    <!-- Фермы будут сгенерированы через JavaScript -->
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Главная</a></li>
+                    <li><a href="#">Аниме</a></li>
+                    <li><a href="#">Популярное</a></li>
+                    <li><a href="#">Новинки</a></li>
+                    <li><a href="#">Жанры</a></li>
+                    <li><a href="#">Календарь</a></li>
+                </ul>
+            </nav>
+            
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Поиск аниме...">
+            </div>
+            
+            <div class="user-actions">
+                <button class="btn btn-outline" id="loginBtn">Войти</button>
+                <button class="btn btn-primary" id="registerBtn">Регистрация</button>
+                
+                <div class="user-menu">
+                    <div class="user-avatar">А</div>
+                    <div class="user-name">Алексей</div>
+                    <i class="fas fa-chevron-down"></i>
+                    
+                    <div class="user-dropdown">
+                        <a href="#"><i class="fas fa-user"></i> Профиль</a>
+                        <a href="#"><i class="fas fa-heart"></i> Избранное</a>
+                        <a href="#"><i class="fas fa-comments"></i> Сообщения <span class="badge">3</span></a>
+                        <a href="#"><i class="fas fa-cog"></i> Настройки</a>
+                        <a href="#"><i class="fas fa-sign-out-alt"></i> Выйти</a>
+                    </div>
                 </div>
             </div>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main class="container">
+        <!-- Герой-секция -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Лучшие аниме всех времен в одном месте</h1>
+                <p>Смотрите аниме в высоком качестве, читайте описание и отзывы, обсуждайте с другими фанатами.</p>
+                <button class="btn btn-primary">Начать просмотр</button>
+            </div>
+        </section>
+        
+        <!-- Популярные тайтлы -->
+        <section>
+            <h2 class="section-title">Популярные сейчас <a href="#" class="btn btn-outline">Смотреть все</a></h2>
+            
+            <div class="anime-grid" id="popularAnime">
+                <!-- Карточки аниме будут сгенерированы JavaScript -->
+            </div>
+        </section>
+        
+        <!-- Новые серии -->
+        <section>
+            <h2 class="section-title">Новые серии <a href="#" class="btn btn-outline">Смотреть все</a></h2>
+            
+            <div class="anime-grid" id="newEpisodes">
+                <!-- Карточки аниме будут сгенерированы JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Футер -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>AnimeHub</h3>
+                    <p>Лучшая платформа для просмотра аниме с друзьями. Тысячи тайтлов, высокое качество и удобный интерфейс.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Разделы</h3>
+                    <ul>
+                        <li><a href="#">Главная</a></li>
+                        <li><a href="#">Аниме</a></li>
+                        <li><a href="#">Популярное</a></li>
+                        <li><a href="#">Новинки</a></li>
+                        <li><a href="#">Жанры</a></li>
+                        <li><a href="#">Календарь выхода</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Помощь</h3>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Правила сайта</a></li>
+                        <li><a href="#">Поддержка</a></li>
+                        <li><a href="#">Контакты</a></li>
+                        <li><a href="#">Политика конфиденциальности</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Партнерам</h3>
+                    <ul>
+                        <li><a href="#">Для правообладателей</a></li>
+                        <li><a href="#">Реклама на сайте</a></li>
+                        <li><a href="#">API для разработчиков</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 AnimeHub. Все права защищены. Все названия аниме, логотипы и изображения являются собственностью их правообладателей.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Модальное окно входа -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-close" id="closeLoginModal">&times;</div>
+            <h2>Вход в аккаунт</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Пароль</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <div class="form-footer">
+                    <button type="submit" class="btn btn-primary">Войти</button>
+                    <a href="#" id="showForgotPassword">Забыли пароль?</a>
+                </div>
+            </form>
+            <p style="margin-top: 20px; text-align: center;">
+                Нет аккаунта? <a href="#" id="showRegisterModal">Зарегистрироваться</a>
+            </p>
         </div>
     </div>
 
-    <!-- Модальное окно улучшения фермы -->
-    <div class="modal" id="upgradeModal">
+    <!-- Модальное окно регистрации -->
+    <div class="modal" id="registerModal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2>Улучшение фермы</h2>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div id="upgradeModalContent">
-                <!-- Контент будет сгенерирован через JavaScript -->
-            </div>
+            <div class="modal-close" id="closeRegisterModal">&times;</div>
+            <h2>Регистрация</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="registerUsername">Имя пользователя</label>
+                    <input type="text" id="registerUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+                    <input type="email" id="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Пароль</label>
+                    <input type="password" id="registerPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerConfirmPassword">Подтвердите пароль</label>
+                    <input type="password" id="registerConfirmPassword" required>
+                </div>
+                <div class="form-footer">
+                    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                </div>
+            </form>
+            <p style="margin-top: 20px; text-align: center;">
+                Уже есть аккаунт? <a href="#" id="showLoginModal">Войти</a>
+            </p>
         </div>
     </div>
 
     <script>
-        // Инициализация Telegram Web App
-        const tg = window.Telegram.WebApp;
-        tg.expand();
-        tg.ready();
+        // Данные для примера
+        const popularAnime = [
+            { title: "Атака Титанов", image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", year: "2023", rating: "9.8", genres: ["Экшен", "Драма", "Фэнтези"], episodes: "25" },
+            { title: "Ван Пис", image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", year: "1999", rating: "9.5", genres: ["Приключения", "Комедия", "Фэнтези"], episodes: "1000+" },
+            { title: "Наруто", image: "https://images.unsplash.com/photo-1618331833071-1c0c6ee3d19e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", year: "2002", rating: "9.2", genres: ["Экшен", "Приключения", "Фэнтези"], episodes: "720" },
+            { title: "Магическая битва", image: "https://images.unsplash.com/photo-1639322537228-f710d846310a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", year: "2020", rating: "9.0", genres: ["Экшен", "Сверхъестественное"], episodes: "24" },
+            { title: "Ходячий замок", image: "https://images.unsplash.com/photo-1541562232579-512a21360020?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", year: "2004", rating: "9.3", genres: ["Приключения", "Драма", "Фэнтези"], episodes: "1" }
+        ];
 
-        // Игровые данные
-        let gameState = {
-            coins: 100,
-            stars: 10,
-            currentFarm: 1,
-            farms: {
-                1: {
-                    grid: Array(25).fill(null),
-                    unlocked: true
-                }
-            },
-            inventory: {
-                plants: {},
-                machines: {},
-                boosters: {}
-            }
-        };
+        const newEpisodes = [
+            { title: "Восхождение героя щита", image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", year: "2023", rating: "8.9", genres: ["Экшен", "Драма", "Фэнтези"], episodes: "12", newEpisode: "Серия 12" },
+            { title: "Обещанная Страна Грёз", image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", year: "2023", rating: "9.1", genres: ["Драма", "Фэнтези", "Триллер"], episodes: "11", newEpisode: "Серия 11" },
+            { title: "Токийские мстители", image: "https://images.unsplash.com/photo-1618331833071-1c0c6ee3d19e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", year: "2023", rating: "8.7", genres: ["Экшен", "Драма", "Повседневность"], episodes: "24", newEpisode: "Серия 20" },
+            { title: "О моём перерождении в слизь", image: "https://images.unsplash.com/photo-1639322537228-f710d846310a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", year: "2023", rating: "8.8", genres: ["Экшен", "Комедия", "Фэнтези"], episodes: "12", newEpisode: "Серия 10" },
+            { title: "Магистр дьявольского культа", image: "https://images.unsplash.com/photo-1541562232579-512a21360020?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", year: "2023", rating: "9.2", genres: ["Драма", "Фэнтези", "Романтика"], episodes: "15", newEpisode: "Серия 13" }
+        ];
 
-        // Игровые объекты
-        const plants = {
-            wheat: { 
-                name: "Пшеница", 
-                price: 10, 
-                growTime: 10, 
-                reward: 15,
-                color: "#FFD700"
-            },
-            carrot: { 
-                name: "Морковь", 
-                price: 20, 
-                growTime: 15, 
-                reward: 30,
-                color: "#FFA500"
-            },
-            pumpkin: { 
-                name: "Тыква", 
-                price: 50, 
-                growTime: 30, 
-                reward: 80,
-                color: "#FF4500"
-            }
-        };
-
-        const machines = {
-            harvester1: {
-                name: "Сборщик Ур.1",
-                price: 100,
-                level: 1,
-                color: "#4682B4"
-            },
-            harvester2: {
-                name: "Сборщик Ур.2",
-                price: 200,
-                level: 2,
-                color: "#4169E1"
-            }
-        };
-
-        const boosters = {
-            farmer: {
-                name: "Фермер",
-                price: 5,
-                effect: "Увеличивает доход на 50%",
-                color: "#FF69B4",
-                cooldown: 60
-            },
-            rain: {
-                name: "Дождь",
-                price: 10,
-                effect: "Ускоряет рост в 2 раза",
-                color: "#1E90FF",
-                cooldown: 120
-            }
-        };
-
-        // Инициализация игры
-        function initGame() {
-            loadGameState();
-            setupUserInfo();
-            renderFarmGrid();
-            setupShopItems();
-            setupEventListeners();
-            startGameLoop();
-        }
-
-        // Загрузка состояния игры
-        function loadGameState() {
-            const saved = localStorage.getItem('farmTycoonSave');
-            if (saved) {
-                gameState = JSON.parse(saved);
-            }
-            updateUI();
-        }
-
-        // Сохранение состояния игры
-        function saveGameState() {
-            localStorage.setItem('farmTycoonSave', JSON.stringify(gameState));
-        }
-
-        // Настройка информации пользователя из Telegram
-        function setupUserInfo() {
-            const user = tg.initDataUnsafe?.user;
-            if (user) {
-                document.getElementById('userName').textContent = user.first_name || 'Игрок';
-                document.getElementById('userAvatar').textContent = user.first_name?.[0] || 'U';
-            }
-        }
-
-        // Рендер игрового поля
-        function renderFarmGrid() {
-            const grid = document.getElementById('farmGrid');
-            grid.innerHTML = '';
-            
-            const farm = gameState.farms[gameState.currentFarm];
-            
-            farm.grid.forEach((cell, index) => {
-                const cellElement = document.createElement('div');
-                cellElement.className = 'grid-cell';
-                cellElement.dataset.index = index;
-                
-                if (cell) {
-                    cellElement.classList.add('occupied');
-                    
-                    const objectElement = document.createElement('div');
-                    if (cell.type === 'plant') {
-                        objectElement.className = 'plant';
-                        objectElement.style.backgroundColor = cell.color;
-                        objectElement.textContent = cell.growth === 'mature' ? '🌾' : '🌱';
-                    } else if (cell.type === 'machine') {
-                        objectElement.className = 'machine';
-                        objectElement.style.backgroundColor = cell.color;
-                        objectElement.textContent = `M${cell.level}`;
-                    } else if (cell.type === 'booster') {
-                        objectElement.className = 'booster';
-                        objectElement.style.backgroundColor = cell.color;
-                        objectElement.textContent = 'B';
-                    }
-                    
-                    cellElement.appendChild(objectElement);
-                }
-                
-                grid.appendChild(cellElement);
-            });
-        }
-
-        // Настройка товаров в магазине
-        function setupShopItems() {
-            setupPlantsShop();
-            setupMachinesShop();
-            setupBoostersShop();
-            setupUpgradesShop();
-            setupFarmsShop();
-        }
-
-        function setupPlantsShop() {
-            const shop = document.getElementById('plantsShop');
-            shop.innerHTML = '';
-            
-            Object.entries(plants).forEach(([id, plant]) => {
-                const item = document.createElement('div');
-                item.className = 'shop-item';
-                item.innerHTML = `
-                    <div class="shop-item-icon plant-icon">🌱</div>
-                    <div>${plant.name}</div>
-                    <div class="shop-item-price coin-price">${plant.price} 🪙</div>
-                `;
-                item.addEventListener('click', () => buyPlant(id));
-                shop.appendChild(item);
-            });
-        }
-
-        function setupMachinesShop() {
-            const shop = document.getElementById('machinesShop');
-            shop.innerHTML = '';
-            
-            Object.entries(machines).forEach(([id, machine]) => {
-                const item = document.createElement('div');
-                item.className = 'shop-item';
-                item.innerHTML = `
-                    <div class="shop-item-icon machine-icon">⚙️</div>
-                    <div>${machine.name}</div>
-                    <div class="shop-item-price coin-price">${machine.price} 🪙</div>
-                `;
-                item.addEventListener('click', () => buyMachine(id));
-                shop.appendChild(item);
-            });
-        }
-
-        function setupBoostersShop() {
-            const shop = document.getElementById('boostersShop');
-            shop.innerHTML = '';
-            
-            Object.entries(boosters).forEach(([id, booster]) => {
-                const item = document.createElement('div');
-                item.className = 'shop-item';
-                item.innerHTML = `
-                    <div class="shop-item-icon booster-icon">⭐</div>
-                    <div>${booster.name}</div>
-                    <div class="shop-item-price star-price">${booster.price} ⭐</div>
-                `;
-                item.addEventListener('click', () => buyBooster(id));
-                shop.appendChild(item);
-            });
-        }
-
-        function setupUpgradesShop() {
-            const shop = document.getElementById('upgradesShop');
-            shop.innerHTML = `
-                <div class="shop-item" onclick="showUpgradeModal('farmSize')">
-                    <div class="shop-item-icon" style="background: #32CD32;">📈</div>
-                    <div>Увеличить ферму</div>
-                    <div class="shop-item-price coin-price">500 🪙</div>
-                </div>
-                <div class="shop-item" onclick="showUpgradeModal('autoCollect')">
-                    <div class="shop-item-icon" style="background: #4682B4;">🤖</div>
-                    <div>Авто-сбор</div>
-                    <div class="shop-item-price coin-price">300 🪙</div>
+        // Функция для создания карточки аниме
+        function createAnimeCard(anime, isNewEpisode = false) {
+            return `
+                <div class="anime-card">
+                    <img src="${anime.image}" alt="${anime.title}">
+                    <div class="anime-card-content">
+                        <h3>${anime.title}</h3>
+                        <div class="anime-meta">
+                            <span>${anime.year}</span>
+                            <span class="anime-rating"><i class="fas fa-star"></i> ${anime.rating}</span>
+                        </div>
+                        ${isNewEpisode ? `<div style="color: var(--primary-color); font-size: 14px; margin-bottom: 10px;"><i class="fas fa-play-circle"></i> ${anime.newEpisode}</div>` : ''}
+                        <div class="anime-genres">
+                            ${anime.genres.map(genre => `<span class="genre-tag">${genre}</span>`).join('')}
+                        </div>
+                    </div>
                 </div>
             `;
         }
 
-        function setupFarmsShop() {
-            const shop = document.getElementById('farmsShop');
-            shop.innerHTML = `
-                <div class="shop-item" onclick="buyFarm(2)">
-                    <div class="shop-item-icon" style="background: #8B4513;">🏞️</div>
-                    <div>Ферма 2</div>
-                    <div class="shop-item-price coin-price">1000 🪙</div>
-                </div>
-                <div class="shop-item" onclick="buyFarm(3)">
-                    <div class="shop-item-icon" style="background: #2E8B57;">🌄</div>
-                    <div>Ферма 3</div>
-                    <div class="shop-item-price coin-price">5000 🪙</div>
-                </div>
-            `;
-        }
-
-        // Система покупок
-        function buyPlant(plantId) {
-            const plant = plants[plantId];
-            if (gameState.coins >= plant.price) {
-                // В реальной реализации здесь будет выбор клетки для посадки
-                const farm = gameState.farms[gameState.currentFarm];
-                const emptyIndex = farm.grid.findIndex(cell => cell === null);
-                
-                if (emptyIndex !== -1) {
-                    gameState.coins -= plant.price;
-                    farm.grid[emptyIndex] = {
-                        type: 'plant',
-                        plantId: plantId,
-                        growth: 'seed',
-                        plantedAt: Date.now(),
-                        color: plant.color
-                    };
-                    
-                    updateUI();
-                    saveGameState();
-                    showNotification(`Посажена ${plant.name}!`);
-                } else {
-                    showNotification('Нет свободных клеток!');
-                }
-            } else {
-                showNotification('Недостаточно монет!');
-            }
-        }
-
-        function buyMachine(machineId) {
-            const machine = machines[machineId];
-            if (gameState.coins >= machine.price) {
-                const farm = gameState.farms[gameState.currentFarm];
-                const emptyIndex = farm.grid.findIndex(cell => cell === null);
-                
-                if (emptyIndex !== -1) {
-                    gameState.coins -= machine.price;
-                    farm.grid[emptyIndex] = {
-                        type: 'machine',
-                        machineId: machineId,
-                        level: machine.level,
-                        color: machine.color
-                    };
-                    
-                    updateUI();
-                    saveGameState();
-                    showNotification(`Куплен ${machine.name}!`);
-                } else {
-                    showNotification('Нет свободных клеток!');
-                }
-            } else {
-                showNotification('Недостаточно монет!');
-            }
-        }
-
-        function buyBooster(boosterId) {
-            const booster = boosters[boosterId];
-            if (gameState.stars >= booster.price) {
-                gameState.stars -= booster.price;
-                // Активация бустера
-                activateBooster(boosterId);
-                updateUI();
-                saveGameState();
-                showNotification(`Активирован ${booster.name}!`);
-            } else {
-                showNotification('Недостаточно звёзд!');
-            }
-        }
-
-        function buyFarm(farmId) {
-            const price = farmId === 2 ? 1000 : 5000;
-            if (gameState.coins >= price) {
-                gameState.coins -= price;
-                if (!gameState.farms[farmId]) {
-                    gameState.farms[farmId] = {
-                        grid: Array(25).fill(null),
-                        unlocked: true
-                    };
-                }
-                gameState.currentFarm = farmId;
-                updateUI();
-                saveGameState();
-                showNotification(`Открыта ферма ${farmId}!`);
-            } else {
-                showNotification('Недостаточно монет!');
-            }
-        }
-
-        // Активация бустера
-        function activateBooster(boosterId) {
-            const booster = boosters[boosterId];
-            // В реальной реализации здесь будет логика применения эффектов бустера
-            console.log(`Активирован бустер: ${booster.name}`);
-        }
-
-        // Покупка звёзд через Telegram
-        function buyStars() {
-            tg.showPopup({
-                title: 'Покупка Звёзд',
-                message: 'Выберите количество звёзд для покупки',
-                buttons: [
-                    { id: '10', type: 'default', text: '10 ⭐ - 99 ₽' },
-                    { id: '50', type: 'default', text: '50 ⭐ - 399 ₽' },
-                    { id: '100', type: 'default', text: '100 ⭐ - 699 ₽' },
-                    { type: 'cancel' }
-                ]
-            }, (buttonId) => {
-                if (buttonId && buttonId !== 'cancel') {
-                    // В реальной реализации здесь будет интеграция с Telegram Payments
-                    const starsToAdd = parseInt(buttonId);
-                    gameState.stars += starsToAdd;
-                    updateUI();
-                    saveGameState();
-                    showNotification(`Куплено ${starsToAdd} звёзд!`);
-                }
-            });
-        }
-
-        // Поделиться игрой
-        function shareGame() {
-            if (tg.share) {
-                tg.share({
-                    title: 'Фермерский Тайкун',
-                    text: 'Присоединяйся к моей ферме!',
-                    url: 'https://t.me/your_bot'
-                });
-            } else {
-                showNotification('Поделиться можно в Telegram!');
-            }
-        }
-
-        // Обновление интерфейса
-        function updateUI() {
-            document.getElementById('coinBalance').textContent = gameState.coins;
-            document.getElementById('starBalance').textContent = gameState.stars;
-            renderFarmGrid();
-        }
-
-        // Уведомления
-        function showNotification(message) {
-            // В реальной реализации можно использовать tg.showPopup или создать кастомные уведомления
-            console.log(message);
-            // Временное решение - alert
-            alert(message);
-        }
-
-        // Игровой цикл
-        function startGameLoop() {
-            setInterval(() => {
-                updatePlants();
-                collectFromMachines();
-                saveGameState();
-            }, 1000);
-        }
-
-        function updatePlants() {
-            const farm = gameState.farms[gameState.currentFarm];
-            const now = Date.now();
-            
-            farm.grid.forEach((cell, index) => {
-                if (cell && cell.type === 'plant') {
-                    const plant = plants[cell.plantId];
-                    const timePlanted = now - cell.plantedAt;
-                    
-                    if (timePlanted >= plant.growTime * 1000 && cell.growth !== 'mature') {
-                        cell.growth = 'mature';
-                        // В реальной реализации здесь будет обновление визуала
-                    }
-                }
-            });
-        }
-
-        function collectFromMachines() {
-            const farm = gameState.farms[gameState.currentFarm];
-            
-            farm.grid.forEach((cell, index) => {
-                if (cell && cell.type === 'machine') {
-                    // Автоматический сбор с соседних клеток
-                    // В реальной реализации здесь будет логика сбора
-                    gameState.coins += cell.level * 2;
-                }
-            });
-            
-            updateUI();
-        }
-
-        // Настройка обработчиков событий
-        function setupEventListeners() {
-            // Переключение вкладок
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.addEventListener('click', () => {
-                    const tabName = tab.dataset.tab;
-                    
-                    // Обновление активной вкладки
-                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                    tab.classList.add('active');
-                    
-                    // Показать соответствующий магазин
-                    document.querySelectorAll('.shop-grid').forEach(shop => {
-                        shop.style.display = 'none';
-                    });
-                    document.getElementById(`${tabName}Shop`).style.display = 'grid';
-                });
+        // Инициализация данных при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Заполняем популярные тайтлы
+            const popularAnimeContainer = document.getElementById('popularAnime');
+            popularAnime.forEach(anime => {
+                popularAnimeContainer.innerHTML += createAnimeCard(anime);
             });
 
-            // Обработка кликов по клеткам фермы
-            document.getElementById('farmGrid').addEventListener('click', (e) => {
-                const cell = e.target.closest('.grid-cell');
-                if (cell) {
-                    const index = parseInt(cell.dataset.index);
-                    const farm = gameState.farms[gameState.currentFarm];
-                    const cellData = farm.grid[index];
-                    
-                    if (cellData && cellData.type === 'plant' && cellData.growth === 'mature') {
-                        // Сбор урожая
-                        const plant = plants[cellData.plantId];
-                        gameState.coins += plant.reward;
-                        farm.grid[index] = null;
-                        
-                        updateUI();
-                        saveGameState();
-                        showNotification(`Собран урожай! +${plant.reward} монет`);
-                    }
+            // Заполняем новые серии
+            const newEpisodesContainer = document.getElementById('newEpisodes');
+            newEpisodes.forEach(anime => {
+                newEpisodesContainer.innerHTML += createAnimeCard(anime, true);
+            });
+
+            // Обработчики для модальных окон
+            const loginBtn = document.getElementById('loginBtn');
+            const registerBtn = document.getElementById('registerBtn');
+            const loginModal = document.getElementById('loginModal');
+            const registerModal = document.getElementById('registerModal');
+            const closeLoginModal = document.getElementById('closeLoginModal');
+            const closeRegisterModal = document.getElementById('closeRegisterModal');
+            const showRegisterModal = document.getElementById('showRegisterModal');
+            const showLoginModal = document.getElementById('showLoginModal');
+
+            // Показ модального окна входа
+            loginBtn.addEventListener('click', () => {
+                loginModal.classList.add('active');
+            });
+
+            // Показ модального окна регистрации
+            registerBtn.addEventListener('click', () => {
+                registerModal.classList.add('active');
+            });
+
+            // Закрытие модального окна входа
+            closeLoginModal.addEventListener('click', () => {
+                loginModal.classList.remove('active');
+            });
+
+            // Закрытие модального окна регистрации
+            closeRegisterModal.addEventListener('click', () => {
+                registerModal.classList.remove('active');
+            });
+
+            // Переключение на регистрацию
+            showRegisterModal.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginModal.classList.remove('active');
+                registerModal.classList.add('active');
+            });
+
+            // Переключение на вход
+            showLoginModal.addEventListener('click', (e) => {
+                e.preventDefault();
+                registerModal.classList.remove('active');
+                loginModal.classList.add('active');
+            });
+
+            // Закрытие модальных окон при клике вне их
+            window.addEventListener('click', (e) => {
+                if (e.target === loginModal) {
+                    loginModal.classList.remove('active');
+                }
+                if (e.target === registerModal) {
+                    registerModal.classList.remove('active');
                 }
             });
 
-            // Кнопка покупки звёзд
-            document.querySelector('.star').addEventListener('click', buyStars);
-
-            // Модальные окна
-            document.querySelectorAll('.close-modal').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('.modal').forEach(modal => {
-                        modal.style.display = 'none';
-                    });
-                });
+            // Обработка формы входа
+            document.getElementById('loginForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Вход выполнен! (В реальном приложении здесь будет отправка на сервер)');
+                loginModal.classList.remove('active');
             });
-        }
 
-        // Вспомогательные функции
-        function showUpgradeModal(type) {
-            const modal = document.getElementById('upgradeModal');
-            const content = document.getElementById('upgradeModalContent');
-            
-            if (type === 'farmSize') {
-                content.innerHTML = `
-                    <p>Увеличить размер фермы до 6x6 клеток</p>
-                    <p>Стоимость: 500 🪙</p>
-                    <button onclick="purchaseUpgrade('farmSize')" style="
-                        background: linear-gradient(45deg, #32CD32, #228B22);
-                        color: white;
-                        border: none;
-                        padding: 10px 20px;
-                        border-radius: 10px;
-                        cursor: pointer;
-                        margin-top: 10px;
-                    ">Купить</button>
-                `;
-            }
-            
-            modal.style.display = 'flex';
-        }
+            // Обработка формы регистрации
+            document.getElementById('registerForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Регистрация прошла успешно! (В реальном приложении здесь будет отправка на сервер)');
+                registerModal.classList.remove('active');
+            });
 
-        function purchaseUpgrade(type) {
-            if (type === 'farmSize' && gameState.coins >= 500) {
-                gameState.coins -= 500;
-                // Логика увеличения фермы
-                showNotification('Ферма увеличена!');
-                updateUI();
-                saveGameState();
-                document.getElementById('upgradeModal').style.display = 'none';
-            } else {
-                showNotification('Недостаточно монет!');
-            }
-        }
+            // Работа выпадающего меню пользователя
+            const userMenu = document.querySelector('.user-menu');
+            const userDropdown = document.querySelector('.user-dropdown');
 
-        // Запуск игры при загрузке страницы
-        document.addEventListener('DOMContentLoaded', initGame);
+            userMenu.addEventListener('click', () => {
+                userDropdown.classList.toggle('active');
+            });
+
+            // Закрытие выпадающего меню при клике вне его
+            document.addEventListener('click', (e) => {
+                if (!userMenu.contains(e.target)) {
+                    userDropdown.classList.remove('active');
+                }
+            });
+
+            // Мобильное меню
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const nav = document.querySelector('nav');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+            });
+        });
     </script>
 </body>
 </html>
