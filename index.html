@@ -2,458 +2,13 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Youkai Studio - Платформа для просмотра аниме</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <style>
-        /* Обновленные переменные с розоватыми оттенками */
-        :root {
-            --primary-color: #ff66a3;
-            --secondary-color: #c77dff;
-            --dark-color: #0f0f1a;
-            --dark-light: #1a1a2e;
-            --text-primary: #ffffff;
-            --text-secondary: #b0b0b0;
-            --card-bg: #252538;
-            --border-color: #333344;
-            --success-color: #6bffb8;
-            --warning-color: #ffd166;
-            --info-color: #7bb4ff;
-            --shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            --gradient: linear-gradient(135deg, #ff66a3 0%, #c77dff 100%);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--dark-color);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        ul {
-            list-style: none;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 10px 24px;
-            border-radius: 8px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-            font-size: 16px;
-        }
-
-        .btn-primary {
-            background: var(--gradient);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 102, 163, 0.4);
-        }
-
-        .btn-secondary {
-            background-color: var(--secondary-color);
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background-color: #b56cf7;
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-outline:hover {
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-        }
-
-        .section-title {
-            font-family: 'Poppins', sans-serif;
-            font-size: 28px;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .section-title span {
-            color: var(--primary-color);
-        }
-
-        /* Обновленная шапка сайта */
-        header {
-            background-color: rgba(15, 15, 26, 0.95);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .header-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px;
-            position: relative;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            font-family: 'Poppins', sans-serif;
-            font-size: 24px;
-            font-weight: 700;
-            z-index: 1001;
-        }
-
-        .logo svg {
-            width: 32px;
-            height: 32px;
-            margin-right: 10px;
-            fill: var(--primary-color);
-        }
-
-        .logo span {
-            color: var(--primary-color);
-        }
-
-        /* Основная навигация */
-        .main-nav {
-            display: flex;
-            align-items: center;
-            flex: 1;
-            justify-content: center;
-        }
-
-        .main-nav ul {
-            display: flex;
-            align-items: center;
-            gap: 25px;
-        }
-
-        .main-nav ul li a {
-            font-weight: 500;
-            padding: 8px 0;
-            position: relative;
-            transition: color 0.3s;
-            font-size: 16px;
-            white-space: nowrap;
-        }
-
-        .main-nav ul li a:hover {
-            color: var(--primary-color);
-        }
-
-        .main-nav ul li a.active {
-            color: var(--primary-color);
-        }
-
-        .main-nav ul li a.active::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: var(--primary-color);
-        }
-
-        /* Поиск */
-        .search-box {
-            display: flex;
-            align-items: center;
-            background-color: var(--dark-light);
-            border-radius: 8px;
-            padding: 8px 15px;
-            width: 300px;
-            transition: width 0.3s;
-            margin: 0 20px;
-        }
-
-        .search-box:focus-within {
-            width: 320px;
-        }
-
-        .search-box input {
-            background: transparent;
-            border: none;
-            outline: none;
-            color: var(--text-primary);
-            width: 100%;
-            margin-left: 10px;
-            font-size: 15px;
-        }
-
-        .search-box input::placeholder {
-            color: var(--text-secondary);
-        }
-
-        /* Правая часть шапки */
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            z-index: 1001;
-        }
-
-        /* Аватарка пользователя с меню */
-        .user-menu {
-            position: relative;
-        }
-
-        .user-avatar {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: var(--gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 18px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 2px solid transparent;
-        }
-
-        .user-avatar:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(255, 102, 163, 0.4);
-            border-color: var(--primary-color);
-        }
-
-        .user-avatar.unauthorized {
-            background: var(--dark-light);
-            color: var(--text-secondary);
-            border: 2px solid var(--border-color);
-        }
-
-        .user-avatar.unauthorized:hover {
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-        }
-
-        /* Выпадающее меню аватарки */
-        .user-dropdown {
-            position: absolute;
-            top: 55px;
-            right: 0;
-            background-color: var(--dark-light);
-            border-radius: 12px;
-            width: 280px;
-            box-shadow: var(--shadow);
-            display: none;
-            z-index: 1000;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-        }
-
-        .user-dropdown.active {
-            display: block;
-        }
-
-        .user-dropdown-header {
-            padding: 20px;
-            background: rgba(255, 102, 163, 0.1);
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .user-dropdown-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 22px;
-            flex-shrink: 0;
-        }
-
-        .user-dropdown-info h4 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 16px;
-            margin-bottom: 5px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 180px;
-        }
-
-        .user-dropdown-info p {
-            font-size: 13px;
-            color: var(--text-secondary);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 180px;
-        }
-
-        .user-dropdown-nav {
-            padding: 10px 0;
-        }
-
-        .user-dropdown-nav a {
-            display: flex;
-            align-items: center;
-            padding: 12px 20px;
-            transition: background-color 0.3s;
-            font-size: 15px;
-            gap: 12px;
-        }
-
-        .user-dropdown-nav a:hover {
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-
-        .user-dropdown-nav a i {
-            width: 20px;
-            color: var(--primary-color);
-        }
-
-        .user-dropdown-divider {
-            height: 1px;
-            background-color: var(--border-color);
-            margin: 8px 20px;
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: var(--text-primary);
-            padding: 8px;
-            border-radius: 6px;
-            transition: all 0.3s;
-        }
-
-        .mobile-menu-btn:hover {
-            background-color: var(--dark-light);
-            color: var(--primary-color);
-        }
-
-        /* Мобильная навигация */
-        .mobile-nav-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 999;
-            display: none;
-        }
-
-        .mobile-nav-overlay.active {
-            display: block;
-        }
-
-        .mobile-nav {
-            position: fixed;
-            top: 0;
-            right: -300px;
-            width: 300px;
-            height: 100%;
-            background-color: var(--dark-light);
-            z-index: 1000;
-            transition: right 0.3s ease;
-            overflow-y: auto;
-            padding: 80px 20px 20px;
-        }
-
-        .mobile-nav.active {
-            right: 0;
-        }
-
-        .mobile-nav-header {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            padding: 20px;
-            background-color: var(--dark-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .mobile-nav-close {
-            font-size: 24px;
-            cursor: pointer;
-            color: var(--text-secondary);
-            transition: color 0.3s;
-        }
-
-        .mobile-nav-close:hover {
-            color: var(--primary-color);
-        }
-
-        .mobile-nav ul {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .mobile-nav ul li a {
-            display: block;
-            padding: 15px;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-
-        .mobile-nav ul li a:hover {
-            background-color: rgba(255, 102, 163, 0.1);
-            color: var(--primary-color);
-        }
-
-        .mobile-nav ul li a.active {
-            background-color: rgba(255, 102, 163, 0.2);
-            color: var(--primary-color);
-        }
-
-        /* Основной контент */
-        main {
-            margin-top: 80px;
-            min-height: calc(100vh - 200px);
-        }
-
-        /* Герой-секция с розовым градиентом */
+        /* Дополнительные стили для главной страницы */
         .hero {
             background: linear-gradient(135deg, rgba(15, 15, 26, 0.9) 0%, rgba(26, 26, 46, 0.8) 100%), 
                         url('https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2068&q=80');
@@ -502,296 +57,16 @@
             flex-wrap: wrap;
         }
 
-        /* Секция с тайтлами */
-        .anime-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 50px;
-        }
-
-        .anime-card {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .anime-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow);
-        }
-
-        .anime-card img {
-            width: 100%;
-            height: 280px;
-            object-fit: cover;
-        }
-
-        .anime-card-content {
-            padding: 15px;
-        }
-
-        .anime-card h3 {
-            font-size: 16px;
-            margin-bottom: 8px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            font-weight: 500;
-        }
-
-        .anime-meta {
-            display: flex;
-            justify-content: space-between;
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin-bottom: 10px;
-        }
-
-        .anime-rating {
-            color: var(--warning-color);
-            display: flex;
-            align-items: center;
-        }
-
-        .anime-rating i {
-            margin-right: 4px;
-            font-size: 12px;
-        }
-
-        .anime-genres {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-top: 10px;
-        }
-
-        .genre-tag {
-            background-color: rgba(199, 125, 255, 0.2);
-            color: var(--secondary-color);
-            padding: 4px 8px;
-            border-radius: 20px;
-            font-size: 11px;
-        }
-
-        .new-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: var(--gradient);
-            color: white;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        /* Футер */
-        footer {
-            background-color: var(--dark-light);
-            padding: 40px 0 20px;
-            margin-top: 50px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .footer-column h3 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 18px;
-            margin-bottom: 15px;
-            color: var(--text-primary);
-        }
-
-        .footer-column ul li {
-            margin-bottom: 10px;
-        }
-
-        .footer-column ul li a {
-            color: var(--text-secondary);
-            transition: color 0.3s;
-            font-size: 14px;
-        }
-
-        .footer-column ul li a:hover {
-            color: var(--primary-color);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 12px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-
-        .social-links a {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--card-bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-
-        .social-links a:hover {
-            background: var(--gradient);
-            transform: translateY(-3px);
-        }
-
-        .social-links a i {
-            font-size: 18px;
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            font-size: 13px;
-        }
-
-        /* Telegram кнопка */
-        .telegram-login {
-            background-color: #0088cc;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 500;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        .telegram-login:hover {
-            background-color: #0077b5;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 136, 204, 0.4);
-        }
-
-        /* Уведомления */
-        .notification {
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            background: var(--gradient);
-            color: white;
-            padding: 15px 20px;
-            border-radius: 8px;
-            z-index: 9999;
-            animation: slideIn 0.3s ease;
-            box-shadow: var(--shadow);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            max-width: 350px;
-        }
-
-        .notification.success {
-            background: linear-gradient(135deg, var(--success-color) 0%, #00cc88 100%);
-        }
-
-        .notification.warning {
-            background: linear-gradient(135deg, var(--warning-color) 0%, #ffaa00 100%);
-        }
-
-        .notification.error {
-            background: linear-gradient(135deg, #ff6666 0%, #ff3333 100%);
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        @keyframes slideOut {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
-        }
-
-        /* Адаптивность */
-        @media (max-width: 1200px) {
-            .search-box {
-                width: 250px;
-            }
-            
-            .search-box:focus-within {
-                width: 270px;
-            }
-            
-            .main-nav ul {
-                gap: 15px;
-            }
-        }
-
-        @media (max-width: 992px) {
-            .main-nav {
-                display: none;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-                order: 1;
-            }
-            
-            .logo {
-                order: 2;
-                margin-left: 10px;
-            }
-            
-            .header-right {
-                order: 3;
-            }
-            
-            .search-box {
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                width: 100%;
-                margin: 0;
-                border-radius: 0;
-                border-bottom: 1px solid var(--border-color);
-                display: none;
-                background-color: var(--dark-color);
-            }
-            
-            .search-box.active {
-                display: flex;
-            }
-            
-            .header-container {
-                flex-wrap: wrap;
-            }
-            
-            .hero h1 {
-                font-size: 36px;
-            }
-            
-            .anime-grid {
-                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            }
-        }
-
+        /* Мобильная оптимизация для героя */
         @media (max-width: 768px) {
             .hero {
                 padding: 60px 0;
+                margin: 0 -15px;
+                border-radius: 0;
             }
             
             .hero h1 {
-                font-size: 30px;
+                font-size: 28px;
             }
             
             .hero p {
@@ -800,97 +75,173 @@
             
             .hero-buttons {
                 flex-direction: column;
-                width: 100%;
             }
             
             .hero-buttons .btn {
                 width: 100%;
                 text-align: center;
             }
-            
-            .anime-grid {
-                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-                gap: 15px;
-            }
-            
-            .anime-card img {
-                height: 240px;
-            }
-            
-            .section-title {
-                font-size: 24px;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
-            }
-            
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 25px;
-            }
-            
-            .social-links {
-                justify-content: center;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .logo span {
-                display: none;
-            }
-            
-            .logo svg {
-                margin-right: 0;
-            }
-            
-            .user-dropdown {
-                width: calc(100vw - 30px);
-                right: 15px;
-            }
-            
-            .hero {
-                padding: 40px 0;
-                margin: 0 -15px;
-                border-radius: 0;
-            }
-            
-            .hero h1 {
-                font-size: 26px;
-            }
-            
-            .anime-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .anime-card img {
-                height: 200px;
-            }
-            
-            .mobile-nav {
-                width: 100%;
-                right: -100%;
-            }
         }
 
         @media (max-width: 480px) {
-            .header-right {
+            .hero {
+                padding: 40px 0;
+            }
+            
+            .hero h1 {
+                font-size: 24px;
+            }
+            
+            .hero p {
+                font-size: 14px;
+            }
+        }
+
+        /* Секции с аниме */
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 28px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .section-title span {
+            color: var(--primary-color);
+        }
+
+        /* Мобильная навигация в секциях */
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 22px;
+                flex-direction: column;
+                align-items: flex-start;
                 gap: 10px;
             }
             
-            .user-avatar {
-                width: 36px;
-                height: 36px;
+            .section-title .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        /* Быстрое меню для мобильных */
+        .quick-actions {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .quick-actions {
+                display: flex;
+                gap: 10px;
+                overflow-x: auto;
+                padding: 15px 0;
+                margin-bottom: 20px;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+            
+            .quick-actions::-webkit-scrollbar {
+                display: none;
+            }
+            
+            .quick-action-btn {
+                flex-shrink: 0;
+                padding: 12px 20px;
+                background-color: var(--dark-light);
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-size: 14px;
+                white-space: nowrap;
+                transition: all 0.3s;
+            }
+            
+            .quick-action-btn:hover {
+                background: var(--gradient);
+                transform: translateY(-2px);
+            }
+            
+            .quick-action-btn i {
                 font-size: 16px;
             }
+        }
+
+        /* Статистика для авторизованных пользователей */
+        .user-stats {
+            display: none;
+            background-color: var(--dark-light);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .user-stats.visible {
+            display: block;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
             
-            .mobile-menu-btn {
+            .stat-item {
+                padding: 12px;
+            }
+            
+            .stat-value {
                 font-size: 20px;
-                padding: 6px;
             }
-            
-            .anime-grid {
-                grid-template-columns: 1fr;
-            }
+        }
+
+        /* Telegram обсуждение */
+        .telegram-discuss-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background-color: #0088cc;
+            color: white;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .telegram-discuss-btn:hover {
+            background-color: #0077b5;
+            transform: translateY(-2px);
         }
     </style>
 </head>
@@ -898,12 +249,10 @@
     <!-- Шапка сайта -->
     <header>
         <div class="container header-container">
-            <!-- Кнопка мобильного меню -->
             <div class="mobile-menu-btn" id="mobileMenuBtn">
                 <i class="fas fa-bars"></i>
             </div>
             
-            <!-- Логотип -->
             <div class="logo">
                 <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                     <path d="M50,10 C70,10 85,25 85,45 C85,55 80,64 72,70 L72,85 C72,90 67,95 62,95 L38,95 C33,95 28,90 28,85 L28,70 C20,64 15,55 15,45 C15,25 30,10 50,10 Z" fill="#ff66a3"/>
@@ -915,41 +264,35 @@
                 Youkai<span>Studio</span>
             </div>
             
-            <!-- Основная навигация (для десктопа) -->
             <nav class="main-nav">
                 <ul>
                     <li><a href="index.html" class="active">Главная</a></li>
                     <li><a href="anime-catalog.html">Каталог</a></li>
                     <li><a href="calendar.html">Календарь</a></li>
                     <li><a href="genres.html">Жанры</a></li>
-                    <li><a href="anime-watch.html">Смотреть</a></li>
+                    <li><a href="profile.html">Профиль</a></li>
                 </ul>
             </nav>
             
-            <!-- Поиск -->
             <div class="search-box" id="searchBox">
                 <i class="fas fa-search" id="searchIcon"></i>
                 <input type="text" placeholder="Поиск аниме..." id="searchInput">
             </div>
             
-            <!-- Правая часть шапки -->
             <div class="header-right">
-                <!-- Кнопка поиска для мобильных -->
                 <div class="mobile-search-btn" id="mobileSearchBtn" style="display: none;">
                     <i class="fas fa-search"></i>
                 </div>
                 
-                <!-- Аватарка пользователя -->
                 <div class="user-menu" id="userMenu">
                     <div class="user-avatar" id="userAvatar" title="Меню пользователя">
-                        <i class="fas fa-user" id="avatarIcon"></i>
+                        <i class="fas fa-user"></i>
                     </div>
                     
-                    <!-- Выпадающее меню аватарки -->
                     <div class="user-dropdown" id="userDropdown">
                         <div class="user-dropdown-header" id="dropdownHeader">
                             <div class="user-dropdown-avatar" id="dropdownAvatar">
-                                <i class="fas fa-user" id="dropdownAvatarIcon"></i>
+                                <i class="fas fa-user"></i>
                             </div>
                             <div class="user-dropdown-info" id="dropdownInfo">
                                 <h4>Войдите через Telegram</h4>
@@ -958,7 +301,7 @@
                         </div>
                         
                         <div class="user-dropdown-nav">
-                            <a href="#" id="telegramLoginBtn" class="telegram-login" style="margin: 10px 20px; justify-content: center;">
+                            <a href="#" id="telegramLoginBtn" class="telegram-login">
                                 <i class="fab fa-telegram"></i> Войти через Telegram
                             </a>
                             
@@ -968,17 +311,17 @@
                                 <i class="fas fa-user"></i> Мой профиль
                             </a>
                             
+                            <a href="messages.html">
+                                <i class="fas fa-comments"></i> Контакты
+                            </a>
+                            
                             <a href="favorites.html">
                                 <i class="fas fa-heart"></i> Избранное
                             </a>
                             
-                            <a href="messages.html">
-                                <i class="fas fa-comments"></i> Сообщения
-                            </a>
-                            
                             <div class="user-dropdown-divider"></div>
                             
-                            <a href="index.html">
+                            <a href="index.html" class="active">
                                 <i class="fas fa-home"></i> Главная
                             </a>
                             
@@ -1000,7 +343,7 @@
                                 <i class="fas fa-cog"></i> Настройки
                             </a>
                             
-                            <a href="#" id="logoutBtn">
+                            <a href="#" id="logoutBtn" style="display: none;">
                                 <i class="fas fa-sign-out-alt"></i> Выйти
                             </a>
                         </div>
@@ -1009,7 +352,6 @@
             </div>
         </div>
         
-        <!-- Мобильная навигация -->
         <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
         <div class="mobile-nav" id="mobileNav">
             <div class="mobile-nav-header">
@@ -1035,15 +377,55 @@
                 <li><a href="anime-watch.html">Смотреть онлайн</a></li>
                 <li><a href="profile.html">Мой профиль</a></li>
                 <li><a href="favorites.html">Избранное</a></li>
-                <li><a href="messages.html">Сообщения</a></li>
+                <li><a href="messages.html">Контакты</a></li>
                 <li><a href="settings.html">Настройки</a></li>
                 <li><a href="admin.html" style="color: var(--warning-color);">Админ-панель</a></li>
             </ul>
         </div>
     </header>
 
-    <!-- Основной контент -->
     <main class="container">
+        <!-- Быстрые действия для мобильных -->
+        <div class="quick-actions">
+            <a href="anime-catalog.html?sort=popular" class="quick-action-btn">
+                <i class="fas fa-fire"></i> Популярное
+            </a>
+            <a href="calendar.html" class="quick-action-btn">
+                <i class="fas fa-calendar"></i> Календарь
+            </a>
+            <a href="anime-catalog.html?status=ongoing" class="quick-action-btn">
+                <i class="fas fa-play-circle"></i> Онгоинги
+            </a>
+            <a href="messages.html" class="quick-action-btn">
+                <i class="fas fa-users"></i> Контакты
+            </a>
+        </div>
+
+        <!-- Статистика пользователя -->
+        <div class="user-stats" id="userStats">
+            <h3 style="margin-bottom: 15px; font-family: 'Poppins', sans-serif;">
+                <i class="fas fa-chart-line"></i> Ваша статистика
+            </h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value" id="watchedCount">0</div>
+                    <div class="stat-label">Просмотрено</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="favoritesCount">0</div>
+                    <div class="stat-label">В избранном</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="timeWatched">0ч</div>
+                    <div class="stat-label">Времени просмотрено</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="currentWeek">0</div>
+                    <div class="stat-label">На этой неделе</div>
+                </div>
+            </div>
+        </div>
+
         <!-- Герой-секция -->
         <section class="hero">
             <div class="hero-content">
@@ -1053,8 +435,8 @@
                     <button class="btn btn-primary" onclick="window.location.href='anime-catalog.html'">
                         <i class="fas fa-play"></i> Начать просмотр
                     </button>
-                    <button class="btn btn-outline" onclick="showNotification('Функция в разработке')">
-                        <i class="fas fa-info-circle"></i> Узнать больше
+                    <button class="btn btn-outline" onclick="showTelegramDiscussion()">
+                        <i class="fab fa-telegram"></i> Обсудить в Telegram
                     </button>
                 </div>
             </div>
@@ -1092,6 +474,21 @@
                 <!-- Карточки аниме будут сгенерированы JavaScript -->
             </div>
         </section>
+
+        <!-- Telegram сообщество -->
+        <section>
+            <div style="background-color: var(--dark-light); border-radius: 12px; padding: 30px; text-align: center; margin-top: 40px;">
+                <h3 style="font-family: 'Poppins', sans-serif; margin-bottom: 15px;">
+                    <i class="fab fa-telegram"></i> Присоединяйтесь к нашему сообществу
+                </h3>
+                <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                    Обсуждайте аниме, делитесь впечатлениями и находите единомышленников в нашем Telegram-сообществе
+                </p>
+                <button class="telegram-discuss-btn" onclick="joinTelegramCommunity()">
+                    <i class="fab fa-telegram"></i> Вступить в Telegram-чат
+                </button>
+            </div>
+        </section>
     </main>
 
     <!-- Футер -->
@@ -1102,7 +499,7 @@
                     <h3>Youkai Studio</h3>
                     <p>Платформа для настоящих ценителей аниме. Высокое качество, удобный интерфейс и активное сообщество.</p>
                     <div class="social-links">
-                        <a href="https://t.me/youkaistudio" target="_blank" title="Telegram">
+                        <a href="https://t.me/youkaistudio" target="_blank" title="Telegram" id="telegramLink">
                             <i class="fab fa-telegram"></i>
                         </a>
                         <a href="https://vk.com/youkaistudio" target="_blank" title="ВКонтакте">
@@ -1153,131 +550,162 @@
         </div>
     </footer>
 
+    <script src="common.js"></script>
     <script>
-        // Данные для примера
+        // Данные для главной страницы
         const popularAnime = [
-            { title: "Атака Титанов: Финальный сезон", image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", year: "2023", rating: "9.8", genres: ["Экшен", "Драма", "Фэнтези"], episodes: "28" },
-            { title: "Ван Пис: Фильм Red", image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", year: "2022", rating: "9.5", genres: ["Приключения", "Комедия"], episodes: "1" },
-            { title: "Магическая битва 2", image: "https://images.unsplash.com/photo-1618331833071-1c0c6ee3d19e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", year: "2023", rating: "9.2", genres: ["Экшен", "Сверхъестественное"], episodes: "23" },
-            { title: "Демон-убийца: Деревня кузнецов", image: "https://images.unsplash.com/photo-1639322537228-f710d846310a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", year: "2023", rating: "9.3", genres: ["Экшен", "Драма"], episodes: "11" },
-            { title: "О моём перерождении в слизь 3", image: "https://images.unsplash.com/photo-1541562232579-512a21360020?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", year: "2023", rating: "9.0", genres: ["Фэнтези", "Приключения"], episodes: "12" }
+            { 
+                title: "Атака Титанов: Финальный сезон", 
+                image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", 
+                year: "2023", 
+                rating: "9.8", 
+                genres: ["Экшен", "Драма", "Фэнтези"], 
+                episodes: "28",
+                discussLink: "https://t.me/youkaistudio_discussion?text=Обсуждение:%20Атака%20Титанов"
+            },
+            { 
+                title: "Ван Пис: Фильм Red", 
+                image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", 
+                year: "2022", 
+                rating: "9.5", 
+                genres: ["Приключения", "Комедия"], 
+                episodes: "1",
+                discussLink: "https://t.me/youkaistudio_discussion?text=Обсуждение:%20Ван%20Пис"
+            },
+            { 
+                title: "Магическая битва 2", 
+                image: "https://images.unsplash.com/photo-1618331833071-1c0c6ee3d19e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", 
+                year: "2023", 
+                rating: "9.2", 
+                genres: ["Экшен", "Сверхъестественное"], 
+                episodes: "23",
+                discussLink: "https://t.me/youkaistudio_discussion?text=Обсуждение:%20Магическая%20битва"
+            },
+            { 
+                title: "Демон-убийца: Деревня кузнецов", 
+                image: "https://images.unsplash.com/photo-1639322537228-f710d846310a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", 
+                year: "2023", 
+                rating: "9.3", 
+                genres: ["Экшен", "Драма"], 
+                episodes: "11",
+                discussLink: "https://t.me/youkaistudio_discussion?text=Обсуждение:%20Демон-убийца"
+            },
+            { 
+                title: "О моём перерождении в слизь 3", 
+                image: "https://images.unsplash.com/photo-1541562232579-512a21360020?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", 
+                year: "2023", 
+                rating: "9.0", 
+                genres: ["Фэнтези", "Приключения"], 
+                episodes: "12",
+                discussLink: "https://t.me/youkaistudio_discussion?text=Обсуждение:%20Перерождение%20в%20слизь"
+            }
         ];
 
         const newEpisodes = [
-            { title: "Восхождение героя щита", image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", year: "2023", rating: "8.9", genres: ["Экшен", "Драма", "Фэнтези"], episodes: "12", newEpisode: "Серия 12", isNew: true },
-            { title: "Обещанная Страна Грёз 2", image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", year: "2023", rating: "9.1", genres: ["Драма", "Фэнтези", "Триллер"], episodes: "11", newEpisode: "Серия 11", isNew: true },
-            { title: "Токийские мстители", image: "https://images.unsplash.com/photo-1618331833071-1c0c6ee3d19e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", year: "2023", rating: "8.7", genres: ["Экшен", "Драма"], episodes: "24", newEpisode: "Серия 20", isNew: false },
-            { title: "Магистр дьявольского культа", image: "https://images.unsplash.com/photo-1639322537228-f710d846310a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", year: "2023", rating: "9.2", genres: ["Драма", "Фэнтези", "Романтика"], episodes: "15", newEpisode: "Серия 13", isNew: true },
-            { title: "Берсерк: Золотой век", image: "https://images.unsplash.com/photo-1541562232579-512a21360020?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", year: "2022", rating: "9.4", genres: ["Экшен", "Драма", "Фэнтези"], episodes: "13", newEpisode: "Серия 10", isNew: false }
+            { 
+                title: "Восхождение героя щита", 
+                image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", 
+                year: "2023", 
+                rating: "8.9", 
+                genres: ["Экшен", "Драма", "Фэнтези"], 
+                episodes: "12", 
+                newEpisode: "Серия 12", 
+                isNew: true,
+                discussLink: "https://t.me/youkaistudio_discussion?text=Обсуждение:%20Герой%20щита"
+            },
+            { 
+                title: "Обещанная Страна Грёз 2", 
+                image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", 
+                year: "2023", 
+                rating: "9.1", 
+                genres: ["Драма", "Фэнтези", "Триллер"], 
+                episodes: "11", 
+                newEpisode: "Серия 11", 
+                isNew: true,
+                discussLink: "https://t.me/youkaistudio_discussion?text=Обсуждение:%20Обещанная%20Страна%20Грёз"
+            },
+            { 
+                title: "Токийские мстители", 
+                image: "https://images.unsplash.com/photo-1618331833071-1c0c6ee3d19e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", 
+                year: "2023", 
+                rating: "8.7", 
+                genres: ["Экшен", "Драма"], 
+                episodes: "24", 
+                newEpisode: "Серия 20", 
+                isNew: false,
+                discussLink: "https://t.me/youkaistudio_discussion?text=Обсуждение:%20Токийские%20мстители"
+            },
+            { 
+                title: "Магистр дьявольского культа", 
+                image: "https://images.unsplash.com/photo-1639322537228-f710d846310a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", 
+                year: "2023", 
+                rating: "9.2", 
+                genres: ["Драма", "Фэнтези", "Романтика"], 
+                episodes: "15", 
+                newEpisode: "Серия 13", 
+                isNew: true,
+                discussLink: "https://t.me/youkaistudio_discussion?text=Обсуждение:%20Магистр%20дьявольского%20культа"
+            },
+            { 
+                title: "Берсерк: Золотой век", 
+                image: "https://images.unsplash.com/photo-1541562232579-512a21360020?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60", 
+                year: "2022", 
+                rating: "9.4", 
+                genres: ["Экшен", "Драма", "Фэнтези"], 
+                episodes: "13", 
+                newEpisode: "Серия 10", 
+                isNew: false,
+                discussLink: "https://t.me/youkaistudio_discussion?text=Обсуждение:%20Берсерк"
+            }
         ];
 
         const recommendations = [
-            { title: "Вайолет Эвергарден", image: "https://images.unsplash.com/photo-1541562232579-512a21360020?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", year: "2018", rating: "9.5", genres: ["Драма", "Фэнтези"], episodes: "13" },
-            { title: "Стальной алхимик: Братство", image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", year: "2009", rating: "9.7", genres: ["Экшен", "Приключения"], episodes: "64" },
-            { title: "Твоё имя", image: "https://images.unsplash.com/photo-1618331833071-1c0c6ee3d19e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", year: "2016", rating: "9.3", genres: ["Драма", "Романтика"], episodes: "1" },
-            { title: "Атака титанов", image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", year: "2013", rating: "9.8", genres: ["Экшен", "Драма"], episodes: "75" },
-            { title: "Ходячий замок", image: "https://images.unsplash.com/photo-1639322537228-f710d846310a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", year: "2004", rating: "9.2", genres: ["Приключения", "Драма"], episodes: "1" }
+            { 
+                title: "Вайолет Эвергарден", 
+                image: "https://images.unsplash.com/photo-1541562232579-512a21360020?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", 
+                year: "2018", 
+                rating: "9.5", 
+                genres: ["Драма", "Фэнтези"], 
+                episodes: "13",
+                discussLink: "https://t.me/youkaistudio_discussion?text=Обсуждение:%20Вайолет%20Эвергарден"
+            },
+            { 
+                title: "Стальной алхимик: Братство", 
+                image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", 
+                year: "2009", 
+                rating: "9.7", 
+                genres: ["Экшен", "Приключения"], 
+                episodes: "64",
+                discussLink: "https://t.me/youkaistudio_discussion?text=Обсуждение:%20Стальной%20алхимик"
+            },
+            { 
+                title: "Твоё имя", 
+                image: "https://images.unsplash.com/photo-1618331833071-1c0c6ee3d19e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", 
+                year: "2016", 
+                rating: "9.3", 
+                genres: ["Драма", "Романтика"], 
+                episodes: "1",
+                discussLink: "https://t.me/youkaistudio_discussion?text=Обсуждение:%20Твоё%20имя"
+            },
+            { 
+                title: "Атака титанов", 
+                image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", 
+                year: "2013", 
+                rating: "9.8", 
+                genres: ["Экшен", "Драма"], 
+                episodes: "75",
+                discussLink: "https://t.me/youkaistudio_discussion?text=Обсуждение:%20Атака%20титанов"
+            },
+            { 
+                title: "Ходячий замок", 
+                image: "https://images.unsplash.com/photo-1639322537228-f710d846310a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", 
+                year: "2004", 
+                rating: "9.2", 
+                genres: ["Приключения", "Драма"], 
+                episodes: "1",
+                discussLink: "https://t.me/youkaistudio_discussion?text=Обсуждение:%20Ходячий%20замок"
+            }
         ];
-
-        // Состояние пользователя (Telegram)
-        let isTelegramUser = false;
-        let telegramUser = null;
-
-        // Проверяем, загружены ли данные из Telegram Web App
-        function checkTelegramAuth() {
-            // В реальном приложении здесь будет проверка данных из Telegram Web App
-            // Для демонстрации используем localStorage
-            const savedUser = localStorage.getItem('telegram_user');
-            
-            if (savedUser) {
-                telegramUser = JSON.parse(savedUser);
-                isTelegramUser = true;
-                updateUserInterface();
-                return true;
-            }
-            
-            // Симуляция данных Telegram (для демонстрации)
-            if (window.location.hash.includes('#tg=')) {
-                // Получаем данные из hash (в реальности это будет от Telegram)
-                const hash = window.location.hash.substring(1);
-                const params = new URLSearchParams(hash);
-                
-                telegramUser = {
-                    id: params.get('id') || '123456789',
-                    first_name: params.get('first_name') || 'Алексей',
-                    last_name: params.get('last_name') || 'Иванов',
-                    username: params.get('username') || 'alexeyivanov',
-                    photo_url: params.get('photo_url') || null
-                };
-                
-                localStorage.setItem('telegram_user', JSON.stringify(telegramUser));
-                isTelegramUser = true;
-                updateUserInterface();
-                return true;
-            }
-            
-            return false;
-        }
-
-        // Обновление интерфейса в зависимости от состояния пользователя
-        function updateUserInterface() {
-            const userAvatar = document.getElementById('userAvatar');
-            const avatarIcon = document.getElementById('avatarIcon');
-            const dropdownHeader = document.getElementById('dropdownHeader');
-            const dropdownAvatar = document.getElementById('dropdownAvatar');
-            const dropdownInfo = document.getElementById('dropdownInfo');
-            const telegramLoginBtn = document.getElementById('telegramLoginBtn');
-            const logoutBtn = document.getElementById('logoutBtn');
-            
-            if (isTelegramUser && telegramUser) {
-                // Пользователь авторизован через Telegram
-                userAvatar.classList.remove('unauthorized');
-                userAvatar.title = `${telegramUser.first_name} ${telegramUser.last_name || ''}`.trim();
-                
-                // Устанавливаем аватарку
-                if (telegramUser.photo_url) {
-                    userAvatar.innerHTML = `<img src="${telegramUser.photo_url}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
-                    dropdownAvatar.innerHTML = `<img src="${telegramUser.photo_url}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
-                } else {
-                    const initials = telegramUser.first_name.charAt(0) + (telegramUser.last_name ? telegramUser.last_name.charAt(0) : '');
-                    userAvatar.textContent = initials.toUpperCase();
-                    dropdownAvatar.textContent = initials.toUpperCase();
-                }
-                
-                // Обновляем информацию в меню
-                dropdownInfo.innerHTML = `
-                    <h4>${telegramUser.first_name} ${telegramUser.last_name || ''}</h4>
-                    <p>@${telegramUser.username}</p>
-                `;
-                
-                // Прячем кнопку входа
-                telegramLoginBtn.style.display = 'none';
-                
-                // Показываем кнопку выхода
-                if (logoutBtn) logoutBtn.style.display = 'block';
-                
-                // Обновляем активные ссылки
-                updateActiveNavLink();
-                
-            } else {
-                // Пользователь не авторизован
-                userAvatar.innerHTML = '<i class="fas fa-user" id="avatarIcon"></i>';
-                userAvatar.classList.add('unauthorized');
-                userAvatar.title = "Меню пользователя";
-                
-                dropdownAvatar.innerHTML = '<i class="fas fa-user" id="dropdownAvatarIcon"></i>';
-                dropdownInfo.innerHTML = `
-                    <h4>Войдите через Telegram</h4>
-                    <p>Для доступа ко всем функциям</p>
-                `;
-                
-                // Показываем кнопку входа
-                telegramLoginBtn.style.display = 'flex';
-                
-                // Прячем кнопку выхода
-                if (logoutBtn) logoutBtn.style.display = 'none';
-            }
-        }
 
         // Функция для создания карточки аниме
         function createAnimeCard(anime, isNewEpisode = false) {
@@ -1295,51 +723,92 @@
                         <div class="anime-genres">
                             ${anime.genres.map(genre => `<span class="genre-tag">${genre}</span>`).join('')}
                         </div>
+                        <button class="telegram-discuss-btn" style="margin-top: 10px; width: 100%;" onclick="event.stopPropagation(); openDiscussion('${anime.discussLink}', '${anime.title}')">
+                            <i class="fab fa-telegram"></i> Обсудить
+                        </button>
                     </div>
                 </div>
             `;
         }
 
-        // Функция показа уведомления
-        function showNotification(message, type = 'info', duration = 3000) {
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.innerHTML = `
-                <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'warning' ? 'fa-exclamation-triangle' : type === 'error' ? 'fa-times-circle' : 'fa-info-circle'}"></i>
-                <span>${message}</span>
-            `;
-            document.body.appendChild(notification);
+        // Открытие обсуждения в Telegram
+        function openDiscussion(link, title) {
+            const tg = window.YoukaiStudio?.getTelegramWebApp();
             
-            setTimeout(() => {
-                notification.style.animation = 'slideOut 0.3s ease';
-                setTimeout(() => notification.remove(), 300);
-            }, duration);
+            if (tg && tg.openTelegramLink) {
+                tg.openTelegramLink(link);
+            } else {
+                window.open(link, '_blank');
+            }
             
-            return notification;
+            window.YoukaiStudio?.showNotification(`Открываем обсуждение: ${title}`, 'info');
         }
 
-        // Обновление активной ссылки в навигации
-        function updateActiveNavLink() {
-            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-            const navLinks = document.querySelectorAll('.main-nav a, .mobile-nav a');
+        // Присоединение к Telegram сообществу
+        function joinTelegramCommunity() {
+            const communityLink = 'https://t.me/youkaistudio_community';
+            const tg = window.YoukaiStudio?.getTelegramWebApp();
             
-            navLinks.forEach(link => {
-                const linkHref = link.getAttribute('href');
-                if (linkHref === currentPage || 
-                    (currentPage === '' && linkHref === 'index.html') ||
-                    (currentPage === 'index.html' && linkHref === 'index.html')) {
-                    link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
-                }
-            });
+            if (tg && tg.openTelegramLink) {
+                tg.openTelegramLink(communityLink);
+            } else {
+                window.open(communityLink, '_blank');
+            }
+            
+            window.YoukaiStudio?.showNotification('Присоединяйтесь к нашему сообществу!', 'success');
         }
 
-        // Инициализация при загрузке страницы
+        // Обсуждение в Telegram (общая кнопка)
+        function showTelegramDiscussion() {
+            const discussionLink = 'https://t.me/youkaistudio_discussion';
+            const tg = window.YoukaiStudio?.getTelegramWebApp();
+            
+            if (tg && tg.openTelegramLink) {
+                tg.openTelegramLink(discussionLink);
+            } else {
+                window.open(discussionLink, '_blank');
+            }
+            
+            window.YoukaiStudio?.showNotification('Открываем общее обсуждение', 'info');
+        }
+
+        // Загрузка статистики пользователя
+        function loadUserStats() {
+            const user = window.YoukaiStudio?.getCurrentUser();
+            const userStats = document.getElementById('userStats');
+            
+            if (user && userStats) {
+                userStats.classList.add('visible');
+                
+                // Загружаем статистику из localStorage
+                const watched = JSON.parse(localStorage.getItem('watched_anime') || '[]');
+                const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+                const timeWatched = parseInt(localStorage.getItem('time_watched') || '0');
+                
+                // Обновляем счетчики
+                document.getElementById('watchedCount').textContent = watched.length;
+                document.getElementById('favoritesCount').textContent = favorites.length;
+                document.getElementById('timeWatched').textContent = `${Math.floor(timeWatched / 60)}ч`;
+                
+                // Считаем просмотры за текущую неделю
+                const now = new Date();
+                const startOfWeek = new Date(now);
+                startOfWeek.setDate(now.getDate() - now.getDay());
+                startOfWeek.setHours(0, 0, 0, 0);
+                
+                const weeklyWatched = watched.filter(anime => {
+                    const watchDate = new Date(anime.watched_at || 0);
+                    return watchDate >= startOfWeek;
+                }).length;
+                
+                document.getElementById('currentWeek').textContent = weeklyWatched;
+            } else if (userStats) {
+                userStats.classList.remove('visible');
+            }
+        }
+
+        // Инициализация главной страницы
         document.addEventListener('DOMContentLoaded', function() {
-            // Проверяем авторизацию Telegram
-            checkTelegramAuth();
-            
             // Заполняем популярные тайтлы
             const popularAnimeContainer = document.getElementById('popularAnime');
             if (popularAnimeContainer) {
@@ -1364,177 +833,56 @@
                 });
             }
 
-            // Элементы управления
-            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-            const mobileNavOverlay = document.getElementById('mobileNavOverlay');
-            const mobileNav = document.getElementById('mobileNav');
-            const mobileNavClose = document.getElementById('mobileNavClose');
-            const searchBox = document.getElementById('searchBox');
-            const searchIcon = document.getElementById('searchIcon');
-            const searchInput = document.getElementById('searchInput');
-            const userMenu = document.getElementById('userMenu');
-            const userDropdown = document.getElementById('userDropdown');
-            const telegramLoginBtn = document.getElementById('telegramLoginBtn');
-            const logoutBtn = document.getElementById('logoutBtn');
-            
-            // Мобильное меню
-            if (mobileMenuBtn) {
-                mobileMenuBtn.addEventListener('click', () => {
-                    mobileNav.classList.add('active');
-                    mobileNavOverlay.classList.add('active');
-                });
-            }
-            
-            if (mobileNavOverlay) {
-                mobileNavOverlay.addEventListener('click', () => {
-                    mobileNav.classList.remove('active');
-                    mobileNavOverlay.classList.remove('active');
-                });
-            }
-            
-            if (mobileNavClose) {
-                mobileNavClose.addEventListener('click', () => {
-                    mobileNav.classList.remove('active');
-                    mobileNavOverlay.classList.remove('active');
-                });
-            }
-            
-            // Выпадающее меню пользователя
-            if (userMenu) {
-                userMenu.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    userDropdown.classList.toggle('active');
-                });
-            }
-            
-            // Закрытие выпадающего меню при клике вне его
-            document.addEventListener('click', (e) => {
-                if (!userMenu.contains(e.target)) {
-                    userDropdown.classList.remove('active');
+            // Загружаем статистику пользователя
+            loadUserStats();
+
+            // Обновляем статистику при изменении данных пользователя
+            window.addEventListener('storage', function(e) {
+                if (e.key === 'tg_user' || e.key === 'watched_anime' || e.key === 'favorites') {
+                    loadUserStats();
                 }
             });
-            
-            // Telegram авторизация
-            if (telegramLoginBtn) {
-                telegramLoginBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    
-                    if (window.Telegram && window.Telegram.WebApp) {
-                        // Используем Telegram Web App
-                        window.Telegram.WebApp.ready();
-                        window.Telegram.WebApp.expand();
-                        
-                        // Получаем данные пользователя
-                        const user = window.Telegram.WebApp.initDataUnsafe.user;
-                        if (user) {
-                            telegramUser = {
-                                id: user.id,
-                                first_name: user.first_name,
-                                last_name: user.last_name || '',
-                                username: user.username,
-                                photo_url: user.photo_url || null
-                            };
-                            
-                            localStorage.setItem('telegram_user', JSON.stringify(telegramUser));
-                            isTelegramUser = true;
-                            updateUserInterface();
-                            showNotification(`Добро пожаловать, ${user.first_name}!`, 'success');
-                        }
-                    } else {
-                        // Демо-режим (для разработки)
-                        telegramUser = {
-                            id: '123456789',
-                            first_name: 'Демо',
-                            last_name: 'Пользователь',
-                            username: 'demo_user',
-                            photo_url: null
-                        };
-                        
-                        localStorage.setItem('telegram_user', JSON.stringify(telegramUser));
-                        isTelegramUser = true;
-                        updateUserInterface();
-                        showNotification('Вход выполнен в демо-режиме', 'success');
-                    }
-                    
-                    userDropdown.classList.remove('active');
-                });
-            }
-            
-            // Выход из аккаунта
-            if (logoutBtn) {
-                logoutBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    
-                    localStorage.removeItem('telegram_user');
-                    isTelegramUser = false;
-                    telegramUser = null;
-                    updateUserInterface();
-                    showNotification('Вы вышли из аккаунта', 'info');
-                    userDropdown.classList.remove('active');
-                });
-            }
-            
+
             // Мобильный поиск
-            if (window.innerWidth <= 992) {
-                // Показываем иконку поиска на мобильных
-                const mobileSearchBtn = document.getElementById('mobileSearchBtn');
-                if (mobileSearchBtn) {
-                    mobileSearchBtn.style.display = 'block';
-                    mobileSearchBtn.addEventListener('click', () => {
-                        searchBox.classList.toggle('active');
-                        if (searchBox.classList.contains('active')) {
-                            searchInput.focus();
-                        }
-                    });
-                }
-                
-                // Скрываем поиск при клике вне его
-                document.addEventListener('click', (e) => {
-                    if (!searchBox.contains(e.target) && !mobileSearchBtn.contains(e.target)) {
-                        searchBox.classList.remove('active');
-                    }
-                });
-            }
-            
-            // Обработка поиска
+            const searchInput = document.getElementById('searchInput');
             if (searchInput) {
-                searchInput.addEventListener('keypress', (e) => {
+                searchInput.addEventListener('keypress', function(e) {
                     if (e.key === 'Enter') {
-                        const query = searchInput.value.trim();
+                        const query = this.value.trim();
                         if (query) {
                             window.location.href = `anime-catalog.html?search=${encodeURIComponent(query)}`;
                         }
                     }
                 });
             }
-            
-            // Обновляем активную ссылку
-            updateActiveNavLink();
-            
-            // Закрытие меню при переходе по ссылке (для мобильных)
-            document.querySelectorAll('.mobile-nav a').forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileNav.classList.remove('active');
-                    mobileNavOverlay.classList.remove('active');
-                });
-            });
-        });
 
-        // Обработка изменения размера окна
-        window.addEventListener('resize', function() {
-            const mobileSearchBtn = document.getElementById('mobileSearchBtn');
-            if (window.innerWidth > 992) {
-                // На десктопе показываем поиск всегда
-                if (searchBox) searchBox.style.display = 'flex';
-                if (mobileSearchBtn) mobileSearchBtn.style.display = 'none';
-            } else {
-                // На мобильных показываем иконку поиска
-                if (mobileSearchBtn) mobileSearchBtn.style.display = 'block';
-                if (searchBox && !searchBox.classList.contains('active')) {
-                    searchBox.style.display = 'none';
-                }
+            // Telegram ссылка в футере
+            const telegramLink = document.getElementById('telegramLink');
+            if (telegramLink) {
+                telegramLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    joinTelegramCommunity();
+                });
             }
         });
+
+        // Оптимизация для мобильных
+        if (window.YoukaiStudio?.isMobileDevice()) {
+            // Ленивая загрузка изображений
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        observer.unobserve(img);
+                    }
+                });
+            });
+
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                observer.observe(img);
+            });
+        }
     </script>
 </body>
 </html>
