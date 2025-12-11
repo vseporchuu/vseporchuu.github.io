@@ -2,502 +2,279 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Календарь выходов - Youkai Studio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <style>
-        :root {
-            --primary-color: #ff66a3;
-            --secondary-color: #c77dff;
-            --dark-color: #0f0f1a;
-            --dark-light: #1a1a2e;
-            --text-primary: #ffffff;
-            --text-secondary: #b0b0b0;
-            --card-bg: #252538;
-            --border-color: #333344;
-            --success-color: #6bffb8;
-            --warning-color: #ffd166;
-            --info-color: #7bb4ff;
-            --shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            --gradient: linear-gradient(135deg, #ff66a3 0%, #c77dff 100%);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--dark-color);
-            color: var(--text-primary);
-            line-height: 1.6;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px 24px;
-            border-radius: 8px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-            font-size: 16px;
-            gap: 8px;
-        }
-
-        .btn-primary {
-            background: var(--gradient);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 102, 163, 0.4);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-outline:hover {
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-        }
-
-        /* Шапка сайта */
-        header {
-            background-color: rgba(15, 15, 26, 0.95);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .header-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px 15px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            font-family: 'Poppins', sans-serif;
-            font-size: 28px;
-            font-weight: 700;
-        }
-
-        .logo svg {
-            width: 32px;
-            height: 32px;
-            margin-right: 10px;
-            fill: var(--primary-color);
-        }
-
-        .logo span {
-            color: var(--primary-color);
-        }
-
-        nav ul {
-            display: flex;
-            align-items: center;
-        }
-
-        nav ul li {
-            margin: 0 12px;
-        }
-
-        nav ul li a {
-            font-weight: 500;
-            padding: 8px 0;
-            position: relative;
-            transition: color 0.3s;
-            font-size: 15px;
-        }
-
-        nav ul li a:hover {
-            color: var(--primary-color);
-        }
-
-        nav ul li a.active {
-            color: var(--primary-color);
-        }
-
-        nav ul li a.active::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: var(--primary-color);
-        }
-
-        .search-box {
-            display: flex;
-            align-items: center;
-            background-color: var(--dark-light);
-            border-radius: 8px;
-            padding: 8px 15px;
-            width: 300px;
-        }
-
-        .search-box input {
-            background: transparent;
-            border: none;
-            outline: none;
-            color: var(--text-primary);
-            width: 100%;
-            margin-left: 10px;
-            font-size: 15px;
-        }
-
-        .user-menu {
-            display: flex;
-            align-items: center;
-            margin-left: 20px;
-            position: relative;
-            cursor: pointer;
-        }
-
-        .user-avatar {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: var(--gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 18px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .user-avatar:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(255, 102, 163, 0.4);
-        }
-
-        main {
-            margin-top: 80px;
-            min-height: calc(100vh - 200px);
-        }
-
-        .page-header {
+        .calendar-container {
             background-color: var(--dark-light);
             border-radius: 12px;
-            padding: 30px;
+            padding: 20px;
             margin-bottom: 30px;
         }
-
-        .page-header h1 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-
-        .page-header p {
-            color: var(--text-secondary);
-            font-size: 16px;
-        }
-
-        .calendar-controls {
+        
+        .calendar-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .calendar-navigation {
-            display: flex;
-            align-items: center;
             gap: 15px;
         }
-
-        .current-month {
+        
+        .calendar-header h2 {
             font-family: 'Poppins', sans-serif;
             font-size: 24px;
-            font-weight: 500;
-        }
-
-        .calendar-view {
-            display: flex;
-            gap: 10px;
-        }
-
-        .view-btn {
-            padding: 8px 20px;
-            border-radius: 6px;
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
             color: var(--text-primary);
-            cursor: pointer;
-            transition: all 0.3s;
         }
-
-        .view-btn.active {
-            background: var(--gradient);
-            border-color: var(--primary-color);
+        
+        .week-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
         }
-
+        
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 1px;
-            background-color: var(--border-color);
-            border-radius: 12px;
-            overflow: hidden;
-            margin-bottom: 30px;
+            gap: 8px;
         }
-
-        .calendar-day-header {
-            background-color: var(--dark-light);
-            padding: 15px;
-            text-align: center;
-            font-weight: 500;
-            font-family: 'Poppins', sans-serif;
-        }
-
+        
         .calendar-day {
-            background-color: var(--dark-light);
-            padding: 15px;
-            min-height: 120px;
+            min-height: 80px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
             position: relative;
-            transition: background-color 0.3s;
+            overflow: hidden;
         }
-
+        
         .calendar-day:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        
+        .calendar-day.empty {
+            background-color: transparent;
+            border: 1px solid transparent;
+        }
+        
+        .calendar-day.today {
+            border: 2px solid var(--primary-color);
             background-color: rgba(255, 102, 163, 0.1);
         }
-
-        .calendar-day.empty {
-            background-color: var(--card-bg);
-        }
-
-        .calendar-day.today {
-            background-color: rgba(255, 102, 163, 0.2);
-        }
-
+        
         .day-number {
+            font-size: 14px;
             font-weight: 500;
-            margin-bottom: 10px;
-            font-size: 18px;
+            margin-bottom: 5px;
+            color: var(--text-secondary);
         }
-
+        
         .day-events {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
+            margin-top: 5px;
         }
-
-        .calendar-event {
-            background-color: rgba(199, 125, 255, 0.2);
-            padding: 5px 8px;
+        
+        .day-event {
+            background: var(--gradient);
+            color: white;
+            padding: 3px 6px;
             border-radius: 4px;
-            font-size: 12px;
+            font-size: 10px;
+            margin-bottom: 3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
             cursor: pointer;
-            transition: transform 0.3s;
+            transition: transform 0.2s;
         }
-
-        .calendar-event:hover {
-            transform: translateX(3px);
+        
+        .day-event:hover {
+            transform: scale(1.05);
         }
-
-        .calendar-event.new {
-            background-color: rgba(255, 102, 163, 0.2);
-        }
-
-        .upcoming-releases {
+        
+        .releases-list {
             background-color: var(--dark-light);
             border-radius: 12px;
-            padding: 30px;
+            padding: 20px;
+            margin-top: 30px;
         }
-
-        .upcoming-releases h2 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-
+        
         .release-item {
             display: flex;
             align-items: center;
-            gap: 15px;
             padding: 15px;
-            border-bottom: 1px solid var(--border-color);
-            transition: background-color 0.3s;
-        }
-
-        .release-item:hover {
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-
-        .release-date {
             background-color: var(--card-bg);
-            padding: 10px 15px;
-            border-radius: 8px;
-            text-align: center;
-            min-width: 80px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
         }
-
+        
+        .release-item:hover {
+            border-color: var(--primary-color);
+            transform: translateX(5px);
+        }
+        
+        .release-date {
+            min-width: 80px;
+            text-align: center;
+            margin-right: 20px;
+        }
+        
         .release-day {
-            font-size: 20px;
+            font-size: 24px;
             font-weight: 700;
             color: var(--primary-color);
+            display: block;
         }
-
+        
         .release-month {
-            font-size: 12px;
+            font-size: 14px;
             color: var(--text-secondary);
+            display: block;
         }
-
+        
+        .release-info {
+            flex: 1;
+        }
+        
         .release-info h4 {
             font-family: 'Poppins', sans-serif;
             margin-bottom: 5px;
+            font-size: 16px;
         }
-
-        .release-info p {
-            font-size: 14px;
+        
+        .release-time {
             color: var(--text-secondary);
-        }
-
-        .notification-bell {
-            position: relative;
-            cursor: pointer;
-        }
-
-        .notification-count {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background-color: var(--primary-color);
-            color: white;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
+            font-size: 14px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 12px;
+            gap: 5px;
         }
-
-        footer {
-            background-color: var(--dark-light);
-            padding: 40px 0 20px;
-            margin-top: 50px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .footer-column h3 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 18px;
-            margin-bottom: 15px;
-            color: var(--text-primary);
-        }
-
-        .footer-column ul li {
-            margin-bottom: 10px;
-        }
-
-        .footer-column ul li a {
-            color: var(--text-secondary);
-            transition: color 0.3s;
-            font-size: 14px;
-        }
-
-        .footer-column ul li a:hover {
-            color: var(--primary-color);
-        }
-
-        .social-links {
+        
+        .calendar-filters {
             display: flex;
-            gap: 12px;
-            margin-top: 15px;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
         }
-
-        .social-links a {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
+        
+        .filter-btn {
+            padding: 8px 16px;
             background-color: var(--card-bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.3s;
-        }
-
-        .social-links a:hover {
-            background: var(--gradient);
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid var(--border-color);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
             color: var(--text-secondary);
-            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
         }
-
-        @media (max-width: 900px) {
+        
+        .filter-btn.active {
+            background: var(--gradient);
+            color: white;
+            border-color: transparent;
+        }
+        
+        @media (max-width: 768px) {
+            .calendar-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
             .calendar-grid {
-                grid-template-columns: repeat(7, 1fr);
+                gap: 5px;
             }
             
             .calendar-day {
-                min-height: 100px;
-                padding: 10px;
+                min-height: 60px;
+                padding: 5px;
+                font-size: 12px;
             }
             
-            .calendar-controls {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .calendar-grid {
-                grid-template-columns: repeat(1, 1fr);
+            .day-number {
+                font-size: 12px;
             }
             
-            .calendar-day-header {
-                display: none;
+            .day-event {
+                font-size: 8px;
+                padding: 2px 4px;
             }
             
             .release-item {
                 flex-direction: column;
                 align-items: flex-start;
+                padding: 12px;
+            }
+            
+            .release-date {
+                margin-right: 0;
+                margin-bottom: 10px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .release-day {
+                font-size: 20px;
+            }
+            
+            .calendar-filters {
+                overflow-x: auto;
+                padding-bottom: 10px;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .filter-btn {
+                flex-shrink: 0;
+                padding: 8px 12px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .calendar-day {
+                min-height: 50px;
+            }
+            
+            .week-days {
+                font-size: 12px;
+            }
+            
+            .day-event {
+                display: none;
+            }
+            
+            .calendar-day.has-events::after {
+                content: '•';
+                position: absolute;
+                bottom: 5px;
+                right: 5px;
+                color: var(--primary-color);
+                font-size: 20px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Шапка сайта (общая для всех страниц) -->
     <header>
         <div class="container header-container">
+            <div class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </div>
+            
             <div class="logo">
                 <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                     <path d="M50,10 C70,10 85,25 85,45 C85,55 80,64 72,70 L72,85 C72,90 67,95 62,95 L38,95 C33,95 28,90 28,85 L28,70 C20,64 15,55 15,45 C15,25 30,10 50,10 Z" fill="#ff66a3"/>
@@ -509,30 +286,106 @@
                 Youkai<span>Studio</span>
             </div>
             
-            <div class="search-box">
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Поиск аниме...">
-            </div>
-            
-            <nav>
+            <nav class="main-nav">
                 <ul>
                     <li><a href="index.html">Главная</a></li>
                     <li><a href="anime-catalog.html">Каталог</a></li>
                     <li><a href="calendar.html" class="active">Календарь</a></li>
                     <li><a href="genres.html">Жанры</a></li>
-                    <li><a href="community.html">Сообщество</a></li>
+                    <li><a href="profile.html">Профиль</a></li>
                 </ul>
             </nav>
             
-            <div class="user-menu">
-                <div class="notification-bell" id="notificationBell">
-                    <i class="fas fa-bell" style="font-size: 20px;"></i>
-                    <div class="notification-count" id="notificationCount">3</div>
+            <div class="search-box" id="searchBox">
+                <i class="fas fa-search" id="searchIcon"></i>
+                <input type="text" placeholder="Поиск аниме..." id="searchInput">
+            </div>
+            
+            <div class="header-right">
+                <div class="mobile-search-btn" id="mobileSearchBtn" style="display: none;">
+                    <i class="fas fa-search"></i>
                 </div>
-                <div class="user-avatar" style="margin-left: 15px;">
-                    <i class="fas fa-user"></i>
+                
+                <div class="user-menu" id="userMenu">
+                    <div class="user-avatar" id="userAvatar" title="Меню пользователя">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-dropdown-header" id="dropdownHeader">
+                            <div class="user-dropdown-avatar" id="dropdownAvatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="user-dropdown-info" id="dropdownInfo">
+                                <h4>Войдите через Telegram</h4>
+                                <p>Для доступа ко всем функциям</p>
+                            </div>
+                        </div>
+                        
+                        <div class="user-dropdown-nav">
+                            <a href="#" id="telegramLoginBtn" class="telegram-login">
+                                <i class="fab fa-telegram"></i> Войти через Telegram
+                            </a>
+                            
+                            <div class="user-dropdown-divider"></div>
+                            
+                            <a href="profile.html">
+                                <i class="fas fa-user"></i> Мой профиль
+                            </a>
+                            
+                            <a href="messages.html">
+                                <i class="fas fa-comments"></i> Контакты
+                            </a>
+                            
+                            <div class="user-dropdown-divider"></div>
+                            
+                            <a href="index.html">
+                                <i class="fas fa-home"></i> Главная
+                            </a>
+                            
+                            <a href="calendar.html" class="active">
+                                <i class="fas fa-calendar"></i> Календарь
+                            </a>
+                            
+                            <a href="settings.html">
+                                <i class="fas fa-cog"></i> Настройки
+                            </a>
+                            
+                            <a href="#" id="logoutBtn">
+                                <i class="fas fa-sign-out-alt"></i> Выйти
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
+        
+        <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+        <div class="mobile-nav" id="mobileNav">
+            <div class="mobile-nav-header">
+                <div class="logo">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                        <path d="M50,10 C70,10 85,25 85,45 C85,55 80,64 72,70 L72,85 C72,90 67,95 62,95 L38,95 C33,95 28,90 28,85 L28,70 C20,64 15,55 15,45 C15,25 30,10 50,10 Z" fill="#ff66a3"/>
+                        <circle cx="40" cy="35" r="5" fill="#ffffff"/>
+                        <circle cx="60" cy="35" r="5" fill="#ffffff"/>
+                        <path d="M45,55 C45,58 47,60 50,60 C53,60 55,58 55,55 C55,52 53,50 50,50 C47,50 45,52 45,55 Z" fill="#ffffff"/>
+                        <path d="M35,75 L65,75 C67,75 69,77 69,79 C69,81 67,83 65,83 L35,83 C33,83 31,81 31,79 C31,77 33,75 35,75 Z" fill="#c77dff"/>
+                    </svg>
+                    <span style="margin-left: 8px;">Youkai Studio</span>
+                </div>
+                <div class="mobile-nav-close" id="mobileNavClose">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="anime-catalog.html">Каталог аниме</a></li>
+                <li><a href="calendar.html" class="active">Календарь выходов</a></li>
+                <li><a href="genres.html">Жанры</a></li>
+                <li><a href="profile.html">Мой профиль</a></li>
+                <li><a href="messages.html">Контакты</a></li>
+                <li><a href="settings.html">Настройки</a></li>
+            </ul>
         </div>
     </header>
 
@@ -541,36 +394,47 @@
             <h1>Календарь выходов</h1>
             <p>Следите за выходом новых серий ваших любимых аниме</p>
         </div>
-
-        <div class="calendar-controls">
-            <div class="calendar-navigation">
-                <button class="btn-outline" id="prevMonth">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <div class="current-month" id="currentMonth">Декабрь 2023</div>
-                <button class="btn-outline" id="nextMonth">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-                <button class="btn btn-primary" id="todayBtn">
-                    <i class="fas fa-calendar-day"></i> Сегодня
-                </button>
+        
+        <div class="calendar-filters">
+            <button class="filter-btn active" data-filter="all">Все дни</button>
+            <button class="filter-btn" data-filter="today">Сегодня</button>
+            <button class="filter-btn" data-filter="week">На этой неделе</button>
+            <button class="filter-btn" data-filter="popular">Популярные</button>
+        </div>
+        
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <h2 id="currentMonth">Декабрь 2023</h2>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn btn-outline" id="prevMonth">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="btn btn-outline" id="todayBtn">Сегодня</button>
+                    <button class="btn btn-outline" id="nextMonth">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
             </div>
             
-            <div class="calendar-view">
-                <button class="view-btn active" data-view="month">Месяц</button>
-                <button class="view-btn" data-view="week">Неделя</button>
-                <button class="view-btn" data-view="list">Список</button>
+            <div class="week-days">
+                <div>Пн</div>
+                <div>Вт</div>
+                <div>Ср</div>
+                <div>Чт</div>
+                <div>Пт</div>
+                <div>Сб</div>
+                <div>Вс</div>
+            </div>
+            
+            <div class="calendar-grid" id="calendarGrid">
+                <!-- Календарь будет заполнен через JavaScript -->
             </div>
         </div>
-
-        <div class="calendar-grid" id="calendarGrid">
-            <!-- Календарь будет заполнен через JavaScript -->
-        </div>
-
-        <div class="upcoming-releases">
-            <h2>Ближайшие выходы</h2>
+        
+        <div class="releases-list">
+            <h3 style="margin-bottom: 20px;">Ближайшие релизы</h3>
             <div id="upcomingReleases">
-                <!-- Ближайшие выходы будут заполнены через JavaScript -->
+                <!-- Список релизов будет заполнен через JavaScript -->
             </div>
         </div>
     </main>
@@ -582,10 +446,15 @@
                     <h3>Youkai Studio</h3>
                     <p>Платформа для настоящих ценителей аниме. Высокое качество, удобный интерфейс и активное сообщество.</p>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-vk"></i></a>
-                        <a href="#"><i class="fab fa-telegram"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="https://t.me/youkaistudio" target="_blank" title="Telegram">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="https://vk.com/youkaistudio" target="_blank" title="ВКонтакте">
+                            <i class="fab fa-vk"></i>
+                        </a>
+                        <a href="https://youtube.com/@youkaistudio" target="_blank" title="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
                     </div>
                 </div>
                 
@@ -594,8 +463,7 @@
                     <ul>
                         <li><a href="index.html">Главная</a></li>
                         <li><a href="anime-catalog.html">Каталог аниме</a></li>
-                        <li><a href="popular.html">Популярное</a></li>
-                        <li><a href="new-episodes.html">Новые серии</a></li>
+                        <li><a href="calendar.html">Календарь выходов</a></li>
                         <li><a href="genres.html">Жанры</a></li>
                     </ul>
                 </div>
@@ -604,17 +472,8 @@
                     <h3>Помощь</h3>
                     <ul>
                         <li><a href="faq.html">FAQ</a></li>
-                        <li><a href="rules.html">Правила сайта</a></li>
                         <li><a href="support.html">Поддержка</a></li>
                         <li><a href="contacts.html">Контакты</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Партнерам</h3>
-                    <ul>
-                        <li><a href="rights-holders.html">Для правообладателей</a></li>
-                        <li><a href="advertising.html">Реклама на сайте</a></li>
                     </ul>
                 </div>
             </div>
@@ -625,280 +484,332 @@
         </div>
     </footer>
 
+    <script src="common.js"></script>
     <script>
         // Данные для календаря
-        const animeReleases = [
-            { id: 1, title: "Атака Титанов", episode: "Серия 29", date: new Date(2023, 11, 10), color: "new" },
-            { id: 2, title: "Магическая битва 2", episode: "Серия 24", date: new Date(2023, 11, 14), color: "normal" },
-            { id: 3, title: "Демон-убийца", episode: "Серия 12", date: new Date(2023, 11, 15), color: "new" },
-            { id: 4, title: "О моём перерождении в слизь", episode: "Серия 13", date: new Date(2023, 11, 18), color: "normal" },
-            { id: 5, title: "Восхождение героя щита", episode: "Сезон 4, Серия 1", date: new Date(2023, 11, 20), color: "new" },
-            { id: 6, title: "Токийские мстители", episode: "Серия 25", date: new Date(2023, 11, 22), color: "normal" },
-            { id: 7, title: "Ван Пис", episode: "Серия 1075", date: new Date(2023, 11, 24), color: "normal" },
-            { id: 8, title: "Наруто", episode: "Боруто: Серия 287", date: new Date(2023, 11, 25), color: "normal" },
-            { id: 9, title: "Стальной алхимик", episode: "Ретроспектива", date: new Date(2023, 11, 28), color: "new" }
+        const calendarData = [
+            { date: '2023-12-15', title: 'Атака Титанов', episode: 'Серия 29', time: '15:00' },
+            { date: '2023-12-15', title: 'Магическая битва', episode: 'Серия 15', time: '18:00' },
+            { date: '2023-12-16', title: 'Демон-убийца', episode: 'Серия 12', time: '16:30' },
+            { date: '2023-12-18', title: 'Ван Пис', episode: 'Серия 1075', time: '14:00' },
+            { date: '2023-12-19', title: 'Хоримия', episode: 'Серия 8', time: '19:00' },
+            { date: '2023-12-20', title: 'Блич', episode: 'Серия 5', time: '17:00' },
+            { date: '2023-12-22', title: 'Стальной алхимик', episode: 'Спешл', time: '20:00' },
+            { date: '2023-12-25', title: 'Наруто', episode: 'Фильм', time: '21:00' }
         ];
 
-        const weekDays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
-        const months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
-
         let currentDate = new Date();
-        let currentView = 'month';
+        let currentYear = currentDate.getFullYear();
+        let currentMonth = currentDate.getMonth();
 
-        // Функция для генерации календаря
-        function generateCalendar(date, view = 'month') {
-            const calendarGrid = document.getElementById('calendarGrid');
-            calendarGrid.innerHTML = '';
+        // Инициализация календаря
+        document.addEventListener('DOMContentLoaded', function() {
+            renderCalendar(currentYear, currentMonth);
+            renderUpcomingReleases();
             
-            // Добавляем заголовки дней недели
-            weekDays.forEach(day => {
-                const dayHeader = document.createElement('div');
-                dayHeader.className = 'calendar-day-header';
-                dayHeader.textContent = day;
-                calendarGrid.appendChild(dayHeader);
+            // Кнопки навигации
+            document.getElementById('prevMonth').addEventListener('click', () => {
+                currentMonth--;
+                if (currentMonth < 0) {
+                    currentMonth = 11;
+                    currentYear--;
+                }
+                renderCalendar(currentYear, currentMonth);
             });
             
-            if (view === 'month') {
-                generateMonthCalendar(date);
-            } else if (view === 'week') {
-                generateWeekCalendar(date);
+            document.getElementById('nextMonth').addEventListener('click', () => {
+                currentMonth++;
+                if (currentMonth > 11) {
+                    currentMonth = 0;
+                    currentYear++;
+                }
+                renderCalendar(currentYear, currentMonth);
+            });
+            
+            document.getElementById('todayBtn').addEventListener('click', () => {
+                currentDate = new Date();
+                currentYear = currentDate.getFullYear();
+                currentMonth = currentDate.getMonth();
+                renderCalendar(currentYear, currentMonth);
+            });
+            
+            // Фильтры
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filter = this.dataset.filter;
+                    filterReleases(filter);
+                });
+            });
+            
+            // Поиск
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    filterReleasesBySearch(this.value);
+                });
             }
-            
-            // Обновляем заголовок месяца
-            document.getElementById('currentMonth').textContent = 
-                `${months[date.getMonth()]} ${date.getFullYear()}`;
-        }
+        });
 
-        // Генерация календаря на месяц
-        function generateMonthCalendar(date) {
-            const year = date.getFullYear();
-            const month = date.getMonth();
+        // Рендер календаря
+        function renderCalendar(year, month) {
+            const calendarGrid = document.getElementById('calendarGrid');
+            const currentMonthElement = document.getElementById('currentMonth');
             
-            // Первый день месяца
+            // Обновляем заголовок
+            const monthNames = [
+                'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+                'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+            ];
+            currentMonthElement.textContent = `${monthNames[month]} ${year}`;
+            
+            // Получаем первый день месяца и количество дней
             const firstDay = new Date(year, month, 1);
-            // Последний день месяца
             const lastDay = new Date(year, month + 1, 0);
-            // День недели первого дня (0 - воскресенье, 1 - понедельник)
-            const firstDayOfWeek = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1;
-            // Количество дней в месяце
             const daysInMonth = lastDay.getDate();
+            const startingDay = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1; // Пн=0, Вс=6
             
-            // Пустые дни до первого дня месяца
-            for (let i = 0; i < firstDayOfWeek; i++) {
-                const emptyDay = document.createElement('div');
-                emptyDay.className = 'calendar-day empty';
-                calendarGrid.appendChild(emptyDay);
+            // Очищаем календарь
+            calendarGrid.innerHTML = '';
+            
+            // Пустые ячейки перед первым днем
+            for (let i = 0; i < startingDay; i++) {
+                calendarGrid.innerHTML += '<div class="calendar-day empty"></div>';
             }
             
             // Дни месяца
             const today = new Date();
+            const isCurrentMonth = today.getFullYear() === year && today.getMonth() === month;
+            
             for (let day = 1; day <= daysInMonth; day++) {
-                const dayElement = document.createElement('div');
-                dayElement.className = 'calendar-day';
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const dayEvents = calendarData.filter(event => event.date === dateStr);
+                const isToday = isCurrentMonth && day === today.getDate();
                 
-                // Проверяем, является ли день сегодняшним
-                if (year === today.getFullYear() && month === today.getMonth() && day === today.getDate()) {
-                    dayElement.classList.add('today');
+                let dayHTML = `<div class="calendar-day ${isToday ? 'today' : ''} ${dayEvents.length > 0 ? 'has-events' : ''}" data-date="${dateStr}">`;
+                dayHTML += `<div class="day-number">${day}</div>`;
+                
+                if (dayEvents.length > 0) {
+                    dayHTML += '<div class="day-events">';
+                    dayEvents.slice(0, 2).forEach(event => {
+                        dayHTML += `<div class="day-event" title="${event.title} - ${event.episode} в ${event.time}">${event.title}</div>`;
+                    });
+                    if (dayEvents.length > 2) {
+                        dayHTML += `<div class="day-event">+${dayEvents.length - 2} ещё</div>`;
+                    }
+                    dayHTML += '</div>';
                 }
                 
-                // Номер дня
-                const dayNumber = document.createElement('div');
-                dayNumber.className = 'day-number';
-                dayNumber.textContent = day;
-                dayElement.appendChild(dayNumber);
-                
-                // События на этот день
-                const currentDate = new Date(year, month, day);
-                const dayEvents = document.createElement('div');
-                dayEvents.className = 'day-events';
-                
-                // Ищем события на эту дату
-                const eventsOnThisDay = animeReleases.filter(release => {
-                    return release.date.getDate() === day &&
-                           release.date.getMonth() === month &&
-                           release.date.getFullYear() === year;
-                });
-                
-                // Добавляем события
-                eventsOnThisDay.forEach(event => {
-                    const eventElement = document.createElement('div');
-                    eventElement.className = `calendar-event ${event.color}`;
-                    eventElement.textContent = `${event.title} (${event.episode})`;
-                    eventElement.setAttribute('data-id', event.id);
-                    dayEvents.appendChild(eventElement);
-                });
-                
-                dayElement.appendChild(dayEvents);
-                calendarGrid.appendChild(dayElement);
+                dayHTML += '</div>';
+                calendarGrid.innerHTML += dayHTML;
             }
+            
+            // Добавляем обработчики для дней с событиями
+            document.querySelectorAll('.calendar-day.has-events').forEach(day => {
+                day.addEventListener('click', function() {
+                    const date = this.dataset.date;
+                    const events = calendarData.filter(event => event.date === date);
+                    
+                    if (events.length > 0) {
+                        showDayEvents(date, events);
+                    }
+                });
+            });
         }
 
-        // Генерация календаря на неделю
-        function generateWeekCalendar(date) {
-            // Для простоты покажем только месяц
-            generateMonthCalendar(date);
-        }
-
-        // Генерация списка ближайших выходов
-        function generateUpcomingReleases() {
-            const upcomingContainer = document.getElementById('upcomingReleases');
-            upcomingContainer.innerHTML = '';
+        // Рендер ближайших релизов
+        function renderUpcomingReleases() {
+            const container = document.getElementById('upcomingReleases');
+            const today = new Date();
+            const nextWeek = new Date(today);
+            nextWeek.setDate(today.getDate() + 7);
             
-            // Сортируем по дате
-            const sortedReleases = [...animeReleases].sort((a, b) => a.date - b.date);
+            // Фильтруем релизы на ближайшую неделю
+            const upcoming = calendarData.filter(event => {
+                const eventDate = new Date(event.date);
+                return eventDate >= today && eventDate <= nextWeek;
+            }).sort((a, b) => new Date(a.date) - new Date(b.date));
             
-            // Берем ближайшие 5
-            const upcoming = sortedReleases.slice(0, 5);
+            container.innerHTML = '';
             
-            upcoming.forEach(release => {
-                const releaseItem = document.createElement('div');
-                releaseItem.className = 'release-item';
+            if (upcoming.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 20px;">Нет запланированных релизов на ближайшую неделю</p>';
+                return;
+            }
+            
+            upcoming.forEach(event => {
+                const date = new Date(event.date);
+                const day = date.getDate();
+                const monthNames = ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];
+                const month = monthNames[date.getMonth()];
                 
-                releaseItem.innerHTML = `
-                    <div class="release-date">
-                        <div class="release-day">${release.date.getDate()}</div>
-                        <div class="release-month">${months[release.date.getMonth()].substring(0, 3)}</div>
-                    </div>
-                    <div class="release-info">
-                        <h4>${release.title}</h4>
-                        <p>${release.episode} • ${release.date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
-                    </div>
-                    <div style="margin-left: auto;">
-                        <button class="btn-outline" style="padding: 5px 15px; font-size: 14px;" data-id="${release.id}">
-                            <i class="fas fa-bell"></i> Уведомить
+                container.innerHTML += `
+                    <div class="release-item" data-date="${event.date}">
+                        <div class="release-date">
+                            <span class="release-day">${day}</span>
+                            <span class="release-month">${month}</span>
+                        </div>
+                        <div class="release-info">
+                            <h4>${event.title} - ${event.episode}</h4>
+                            <div class="release-time">
+                                <i class="far fa-clock"></i>
+                                ${event.time}
+                            </div>
+                        </div>
+                        <button class="btn btn-outline" onclick="setReminder('${event.date}', '${event.title}')">
+                            <i class="far fa-bell"></i> Напомнить
                         </button>
                     </div>
                 `;
-                
-                upcomingContainer.appendChild(releaseItem);
             });
         }
 
-        // Инициализация календаря при загрузке
-        document.addEventListener('DOMContentLoaded', function() {
-            // Генерируем календарь
-            generateCalendar(currentDate, currentView);
-            generateUpcomingReleases();
+        // Фильтрация релизов
+        function filterReleases(filter) {
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(today.getDate() + 1);
             
-            // Навигация по месяцам
-            document.getElementById('prevMonth').addEventListener('click', function() {
-                currentDate.setMonth(currentDate.getMonth() - 1);
-                generateCalendar(currentDate, currentView);
-            });
+            const endOfWeek = new Date(today);
+            endOfWeek.setDate(today.getDate() + (7 - today.getDay()));
             
-            document.getElementById('nextMonth').addEventListener('click', function() {
-                currentDate.setMonth(currentDate.getMonth() + 1);
-                generateCalendar(currentDate, currentView);
-            });
+            let filtered = [...calendarData];
             
-            document.getElementById('todayBtn').addEventListener('click', function() {
-                currentDate = new Date();
-                generateCalendar(currentDate, currentView);
-            });
-            
-            // Переключение вида календаря
-            document.querySelectorAll('.view-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    // Удаляем активный класс у всех кнопок
-                    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
-                    
-                    // Добавляем активный класс текущей кнопке
-                    this.classList.add('active');
-                    
-                    // Меняем вид
-                    currentView = this.getAttribute('data-view');
-                    generateCalendar(currentDate, currentView);
-                });
-            });
-            
-            // Обработка кликов на события
-            document.getElementById('calendarGrid').addEventListener('click', function(e) {
-                const eventElement = e.target.closest('.calendar-event');
-                if (eventElement) {
-                    const eventId = eventElement.getAttribute('data-id');
-                    const event = animeReleases.find(r => r.id == eventId);
-                    if (event) {
-                        alert(`Переход к ${event.title} - ${event.episode}`);
-                        // В реальном приложении здесь будет переход на страницу аниме
-                    }
-                }
-            });
-            
-            // Уведомления о выходе
-            document.getElementById('upcomingReleases').addEventListener('click', function(e) {
-                const notifyBtn = e.target.closest('button');
-                if (notifyBtn && notifyBtn.textContent.includes('Уведомить')) {
-                    const eventId = notifyBtn.getAttribute('data-id');
-                    const event = animeReleases.find(r => r.id == eventId);
-                    
-                    if (event) {
-                        if (notifyBtn.textContent.includes('Уведомить')) {
-                            notifyBtn.innerHTML = '<i class="fas fa-bell-slash"></i> Отписаться';
-                            notifyBtn.classList.remove('btn-outline');
-                            notifyBtn.classList.add('btn-primary');
-                            showNotification(`Вы будете уведомлены о выходе ${event.title}`);
-                        } else {
-                            notifyBtn.innerHTML = '<i class="fas fa-bell"></i> Уведомить';
-                            notifyBtn.classList.remove('btn-primary');
-                            notifyBtn.classList.add('btn-outline');
-                            showNotification(`Уведомления отменены для ${event.title}`);
-                        }
-                    }
-                }
-            });
-            
-            // Уведомления
-            document.getElementById('notificationBell').addEventListener('click', function() {
-                const count = document.getElementById('notificationCount');
-                const currentCount = parseInt(count.textContent);
-                
-                if (currentCount > 0) {
-                    showNotification(`У вас ${currentCount} непрочитанных уведомления`);
-                    count.textContent = '0';
-                    count.style.display = 'none';
-                } else {
-                    showNotification('Новых уведомлений нет');
-                }
-            });
-            
-            // Функция показа уведомления
-            function showNotification(message) {
-                const notification = document.createElement('div');
-                notification.style.cssText = `
-                    position: fixed;
-                    top: 100px;
-                    right: 20px;
-                    background: var(--gradient);
-                    color: white;
-                    padding: 15px 20px;
-                    border-radius: 8px;
-                    z-index: 9999;
-                    animation: slideIn 0.3s ease;
-                    box-shadow: var(--shadow);
-                `;
-                notification.textContent = message;
-                document.body.appendChild(notification);
-                
-                setTimeout(() => {
-                    notification.style.animation = 'slideOut 0.3s ease';
-                    setTimeout(() => notification.remove(), 300);
-                }, 3000);
-                
-                // Добавляем анимации
-                const style = document.createElement('style');
-                style.textContent = `
-                    @keyframes slideIn {
-                        from { transform: translateX(100%); opacity: 0; }
-                        to { transform: translateX(0); opacity: 1; }
-                    }
-                    @keyframes slideOut {
-                        from { transform: translateX(0); opacity: 1; }
-                        to { transform: translateX(100%); opacity: 0; }
-                    }
-                `;
-                document.head.appendChild(style);
+            switch(filter) {
+                case 'today':
+                    const todayStr = today.toISOString().split('T')[0];
+                    filtered = calendarData.filter(event => event.date === todayStr);
+                    break;
+                case 'week':
+                    filtered = calendarData.filter(event => {
+                        const eventDate = new Date(event.date);
+                        return eventDate >= today && eventDate <= endOfWeek;
+                    });
+                    break;
+                case 'popular':
+                    // В реальном приложении здесь будет логика популярности
+                    filtered = calendarData.slice(0, 5);
+                    break;
             }
-        });
+            
+            // Обновляем календарь с фильтром
+            highlightFilteredDays(filtered);
+            updateUpcomingReleases(filtered);
+        }
+
+        // Подсветка отфильтрованных дней
+        function highlightFilteredDays(filteredEvents) {
+            document.querySelectorAll('.calendar-day').forEach(day => {
+                const date = day.dataset.date;
+                const hasFilteredEvent = filteredEvents.some(event => event.date === date);
+                
+                if (date && hasFilteredEvent) {
+                    day.style.boxShadow = '0 0 0 2px var(--primary-color)';
+                } else {
+                    day.style.boxShadow = '';
+                }
+            });
+        }
+
+        // Обновление списка релизов
+        function updateUpcomingReleases(events) {
+            const container = document.getElementById('upcomingReleases');
+            container.innerHTML = '';
+            
+            events.sort((a, b) => new Date(a.date) - new Date(b.date)).forEach(event => {
+                const date = new Date(event.date);
+                const day = date.getDate();
+                const monthNames = ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];
+                const month = monthNames[date.getMonth()];
+                
+                container.innerHTML += `
+                    <div class="release-item">
+                        <div class="release-date">
+                            <span class="release-day">${day}</span>
+                            <span class="release-month">${month}</span>
+                        </div>
+                        <div class="release-info">
+                            <h4>${event.title} - ${event.episode}</h4>
+                            <div class="release-time">
+                                <i class="far fa-clock"></i>
+                                ${event.time}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            if (events.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 20px;">Нет релизов по выбранному фильтру</p>';
+            }
+        }
+
+        // Фильтрация по поиску
+        function filterReleasesBySearch(query) {
+            if (!query.trim()) {
+                document.querySelectorAll('.release-item').forEach(item => {
+                    item.style.display = 'flex';
+                });
+                return;
+            }
+            
+            const searchLower = query.toLowerCase();
+            document.querySelectorAll('.release-item').forEach(item => {
+                const title = item.querySelector('h4').textContent.toLowerCase();
+                item.style.display = title.includes(searchLower) ? 'flex' : 'none';
+            });
+        }
+
+        // Показ событий дня
+        function showDayEvents(date, events) {
+            const tg = window.YoukaiStudio?.getTelegramWebApp();
+            const user = window.YoukaiStudio?.getCurrentUser();
+            
+            let message = `📅 События на ${date}:\n\n`;
+            events.forEach((event, index) => {
+                message += `${index + 1}. ${event.title}\n`;
+                message += `   📺 ${event.episode}\n`;
+                message += `   ⏰ ${event.time}\n\n`;
+            });
+            
+            if (tg && tg.showAlert) {
+                tg.showAlert(message);
+            } else {
+                alert(message);
+            }
+        }
+
+        // Установка напоминания
+        function setReminder(date, title) {
+            const user = window.YoukaiStudio?.getCurrentUser();
+            
+            if (user) {
+                window.YoukaiStudio.showNotification(`Напоминание установлено: ${title} на ${date}`, 'success');
+                
+                // В реальном приложении здесь будет отправка на сервер
+                const reminders = JSON.parse(localStorage.getItem('reminders') || '[]');
+                reminders.push({ date, title, userId: user.id });
+                localStorage.setItem('reminders', JSON.stringify(reminders));
+            } else {
+                window.YoukaiStudio.showNotification('Войдите, чтобы устанавливать напоминания', 'warning');
+            }
+        }
+
+        // Оптимизация для мобильных
+        if (window.YoukaiStudio?.isMobileDevice()) {
+            // Увеличиваем тап-зоны для мобильных
+            document.querySelectorAll('.calendar-day, .release-item, .filter-btn').forEach(el => {
+                el.style.minHeight = '44px';
+            });
+            
+            // Улучшаем скролл для фильтров
+            const filtersContainer = document.querySelector('.calendar-filters');
+            if (filtersContainer) {
+                filtersContainer.style.paddingBottom = '5px';
+            }
+        }
     </script>
 </body>
 </html>
