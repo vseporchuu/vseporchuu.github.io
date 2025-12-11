@@ -2,214 +2,12 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Атака Титанов - Смотреть онлайн - Youkai Studio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <style>
-        :root {
-            --primary-color: #ff66a3;
-            --secondary-color: #c77dff;
-            --dark-color: #0f0f1a;
-            --dark-light: #1a1a2e;
-            --text-primary: #ffffff;
-            --text-secondary: #b0b0b0;
-            --card-bg: #252538;
-            --border-color: #333344;
-            --success-color: #6bffb8;
-            --warning-color: #ffd166;
-            --info-color: #7bb4ff;
-            --shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            --gradient: linear-gradient(135deg, #ff66a3 0%, #c77dff 100%);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--dark-color);
-            color: var(--text-primary);
-            line-height: 1.6;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px 24px;
-            border-radius: 8px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-            font-size: 16px;
-            gap: 8px;
-        }
-
-        .btn-primary {
-            background: var(--gradient);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 102, 163, 0.4);
-        }
-
-        .btn-secondary {
-            background-color: var(--secondary-color);
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background-color: #b56cf7;
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-outline:hover {
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-        }
-
-        .btn-icon {
-            width: 40px;
-            height: 40px;
-            padding: 0;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Шапка сайта */
-        header {
-            background-color: rgba(15, 15, 26, 0.95);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .header-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px 15px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            font-family: 'Poppins', sans-serif;
-            font-size: 28px;
-            font-weight: 700;
-        }
-
-        .logo svg {
-            width: 32px;
-            height: 32px;
-            margin-right: 10px;
-            fill: var(--primary-color);
-        }
-
-        .logo span {
-            color: var(--primary-color);
-        }
-
-        nav ul {
-            display: flex;
-            align-items: center;
-        }
-
-        nav ul li {
-            margin: 0 12px;
-        }
-
-        nav ul li a {
-            font-weight: 500;
-            padding: 8px 0;
-            position: relative;
-            transition: color 0.3s;
-            font-size: 15px;
-        }
-
-        nav ul li a:hover {
-            color: var(--primary-color);
-        }
-
-        nav ul li a.active {
-            color: var(--primary-color);
-        }
-
-        .search-box {
-            display: flex;
-            align-items: center;
-            background-color: var(--dark-light);
-            border-radius: 8px;
-            padding: 8px 15px;
-            width: 300px;
-        }
-
-        .search-box input {
-            background: transparent;
-            border: none;
-            outline: none;
-            color: var(--text-primary);
-            width: 100%;
-            margin-left: 10px;
-            font-size: 15px;
-        }
-
-        .user-menu {
-            display: flex;
-            align-items: center;
-            margin-left: 20px;
-            position: relative;
-            cursor: pointer;
-        }
-
-        .user-avatar {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: var(--gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 18px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .user-avatar:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(255, 102, 163, 0.4);
-        }
-
-        main {
-            margin-top: 80px;
-            min-height: calc(100vh - 200px);
-        }
-
-        /* Видеоплеер */
         .video-container {
             background-color: #000;
             border-radius: 12px;
@@ -239,6 +37,8 @@
             font-family: 'Poppins', sans-serif;
             font-size: 24px;
             margin-bottom: 10px;
+            text-align: center;
+            padding: 0 20px;
         }
 
         .video-placeholder p {
@@ -246,6 +46,7 @@
             text-align: center;
             max-width: 400px;
             margin-bottom: 20px;
+            padding: 0 20px;
         }
 
         .video-controls {
@@ -254,6 +55,8 @@
             justify-content: space-between;
             padding: 15px 20px;
             background-color: rgba(0, 0, 0, 0.8);
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .video-info {
@@ -340,6 +143,11 @@
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         .episode-card:hover {
@@ -350,6 +158,20 @@
         .episode-card.active {
             background-color: rgba(255, 102, 163, 0.2);
             border: 1px solid var(--primary-color);
+        }
+
+        .episode-card.watched {
+            opacity: 0.8;
+            position: relative;
+        }
+
+        .episode-card.watched::after {
+            content: '✓';
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            color: var(--success-color);
+            font-size: 12px;
         }
 
         .episode-number {
@@ -389,6 +211,8 @@
             border-radius: 8px;
             color: var(--text-primary);
             font-size: 15px;
+            min-height: 50px;
+            resize: vertical;
         }
 
         .comment {
@@ -414,6 +238,9 @@
         .comment-content h4 {
             font-family: 'Poppins', sans-serif;
             margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .comment-time {
@@ -424,6 +251,7 @@
 
         .comment-text {
             margin-bottom: 10px;
+            line-height: 1.5;
         }
 
         .comment-actions {
@@ -445,72 +273,19 @@
             color: var(--primary-color);
         }
 
-        footer {
-            background-color: var(--dark-light);
-            padding: 40px 0 20px;
-            margin-top: 50px;
+        .telegram-discussion-btn {
+            margin-top: 20px;
+            width: 100%;
         }
 
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .footer-column h3 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 18px;
-            margin-bottom: 15px;
-            color: var(--text-primary);
-        }
-
-        .footer-column ul li {
-            margin-bottom: 10px;
-        }
-
-        .footer-column ul li a {
-            color: var(--text-secondary);
-            transition: color 0.3s;
-            font-size: 14px;
-        }
-
-        .footer-column ul li a:hover {
-            color: var(--primary-color);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 12px;
-            margin-top: 15px;
-        }
-
-        .social-links a {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background-color: var(--card-bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.3s;
-        }
-
-        .social-links a:hover {
-            background: var(--gradient);
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            font-size: 13px;
-        }
-
+        /* Мобильная оптимизация */
         @media (max-width: 900px) {
             .video-placeholder {
                 height: 400px;
+            }
+            
+            .video-placeholder i {
+                font-size: 60px;
             }
             
             .anime-title {
@@ -519,7 +294,12 @@
             
             .anime-actions {
                 flex-direction: column;
-                align-items: flex-start;
+                align-items: stretch;
+            }
+            
+            .anime-actions .btn {
+                width: 100%;
+                text-align: center;
             }
             
             .episodes-grid {
@@ -533,11 +313,23 @@
             }
             
             .video-placeholder i {
-                font-size: 60px;
+                font-size: 50px;
+            }
+            
+            .video-placeholder h2 {
+                font-size: 20px;
+            }
+            
+            .video-placeholder p {
+                font-size: 14px;
             }
             
             .anime-title {
                 font-size: 24px;
+            }
+            
+            .video-info, .episodes-list, .comments-section {
+                padding: 20px;
             }
             
             .comment-form {
@@ -547,12 +339,146 @@
             .comment {
                 flex-direction: column;
             }
+            
+            .comment-avatar {
+                width: 36px;
+                height: 36px;
+                font-size: 14px;
+            }
+            
+            .episodes-grid {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+                gap: 8px;
+            }
+            
+            .episode-card {
+                padding: 12px 5px;
+                min-height: 70px;
+            }
+            
+            .episode-number {
+                font-size: 16px;
+            }
+            
+            .episode-title {
+                font-size: 10px;
+            }
+            
+            .video-controls {
+                padding: 10px 15px;
+            }
+            
+            .video-controls .btn-icon {
+                width: 36px !important;
+                height: 36px !important;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .video-placeholder {
+                height: 250px;
+            }
+            
+            .anime-meta {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .anime-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .episodes-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .comment-actions {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .episodes-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .video-placeholder {
+                height: 200px;
+            }
+            
+            .video-placeholder i {
+                font-size: 40px;
+            }
+        }
+
+        /* Стили для прогресса просмотра */
+        .watch-progress {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 6px;
+            background-color: var(--border-color);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 12px;
+            color: var(--text-secondary);
+            min-width: 40px;
+            text-align: right;
+        }
+
+        /* Кнопка обсуждения в Telegram */
+        .telegram-discuss-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 20px;
+            background-color: #0088cc;
+            color: white;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        .telegram-discuss-btn:hover {
+            background-color: #0077b5;
+            transform: translateY(-2px);
+        }
+
+        .telegram-discuss-btn i {
+            font-size: 18px;
         }
     </style>
 </head>
 <body>
     <header>
         <div class="container header-container">
+            <div class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </div>
+            
             <div class="logo">
                 <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                     <path d="M50,10 C70,10 85,25 85,45 C85,55 80,64 72,70 L72,85 C72,90 67,95 62,95 L38,95 C33,95 28,90 28,85 L28,70 C20,64 15,55 15,45 C15,25 30,10 50,10 Z" fill="#ff66a3"/>
@@ -564,26 +490,116 @@
                 Youkai<span>Studio</span>
             </div>
             
-            <div class="search-box">
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Поиск аниме...">
-            </div>
-            
-            <nav>
+            <nav class="main-nav">
                 <ul>
                     <li><a href="index.html">Главная</a></li>
                     <li><a href="anime-catalog.html">Каталог</a></li>
                     <li><a href="calendar.html">Календарь</a></li>
                     <li><a href="genres.html">Жанры</a></li>
-                    <li><a href="community.html">Сообщество</a></li>
+                    <li><a href="anime-watch.html" class="active">Смотреть</a></li>
                 </ul>
             </nav>
             
-            <div class="user-menu">
-                <div class="user-avatar">
-                    <i class="fas fa-user"></i>
+            <div class="search-box" id="searchBox">
+                <i class="fas fa-search" id="searchIcon"></i>
+                <input type="text" placeholder="Поиск аниме..." id="searchInput">
+            </div>
+            
+            <div class="header-right">
+                <div class="mobile-search-btn" id="mobileSearchBtn" style="display: none;">
+                    <i class="fas fa-search"></i>
+                </div>
+                
+                <div class="user-menu" id="userMenu">
+                    <div class="user-avatar" id="userAvatar" title="Меню пользователя">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-dropdown-header" id="dropdownHeader">
+                            <div class="user-dropdown-avatar" id="dropdownAvatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="user-dropdown-info" id="dropdownInfo">
+                                <h4>Войдите через Telegram</h4>
+                                <p>Для доступа ко всем функциям</p>
+                            </div>
+                        </div>
+                        
+                        <div class="user-dropdown-nav">
+                            <a href="#" id="telegramLoginBtn" class="telegram-login">
+                                <i class="fab fa-telegram"></i> Войти через Telegram
+                            </a>
+                            
+                            <div class="user-dropdown-divider"></div>
+                            
+                            <a href="profile.html">
+                                <i class="fas fa-user"></i> Мой профиль
+                            </a>
+                            
+                            <a href="messages.html">
+                                <i class="fas fa-comments"></i> Контакты
+                            </a>
+                            
+                            <a href="favorites.html">
+                                <i class="fas fa-heart"></i> Избранное
+                            </a>
+                            
+                            <div class="user-dropdown-divider"></div>
+                            
+                            <a href="index.html">
+                                <i class="fas fa-home"></i> Главная
+                            </a>
+                            
+                            <a href="anime-catalog.html">
+                                <i class="fas fa-list"></i> Каталог
+                            </a>
+                            
+                            <a href="calendar.html">
+                                <i class="fas fa-calendar"></i> Календарь
+                            </a>
+                            
+                            <a href="settings.html">
+                                <i class="fas fa-cog"></i> Настройки
+                            </a>
+                            
+                            <a href="#" id="logoutBtn" style="display: none;">
+                                <i class="fas fa-sign-out-alt"></i> Выйти
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
+        
+        <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+        <div class="mobile-nav" id="mobileNav">
+            <div class="mobile-nav-header">
+                <div class="logo">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                        <path d="M50,10 C70,10 85,25 85,45 C85,55 80,64 72,70 L72,85 C72,90 67,95 62,95 L38,95 C33,95 28,90 28,85 L28,70 C20,64 15,55 15,45 C15,25 30,10 50,10 Z" fill="#ff66a3"/>
+                        <circle cx="40" cy="35" r="5" fill="#ffffff"/>
+                        <circle cx="60" cy="35" r="5" fill="#ffffff"/>
+                        <path d="M45,55 C45,58 47,60 50,60 C53,60 55,58 55,55 C55,52 53,50 50,50 C47,50 45,52 45,55 Z" fill="#ffffff"/>
+                        <path d="M35,75 L65,75 C67,75 69,77 69,79 C69,81 67,83 65,83 L35,83 C33,83 31,81 31,79 C31,77 33,75 35,75 Z" fill="#c77dff"/>
+                    </svg>
+                    <span style="margin-left: 8px;">Youkai Studio</span>
+                </div>
+                <div class="mobile-nav-close" id="mobileNavClose">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="anime-catalog.html">Каталог аниме</a></li>
+                <li><a href="calendar.html">Календарь выходов</a></li>
+                <li><a href="genres.html">Жанры</a></li>
+                <li><a href="anime-watch.html" class="active">Смотреть онлайн</a></li>
+                <li><a href="profile.html">Мой профиль</a></li>
+                <li><a href="messages.html">Контакты</a></li>
+                <li><a href="favorites.html">Избранное</a></li>
+                <li><a href="settings.html">Настройки</a></li>
+            </ul>
         </div>
     </header>
 
@@ -594,27 +610,33 @@
                 <i class="fas fa-play-circle"></i>
                 <h2>Атака Титанов: Финальный сезон</h2>
                 <p>Сезон 4, Серия 28: "За пределы стен"</p>
-                <button class="btn btn-primary">
+                <button class="btn btn-primary" id="watchBtn">
                     <i class="fas fa-play"></i> Начать просмотр
                 </button>
+                <div class="watch-progress" id="watchProgress" style="display: none; margin-top: 20px;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-text" id="progressText">0%</div>
+                </div>
             </div>
             <div class="video-controls">
                 <div style="display: flex; gap: 10px;">
-                    <button class="btn-outline btn-icon">
+                    <button class="btn-outline btn-icon" id="prevEpisode">
                         <i class="fas fa-backward"></i>
                     </button>
-                    <button class="btn-primary btn-icon">
+                    <button class="btn-primary btn-icon" id="playPauseBtn">
                         <i class="fas fa-play"></i>
                     </button>
-                    <button class="btn-outline btn-icon">
+                    <button class="btn-outline btn-icon" id="nextEpisode">
                         <i class="fas fa-forward"></i>
                     </button>
                 </div>
                 <div style="display: flex; gap: 10px;">
-                    <button class="btn-outline btn-icon">
+                    <button class="btn-outline btn-icon" id="volumeBtn">
                         <i class="fas fa-volume-up"></i>
                     </button>
-                    <button class="btn-outline btn-icon">
+                    <button class="btn-outline btn-icon" id="fullscreenBtn">
                         <i class="fas fa-expand"></i>
                     </button>
                 </div>
@@ -634,7 +656,7 @@
             </div>
 
             <div class="anime-actions">
-                <button class="btn btn-primary" id="watchBtn">
+                <button class="btn btn-primary" id="watchNowBtn">
                     <i class="fas fa-play"></i> Смотреть сейчас
                 </button>
                 <button class="btn btn-secondary" id="favoriteBtn">
@@ -645,6 +667,9 @@
                 </button>
                 <button class="btn btn-outline" id="rateBtn">
                     <i class="fas fa-star"></i> Оценить
+                </button>
+                <button class="telegram-discuss-btn" id="telegramDiscussBtn">
+                    <i class="fab fa-telegram"></i> Обсудить в Telegram
                 </button>
             </div>
 
@@ -668,10 +693,10 @@
                 </div>
                 <div class="detail-item">
                     <h4>Статус просмотра</h4>
-                    <div style="display: flex; gap: 10px;">
-                        <button class="btn-outline" style="padding: 5px 15px; font-size: 14px;">Смотрю</button>
-                        <button class="btn-outline" style="padding: 5px 15px; font-size: 14px;">Просмотрено</button>
-                        <button class="btn-outline" style="padding: 5px 15px; font-size: 14px;">Буду смотреть</button>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button class="btn-outline watch-status-btn" data-status="watching" style="padding: 5px 15px; font-size: 14px;">Смотрю</button>
+                        <button class="btn-outline watch-status-btn" data-status="watched" style="padding: 5px 15px; font-size: 14px;">Просмотрено</button>
+                        <button class="btn-outline watch-status-btn" data-status="planned" style="padding: 5px 15px; font-size: 14px;">Буду смотреть</button>
                     </div>
                 </div>
             </div>
@@ -690,13 +715,17 @@
             <h3>Комментарии (127)</h3>
             
             <div class="comment-form">
-                <input type="text" class="comment-input" placeholder="Напишите комментарий...">
-                <button class="btn btn-primary">Отправить</button>
+                <input type="text" class="comment-input" placeholder="Напишите комментарий..." id="commentInput">
+                <button class="btn btn-primary" id="submitCommentBtn">Отправить</button>
             </div>
 
             <div class="comments-list" id="commentsList">
                 <!-- Комментарии будут добавлены через JavaScript -->
             </div>
+            
+            <button class="telegram-discuss-btn" onclick="openAnimeDiscussion()">
+                <i class="fab fa-telegram"></i> Присоединиться к обсуждению в Telegram
+            </button>
         </div>
     </main>
 
@@ -707,10 +736,15 @@
                     <h3>Youkai Studio</h3>
                     <p>Платформа для настоящих ценителей аниме. Высокое качество, удобный интерфейс и активное сообщество.</p>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-vk"></i></a>
-                        <a href="#"><i class="fab fa-telegram"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="https://t.me/youkaistudio" target="_blank" title="Telegram" id="telegramLink">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="https://vk.com/youkaistudio" target="_blank" title="ВКонтакте">
+                            <i class="fab fa-vk"></i>
+                        </a>
+                        <a href="https://youtube.com/@youkaistudio" target="_blank" title="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
                     </div>
                 </div>
                 
@@ -719,9 +753,9 @@
                     <ul>
                         <li><a href="index.html">Главная</a></li>
                         <li><a href="anime-catalog.html">Каталог аниме</a></li>
-                        <li><a href="popular.html">Популярное</a></li>
-                        <li><a href="new-episodes.html">Новые серии</a></li>
+                        <li><a href="calendar.html">Календарь выходов</a></li>
                         <li><a href="genres.html">Жанры</a></li>
+                        <li><a href="anime-watch.html">Смотреть онлайн</a></li>
                     </ul>
                 </div>
                 
@@ -750,14 +784,16 @@
         </div>
     </footer>
 
+    <script src="common.js"></script>
     <script>
         // Данные для страницы
         const episodes = [];
         for (let i = 1; i <= 28; i++) {
             episodes.push({
                 number: i,
-                title: `Эпизод ${i}`,
-                watched: i <= 15 // Первые 15 эпизодов просмотрены
+                title: `Эпизод ${i}: ${getRandomEpisodeTitle()}`,
+                duration: 24,
+                watched: localStorage.getItem(`episode_${i}_watched`) === 'true' || i <= 15
             });
         }
 
@@ -769,7 +805,8 @@
                 time: "2 часа назад",
                 text: "Этот эпизод просто невероятный! Анимация на высшем уровне, сюжетные повороты заставляют сердце биться чаще.",
                 likes: 42,
-                replies: 3
+                replies: 3,
+                isAdmin: false
             },
             {
                 id: 2,
@@ -778,26 +815,53 @@
                 time: "5 часов назад",
                 text: "Не могу дождаться следующей серии! Как думаете, что будет с главными героями?",
                 likes: 28,
-                replies: 5
+                replies: 5,
+                isAdmin: false
             },
             {
                 id: 3,
-                author: "Дмитрий",
-                avatar: "Д",
+                author: "Администратор Youkai",
+                avatar: "Y",
                 time: "Вчера",
                 text: "Мурашки по коже от концовки! Студия MAPPA снова доказала свой профессионализм.",
                 likes: 56,
-                replies: 2
+                replies: 2,
+                isAdmin: true
             }
         ];
+
+        // Вспомогательные функции
+        function getRandomEpisodeTitle() {
+            const titles = [
+                "За пределы стен",
+                "Путь к свободе",
+                "Последний бой",
+                "Надежда человечества",
+                "Падение Титанов",
+                "Новая эра",
+                "Правда о мире",
+                "Судьба Эльдии",
+                "Финальная битва",
+                "Выбор Эрена"
+            ];
+            return titles[Math.floor(Math.random() * titles.length)];
+        }
+
+        function formatTime(minutes) {
+            const hours = Math.floor(minutes / 60);
+            const mins = minutes % 60;
+            return hours > 0 ? `${hours}ч ${mins}м` : `${mins}м`;
+        }
 
         // Функция для создания элемента эпизода
         function createEpisodeCard(episode, isActive = false) {
             return `
-                <div class="episode-card ${episode.watched ? 'watched' : ''} ${isActive ? 'active' : ''}" data-episode="${episode.number}">
+                <div class="episode-card ${episode.watched ? 'watched' : ''} ${isActive ? 'active' : ''}" 
+                     data-episode="${episode.number}"
+                     data-title="${episode.title}"
+                     data-duration="${episode.duration}">
                     <div class="episode-number">${episode.number}</div>
                     <div class="episode-title">${episode.title}</div>
-                    ${episode.watched ? '<div style="font-size: 10px; color: var(--success-color); margin-top: 5px;"><i class="fas fa-check"></i> Просмотрено</div>' : ''}
                 </div>
             `;
         }
@@ -808,33 +872,76 @@
                 <div class="comment">
                     <div class="comment-avatar">${comment.avatar}</div>
                     <div class="comment-content">
-                        <h4>${comment.author}</h4>
+                        <h4>
+                            ${comment.author}
+                            ${comment.isAdmin ? '<span style="color: var(--warning-color); font-size: 12px; background: rgba(255, 209, 102, 0.2); padding: 2px 8px; border-radius: 10px;">Админ</span>' : ''}
+                        </h4>
                         <div class="comment-time">${comment.time}</div>
                         <div class="comment-text">${comment.text}</div>
                         <div class="comment-actions">
                             <div class="comment-action" data-id="${comment.id}">
                                 <i class="fas fa-thumbs-up"></i> ${comment.likes}
                             </div>
-                            <div class="comment-action">
+                            <div class="comment-action" onclick="replyToComment(${comment.id}, '${comment.author}')">
                                 <i class="fas fa-reply"></i> Ответить
                             </div>
-                            <div class="comment-action">
-                                <i class="fas fa-flag"></i> Пожаловаться
-                            </div>
+                            ${!comment.isAdmin ? '<div class="comment-action"><i class="fas fa-flag"></i> Пожаловаться</div>' : ''}
                         </div>
                     </div>
                 </div>
             `;
         }
 
+        // Открытие обсуждения аниме в Telegram
+        function openAnimeDiscussion() {
+            const animeTitle = "Атака Титанов: Финальный сезон";
+            const discussionLink = `https://t.me/youkaistudio_discussion?text=Обсуждение:%20${encodeURIComponent(animeTitle)}`;
+            
+            const tg = window.YoukaiStudio?.getTelegramWebApp();
+            if (tg && tg.openTelegramLink) {
+                tg.openTelegramLink(discussionLink);
+            } else {
+                window.open(discussionLink, '_blank');
+            }
+            
+            window.YoukaiStudio?.showNotification('Открываем обсуждение в Telegram', 'info');
+        }
+
+        // Ответ на комментарий
+        function replyToComment(commentId, author) {
+            const commentInput = document.getElementById('commentInput');
+            if (commentInput) {
+                commentInput.value = `@${author} `;
+                commentInput.focus();
+                window.YoukaiStudio?.showNotification(`Ответ ${author}`, 'info');
+            }
+        }
+
         // Инициализация страницы при загрузке
         document.addEventListener('DOMContentLoaded', function() {
             const episodesGrid = document.getElementById('episodesGrid');
             const commentsList = document.getElementById('commentsList');
-            const watchBtn = document.getElementById('watchBtn');
+            const watchNowBtn = document.getElementById('watchNowBtn');
             const favoriteBtn = document.getElementById('favoriteBtn');
             const shareBtn = document.getElementById('shareBtn');
             const rateBtn = document.getElementById('rateBtn');
+            const telegramDiscussBtn = document.getElementById('telegramDiscussBtn');
+            const submitCommentBtn = document.getElementById('submitCommentBtn');
+            const commentInput = document.getElementById('commentInput');
+            const watchProgress = document.getElementById('watchProgress');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const prevEpisodeBtn = document.getElementById('prevEpisode');
+            const nextEpisodeBtn = document.getElementById('nextEpisode');
+            
+            let currentEpisode = 28;
+            let isPlaying = false;
+            let currentTime = 0;
+            let totalTime = 24 * 60; // 24 минуты в секундах
+            let progressInterval = null;
+            let isFavorite = localStorage.getItem('anime_favorite') === 'true';
+            let userRating = localStorage.getItem('user_rating') || 0;
             
             // Заполняем список эпизодов
             episodes.forEach((episode, index) => {
@@ -845,6 +952,17 @@
             comments.forEach(comment => {
                 commentsList.innerHTML += createComment(comment);
             });
+            
+            // Обновляем состояние кнопки избранного
+            updateFavoriteButton();
+            
+            // Обновляем состояние кнопки оценки
+            if (userRating > 0) {
+                rateBtn.innerHTML = `<i class="fas fa-star"></i> Ваша оценка: ${userRating}/10`;
+            }
+            
+            // Загружаем прогресс просмотра
+            loadWatchProgress();
             
             // Обработка клика на эпизод
             episodesGrid.addEventListener('click', function(e) {
@@ -859,66 +977,84 @@
                     episodeCard.classList.add('active');
                     
                     // Обновляем информацию в плеере
-                    const episodeNumber = episodeCard.getAttribute('data-episode');
-                    updatePlayerInfo(episodeNumber);
-                }
-            });
-            
-            // Обработка кнопок действий
-            let isFavorite = false;
-            let userRating = 0;
-            
-            favoriteBtn.addEventListener('click', function() {
-                isFavorite = !isFavorite;
-                const icon = this.querySelector('i');
-                if (isFavorite) {
-                    icon.style.color = '#ff66a3';
-                    this.innerHTML = '<i class="fas fa-heart" style="color: #ff66a3;"></i> В избранном';
-                    showNotification('Добавлено в избранное');
-                } else {
-                    icon.style.color = '';
-                    this.innerHTML = '<i class="fas fa-heart"></i> В избранное';
-                    showNotification('Удалено из избранного');
-                }
-            });
-            
-            shareBtn.addEventListener('click', function() {
-                if (navigator.share) {
-                    navigator.share({
-                        title: 'Атака Титанов: Финальный сезон',
-                        text: 'Смотри это аниме на Youkai Studio!',
-                        url: window.location.href
-                    });
-                } else {
-                    // Для браузеров без поддержки Web Share API
-                    navigator.clipboard.writeText(window.location.href);
-                    showNotification('Ссылка скопирована в буфер обмена');
-                }
-            });
-            
-            rateBtn.addEventListener('click', function() {
-                const rating = prompt('Оцените аниме от 1 до 10:');
-                if (rating && rating >= 1 && rating <= 10) {
-                    userRating = rating;
-                    this.innerHTML = `<i class="fas fa-star"></i> Ваша оценка: ${rating}/10`;
-                    showNotification(`Вы поставили оценку ${rating}/10`);
-                }
-            });
-            
-            watchBtn.addEventListener('click', function() {
-                // Симуляция начала просмотра
-                const activeEpisode = document.querySelector('.episode-card.active');
-                if (activeEpisode) {
-                    const episodeNumber = activeEpisode.getAttribute('data-episode');
-                    showNotification(`Начинаем просмотр серии ${episodeNumber}...`);
+                    currentEpisode = parseInt(episodeCard.getAttribute('data-episode'));
+                    updatePlayerInfo(currentEpisode);
                     
-                    // Помечаем как просмотренное
-                    activeEpisode.classList.add('watched');
-                    activeEpisode.innerHTML += '<div style="font-size: 10px; color: var(--success-color); margin-top: 5px;"><i class="fas fa-check"></i> Просмотрено</div>';
+                    // Загружаем прогресс для выбранного эпизода
+                    loadEpisodeProgress(currentEpisode);
                 }
             });
             
-            // Обработка лайков комментариев
+            // Кнопка "Смотреть сейчас"
+            watchNowBtn.addEventListener('click', function() {
+                startWatching();
+            });
+            
+            // Кнопка избранного
+            favoriteBtn.addEventListener('click', function() {
+                toggleFavorite();
+            });
+            
+            // Кнопка поделиться
+            shareBtn.addEventListener('click', function() {
+                shareAnime();
+            });
+            
+            // Кнопка оценки
+            rateBtn.addEventListener('click', function() {
+                rateAnime();
+            });
+            
+            // Кнопка обсуждения в Telegram
+            telegramDiscussBtn.addEventListener('click', openAnimeDiscussion);
+            
+            // Кнопка отправки комментария
+            submitCommentBtn.addEventListener('click', function() {
+                submitComment();
+            });
+            
+            // Отправка комментария по Enter
+            if (commentInput) {
+                commentInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        submitComment();
+                    }
+                });
+            }
+            
+            // Кнопки управления плеером
+            playPauseBtn.addEventListener('click', function() {
+                togglePlayPause();
+            });
+            
+            prevEpisodeBtn.addEventListener('click', function() {
+                if (currentEpisode > 1) {
+                    currentEpisode--;
+                    updatePlayerInfo(currentEpisode);
+                    loadEpisodeProgress(currentEpisode);
+                    updateActiveEpisode();
+                }
+            });
+            
+            nextEpisodeBtn.addEventListener('click', function() {
+                if (currentEpisode < episodes.length) {
+                    currentEpisode++;
+                    updatePlayerInfo(currentEpisode);
+                    loadEpisodeProgress(currentEpisode);
+                    updateActiveEpisode();
+                }
+            });
+            
+            // Кнопки статуса просмотра
+            document.querySelectorAll('.watch-status-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const status = this.getAttribute('data-status');
+                    setWatchStatus(status);
+                });
+            });
+            
+            // Лайки комментариев
             commentsList.addEventListener('click', function(e) {
                 const likeBtn = e.target.closest('.comment-action');
                 if (likeBtn && likeBtn.querySelector('.fa-thumbs-up')) {
@@ -935,52 +1071,342 @@
                     
                     // Отключаем повторные клики
                     likeBtn.style.pointerEvents = 'none';
+                    
+                    window.YoukaiStudio?.showNotification('Лайк добавлен', 'success');
                 }
             });
             
-            // Функция обновления информации в плеере
+            // Функции
             function updatePlayerInfo(episodeNumber) {
                 const placeholder = document.querySelector('.video-placeholder');
-                placeholder.querySelector('h2').textContent = `Атака Титанов: Финальный сезон`;
-                placeholder.querySelector('p').textContent = `Сезон 4, Серия ${episodeNumber}: "Название эпизода"`;
+                const episode = episodes.find(e => e.number === episodeNumber);
+                
+                if (episode) {
+                    placeholder.querySelector('h2').textContent = `Атака Титанов: Финальный сезон`;
+                    placeholder.querySelector('p').textContent = `Сезон 4, Серия ${episodeNumber}: "${episode.title.split(': ')[1]}"`;
+                }
             }
             
-            // Функция показа уведомления
-            function showNotification(message) {
-                const notification = document.createElement('div');
-                notification.style.cssText = `
-                    position: fixed;
-                    top: 100px;
-                    right: 20px;
-                    background: var(--gradient);
-                    color: white;
-                    padding: 15px 20px;
-                    border-radius: 8px;
-                    z-index: 9999;
-                    animation: slideIn 0.3s ease;
-                    box-shadow: var(--shadow);
-                `;
-                notification.textContent = message;
-                document.body.appendChild(notification);
-                
-                setTimeout(() => {
-                    notification.style.animation = 'slideOut 0.3s ease';
-                    setTimeout(() => notification.remove(), 300);
-                }, 3000);
-                
-                // Добавляем анимации
-                const style = document.createElement('style');
-                style.textContent = `
-                    @keyframes slideIn {
-                        from { transform: translateX(100%); opacity: 0; }
-                        to { transform: translateX(0); opacity: 1; }
+            function updateActiveEpisode() {
+                document.querySelectorAll('.episode-card').forEach(card => {
+                    card.classList.remove('active');
+                    const cardEpisode = parseInt(card.getAttribute('data-episode'));
+                    if (cardEpisode === currentEpisode) {
+                        card.classList.add('active');
                     }
-                    @keyframes slideOut {
-                        from { transform: translateX(0); opacity: 1; }
-                        to { transform: translateX(100%); opacity: 0; }
+                });
+            }
+            
+            function startWatching() {
+                const user = window.YoukaiStudio?.getCurrentUser();
+                
+                if (!user) {
+                    window.YoukaiStudio?.showNotification('Войдите, чтобы начать просмотр', 'warning');
+                    return;
+                }
+                
+                isPlaying = true;
+                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                watchProgress.style.display = 'flex';
+                
+                // Симуляция просмотра
+                startProgressSimulation();
+                
+                // Помечаем эпизод как просмотренный
+                markEpisodeAsWatched(currentEpisode);
+                
+                window.YoukaiStudio?.showNotification(`Начинаем просмотр серии ${currentEpisode}...`, 'success');
+            }
+            
+            function togglePlayPause() {
+                isPlaying = !isPlaying;
+                
+                if (isPlaying) {
+                    playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                    startProgressSimulation();
+                    window.YoukaiStudio?.showNotification('Продолжаем просмотр', 'info');
+                } else {
+                    playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+                    stopProgressSimulation();
+                    window.YoukaiStudio?.showNotification('Пауза', 'info');
+                }
+            }
+            
+            function startProgressSimulation() {
+                if (progressInterval) clearInterval(progressInterval);
+                
+                progressInterval = setInterval(() => {
+                    if (currentTime < totalTime) {
+                        currentTime += 1;
+                        updateProgressBar();
+                        
+                        // Автоматически помечаем как просмотренное при 90% просмотра
+                        if (currentTime >= totalTime * 0.9 && !episodes[currentEpisode - 1].watched) {
+                            markEpisodeAsWatched(currentEpisode);
+                        }
+                    } else {
+                        stopProgressSimulation();
+                        isPlaying = false;
+                        playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+                        
+                        // Автоматически переходим к следующему эпизоду
+                        if (currentEpisode < episodes.length) {
+                            setTimeout(() => {
+                                currentEpisode++;
+                                updatePlayerInfo(currentEpisode);
+                                loadEpisodeProgress(currentEpisode);
+                                updateActiveEpisode();
+                                window.YoukaiStudio?.showNotification(`Переход к серии ${currentEpisode}`, 'info');
+                            }, 1000);
+                        }
                     }
-                `;
-                document.head.appendChild(style);
+                }, 1000); // 1 секунда реального времени = 1 секунда просмотра
+            }
+            
+            function stopProgressSimulation() {
+                if (progressInterval) {
+                    clearInterval(progressInterval);
+                    progressInterval = null;
+                }
+            }
+            
+            function updateProgressBar() {
+                const progress = (currentTime / totalTime) * 100;
+                progressFill.style.width = `${progress}%`;
+                progressText.textContent = `${Math.round(progress)}%`;
+            }
+            
+            function loadEpisodeProgress(episodeNumber) {
+                const progress = localStorage.getItem(`episode_${episodeNumber}_progress`) || 0;
+                currentTime = parseInt(progress);
+                totalTime = 24 * 60; // 24 минуты
+                updateProgressBar();
+            }
+            
+            function loadWatchProgress() {
+                const totalEpisodes = episodes.length;
+                const watchedEpisodes = episodes.filter(e => e.watched).length;
+                const progress = (watchedEpisodes / totalEpisodes) * 100;
+                
+                if (watchedEpisodes > 0) {
+                    watchProgress.style.display = 'flex';
+                    progressFill.style.width = `${progress}%`;
+                    progressText.textContent = `${Math.round(progress)}%`;
+                }
+            }
+            
+            function markEpisodeAsWatched(episodeNumber) {
+                // Обновляем в массиве
+                const episodeIndex = episodeNumber - 1;
+                if (episodes[episodeIndex]) {
+                    episodes[episodeIndex].watched = true;
+                    
+                    // Обновляем в localStorage
+                    localStorage.setItem(`episode_${episodeNumber}_watched`, 'true');
+                    
+                    // Обновляем отображение
+                    const episodeCard = document.querySelector(`.episode-card[data-episode="${episodeNumber}"]`);
+                    if (episodeCard) {
+                        episodeCard.classList.add('watched');
+                    }
+                    
+                    // Обновляем статистику
+                    updateWatchStatistics();
+                }
+            }
+            
+            function updateWatchStatistics() {
+                const watchedEpisodes = episodes.filter(e => e.watched).length;
+                const totalTime = watchedEpisodes * 24; // минуты
+                
+                // Сохраняем в localStorage
+                const watchedAnime = JSON.parse(localStorage.getItem('watched_anime') || '[]');
+                const animeIndex = watchedAnime.findIndex(a => a.title === 'Атака Титанов: Финальный сезон');
+                
+                if (animeIndex === -1) {
+                    watchedAnime.push({
+                        title: 'Атака Титанов: Финальный сезон',
+                        episodes: watchedEpisodes,
+                        totalEpisodes: 28,
+                        lastWatched: new Date().toISOString()
+                    });
+                } else {
+                    watchedAnime[animeIndex].episodes = watchedEpisodes;
+                    watchedAnime[animeIndex].lastWatched = new Date().toISOString();
+                }
+                
+                localStorage.setItem('watched_anime', JSON.stringify(watchedAnime));
+                
+                // Обновляем общее время просмотра
+                const totalWatchedTime = parseInt(localStorage.getItem('time_watched') || '0');
+                localStorage.setItem('time_watched', (totalWatchedTime + 24).toString());
+                
+                // Триггер обновления статистики на главной
+                window.dispatchEvent(new StorageEvent('storage', {
+                    key: 'watched_anime'
+                }));
+            }
+            
+            function updateFavoriteButton() {
+                if (isFavorite) {
+                    favoriteBtn.innerHTML = '<i class="fas fa-heart" style="color: #ff66a3;"></i> В избранном';
+                    favoriteBtn.style.backgroundColor = 'rgba(255, 102, 163, 0.1)';
+                    favoriteBtn.style.borderColor = '#ff66a3';
+                } else {
+                    favoriteBtn.innerHTML = '<i class="fas fa-heart"></i> В избранное';
+                    favoriteBtn.style.backgroundColor = '';
+                    favoriteBtn.style.borderColor = '';
+                }
+            }
+            
+            function toggleFavorite() {
+                const user = window.YoukaiStudio?.getCurrentUser();
+                
+                if (!user) {
+                    window.YoukaiStudio?.showNotification('Войдите, чтобы добавлять в избранное', 'warning');
+                    return;
+                }
+                
+                isFavorite = !isFavorite;
+                localStorage.setItem('anime_favorite', isFavorite);
+                
+                // Обновляем список избранного
+                const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+                const animeIndex = favorites.findIndex(a => a.title === 'Атака Титанов: Финальный сезон');
+                
+                if (isFavorite && animeIndex === -1) {
+                    favorites.push({
+                        title: 'Атака Титанов: Финальный сезон',
+                        image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                        added: new Date().toISOString()
+                    });
+                    window.YoukaiStudio?.showNotification('Добавлено в избранное', 'success');
+                } else if (!isFavorite && animeIndex !== -1) {
+                    favorites.splice(animeIndex, 1);
+                    window.YoukaiStudio?.showNotification('Удалено из избранного', 'info');
+                }
+                
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+                updateFavoriteButton();
+                
+                // Триггер обновления статистики
+                window.dispatchEvent(new StorageEvent('storage', {
+                    key: 'favorites'
+                }));
+            }
+            
+            function shareAnime() {
+                const shareUrl = window.location.href;
+                const shareText = 'Смотри "Атака Титанов: Финальный сезон" на Youkai Studio!';
+                
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Атака Титанов: Финальный сезон',
+                        text: shareText,
+                        url: shareUrl
+                    });
+                } else {
+                    navigator.clipboard.writeText(shareUrl);
+                    window.YoukaiStudio?.showNotification('Ссылка скопирована в буфер обмена', 'success');
+                }
+            }
+            
+            function rateAnime() {
+                const user = window.YoukaiStudio?.getCurrentUser();
+                
+                if (!user) {
+                    window.YoukaiStudio?.showNotification('Войдите, чтобы оценивать аниме', 'warning');
+                    return;
+                }
+                
+                const rating = prompt('Оцените аниме от 1 до 10:');
+                if (rating && rating >= 1 && rating <= 10) {
+                    userRating = rating;
+                    localStorage.setItem('user_rating', rating);
+                    rateBtn.innerHTML = `<i class="fas fa-star"></i> Ваша оценка: ${rating}/10`;
+                    window.YoukaiStudio?.showNotification(`Вы поставили оценку ${rating}/10`, 'success');
+                }
+            }
+            
+            function setWatchStatus(status) {
+                const user = window.YoukaiStudio?.getCurrentUser();
+                
+                if (!user) {
+                    window.YoukaiStudio?.showNotification('Войдите, чтобы отмечать статус просмотра', 'warning');
+                    return;
+                }
+                
+                // Обновляем кнопки
+                document.querySelectorAll('.watch-status-btn').forEach(btn => {
+                    if (btn.getAttribute('data-status') === status) {
+                        btn.style.background = 'var(--gradient)';
+                        btn.style.borderColor = 'transparent';
+                        btn.style.color = 'white';
+                    } else {
+                        btn.style.background = '';
+                        btn.style.borderColor = '';
+                        btn.style.color = '';
+                    }
+                });
+                
+                // Сохраняем статус
+                localStorage.setItem('watch_status', status);
+                
+                let statusText = '';
+                switch(status) {
+                    case 'watching': statusText = 'Смотрю'; break;
+                    case 'watched': statusText = 'Просмотрено'; break;
+                    case 'planned': statusText = 'Буду смотреть'; break;
+                }
+                
+                window.YoukaiStudio?.showNotification(`Статус: ${statusText}`, 'success');
+            }
+            
+            function submitComment() {
+                const user = window.YoukaiStudio?.getCurrentUser();
+                
+                if (!user) {
+                    window.YoukaiStudio?.showNotification('Войдите, чтобы оставлять комментарии', 'warning');
+                    return;
+                }
+                
+                const text = commentInput.value.trim();
+                if (!text) {
+                    window.YoukaiStudio?.showNotification('Введите текст комментария', 'warning');
+                    return;
+                }
+                
+                // Создаем новый комментарий
+                const newComment = {
+                    id: Date.now(),
+                    author: user.first_name,
+                    avatar: user.first_name.charAt(0),
+                    time: 'Только что',
+                    text: text,
+                    likes: 0,
+                    replies: 0,
+                    isAdmin: false
+                };
+                
+                // Добавляем в список
+                commentsList.insertAdjacentHTML('afterbegin', createComment(newComment));
+                
+                // Очищаем поле ввода
+                commentInput.value = '';
+                
+                window.YoukaiStudio?.showNotification('Комментарий добавлен', 'success');
+            }
+            
+            // Инициализация прогресса
+            loadEpisodeProgress(currentEpisode);
+            
+            // Telegram ссылка в футере
+            const telegramLink = document.getElementById('telegramLink');
+            if (telegramLink) {
+                telegramLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openAnimeDiscussion();
+                });
             }
         });
     </script>
