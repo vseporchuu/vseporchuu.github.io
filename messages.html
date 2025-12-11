@@ -2,428 +2,109 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Личные сообщения - Youkai Studio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Друзья - Youkai Studio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <style>
-        :root {
-            --primary-color: #ff66a3;
-            --secondary-color: #c77dff;
-            --dark-color: #0f0f1a;
-            --dark-light: #1a1a2e;
-            --text-primary: #ffffff;
-            --text-secondary: #b0b0b0;
-            --card-bg: #252538;
-            --border-color: #333344;
-            --success-color: #6bffb8;
-            --warning-color: #ffd166;
-            --info-color: #7bb4ff;
-            --shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            --gradient: linear-gradient(135deg, #ff66a3 0%, #c77dff 100%);
+        .contacts-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--dark-color);
-            color: var(--text-primary);
-            line-height: 1.6;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 10px 24px;
-            border-radius: 8px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-            font-size: 16px;
-        }
-
-        .btn-primary {
-            background: var(--gradient);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 102, 163, 0.4);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-outline:hover {
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-        }
-
-        /* Шапка сайта */
-        header {
-            background-color: rgba(15, 15, 26, 0.95);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .header-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px 15px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            font-family: 'Poppins', sans-serif;
-            font-size: 28px;
-            font-weight: 700;
-        }
-
-        .logo svg {
-            width: 32px;
-            height: 32px;
-            margin-right: 10px;
-            fill: var(--primary-color);
-        }
-
-        .logo span {
-            color: var(--primary-color);
-        }
-
-        nav ul {
-            display: flex;
-            align-items: center;
-        }
-
-        nav ul li {
-            margin: 0 12px;
-        }
-
-        nav ul li a {
-            font-weight: 500;
-            padding: 8px 0;
-            position: relative;
-            transition: color 0.3s;
-            font-size: 15px;
-        }
-
-        nav ul li a:hover {
-            color: var(--primary-color);
-        }
-
-        .search-box {
-            display: flex;
-            align-items: center;
-            background-color: var(--dark-light);
-            border-radius: 8px;
-            padding: 8px 15px;
-            width: 300px;
-        }
-
-        .search-box input {
-            background: transparent;
-            border: none;
-            outline: none;
-            color: var(--text-primary);
-            width: 100%;
-            margin-left: 10px;
-            font-size: 15px;
-        }
-
-        .user-menu {
-            display: flex;
-            align-items: center;
-            margin-left: 20px;
-            position: relative;
-            cursor: pointer;
-        }
-
-        .user-avatar {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: var(--gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 18px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .user-avatar:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(255, 102, 163, 0.4);
-        }
-
-        main {
-            margin-top: 80px;
-            min-height: calc(100vh - 200px);
-        }
-
-        .page-header {
+        
+        .contacts-header {
             background-color: var(--dark-light);
             border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 30px;
+            padding: 25px;
+            margin-bottom: 20px;
         }
-
-        .page-header h1 {
+        
+        .contacts-header h1 {
             font-family: 'Poppins', sans-serif;
             font-size: 32px;
             margin-bottom: 10px;
         }
-
-        .page-header p {
+        
+        .contacts-header p {
             color: var(--text-secondary);
             font-size: 16px;
         }
         
-        .messages-container {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 20px;
-            min-height: 600px;
+        .contacts-search {
+            margin-bottom: 25px;
         }
         
-        .conversations-list {
-            background-color: var(--dark-light);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-        
-        .conversations-header {
-            padding: 20px;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .conversations-header h3 {
-            font-family: 'Poppins', sans-serif;
-            margin-bottom: 0;
-        }
-        
-        .conversation-search {
-            padding: 15px 20px;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .conversation-search input {
+        .contacts-search input {
             width: 100%;
-            padding: 10px 15px;
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-size: 14px;
-        }
-        
-        .conversations {
-            max-height: 500px;
-            overflow-y: auto;
-        }
-        
-        .conversation-item {
-            display: flex;
-            align-items: center;
             padding: 15px 20px;
-            border-bottom: 1px solid var(--border-color);
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        
-        .conversation-item:hover, .conversation-item.active {
-            background-color: rgba(255, 102, 163, 0.1);
-        }
-        
-        .conversation-avatar {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: var(--gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            margin-right: 15px;
-            flex-shrink: 0;
-        }
-        
-        .conversation-info {
-            flex-grow: 1;
-            min-width: 0;
-        }
-        
-        .conversation-name {
-            font-weight: 500;
-            margin-bottom: 5px;
-            display: flex;
-            justify-content: space-between;
-        }
-        
-        .conversation-time {
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-        
-        .conversation-preview {
-            color: var(--text-secondary);
-            font-size: 14px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        
-        .unread-badge {
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            margin-left: auto;
-        }
-        
-        .messages-area {
-            display: flex;
-            flex-direction: column;
-            background-color: var(--dark-light);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-        
-        .messages-header {
-            padding: 20px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .messages-header-info {
-            display: flex;
-            align-items: center;
-        }
-        
-        .messages-header-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            margin-right: 15px;
-        }
-        
-        .messages-header-details h4 {
-            font-family: 'Poppins', sans-serif;
-            margin-bottom: 2px;
-        }
-        
-        .messages-header-details p {
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-        
-        .messages-content {
-            flex-grow: 1;
-            padding: 20px;
-            overflow-y: auto;
-            max-height: 400px;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .message {
-            margin-bottom: 20px;
-            max-width: 70%;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .message.received {
-            align-items: flex-start;
-        }
-        
-        .message.sent {
-            align-items: flex-end;
-        }
-        
-        .message-bubble {
-            padding: 12px 16px;
-            border-radius: 18px;
-            background-color: var(--card-bg);
-            max-width: 100%;
-        }
-        
-        .message.sent .message-bubble {
-            background: rgba(255, 102, 163, 0.2);
-            border-bottom-right-radius: 4px;
-        }
-        
-        .message.received .message-bubble {
-            border-bottom-left-radius: 4px;
-        }
-        
-        .message-time {
-            font-size: 12px;
-            color: var(--text-secondary);
-            margin-top: 5px;
-        }
-        
-        .message-input-area {
-            padding: 20px;
-            border-top: 1px solid var(--border-color);
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-        
-        .message-input {
-            flex-grow: 1;
-            padding: 12px 15px;
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
+            border-radius: 10px;
             color: var(--text-primary);
-            font-size: 15px;
-            resize: none;
-            min-height: 50px;
-            max-height: 100px;
+            font-size: 16px;
         }
         
-        .message-input:focus {
+        .contacts-search input:focus {
             outline: none;
             border-color: var(--primary-color);
         }
         
-        .send-button {
+        .contacts-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .contacts-tabs::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .contact-tab {
+            padding: 10px 20px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        
+        .contact-tab.active {
+            background: var(--gradient);
+            color: white;
+            border-color: transparent;
+        }
+        
+        .contacts-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .contact-card {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+        
+        .contact-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .contact-avatar {
             width: 50px;
             height: 50px;
             border-radius: 50%;
@@ -431,92 +112,178 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            transition: transform 0.3s;
+            font-weight: bold;
+            font-size: 20px;
+            margin-right: 15px;
+            flex-shrink: 0;
         }
         
-        .send-button:hover {
-            transform: scale(1.05);
+        .contact-info {
+            flex: 1;
+            min-width: 0;
         }
         
-        footer {
-            background-color: var(--dark-light);
-            padding: 40px 0 20px;
-            margin-top: 50px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .footer-column h3 {
+        .contact-info h4 {
             font-family: 'Poppins', sans-serif;
-            font-size: 18px;
-            margin-bottom: 15px;
-            color: var(--text-primary);
+            margin-bottom: 5px;
+            font-size: 16px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
-
-        .footer-column ul li {
-            margin-bottom: 10px;
-        }
-
-        .footer-column ul li a {
+        
+        .contact-details {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             color: var(--text-secondary);
-            transition: color 0.3s;
             font-size: 14px;
         }
-
-        .footer-column ul li a:hover {
-            color: var(--primary-color);
-        }
-
-        .social-links {
+        
+        .online-status {
             display: flex;
-            gap: 12px;
-            margin-top: 15px;
+            align-items: center;
+            gap: 5px;
         }
-
-        .social-links a {
-            width: 36px;
-            height: 36px;
+        
+        .online-dot {
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
-            background-color: var(--card-bg);
+            background-color: var(--success-color);
+        }
+        
+        .online-dot.offline {
+            background-color: var(--text-secondary);
+        }
+        
+        .contact-actions {
+            display: flex;
+            gap: 10px;
+            margin-left: 15px;
+            flex-shrink: 0;
+        }
+        
+        .contact-action-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background-color 0.3s;
-        }
-
-        .social-links a:hover {
-            background: var(--gradient);
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            font-size: 13px;
+            background-color: var(--dark-light);
+            border: none;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s;
         }
         
-        @media (max-width: 900px) {
-            .messages-container {
-                grid-template-columns: 1fr;
+        .contact-action-btn:hover {
+            background: var(--gradient);
+            transform: scale(1.1);
+        }
+        
+        .privacy-warning {
+            background-color: rgba(255, 209, 102, 0.1);
+            border: 1px solid var(--warning-color);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: center;
+            color: var(--warning-color);
+            font-size: 14px;
+        }
+        
+        .no-contacts {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--text-secondary);
+        }
+        
+        .no-contacts i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+        }
+        
+        /* Мобильная оптимизация */
+        @media (max-width: 768px) {
+            .contacts-header {
+                padding: 20px;
             }
             
-            .conversations-list {
-                max-height: 300px;
-                overflow-y: auto;
+            .contacts-header h1 {
+                font-size: 24px;
+            }
+            
+            .contact-card {
+                padding: 12px;
+            }
+            
+            .contact-avatar {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+                margin-right: 12px;
+            }
+            
+            .contact-info h4 {
+                font-size: 14px;
+            }
+            
+            .contact-details {
+                font-size: 12px;
+            }
+            
+            .contact-action-btn {
+                width: 36px;
+                height: 36px;
+            }
+            
+            .contacts-search input {
+                padding: 12px 15px;
+                font-size: 16px;
+            }
+            
+            .contact-tab {
+                padding: 8px 16px;
+                font-size: 14px;
             }
         }
+        
+        @media (max-width: 480px) {
+            .contact-actions {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .contact-action-btn {
+                width: 32px;
+                height: 32px;
+                font-size: 12px;
+            }
+            
+            .contacts-header {
+                padding: 15px;
+            }
+        }
+        
+        /* Темы для аватарок */
+        .avatar-theme-1 { background: linear-gradient(135deg, #ff66a3, #c77dff); }
+        .avatar-theme-2 { background: linear-gradient(135deg, #6bffb8, #00cc88); }
+        .avatar-theme-3 { background: linear-gradient(135deg, #ffd166, #ffaa00); }
+        .avatar-theme-4 { background: linear-gradient(135deg, #7bb4ff, #0088cc); }
+        .avatar-theme-5 { background: linear-gradient(135deg, #c77dff, #9933ff); }
     </style>
 </head>
 <body>
+    <!-- Шапка сайта -->
     <header>
         <div class="container header-container">
+            <div class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </div>
+            
             <div class="logo">
                 <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                     <path d="M50,10 C70,10 85,25 85,45 C85,55 80,64 72,70 L72,85 C72,90 67,95 62,95 L38,95 C33,95 28,90 28,85 L28,70 C20,64 15,55 15,45 C15,25 30,10 50,10 Z" fill="#ff66a3"/>
@@ -528,78 +295,144 @@
                 Youkai<span>Studio</span>
             </div>
             
-            <div class="search-box">
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Поиск аниме...">
-            </div>
-            
-            <nav>
+            <nav class="main-nav">
                 <ul>
                     <li><a href="index.html">Главная</a></li>
                     <li><a href="anime-catalog.html">Каталог</a></li>
                     <li><a href="calendar.html">Календарь</a></li>
                     <li><a href="profile.html">Профиль</a></li>
-                    <li><a href="messages.html" style="color: var(--primary-color);">Сообщения</a></li>
+                    <li><a href="messages.html" class="active">Контакты</a></li>
                 </ul>
             </nav>
             
-            <div class="user-menu">
-                <div class="user-avatar">
-                    <i class="fas fa-user"></i>
+            <div class="search-box" id="searchBox">
+                <i class="fas fa-search" id="searchIcon"></i>
+                <input type="text" placeholder="Поиск пользователей..." id="searchInput">
+            </div>
+            
+            <div class="header-right">
+                <div class="mobile-search-btn" id="mobileSearchBtn" style="display: none;">
+                    <i class="fas fa-search"></i>
+                </div>
+                
+                <div class="user-menu" id="userMenu">
+                    <div class="user-avatar" id="userAvatar" title="Меню пользователя">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-dropdown-header" id="dropdownHeader">
+                            <div class="user-dropdown-avatar" id="dropdownAvatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="user-dropdown-info" id="dropdownInfo">
+                                <h4>Войдите через Telegram</h4>
+                                <p>Для доступа ко всем функциям</p>
+                            </div>
+                        </div>
+                        
+                        <div class="user-dropdown-nav">
+                            <a href="#" id="telegramLoginBtn" class="telegram-login">
+                                <i class="fab fa-telegram"></i> Войти через Telegram
+                            </a>
+                            
+                            <div class="user-dropdown-divider"></div>
+                            
+                            <a href="profile.html">
+                                <i class="fas fa-user"></i> Мой профиль
+                            </a>
+                            
+                            <a href="messages.html" class="active">
+                                <i class="fas fa-users"></i> Контакты
+                            </a>
+                            
+                            <a href="favorites.html">
+                                <i class="fas fa-heart"></i> Избранное
+                            </a>
+                            
+                            <div class="user-dropdown-divider"></div>
+                            
+                            <a href="index.html">
+                                <i class="fas fa-home"></i> Главная
+                            </a>
+                            
+                            <a href="anime-catalog.html">
+                                <i class="fas fa-list"></i> Каталог
+                            </a>
+                            
+                            <a href="calendar.html">
+                                <i class="fas fa-calendar"></i> Календарь
+                            </a>
+                            
+                            <a href="settings.html">
+                                <i class="fas fa-cog"></i> Настройки
+                            </a>
+                            
+                            <a href="#" id="logoutBtn" style="display: none;">
+                                <i class="fas fa-sign-out-alt"></i> Выйти
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
+        
+        <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+        <div class="mobile-nav" id="mobileNav">
+            <div class="mobile-nav-header">
+                <div class="logo">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                        <path d="M50,10 C70,10 85,25 85,45 C85,55 80,64 72,70 L72,85 C72,90 67,95 62,95 L38,95 C33,95 28,90 28,85 L28,70 C20,64 15,55 15,45 C15,25 30,10 50,10 Z" fill="#ff66a3"/>
+                        <circle cx="40" cy="35" r="5" fill="#ffffff"/>
+                        <circle cx="60" cy="35" r="5" fill="#ffffff"/>
+                        <path d="M45,55 C45,58 47,60 50,60 C53,60 55,58 55,55 C55,52 53,50 50,50 C47,50 45,52 45,55 Z" fill="#ffffff"/>
+                        <path d="M35,75 L65,75 C67,75 69,77 69,79 C69,81 67,83 65,83 L35,83 C33,83 31,81 31,79 C31,77 33,75 35,75 Z" fill="#c77dff"/>
+                    </svg>
+                    <span style="margin-left: 8px;">Youkai Studio</span>
+                </div>
+                <div class="mobile-nav-close" id="mobileNavClose">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="anime-catalog.html">Каталог аниме</a></li>
+                <li><a href="calendar.html">Календарь выходов</a></li>
+                <li><a href="genres.html">Жанры</a></li>
+                <li><a href="profile.html">Мой профиль</a></li>
+                <li><a href="messages.html" class="active">Контакты</a></li>
+                <li><a href="favorites.html">Избранное</a></li>
+                <li><a href="settings.html">Настройки</a></li>
+            </ul>
         </div>
     </header>
 
     <main class="container">
-        <div class="page-header">
-            <h1>Личные сообщения</h1>
-            <p>Общайтесь с другими пользователями Youkai Studio</p>
-        </div>
-
-        <div class="messages-container">
-            <div class="conversations-list">
-                <div class="conversations-header">
-                    <h3>Диалоги</h3>
-                </div>
-                
-                <div class="conversation-search">
-                    <input type="text" placeholder="Поиск диалогов...">
-                </div>
-                
-                <div class="conversations" id="conversationsList">
-                    <!-- Список диалогов будет добавлен через JavaScript -->
-                </div>
+        <div class="contacts-container">
+            <div class="contacts-header">
+                <h1>Контакты</h1>
+                <p>Свяжитесь с другими пользователями через Telegram</p>
             </div>
             
-            <div class="messages-area">
-                <div class="messages-header">
-                    <div class="messages-header-info">
-                        <div class="messages-header-avatar">М</div>
-                        <div class="messages-header-details">
-                            <h4>Мария Соколова</h4>
-                            <p>Был(а) в сети 15 минут назад</p>
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <button class="btn btn-outline"><i class="fas fa-ellipsis-h"></i></button>
-                    </div>
-                </div>
-                
-                <div class="messages-content" id="messagesContent">
-                    <!-- Сообщения будут добавлены через JavaScript -->
-                </div>
-                
-                <div class="message-input-area">
-                    <button class="btn-outline" style="padding: 10px;">
-                        <i class="fas fa-paperclip"></i>
-                    </button>
-                    <textarea class="message-input" placeholder="Введите сообщение..." id="messageInput"></textarea>
-                    <div class="send-button" id="sendButton">
-                        <i class="fas fa-paper-plane"></i>
-                    </div>
-                </div>
+            <div class="contacts-search">
+                <input type="text" id="contactsSearch" placeholder="Поиск по имени или username...">
+            </div>
+            
+            <div class="contacts-tabs">
+                <div class="contact-tab active" data-filter="all">Все</div>
+                <div class="contact-tab" data-filter="online">В сети</div>
+                <div class="contact-tab" data-filter="friends">Друзья</div>
+                <div class="contact-tab" data-filter="admins">Администраторы</div>
+                <div class="contact-tab" data-filter="recent">Недавние</div>
+            </div>
+            
+            <div class="contacts-list" id="contactsList">
+                <!-- Контакты будут загружены через JavaScript -->
+            </div>
+            
+            <div class="privacy-warning" id="privacyWarning" style="display: none;">
+                <i class="fas fa-shield-alt"></i>
+                <p>Настройки приватности не позволяют другим пользователям писать вам. Изменить настройки можно в <a href="settings.html" style="color: var(--warning-color);">Настройках приватности</a>.</p>
             </div>
         </div>
     </main>
@@ -611,10 +444,15 @@
                     <h3>Youkai Studio</h3>
                     <p>Платформа для настоящих ценителей аниме. Высокое качество, удобный интерфейс и активное сообщество.</p>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-vk"></i></a>
-                        <a href="#"><i class="fab fa-telegram"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="https://t.me/youkaistudio" target="_blank" title="Telegram" id="telegramLink">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="https://vk.com/youkaistudio" target="_blank" title="ВКонтакте">
+                            <i class="fab fa-vk"></i>
+                        </a>
+                        <a href="https://youtube.com/@youkaistudio" target="_blank" title="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
                     </div>
                 </div>
                 
@@ -623,9 +461,9 @@
                     <ul>
                         <li><a href="index.html">Главная</a></li>
                         <li><a href="anime-catalog.html">Каталог аниме</a></li>
-                        <li><a href="popular.html">Популярное</a></li>
-                        <li><a href="new-episodes.html">Новые серии</a></li>
+                        <li><a href="calendar.html">Календарь выходов</a></li>
                         <li><a href="genres.html">Жанры</a></li>
+                        <li><a href="messages.html">Контакты</a></li>
                     </ul>
                 </div>
                 
@@ -654,167 +492,338 @@
         </div>
     </footer>
 
+    <script src="common.js"></script>
     <script>
-        // Данные для сообщений
-        const conversationsData = [
-            { id: 1, name: "Мария Соколова", avatar: "М", lastMessage: "Привет! Ты смотрел новую серию Атаки Титанов?", time: "15:30", unread: 3, online: true },
-            { id: 2, name: "Дмитрий Петров", avatar: "Д", lastMessage: "Как тебе новая арка в Ван Пис?", time: "Вчера", unread: 0, online: true },
-            { id: 3, name: "Анна Козлова", avatar: "А", lastMessage: "Посоветуй что-то похожее на Стального алхимика", time: "2 дня назад", unread: 1, online: false },
-            { id: 4, name: "Иван Сидоров", avatar: "И", lastMessage: "Спасибо за рекомендацию!", time: "Неделю назад", unread: 0, online: true },
-            { id: 5, name: "Екатерина Волкова", avatar: "Е", lastMessage: "Жду твоего отзыва на новую серию", time: "2 недели назад", unread: 0, online: false }
+        // Данные контактов (в реальном приложении будут загружаться с сервера)
+        const contactsData = [
+            { 
+                id: '123456789', 
+                name: 'Алексей Иванов', 
+                username: 'alexeyivanov', 
+                avatar: 'А',
+                theme: 'avatar-theme-1',
+                online: true,
+                lastSeen: 'только что',
+                isFriend: true,
+                isAdmin: false,
+                sharedAnime: 15,
+                privacy: 'enabled'
+            },
+            { 
+                id: '987654321', 
+                name: 'Мария Соколова', 
+                username: 'mariya_sokolova', 
+                avatar: 'М',
+                theme: 'avatar-theme-2',
+                online: true,
+                lastSeen: '5 минут назад',
+                isFriend: true,
+                isAdmin: false,
+                sharedAnime: 8,
+                privacy: 'enabled'
+            },
+            { 
+                id: '456789123', 
+                name: 'Дмитрий Петров', 
+                username: 'dmitry_petrov', 
+                avatar: 'Д',
+                theme: 'avatar-theme-3',
+                online: false,
+                lastSeen: '2 часа назад',
+                isFriend: false,
+                isAdmin: false,
+                sharedAnime: 3,
+                privacy: 'enabled'
+            },
+            { 
+                id: '789123456', 
+                name: 'Администратор Youkai', 
+                username: 'youkai_admin', 
+                avatar: 'Y',
+                theme: 'avatar-theme-4',
+                online: true,
+                lastSeen: 'в сети',
+                isFriend: false,
+                isAdmin: true,
+                sharedAnime: 0,
+                privacy: 'enabled'
+            },
+            { 
+                id: '321654987', 
+                name: 'Анна Козлова', 
+                username: 'anna_kozlova', 
+                avatar: 'А',
+                theme: 'avatar-theme-5',
+                online: false,
+                lastSeen: 'вчера',
+                isFriend: true,
+                isAdmin: false,
+                sharedAnime: 12,
+                privacy: 'disabled'
+            },
+            { 
+                id: '654987321', 
+                name: 'Иван Сидоров', 
+                username: 'ivan_sidorov', 
+                avatar: 'И',
+                theme: 'avatar-theme-1',
+                online: true,
+                lastSeen: '30 минут назад',
+                isFriend: false,
+                isAdmin: false,
+                sharedAnime: 5,
+                privacy: 'enabled'
+            }
         ];
 
-        const messagesData = {
-            1: [
-                { id: 1, text: "Привет! Ты смотрел новую серию Атаки Титанов?", time: "15:20", sender: "received" },
-                { id: 2, text: "Привет! Да, только что посмотрел. Это было невероятно!", time: "15:25", sender: "sent" },
-                { id: 3, text: "Правда? Я тоже в восторге! Особенно момент с...", time: "15:28", sender: "received" },
-                { id: 4, text: "Да, этот поворот сюжета просто взорвал мне мозг! Жду следующей серии.", time: "15:30", sender: "sent" }
-            ]
-        };
+        let currentFilter = 'all';
+        let searchQuery = '';
 
-        // Функция для создания элемента диалога
-        function createConversationItem(conversation) {
+        // Функция создания карточки контакта
+        function createContactCard(contact) {
             return `
-                <div class="conversation-item ${conversation.id === 1 ? 'active' : ''}" data-id="${conversation.id}">
-                    <div class="conversation-avatar">${conversation.avatar}</div>
-                    <div class="conversation-info">
-                        <div class="conversation-name">
-                            <span>${conversation.name}</span>
-                            <span class="conversation-time">${conversation.time}</span>
+                <div class="contact-card" data-user-id="${contact.id}" data-username="${contact.username}" data-privacy="${contact.privacy}">
+                    <div class="contact-avatar ${contact.theme}">${contact.avatar}</div>
+                    <div class="contact-info">
+                        <h4>${contact.name} ${contact.isAdmin ? '<i class="fas fa-shield-alt" style="color: var(--warning-color); font-size: 12px; margin-left: 5px;"></i>' : ''}</h4>
+                        <div class="contact-details">
+                            <span>@${contact.username}</span>
+                            <div class="online-status">
+                                <div class="online-dot ${contact.online ? '' : 'offline'}"></div>
+                                <span>${contact.online ? 'В сети' : `Был(а) ${contact.lastSeen}`}</span>
+                            </div>
+                            ${contact.sharedAnime > 0 ? `<span>· ${contact.sharedAnime} общих аниме</span>` : ''}
                         </div>
-                        <div class="conversation-preview">${conversation.lastMessage}</div>
                     </div>
-                    ${conversation.unread > 0 ? `<div class="unread-badge">${conversation.unread}</div>` : ''}
+                    <div class="contact-actions">
+                        <button class="contact-action-btn telegram-chat-btn" title="Написать в Telegram">
+                            <i class="fab fa-telegram"></i>
+                        </button>
+                        ${contact.isFriend ? `
+                            <button class="contact-action-btn" title="Друг" style="color: var(--success-color);">
+                                <i class="fas fa-user-friends"></i>
+                            </button>
+                        ` : ''}
+                    </div>
                 </div>
             `;
         }
 
-        // Функция для создания элемента сообщения
-        function createMessageItem(message) {
-            return `
-                <div class="message ${message.sender}">
-                    <div class="message-bubble">${message.text}</div>
-                    <div class="message-time">${message.time}</div>
-                </div>
-            `;
+        // Фильтрация контактов
+        function filterContacts() {
+            let filtered = [...contactsData];
+            
+            // Применяем текстовый поиск
+            if (searchQuery) {
+                const query = searchQuery.toLowerCase();
+                filtered = filtered.filter(contact => 
+                    contact.name.toLowerCase().includes(query) || 
+                    contact.username.toLowerCase().includes(query)
+                );
+            }
+            
+            // Применяем фильтр по табам
+            switch(currentFilter) {
+                case 'online':
+                    filtered = filtered.filter(contact => contact.online);
+                    break;
+                case 'friends':
+                    filtered = filtered.filter(contact => contact.isFriend);
+                    break;
+                case 'admins':
+                    filtered = filtered.filter(contact => contact.isAdmin);
+                    break;
+                case 'recent':
+                    // В реальном приложении здесь будет логика "недавние"
+                    filtered = filtered.slice(0, 3);
+                    break;
+            }
+            
+            return filtered;
         }
 
-        // Инициализация сообщений при загрузке страницы
-        document.addEventListener('DOMContentLoaded', function() {
-            const conversationsList = document.getElementById('conversationsList');
-            const messagesContent = document.getElementById('messagesContent');
-            const messageInput = document.getElementById('messageInput');
-            const sendButton = document.getElementById('sendButton');
+        // Рендер списка контактов
+        function renderContacts() {
+            const container = document.getElementById('contactsList');
+            const filteredContacts = filterContacts();
             
-            // Заполняем список диалогов
-            conversationsData.forEach(conversation => {
-                conversationsList.innerHTML += createConversationItem(conversation);
-            });
+            container.innerHTML = '';
             
-            // Заполняем сообщения для активного диалога
-            if (messagesData[1]) {
-                messagesData[1].forEach(message => {
-                    messagesContent.innerHTML += createMessageItem(message);
-                });
+            if (filteredContacts.length === 0) {
+                container.innerHTML = `
+                    <div class="no-contacts">
+                        <i class="fas fa-users"></i>
+                        <h3>Контакты не найдены</h3>
+                        <p>${searchQuery ? 'Попробуйте изменить поисковый запрос' : 'Добавьте друзей из сообщества'}</p>
+                    </div>
+                `;
+                return;
             }
             
-            // Прокручиваем к последнему сообщению
-            messagesContent.scrollTop = messagesContent.scrollHeight;
+            filteredContacts.forEach(contact => {
+                container.innerHTML += createContactCard(contact);
+            });
             
-            // Обработка выбора диалога
-            const conversationItems = document.querySelectorAll('.conversation-item');
-            conversationItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    // Удаляем активный класс у всех диалогов
-                    conversationItems.forEach(i => i.classList.remove('active'));
+            // Добавляем обработчики для кнопок Telegram
+            document.querySelectorAll('.telegram-chat-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
                     
-                    // Добавляем активный класс текущему диалогу
-                    this.classList.add('active');
+                    const contactCard = this.closest('.contact-card');
+                    const userId = contactCard.dataset.userId;
+                    const username = contactCard.dataset.username;
+                    const privacy = contactCard.dataset.privacy;
                     
-                    // Загружаем сообщения для выбранного диалога
-                    const conversationId = this.getAttribute('data-id');
-                    loadMessages(conversationId);
+                    // Проверяем настройки приватности
+                    if (privacy === 'disabled') {
+                        window.YoukaiStudio?.showNotification('Пользователь запретил личные сообщения', 'warning');
+                        return;
+                    }
+                    
+                    // Открываем чат в Telegram
+                    window.YoukaiStudio?.openTelegramChat(userId, username);
                 });
             });
             
-            // Обработка отправки сообщения
-            function sendMessage() {
-                const text = messageInput.value.trim();
-                if (text) {
-                    const newMessage = {
-                        id: Date.now(),
-                        text: text,
-                        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                        sender: 'sent'
-                    };
-                    
-                    // Добавляем сообщение в чат
-                    messagesContent.innerHTML += createMessageItem(newMessage);
-                    messageInput.value = '';
-                    
-                    // Прокручиваем к последнему сообщению
-                    messagesContent.scrollTop = messagesContent.scrollHeight;
-                    
-                    // В реальном приложении здесь будет отправка сообщения на сервер
-                    console.log('Отправлено сообщение:', text);
-                }
+            // Обработка клика на карточку контакта
+            document.querySelectorAll('.contact-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const userId = this.dataset.userId;
+                    showContactProfile(userId);
+                });
+            });
+        }
+
+        // Показ профиля контакта
+        function showContactProfile(userId) {
+            const contact = contactsData.find(c => c.id === userId);
+            if (!contact) return;
+            
+            let message = `👤 ${contact.name}\n`;
+            message += `@${contact.username}\n\n`;
+            message += `📊 Статистика:\n`;
+            message += `• ${contact.online ? '🟢 В сети' : '⚫ Был(а) ' + contact.lastSeen}\n`;
+            message += `• ${contact.sharedAnime} общих просмотренных аниме\n`;
+            message += `• ${contact.isFriend ? '✅ В друзьях' : 'Не в друзьях'}\n`;
+            message += `• ${contact.isAdmin ? '👑 Администратор' : 'Пользователь'}\n\n`;
+            
+            if (contact.privacy === 'disabled') {
+                message += '⚠️ Пользователь запретил личные сообщения';
             }
             
-            // Отправка по кнопке
-            sendButton.addEventListener('click', sendMessage);
+            const tg = window.YoukaiStudio?.getTelegramWebApp();
+            if (tg && tg.showAlert) {
+                tg.showAlert(message);
+            } else {
+                alert(message);
+            }
+        }
+
+        // Проверка настроек приватности текущего пользователя
+        function checkCurrentUserPrivacy() {
+            const user = window.YoukaiStudio?.getCurrentUser();
+            const privacyWarning = document.getElementById('privacyWarning');
             
-            // Отправка по Enter (без Shift)
-            messageInput.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    sendMessage();
-                }
-            });
-            
-            // Функция загрузки сообщений для диалога
-            function loadMessages(conversationId) {
-                messagesContent.innerHTML = '';
-                
-                if (messagesData[conversationId]) {
-                    messagesData[conversationId].forEach(message => {
-                        messagesContent.innerHTML += createMessageItem(message);
-                    });
+            if (user) {
+                const privacySetting = localStorage.getItem(`privacy_${user.id}`);
+                if (privacySetting === 'disabled') {
+                    privacyWarning.style.display = 'block';
                 } else {
-                    messagesContent.innerHTML = '<div style="text-align: center; padding: 40px; color: var(--text-secondary);">Нет сообщений в этом диалоге</div>';
-                }
-                
-                // Прокручиваем к последнему сообщению
-                messagesContent.scrollTop = messagesContent.scrollHeight;
-                
-                // Обновляем заголовок с информацией о собеседнике
-                const conversation = conversationsData.find(c => c.id == conversationId);
-                if (conversation) {
-                    document.querySelector('.messages-header-details h4').textContent = conversation.name;
-                    document.querySelector('.messages-header-details p').textContent = 
-                        conversation.online ? 'В сети' : 'Был(а) в сети недавно';
-                    document.querySelector('.messages-header-avatar').textContent = conversation.avatar;
+                    privacyWarning.style.display = 'none';
                 }
             }
+        }
+
+        // Инициализация страницы контактов
+        document.addEventListener('DOMContentLoaded', function() {
+            // Загружаем контакты
+            renderContacts();
             
-            // Поиск диалогов
-            const searchInput = document.querySelector('.conversation-search input');
-            searchInput.addEventListener('input', function() {
-                const searchTerm = this.value.toLowerCase();
-                const allConversations = document.querySelectorAll('.conversation-item');
-                
-                allConversations.forEach(item => {
-                    const name = item.querySelector('.conversation-name span').textContent.toLowerCase();
-                    const preview = item.querySelector('.conversation-preview').textContent.toLowerCase();
-                    
-                    if (name.includes(searchTerm) || preview.includes(searchTerm)) {
-                        item.style.display = 'flex';
+            // Проверяем настройки приватности
+            checkCurrentUserPrivacy();
+            
+            // Обработка поиска
+            const searchInput = document.getElementById('contactsSearch');
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    searchQuery = this.value.trim();
+                    renderContacts();
+                });
+            }
+            
+            // Обработка табов
+            document.querySelectorAll('.contact-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('.contact-tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilter = this.dataset.filter;
+                    renderContacts();
+                });
+            });
+            
+            // Telegram ссылка в футере
+            const telegramLink = document.getElementById('telegramLink');
+            if (telegramLink) {
+                telegramLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const tg = window.YoukaiStudio?.getTelegramWebApp();
+                    if (tg && tg.openTelegramLink) {
+                        tg.openTelegramLink('https://t.me/youkaistudio_community');
                     } else {
-                        item.style.display = 'none';
+                        window.open('https://t.me/youkaistudio_community', '_blank');
                     }
                 });
+            }
+            
+            // Обновляем контакты при изменении пользователя
+            window.addEventListener('storage', function(e) {
+                if (e.key === 'tg_user') {
+                    checkCurrentUserPrivacy();
+                }
             });
         });
+
+        // Оптимизация для мобильных
+        if (window.YoukaiStudio?.isMobileDevice()) {
+            // Увеличиваем тап-зоны
+            document.querySelectorAll('.contact-card, .contact-tab').forEach(el => {
+                el.style.minHeight = '44px';
+            });
+            
+            // Добавляем свайп для табов
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            const tabsContainer = document.querySelector('.contacts-tabs');
+            if (tabsContainer) {
+                tabsContainer.addEventListener('touchstart', e => {
+                    touchStartX = e.changedTouches[0].screenX;
+                });
+                
+                tabsContainer.addEventListener('touchend', e => {
+                    touchEndX = e.changedTouches[0].screenX;
+                    handleSwipe();
+                });
+                
+                function handleSwipe() {
+                    const swipeThreshold = 50;
+                    const diff = touchStartX - touchEndX;
+                    
+                    if (Math.abs(diff) > swipeThreshold) {
+                        const tabs = document.querySelectorAll('.contact-tab');
+                        const currentIndex = Array.from(tabs).findIndex(tab => tab.classList.contains('active'));
+                        
+                        if (diff > 0 && currentIndex < tabs.length - 1) {
+                            // Свайп влево - следующий таб
+                            tabs[currentIndex + 1].click();
+                        } else if (diff < 0 && currentIndex > 0) {
+                            // Свайп вправо - предыдущий таб
+                            tabs[currentIndex - 1].click();
+                        }
+                    }
+                }
+            }
+        }
     </script>
 </body>
 </html>
