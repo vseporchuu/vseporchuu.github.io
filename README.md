@@ -1,6 +1,6 @@
-# Blockopolis Helper v8
+# Blockopolis Helper
 
-Статический помощник для события Blockopolis 2026, рассчитанный на GitHub Pages.
+Статический помощник для события Blockopolis 2026.
 
 ## Что нового в v8
 
@@ -19,7 +19,3 @@
 - `index.html` — интерфейс
 - `style.css` — оформление
 - `script.js` — распознавание и решатель
-
-## GitHub Pages
-
-Положи эти четыре файла в корень репозитория и включи GitHub Pages для ветки `main` / папки `/ (root)`.
