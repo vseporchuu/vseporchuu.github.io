@@ -1,19 +1,5 @@
-# Blockopolis Helper
+# Blockopolis Helper v5
 
-Неофициальный локальный помощник для веб-события «Блокополис».
+GitHub Pages ready. Upload all files from this folder to the root of a repository and enable Settings → Pages → Deploy from branch → main → / (root).
 
-## Возможности
-- поле 10×10;
-- ручная разметка блоков и бомб;
-- выбор трёх фигур и их ориентаций;
-- перебор порядка и позиций фигур;
-- симуляция очистки линий и двухстадийной механики бомб;
-- оценка будущего пространства;
-- загрузка скриншота и попытка автоматического распознавания поля/фигур;
-- полностью клиентская работа, без сервера и авторизации.
-
-## GitHub Pages
-Загрузите `index.html`, `style.css` и `script.js` в репозиторий и включите GitHub Pages для ветки, содержащей эти файлы.
-
-## Важно
-Распознавание скриншота сделано как вспомогательная функция. После автоматического распознавания стоит быстро проверить клетки и фигуры: размеры/масштаб скриншота могут отличаться от стандартного интерфейса события.
+Workflow: upload a full Blockopolis screenshot → automatic recognition → manually correct if needed → Find best move. Everything runs locally in the browser.
