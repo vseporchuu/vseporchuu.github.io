@@ -6,7 +6,7 @@
 </head>
 <body>
 <header class="top">
-  <div><div class="eyebrow">НЕОФИЦИАЛЬНЫЙ ПОМОЩНИК</div><h1>BLOCKOPOLIS HELPER</h1><p>Скриншот → состояние поля → быстрый поиск с ограниченным прогнозом будущих ходов</p></div>
+  <div><div class="eyebrow">НЕОФИЦИАЛЬНЫЙ ПОМОЩНИК</div><h1>BLOCKOPOLIS HELPER</h1><p>Скриншот → состояние поля → быстрый поиск с прогнозом будущих ходов</p></div>
   <div class="top-actions">
     <label class="upload primary"><input id="imageInput" type="file" accept="image/*">Загрузить скриншот</label>
     <button id="scanAgain" class="secondary" disabled>Распознать ещё раз</button>
@@ -16,7 +16,7 @@
 </header>
 <main class="layout">
 <section class="panel board-panel">
- <div class="panel-title"><div><h2>Игровое поле 10×10</h2><span>Цвета на поле сохраняются для наглядности, но решатель считает только занятость клеток и бомбы.</span></div><div class="status" id="scanStatus">Готов</div></div>
+ <div class="panel-title"><div><h2>Игровое поле 10×10</h2><span>Цвет блока на поле нейтральный: для расчёта важна занятость клетки, а не цвет фигуры.</span></div><div class="status" id="scanStatus">Готов</div></div>
  <div class="tools">
   <button class="tool active" data-tool="block"><span class="swatch block"></span>Блок</button>
   <button class="tool" data-tool="bombLocked"><span class="swatch bomb"></span>Бомба</button>
@@ -29,12 +29,12 @@
 <aside class="panel side">
  <section class="side-section"><div class="section-head"><h2>Три фигуры</h2><button id="clearPieces" class="text-btn">Сбросить</button></div><p class="muted">После загрузки скриншота фигуры определяются автоматически. При необходимости их можно исправить.</p><div id="pieceSlots" class="piece-slots"></div><div id="orientation"></div><div id="piecePicker" class="piece-picker"></div></section>
  <section class="side-section"><h2>Скриншот</h2><div class="scan-box"><div class="scan-icon">↑</div><div><b>Распознавание работает локально</b><p>Изображение не отправляется на сервер. Сайт ищет поле, цветные блоки, мины и три карточки фигур прямо в браузере.</p></div></div><div class="scan-actions"><label class="upload secondary wide"><input id="imageInput2" type="file" accept="image/*">Загрузить новый скриншот</label><button id="scanAgain2" class="secondary wide" disabled>Повторить распознавание</button></div><details><summary>Если что-то распознано неверно</summary><p>Исправь отдельные клетки инструментами слева или выбери другую фигуру в нужном слоте. После этого расчёт использует уже исправленное состояние.</p></details></section>
- <section class="side-section"><h2>Поиск</h2><label class="check"><input id="bombAware" type="checkbox" checked> Учитывать бомбы</label><label class="check"><input id="futureAware" type="checkbox" checked> Учитывать будущие фигуры и беречь пространство</label><label class="range-row"><span>Вес сохранения свободного поля: <b id="survivalValue">35</b>%</span><input id="survivalWeight" type="range" min="0" max="100" value="35"></label><div class="mini-stats"><div><b id="bestScore">—</b><span>оценка</span></div><div><b id="resultMoves">—</b><span>ходов после</span></div></div></section>
+ <section class="side-section"><h2>Поиск</h2><label class="check"><input id="bombAware" type="checkbox" checked> Учитывать бомбы</label><label class="check"><input id="futureAware" type="checkbox" checked> Учитывать будущие фигуры и беречь пространство</label><label class="range-row"><span>Вес сохранения свободного поля</span><input id="survivalWeight" type="range" min="0" max="100" value="35"></label><div class="mini-stats"><div><b id="bestScore">—</b><span>оценка</span></div><div><b id="resultMoves">—</b><span>ходов после</span></div></div></section>
  <section class="side-section result-section"><button id="solve" class="primary wide">Найти лучший ход</button><div id="result" class="result empty"><strong>Готово к расчёту</strong><p>Загрузи реальный скриншот, проверь распознавание и нажми «Найти лучший ход».</p></div></section>
 </aside>
 </main>
 <section class="panel screenshot-panel" id="screenshotPanel" hidden><div class="section-head"><div><h2>Последний скриншот</h2><p class="muted">Ниже можно визуально сверить исходное изображение.</p></div><button id="hideScreenshot" class="text-btn">Скрыть</button></div><div class="image-wrap"><img id="screenshotPreview" alt="Последний загруженный скриншот"></div></section>
 <section class="panel explanation"><h2>Как пользоваться</h2><div class="explain-grid"><div><b>1. Сделай скриншот</b><p>Сохрани экран Блокополиса так, чтобы было видно всё поле и три новые фигуры.</p></div><div><b>2. Загрузи его</b><p>Нажми «Загрузить скриншот». Сайт сам заполнит поле и три слота.</p></div><div><b>3. Проверь</b><p>Если одна клетка или фигура определилась неверно, исправь её вручную.</p></div><div><b>4. Рассчитай</b><p>Нажми «Найти лучший ход». Получишь порядок фигур и координату начала каждой. Номера на поле показывают последовательность ходов.</p></div></div><p class="note">Все вычисления выполняются в браузере. Инструмент не является официальным сервисом Tanki Online.</p></section>
-<footer><span>Blockopolis Helper v8 · GitHub Pages ready</span><span>Локальный инструмент</span></footer>
+<footer><span>Blockopolis Helper v7 · GitHub Pages ready</span><span>Локальный инструмент</span></footer>
 <script src="script.js"></script>
 </body></html>
