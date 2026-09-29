@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Blockopolis Helper</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div><div class="eyebrow">ЛОКАЛЬНЫЙ ИНСТРУМЕНТ</div><h1>BLOCKOPOLIS HELPER</h1><p>Скриншот → распознавание поля → поиск хода</p></div>
+  <div class="top-actions"><label class="upload secondary"><input id="imageInput" type="file" accept="image/*">Загрузить скриншот</label><button id="demoBoard" class="secondary">Демо</button><button id="clearBoard" class="secondary">Очистить</button></div>
+</header>
+
+<main class="layout">
+<section class="panel board-panel">
+  <div class="panel-title"><div><h2>Игровое поле</h2><span id="boardHint">Клик по клетке — изменить её состояние</span></div><div class="status" id="scanStatus">Готов</div></div>
+  <div class="tools">
+    <button class="tool active" data-tool="block"><span class="swatch block"></span>Блок</button>
+    <button class="tool" data-tool="bombLocked"><span class="swatch bomb"></span>Бомба</button>
+    <button class="tool" data-tool="bombOpen"><span class="swatch bomb open"></span>Разблок. бомба</button>
+    <button class="tool" data-tool="erase"><span class="swatch empty"></span>Очистить</button>
+  </div>
+  <div id="board" class="board" aria-label="Поле 10 на 10"></div>
+  <div class="board-info"><span>Занято: <b id="filledCount">0</b>/100</span><span>Готовых линий: <b id="lineCount">0</b></span><span>Доступных ходов: <b id="currentMoves">0</b></span></div>
+</section>
+
+<aside class="panel side">
+  <section class="side-section">
+    <div class="section-head"><h2>Три фигуры</h2><button id="clearPieces" class="text-btn">Сбросить</button></div>
+    <p class="muted">Выбери фигуру в каждом слоте. При распознавании скриншота сайт постарается заполнить их автоматически.</p>
+    <div id="pieceSlots" class="piece-slots"></div>
+    <div id="orientation"></div>
+    <div id="piecePicker" class="piece-picker"></div>
+  </section>
+  <section class="side-section">
+    <h2>Скриншот</h2>
+    <div class="scan-box"><div class="scan-icon">↥</div><div><b>Автораспознавание</b><p>Определяет поле, бомбы и фигуры прямо в браузере.</p></div></div>
+    <button id="scanAgain" class="secondary wide">Распознать ещё раз</button>
+    <details><summary>Если распознало неправильно</summary><p>После распознавания можно вручную исправить любую клетку и любую фигуру. Сам скриншот никуда не отправляется.</p></details>
+  </section>
+  <section class="side-section">
+    <h2>Поиск</h2>
+    <label class="check"><input id="bombAware" type="checkbox" checked> Учитывать бомбы</label>
+    <label class="check"><input id="futureAware" type="checkbox" checked> Беречь пространство</label>
+    <label class="range-row"><span>Приоритет будущего</span><input id="survivalWeight" type="range" min="0" max="100" value="65"></label>
+    <div class="mini-stats"><div><b id="bestScore">—</b><span>оценка</span></div><div><b id="resultMoves">—</b><span>ходов после</span></div></div>
+  </section>
+  <section class="side-section result-section">
+    <button id="solve" class="primary">Найти лучший ход</button>
+    <div id="result" class="result empty"><strong>Готово к расчёту</strong><p>Загрузи скриншот или расставь поле вручную, затем выбери три фигуры.</p></div>
+  </section>
+</aside>
+</main>
+
+<section class="panel screenshot-panel" id="screenshotPanel" hidden>
+  <div class="section-head"><div><h2>Распознанный скриншот</h2><p class="muted">Это только визуальная проверка. Исходный файл обрабатывается локально.</p></div><button id="hideScreenshot" class="text-btn">Скрыть</button></div>
+  <div class="image-wrap"><img id="screenshotPreview" alt="Загруженный скриншот"></div>
+</section>
+
+<section class="panel explanation"><h2>Что учитывает решатель</h2><div class="explain-grid"><div><b>Все варианты</b><p>Перебирает допустимые положения и порядок до трёх фигур.</p></div><div><b>Линии</b><p>Симулирует исчезновение заполненных горизонталей и вертикалей.</p></div><div><b>Бомбы</b><p>Учитывает занятую клетку, снятие замка после первой линии и уничтожение после второй.</p></div><div><b>Будущее</b><p>Сравнивает оставшееся пространство и количество потенциальных следующих ходов.</p></div></div><p class="note">Работает полностью в браузере. Авторизация и данные игры не передаются этому сайту.</p></section>
+<footer><span>Blockopolis Helper · GitHub Pages ready</span><span>Неофициальный вспомогательный инструмент.</span></footer>
+<script src="script.js"></script>
+</body></html>
